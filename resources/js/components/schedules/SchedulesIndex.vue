@@ -17,8 +17,9 @@
                             <router-link :to="{ name: 'schedules.edit', params: {id: item.id} }"  class="btn btn-primary">
                                 <i class="fas fa-cog"></i>Edit
                             </router-link>
-                            <button type="button" class="btn btn-secondary"><i class="fas fa-cog"></i> Manage Schedule</button>
-                            <button type="button" class="btn btn-info"><i class="fas fa-eye"></i> View Schedule</button>
+                            <a class="btn btn-secondary" :href="'/schedules/manage/' + item.id"><i class="fas fa-cog"></i> Manage Schedule</a>
+                            <a class="btn btn-info" :href="'/schedules/view/' + item.id"><i class="fas fa-eye"></i> View Schedule</a>
+                            <!-- <button type="button" class="btn btn-info"><i class="fas fa-eye"></i> View Schedule</button> -->
                         </td>
                     </tr>
                 </template>

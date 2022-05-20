@@ -20,12 +20,12 @@ return new class extends Migration
             $table->string('last_name', 50);
             $table->string('username', 50);
             $table->string('password')->nullable();
-            $table->integer('contact');
+            $table->string('contact', 50);
             $table->boolean('is_active');
             $table->string('position', 50);
             $table->string('allowed_sides', 50);
-            $table->text('remarks');
-            $table->string('site');
+            $table->text('remarks')->nullable();
+            $table->string('site')->nullable();
             $table->timestamps();
         });
     }
