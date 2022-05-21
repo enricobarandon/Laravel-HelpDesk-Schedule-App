@@ -10,6 +10,7 @@ use Auth;
 use App\Models\Account;
 use App\Models\ScheduledAccount;
 use App\Models\Schedule;
+use App\Models\ActivityLog;
 
 class ScheduleGroupController extends Controller
 {
@@ -48,6 +49,16 @@ class ScheduleGroupController extends Controller
         $groupId = request()->group_id;
 
         $user = Auth::user();
+
+        ActivityLog::create([
+            'type' => 'add-group',
+            'user_id' => $user->id,
+            'assets' => json_encode([
+                'action' => 'added group to schedule',
+                'group_id' => $groupId,
+                'schedule_id' => $scheduleId
+            ])
+        ]);
 
         if ($groupId == 'all') {
 
@@ -93,6 +104,8 @@ class ScheduleGroupController extends Controller
         $scheduleId = request()->scheduleId;
         
         $groupId = request()->groupId;
+        
+        $user = Auth::user();
 
         $scheduledGroupInfo = ScheduledGroup::where('schedule_id', $scheduleId)
                             ->where('group_id', $groupId)
@@ -102,6 +115,16 @@ class ScheduleGroupController extends Controller
 
         $deleteScheduledAccounts = ScheduledAccount::where('scheduled_group_id', $scheduledGroupInfo->id)
                                         ->delete();
+
+        ActivityLog::create([
+            'type' => 'remove-group',
+            'user_id' => $user->id,
+            'assets' => json_encode([
+                'action' => 'removed group from a schedule',
+                'group_id' => $groupId,
+                'schedule_id' => $scheduleId
+            ])
+        ]);
 
         return redirect('/schedules/manage/' . $scheduleId);
     }
@@ -128,8 +151,8 @@ class ScheduleGroupController extends Controller
                             ->get();
 
         return view('schedules.groups.index', [
-            'scheduleId' => encrypt($scheduleId),
-            'groupId' => encrypt($groupId),
+            'scheduleId' => $scheduleId,
+            'groupId' => $groupId,
             'groupInfo' => $groupInfo,
             'scheduledGroupInfo' => $scheduledGroupInfo,
             'groupAccounts' => $groupAccounts
@@ -141,6 +164,8 @@ class ScheduleGroupController extends Controller
         $scheduledGroupId = request()->scheduledGroupId;
         
         $accountId = request()->accountId;
+        
+        $user = Auth::user();
 
         $deleteAccountFromScheduledGroup = ScheduledAccount::where('scheduled_group_id', $scheduledGroupId)
                                                     ->where('account_id', $accountId)
@@ -149,6 +174,17 @@ class ScheduleGroupController extends Controller
         $scheduledGroupInfo = ScheduledGroup::find($scheduledGroupId);
 
         if ($deleteAccountFromScheduledGroup) {
+
+            ActivityLog::create([
+                'type' => 'remove-confirmed-account',
+                'user_id' => $user->id,
+                'assets' => json_encode([
+                    'action' => 'Removed account from a scheduled group',
+                    'account_id' => $accountId,
+                    'schedule_group_id' => $scheduledGroupId
+                ])
+            ]);
+
             return redirect("/schedules/$scheduledGroupInfo->schedule_id/groups/$scheduledGroupInfo->group_id");
         }
     }
@@ -159,9 +195,11 @@ class ScheduleGroupController extends Controller
         
         $accountId = request()->accountId;
 
-        $scheduleId = decrypt(request()->scheduleId);
+        $scheduleId = request()->scheduleId;
 
-        $groupId = decrypt(request()->groupId);
+        $groupId = request()->groupId;
+        
+        $user = Auth::user();
 
         $storeAccountFromScheduledGroup = ScheduledAccount::insert([
             'scheduled_group_id' => $scheduledGroupId,
@@ -175,6 +213,19 @@ class ScheduleGroupController extends Controller
         $scheduledGroupInfo = ScheduledGroup::find($scheduledGroupId);
 
         if ($storeAccountFromScheduledGroup) {
+
+            ActivityLog::create([
+                'type' => 'confirmed-account',
+                'user_id' => $user->id,
+                'assets' => json_encode([
+                    'action' => 'Confirmed an account for a scheduled group',
+                    'account_id' => $accountId,
+                    'schedule_group_id' => $scheduledGroupId,
+                    'scheduleId' => $scheduleId,
+                    'groupId' => $groupId
+                ])
+            ]);
+
             return redirect("/schedules/$scheduledGroupInfo->schedule_id/groups/$scheduledGroupInfo->group_id");
         }
     }
@@ -197,6 +248,38 @@ class ScheduleGroupController extends Controller
             'groups' => $scheduledGroups,
             'groupedByAccounts' => $groupedByAccounts
         ]);
+    }
+
+    public function updateGroup()
+    {
+        $scheduleId = request()->scheduleId;
+
+        $groupId = request()->groupId;
+        
+        $user = Auth::user();
+
+        $newOperationTime = date('H:i:s',strtotime(request()->operation_time));
+        
+        $updateOperationTime = ScheduledGroup::where('schedule_id', $scheduleId)->where('group_id', $groupId)->update(['operation_time' => $newOperationTime]);
+
+        if ($updateOperationTime) {
+
+            ActivityLog::create([
+                'type' => 'update-operation-time',
+                'user_id' => $user->id,
+                'assets' => json_encode([
+                    'action' => 'Updated operation time',
+                    'scheduleId' => $scheduleId,
+                    'groupId' => $groupId,
+                    'newOperationTime' => $newOperationTime
+                ])
+            ]);
+
+            return redirect("/schedules/$scheduleId/groups/$groupId")->with('success', 'Group details updated!');
+        } else {
+            return redirect("/schedules/$scheduleId/groups/$groupId")->with('error', 'Something went wrong!');
+        }
+
     }
 
 }

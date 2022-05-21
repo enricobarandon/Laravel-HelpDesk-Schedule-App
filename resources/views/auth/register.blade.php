@@ -26,6 +26,26 @@
                         </div>
 
                         <div class="row mb-3">
+                            <label for="user_type_id" class="col-md-4 col-form-label text-md-end">{{ __('User Role') }}</label>
+
+                            <div class="col-md-6">
+                                <!-- <input id="user_type_id" type="text" class="form-control @error('user_type') is-invalid @enderror" name="user_type_id" value="{{ old('user_type_id') }}" required autocomplete="user_type_id" autofocus> -->
+                                <select id="user_type_id" class="form-control @error('user_type_id') is-invalid @enderror" name="user_type_id">
+                                    <option selected disabled value="0">-- Select User Role--</option>
+                                    @foreach($userTypes as $userType)
+                                        <option value="{{ $userType->id }}">{{ $userType->role }}</option>
+                                    @endforeach
+                                </select>
+
+                                @error('name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
                             <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
 
                             <div class="col-md-6">

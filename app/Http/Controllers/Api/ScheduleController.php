@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Resources\ScheduleResource;
 use App\Models\Schedule;
 use App\Http\Requests\ScheduleRequest;
+use App\Models\ActivityLog;
 
 class ScheduleController extends Controller
 {
@@ -30,6 +31,17 @@ class ScheduleController extends Controller
     public function store(ScheduleRequest $request)
     {
         $schedule = Schedule::create($request->validated());
+
+        $user = Auth::user();
+
+        // ActivityLog::create([
+        //     'type' => 'store-schedule',
+        //     'user_id' => Auth::id(),
+        //     'assets' => json_encode([
+        //         'action' => 'Created a schedule',
+        //         'data' => json_encode($request->all())
+        //     ])
+        // ]);
 
         return new ScheduleResource($schedule);
     }

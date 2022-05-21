@@ -139,8 +139,10 @@
                                             <td>--</td>
                                             <td class="
                                                 <?php
-                                                    if($group->site) {
-                                                        echo $siteColorArr[$group->site];
+                                                    if($group->site == 'wpc2040') {
+                                                        echo 'td-blue';
+                                                    } else if($group->site == 'wpc2040aa'){
+                                                        echo 'td-red';
                                                     }
                                                 ?>
                                             ">

@@ -68,9 +68,13 @@
                         <input type="text" value="--" class="form-control" id="gGuarantor" disabled>
                       </div>
                       <div class="form-group p-relative">
-                        <label>Time of Operation</label>
-                        <input type="text" value="{{ date('h:i A', strtotime($scheduledGroupInfo->operation_time)) }}" class="form-control" id="gTime">
-                        <button class="btn btn-primary pull-right" id="updateGroupTime"><i class="fa fa-wrench"aria-hidden="true"></i> Update</button>
+                        <form action='{{ url("/schedules/$scheduleId/groups/$groupId") }}' method="POST">
+                            @csrf
+                            @method('put')
+                            <label>Time of Operation</label>
+                            <input type="text" value="{{ date('h:i A', strtotime($scheduledGroupInfo->operation_time)) }}" class="form-control" id="operation_time" name="operation_time">
+                            <button type="submit" class="btn btn-primary pull-right" id="updateGroupTime"><i class="fa fa-wrench"aria-hidden="true"></i> Update</button>
+                        </form>
                       </div>
                     </div>
 

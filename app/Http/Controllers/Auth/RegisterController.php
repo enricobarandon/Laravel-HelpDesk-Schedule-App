@@ -8,6 +8,10 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Models\ActivityLog;
+use Illuminate\Http\Request;
+use Illuminate\Auth\Events\Registered;
+use Auth;
 
 class RegisterController extends Controller
 {
@@ -38,7 +42,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('auth');
     }
 
     /**
@@ -53,6 +57,7 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'user_type_id' => ['required','numeric']
         ]);
     }
 
@@ -68,6 +73,26 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'user_type_id' => $data['user_type_id']
         ]);
     }
+
+    public function register(Request $request){
+        $this->validator($request->all())->validate();
+        event(new Registered($user = $this->create($request->all())));
+        // $this->guard()->login($user);
+        ActivityLog::create([
+            'type' => 'create-user',
+            'user_id' => Auth::id(),
+            'assets' => json_encode([
+                'action' => 'created a user account',
+                'data' => json_encode($request->all())
+            ])
+        ]);
+
+        return $this->registered($request, $user)
+                            ?: redirect($this->redirectPath())->with('success','User successfully created.');
+
+    }
+
 }
