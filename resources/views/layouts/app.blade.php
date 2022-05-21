@@ -11,20 +11,8 @@
 
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/app2.css') }}" rel="stylesheet">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css" rel="stylesheet">
-
-    <link href="css/app.css" rel="stylesheet">
-
-    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-      <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-    <!-- Font Awesome Icons -->
+    <link href="{{ asset('css/min/backend.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
 
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -39,16 +27,6 @@
       <li class="nav-item d-none d-sm-inline-block">
         <!-- <a href="/home" class="nav-link">Home</a> -->
       </li>
-    </ul>
-
-    <!-- Right navbar links -->
-    <ul class="navbar-nav ml-auto">
-      
-    <form id="logout-form" action="{{ route('logout') }}" method="POST">
-                        @csrf
-                        <button type="submit" class="btn btn-danger">Log out</button>
-                    </form>
-      
     </ul>
 
     <!-- Right navbar links -->
@@ -68,7 +46,7 @@
             @endif
         @else
             <li class="nav-item dropdown">
-                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                     {{ Auth::user()->name }}
                 </a>
 
@@ -83,6 +61,7 @@
                         @csrf
                     </form>
                 </div>
+                <div class="dropdown">
             </li>
         @endguest
       
@@ -215,47 +194,6 @@
 
 
 <!-- Scripts -->
-<script src="{{ asset('js/app.js') }}"></script>
-<!-- <script src="{{ asset('js/app2.js') }}"></script> -->
-<!-- jQuery -->
-<!-- <script src="{{ asset('js/jquery.min.js') }}" ></script> -->
-<script src="{{ asset('js/bootstrap.min.js') }}" ></script>
-<script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-<!-- AdminLTE App -->
-<script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
-<!-- <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
-<script type="text/javascript">
-    $( function() {
-		var dateFormat = "mm/dd/yy",
-			from = $( "#date_time" )
-				.datepicker({
-					changeMonth: true,
-					numberOfMonths: 1
-				})
-				.on( "change", function() {
-					to.datepicker( "option", "minDate", getDate( this ) );
-				}),
-			to = $( "#to" ).datepicker({
-				defaultDate: "+1w",
-				changeMonth: true,
-				numberOfMonths: 1,
-        maxDate: 0
-			})
-			.on( "change", function() {
-				from.datepicker( "option", "maxDate", getDate( this ) );
-			});
-
-		function getDate( element ) {
-			var date;
-			try {
-				date = $.datepicker.parseDate( dateFormat, element.value );
-			} catch( error ) {
-				date = null;
-			}
-
-			return date;
-		}
-	} );
-</script> -->
+<script src="{{ asset('js/min/backend.min.js') }}"></script>
 
 </html>
