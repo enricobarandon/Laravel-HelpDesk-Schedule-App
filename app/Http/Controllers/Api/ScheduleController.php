@@ -10,6 +10,8 @@ use App\Models\Schedule;
 use App\Http\Requests\ScheduleRequest;
 use App\Models\ActivityLog;
 
+use Auth;
+
 class ScheduleController extends Controller
 {
     /**
@@ -30,6 +32,7 @@ class ScheduleController extends Controller
      */
     public function store(ScheduleRequest $request)
     {
+        $request->date_time = date('Y-m-d h:i:s', strtotime($request->date_time));
         $schedule = Schedule::create($request->validated());
 
         $user = Auth::user();

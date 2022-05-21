@@ -16,6 +16,12 @@ class ScheduleRequest extends FormRequest
         return true;
     }
 
+    protected function prepareForValidation()
+    {
+        if ($this->has('date_time'))
+            $this->merge(['date_time' => date('Y-m-d H:i:s', strtotime($this->date_time))]);
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
