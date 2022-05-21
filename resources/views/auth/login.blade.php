@@ -33,12 +33,12 @@
                                         @csrf
                                         <div class="form-group">
                                             <label for="email" >Username</label>
-                                                <input id="email" type="text" placeholder="Enter your username" class="form-control" name="email" required autofocus>
+                                                <input id="email" type="text" placeholder="Enter your username" class="form-control login-textbox" name="email" required autofocus>
                                         </div>
 
                                         <div class="form-group">
                                             <label for="password">Password</label>
-                                                <input id="password" type="password" placeholder="Enter your password" class="form-control" name="password" required>
+                                                <input id="password" type="password" placeholder="Enter your password" class="form-control login-textbox" name="password" required>
                                         </div>
 
                                         <div class="form-group form-group--sm">

@@ -62,6 +62,9 @@
                         $groupCount = 1;
                     @endphp
 
+                    <table class="table table-bordered display-center" cellspacing="0">
+                            <thead></thead>
+                            <tbody>
                     @foreach($groups as $group)
 
                         @php
@@ -73,9 +76,6 @@
                             }
                         @endphp
 
-                        <table class="table table-bordered display-center" cellspacing="0">
-                            <thead></thead>
-                            <tbody>
                                 <tr>
                                     <td colspan="1"><h3>{{ $groupCount++ }}</h3></td>
                                     <td colspan="8">
@@ -150,10 +150,10 @@
                                     </table>
                                     </td>
                                 </tr>
-                            </tbody>
-                        </table>
 
                     @endforeach
+                            </tbody>
+                        </table>
 
                 </div>
 
