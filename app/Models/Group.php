@@ -10,5 +10,17 @@ class Group extends Model
     use HasFactory;
 
     protected $table = 'groups';
+
+    protected $fillable = [
+        'uuid',
+        'province_id',
+        'is_active',
+        'group_type',
+        'name',
+        'code',
+        'owner',
+        'contact',
+        'address'
+    ];
     
 }

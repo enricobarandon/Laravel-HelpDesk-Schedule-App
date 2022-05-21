@@ -38,4 +38,12 @@ Route::middleware(['auth'])->group(function(){
     Route::get('schedules/view/{id}', [App\Http\Controllers\ScheduleGroupController::class, 'view'])->name('schedules.groups.view');
     Route::put('schedules/{scheduleId}/groups/{groupId}', [App\Http\Controllers\ScheduleGroupController::class, 'updateGroup'])->name('schedules.groups.update');
 
+    Route::get('accounts', [App\Http\Controllers\AccountController::class, 'index'])->name('accounts.index');
+
+    Route::get('data', [App\Http\Controllers\DataController::class, 'index'])->name('data.index');
+    Route::post('groups-data', [App\Http\Controllers\DataController::class, 'initialGroupsTransfer'])->name('data.initialGroupsTransfer');
+    Route::post('users-data', [App\Http\Controllers\DataController::class, 'initialUsersTransfer'])->name('data.initialUsersTransfer');
+
+    Route::get('users', [App\Http\Controllers\UserController::class, 'index'])->name('users.index');
+
 });

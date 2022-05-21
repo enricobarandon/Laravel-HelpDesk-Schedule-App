@@ -110,7 +110,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="/register" class="nav-link">
+            <a href="/users" class="nav-link">
               <i class="nav-icon fa fa-users"></i>
               <p>
                 Users
@@ -118,10 +118,18 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="/register" class="nav-link">
+            <a href="/accounts" class="nav-link">
               <i class="nav-icon fa fa-list"></i>
               <p>
                 Accounts
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/data" class="nav-link">
+              <i class="nav-icon fa fa-list"></i>
+              <p>
+                Sync Data
               </p>
             </a>
           </li>

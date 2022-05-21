@@ -10,4 +10,16 @@ class Account extends Model
     use HasFactory;
 
     protected $table = 'accounts';
+
+    protected $fillable = [
+        'uuid',
+        'group_id',
+        'first_name',
+        'last_name',
+        'username',
+        'is_active',
+        'allowed_sides',
+        'position',
+        'contact'
+    ];
 }
