@@ -140,13 +140,13 @@
             </a>
             <ul class="nav nav-treeview" style="display: block;">
               <li class="nav-item">
-                <a href="./index.html" class="nav-link">
+                <a href="/groups/active" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Active Group</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./index2.html" class="nav-link">
+                <a href="/groups/deactivated" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Deactivated</p>
                 </a>

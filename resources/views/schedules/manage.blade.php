@@ -3,6 +3,9 @@
 @section('content')
 <div class="content">
     <div class="container-fluid">
+
+            <a href='{{ url("schedules") }}' class="btn btn-primary"><< Back to Schedule Management page</a>
+
         <div class="row">
             <main class="py-4">
                 <h3><i class="fa fa-info-circle"></i> Wpc2021 OCBS Schedule</h3>

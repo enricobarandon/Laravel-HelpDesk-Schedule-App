@@ -4,6 +4,9 @@
 <!-- Main content -->
 <div class="content">
       <div class="container-fluid">
+
+        <a href='{{ url("schedules/manage/$scheduleId/") }}' class="btn btn-primary"><< Back to Scheduled Group Management page</a>
+
         <div class="row">
             <main class="py-4">
 

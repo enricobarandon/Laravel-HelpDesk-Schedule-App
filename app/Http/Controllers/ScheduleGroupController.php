@@ -31,7 +31,9 @@ class ScheduleGroupController extends Controller
                                 ->get();
         
         $groupsForSelect = Group::select('id','name','address')
+                            ->where('is_active', 1)
                             ->whereNotIn('id', $scheduledGroups)
+                            ->orderBy('name', 'asc')
                             ->get();
 
         return view('schedules.manage', [
@@ -62,7 +64,7 @@ class ScheduleGroupController extends Controller
 
         if ($groupId == 'all') {
 
-            $allGroups = Group::select('id')->where('is_active', 1)->get();
+            $allGroups = Group::select('id')->where('is_active', 1)->orderBy('name','asc')->get();
 
             $groupArray = [];
 
@@ -78,7 +80,11 @@ class ScheduleGroupController extends Controller
             
             $insertScheduledGroups = ScheduledGroup::insert($groupArray);
 
-            return $insertScheduledGroups;
+            if ($insertScheduledGroups) {
+                return redirect('/schedules/manage/' . $scheduleId)->with('success', 'All active groups added!');
+            } else {
+                return redirect('/schedules/manage/' . $scheduleId)->with('error', 'Something went wrong!');
+            }
             
         } else if ($groupId > 0)  {
 

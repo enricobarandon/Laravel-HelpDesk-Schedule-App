@@ -46,4 +46,6 @@ Route::middleware(['auth'])->group(function(){
 
     Route::get('users', [App\Http\Controllers\UserController::class, 'index'])->name('users.index');
 
+    Route::get('groups/{status}', [\App\Http\Controllers\GroupController::class, 'index'])->name('groups.index');
+
 });
