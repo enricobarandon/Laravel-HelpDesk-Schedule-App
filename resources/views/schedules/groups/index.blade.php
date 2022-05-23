@@ -1,5 +1,11 @@
 @extends('layouts.app')
-
+@section('style')
+<link href="{{ asset('css/timepicker.min.css') }}" rel="stylesheet">
+@endsection
+@section('script')
+<script src="{{ asset('js/timepicker.min.js') }}"></script>
+<script src="{{ asset('js/script.js') }}"></script>
+@endsection
 @section('content')
 <!-- Main content -->
 <div class="content">

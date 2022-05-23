@@ -13,6 +13,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/min/backend.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
+    @yield('style')
 
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -203,5 +204,6 @@
 
 <!-- Scripts -->
 <script src="{{ asset('js/min/backend.min.js') }}"></script>
+@yield('script')
 
 </html>

@@ -22,7 +22,7 @@ mix.js('resources/js/app.js', 'public/js')
         'public/js/bootstrap.min.js',
         'public/plugins/bootstrap/js/bootstrap.bundle.min.js',
         'public/dist/js/adminlte.min.js',
-        'public/js/script.js',
+        // 'public/js/script.js',
     ], 'public/js/min/backend.min.js')
     .styles([
         'public/css/app.css',
