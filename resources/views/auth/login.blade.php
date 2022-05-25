@@ -30,6 +30,15 @@
 
                                 <div class="card-body card__content">
                                     <form method="POST" action="{{ route('login') }}">
+                                    @if ($errors->any())
+                                        <div class="alert alert-danger">
+                                            <ul>
+                                                @foreach ($errors->all() as $error)
+                                                    <li>{{ $error }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    @endif
                                         @csrf
                                         <div class="form-group">
                                             <label for="email" >Username</label>

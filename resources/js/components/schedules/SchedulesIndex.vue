@@ -12,7 +12,7 @@
                 <template v-for="item in schedules" :key="item.id">
                     <tr>
                         <td>{{ item.name }}</td>
-                        <td>{{ item.date_time }}</td>
+                        <td>{{ format_date(item.date_time) }}</td>
                         <td class="display-center">
                             <router-link :to="{ name: 'schedules.edit', params: {id: item.id} }"  class="btn btn-primary">
                                 <i class="fas fa-cog"></i>Edit
@@ -30,6 +30,7 @@
 <script>
 import { onMounted } from "vue"
 import useSchedules from "../../composables/schedules"
+import moment from 'moment'
 
 export default {
     setup() {
@@ -41,6 +42,13 @@ export default {
         return {
             schedules
         }
-    }
+    },
+    methods: { 
+      format_date(value){
+         if (value) {
+           return moment(String(value)).format('MMMM DD YYYY')
+          }
+      },
+   }
 }
 </script>

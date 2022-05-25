@@ -69,28 +69,34 @@
 
                     <div class="card-body">
                         <div class="form-group">
-                            <form class="form-horizontal">
+                            <form class="form-horizontal" method="get">
                                 <div class="form-group row">
                                     <div class="col-md-3">
-                                        <input type="text" class="filter-group form-control" placeholder="Group Name / Code">
+                                        <input type="text" class="filter-group form-control" name="filterGroup" id="filterGroup" placeholder="Group Name / Code">
                                     </div>
 
                                     <div class="col-md-3">
-                                        <input type="text" class="filter-group form-control" placeholder="Province">
+                                        <!-- <input type="text" class="filter-group form-control" name="filterProvince" id="filterProvince" placeholder="Province"> -->
+                                        <select class="form-control" name="selectProvince" id="selectProvince">
+                                            <option selected disabled value="">Select Province</option>
+                                            @foreach($provinces as $province)
+                                            <option value="{{ $province->id }}">{{ $province->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
 
                                     <div class="col-md-2">
                                         <select id="selectType" name="selectType" class="form-control">
                                             <option selected value="">SELECT ALL TYPE</option>
-                                            <option value="1">ARENA</option>
-                                            <option value="2">OCBS-LOTTO</option>
-                                            <option value="3">OCBS-OTB</option>
-                                            <option value="4">OCBS-RESTOBAR</option>
-                                            <option value="5">OCBS-STORE</option>
-                                            <option value="6">OCBS-MALL</option>
-                                            <option value="7">OCBS</option>
-                                            <option value="8">OCBS-EGAMES</option>
-                                            <option value="9">OCBS-CASINO</option>
+                                            <option value="ARENA">ARENA</option>
+                                            <option value="OCBS-LOTTO">OCBS-LOTTO</option>
+                                            <option value="OCBS-OTB">OCBS-OTB</option>
+                                            <option value="OCBS-RESTOBAR">OCBS-RESTOBAR</option>
+                                            <option value="OCBS-STORE">OCBS-STORE</option>
+                                            <option value="OCBS-MALL">OCBS-MALL</option>
+                                            <option value="OCBS">OCBS</option>
+                                            <option value="OCBS-EGAMES8">OCBS-EGAMES</option>
+                                            <option value="OCBS-CASINO">OCBS-CASINO</option>
                                         </select>
                                     </div>
 
@@ -103,7 +109,8 @@
                                     </div>
 
                                     <div class="col">
-                                        <button type="button" class="btn btn-success"><i class="fas fa-search"></i> Submit</button>
+                                        <button type="submit" class="btn btn-success"><i class="fas fa-search"></i> Submit</button>
+                                        <a href="{{ url('schedules/manage') }}/{{ $scheduleId }}" class="btn btn-danger">Reset</a>
                                     </div>
                                 </div>
                             </form>

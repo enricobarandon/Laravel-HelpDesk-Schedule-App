@@ -13,9 +13,9 @@
             <input type="text" name="name" class="form-control" id="name" placeholder="Description" v-model="schedule.name">
         </div>
         <div class="form-group">
-            <label for="date_time">Schedule Date and Time</label>
+            <label for="date_time">Schedule Date</label>
             <!-- <input type="text" name="date_time" class="form-control" id="date_time" placeholder="Y-m-d H:i:s a" v-model="schedule.date_time"> -->
-            <Datepicker :format="formatDate" name="date_time" id="date_time" placeholder="Y-m-d H:i:s" v-model="schedule.date_time" />
+            <Datepicker :format="formatDate" name="date_time" id="date_time" placeholder="Y-m-d" v-model="schedule.date_time" />
         </div>
 
         <button type="submit" class="btn btn-primary">Submit</button>
@@ -57,7 +57,7 @@ export default {
     },
     methods: {
         formatDate(date){
-            return moment(date).format('YYYY-MM-DD hh:mm:ss');
+            return moment(date).format('YYYY-MM-DD');
         }
     }
 }
