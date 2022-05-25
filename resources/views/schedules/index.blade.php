@@ -3,7 +3,7 @@
 @section('content')
 <div class="container-fluid">
     
-    <a href='{{ url("schedules") }}' class="btn btn-primary"><< Back to Schedule Management page</a>
+    <!-- <a href='{{ url("schedules") }}' class="btn btn-primary"><< Back to Schedule Management page</a> -->
 
     <div class="row justify-content-center">
         <div class="col-md-12">

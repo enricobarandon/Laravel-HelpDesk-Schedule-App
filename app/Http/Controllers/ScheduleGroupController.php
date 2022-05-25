@@ -11,11 +11,12 @@ use App\Models\Account;
 use App\Models\ScheduledAccount;
 use App\Models\Schedule;
 use App\Models\ActivityLog;
+use App\Models\Province;
 
 class ScheduleGroupController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
         $scheduleId = request()->segment(3);
 
@@ -27,19 +28,42 @@ class ScheduleGroupController extends Controller
 
         $groupsForDisplay = Group::select('groups.id','groups.name as group_name','address','provinces.site','province_id','provinces.name as province_name')
                                 ->join('provinces','provinces.id', 'groups.province_id')
-                                ->whereIn('groups.id', $scheduledGroups)
-                                ->get();
+                                ->whereIn('groups.id', $scheduledGroups);
+                                // ->get();
         
         $groupsForSelect = Group::select('id','name','address')
                             ->where('is_active', 1)
                             ->whereNotIn('id', $scheduledGroups)
                             ->orderBy('name', 'asc')
                             ->get();
+        
+        $provinces = Province::select('id','name','site')
+                            ->get();
+        
+        
+        if($request->filterGroup){
+            $groupsForDisplay = $groupsForDisplay->where('groups.name', 'like', '%' . $request->filterGroup . '%');
+        }
+
+        if($request->selectProvince){
+            $groupsForDisplay = $groupsForDisplay->where('provinces.id', $request->selectProvince);
+        }
+
+        if($request->selectType){
+            $groupsForDisplay = $groupsForDisplay->where('groups.group_type', $request->selectType);
+        }
+
+        if($request->siteID){
+            $groupsForDisplay = $groupsForDisplay->where('provinces.site', $request->siteID);
+        }
+
+        $groupsForDisplay = $groupsForDisplay->get();
 
         return view('schedules.manage', [
             'scheduleId' => $scheduleId,
             'groupsForDisplay' => $groupsForDisplay,
-            'groupsForSelect' => $groupsForSelect
+            'groupsForSelect' => $groupsForSelect,
+            'provinces' => $provinces
         ]);
         
     }
