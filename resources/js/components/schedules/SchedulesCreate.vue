@@ -15,7 +15,7 @@
         <div class="form-group">
             <label for="date_time">Schedule Date and Time</label>
             <!-- <input type="text" :format="formatDate" name="date_time" class="form-control" id="date_time" placeholder="Y-m-d H:i:s a" v-model="form.date_time"> -->
-            <Datepicker :format="formatDate" name="date_time" id="date_time" placeholder="Y-m-d H:i:s" v-model="form.date_time" />
+            <Datepicker :format="formatDate" name="date_time" id="date_time" placeholder="Y-m-d H:i:s" v-model="form.date_time"/>
         </div>
 
         <button type="submit" class="btn btn-primary">Submit</button>
@@ -29,6 +29,7 @@ import useSchedules from '../../composables/schedules'
 import Datepicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 import moment from 'moment'
+import Swal from 'sweetalert2'
 
 export default {
     setup() {

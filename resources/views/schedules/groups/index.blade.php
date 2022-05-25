@@ -25,14 +25,14 @@
                     <div class="col-md-6">
                       <div class="form-group">
                         <label>Group Name</label>
-                        <textarea id="gName" name="gName" class="form-control" id="gName" rows="2" disabled>{{ $groupInfo->group_name }}</textarea>
+                        <textarea id="gName" name="gName" class="form-control" rows="2" disabled>{{ $groupInfo->group_name }}</textarea>
                       </div>
                     </div>
 
                     <div class="col-md-6">
                       <div class="form-group">
                         <label>Address</label>
-                        <textarea id="gAddress" name="gAddress" class="form-control" id="gAddress" rows="2" disabled>{{ $groupInfo->address }}</textarea>
+                        <textarea id="gAddress" name="gAddress" class="form-control" rows="2" disabled>{{ $groupInfo->address }}</textarea>
                       </div>
                     </div>
 

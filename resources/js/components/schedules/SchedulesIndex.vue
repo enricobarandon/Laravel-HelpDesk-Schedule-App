@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { onMounted } from "vue"
+import { onMounted, inject } from "vue"
 import useSchedules from "../../composables/schedules"
 
 export default {

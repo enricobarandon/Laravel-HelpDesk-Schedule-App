@@ -17,7 +17,7 @@ class GroupController extends Controller
      */
     public function getActiveGroups()
     {
-        $groups = Group::select('groups.name','groups.uuid','groups.group_type','owner','contact','code','provinces.site','provinces.name as province_name','active_staff','installed_pc')
+        $groups = Group::select('groups.id','groups.name','groups.uuid','groups.group_type','owner','contact','code','provinces.site as site','provinces.name as province_name','active_staff','installed_pc','address')
                     ->leftjoin('provinces','provinces.id','groups.province_id')
                     ->where('groups.is_active', 1)
                     ->get();
@@ -27,7 +27,7 @@ class GroupController extends Controller
 
     public function getDeactivatedGroups()
     {
-        $groups = Group::select('groups.name','groups.uuid','groups.group_type','owner','contact','code','provinces.site','provinces.name as province_name','active_staff','installed_pc')
+        $groups = Group::select('groups.id','groups.name','groups.uuid','groups.group_type','owner','contact','code','provinces.site as site','provinces.name as province_name','active_staff','installed_pc','address')
                     ->leftjoin('provinces','provinces.id','groups.province_id')
                     ->where('groups.is_active', 0)
                     ->get();
@@ -52,9 +52,13 @@ class GroupController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Group $group)
     {
-        //
+        $group = Group::select('groups.id','groups.name','groups.uuid','groups.group_type','owner','contact','code','provinces.site as site','provinces.name as province_name','active_staff','installed_pc','address','guarantor')
+                    ->leftjoin('provinces','provinces.id','groups.province_id')
+                    ->where('groups.id', $group->id)
+                    ->first();
+        return new GroupResource($group);
     }
 
     /**

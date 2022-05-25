@@ -21,8 +21,6 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-// Route::view('/{any}', 'schedules.index')->middleware('auth')->where('any','.*');
-
 Route::middleware(['auth'])->group(function(){
     
     Route::resource('schedules', \App\Http\Controllers\ScheduleController::class);
@@ -46,6 +44,9 @@ Route::middleware(['auth'])->group(function(){
 
     Route::get('users', [App\Http\Controllers\UserController::class, 'index'])->name('users.index');
 
-    Route::get('groups/{status}', [\App\Http\Controllers\GroupController::class, 'index'])->name('groups.index');
+    Route::get('groups/view/{status}', [\App\Http\Controllers\GroupController::class, 'index'])->name('groups.index');
 
+    Route::post('requests/groups', [\App\Http\Controllers\RequestController::class, 'groupStatusUpdate'])->name('requests.groups.update');
+
+    Route::get('requests', [\App\Http\Controllers\RequestController::class, 'index'])->name('requests.index');
 });

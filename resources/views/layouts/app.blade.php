@@ -134,6 +134,14 @@
               </p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="/requests" class="nav-link">
+              <i class="nav-icon fa fa-list"></i>
+              <p>
+                Requests
+              </p>
+            </a>
+          </li>
           <li class="nav-item menu-is-opening menu-open">
             <a href="#" class="nav-link active">
               <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -141,13 +149,13 @@
             </a>
             <ul class="nav nav-treeview" style="display: block;">
               <li class="nav-item">
-                <a href="/groups/active" class="nav-link">
+                <a href="/groups/view/active" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Active Group</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/groups/deactivated" class="nav-link">
+                <a href="/groups/view/deactivated" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Deactivated</p>
                 </a>

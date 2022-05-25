@@ -30,7 +30,13 @@
                     <td>{{ item.active_staff }}</td>
                     <td>{{ item.installed_pc }}</td>
                     <td class="display-center">
-                        
+                        <button type="button" class="btn btn-danger" @click="postDeactivationRequest(item.uuid)"><i class="fas fa-times"></i> Deactivate</button>
+                        <!-- <a :href="'/groups/edit/' + item.id" class="btn btn-primary">
+                            <i class="fas fa-cog"></i>Edit
+                        </a> -->
+                        <router-link :to="{ name: 'groups.edit', params: {id: item.id} }"  class="btn btn-primary">
+                            <i class="fas fa-cog"></i>Edit
+                        </router-link>
                     </td>
                 </tr>
             </template>
@@ -39,21 +45,42 @@
 </template>
 
 <script>
-import { onMounted } from 'vue'
+import { onMounted, reactive } from 'vue'
 import useGroups from '../../composables/groups'
+import useRequests from '../../composables/requests'
 
 export default {
     setup() {
 
         const count = 1;
 
+        const form = reactive({
+            'api_key' : '',
+            'uuid' : '',
+            'operation' : '',
+            'status' : 'pending',
+            'data' : ''
+        })
+
         const { groups, getActiveGroups } = useGroups()
+
+        const { storeRequest } = useRequests()
 
         onMounted(getActiveGroups)
 
+        const postDeactivationRequest = async (uuid) => {
+            form.api_key = '4e829e510539afcc43365a18acc91ede41fb555e'
+            form.uuid = uuid
+            form.operation = 'groups.update'
+            form.data = JSON.stringify({'is_active': 0})
+            await storeRequest({...form})
+        }
+
         return {
             groups,
-            count
+            count,
+            form,
+            postDeactivationRequest
         }
     }
 }

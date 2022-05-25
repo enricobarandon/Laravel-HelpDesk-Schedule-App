@@ -1,6 +1,7 @@
 import { ref } from 'vue'
 import axios from 'axios'
 import { useRouter } from 'vue-router'
+import Swal from 'sweetalert2'
 
 export default function useSchedules() {
     const schedules = ref([])
@@ -16,8 +17,16 @@ export default function useSchedules() {
     const storeSchedule = async (data) => {
         errors.value = '';
         try {
-            await axios.post('/api/schedules', data)
-            await router.push({ name: 'schedules.index' })
+            let store = await axios.post('/api/schedules', data)
+            if (store.status === 201) {
+                Swal.fire({
+                    title: "Wow!",
+                    text: "Message!",
+                    icon: "success"
+                }).then(function() {
+                    router.push({ name: 'schedules.index' })
+                });
+            }
         } catch (e) {
             if (e.response.status === 422) {
                 errors.value = e.response.data.errors

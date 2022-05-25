@@ -5,6 +5,7 @@ import SchedulesCreate from '../components/schedules/SchedulesCreate';
 import SchedulesEdit from '../components/schedules/SchedulesEdit';
 import GroupsActive from '../components/groups/GroupsActive';
 import GroupsDeactivated from '../components/groups/GroupsDeactivated';
+import GroupsEdit from '../components/groups/GroupsEdit';
 
 const routes = [
     {
@@ -24,14 +25,20 @@ const routes = [
         props: true
     },
     {
-        path: '/groups/active',
+        path: '/groups/view/active',
         name: 'groups.active',
         component: GroupsActive
     },
     {
-        path: '/groups/deactivated',
+        path: '/groups/view/deactivated',
         name: 'groups.deactivated',
         component: GroupsDeactivated
+    },
+    {
+        path: '/groups/edit',
+        name: 'groups.edit',
+        component: GroupsEdit,
+        props: true
     }
 ]
 

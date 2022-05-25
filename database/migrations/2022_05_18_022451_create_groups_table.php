@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('groups', function (Blueprint $table) {
             $table->id();
-            $table->char('uuid', 36);
+            $table->char('uuid', 36)->nullable();
             $table->integer('province_id');
             $table->boolean('is_active')->default(1);
             $table->string('group_type');
@@ -28,6 +28,7 @@ return new class extends Migration
             $table->integer('installed_pc')->default(0);
             $table->text('remarks')->nullable();
             $table->string('site');
+            $table->string('guarantor');
             $table->timestamps();
         });
     }

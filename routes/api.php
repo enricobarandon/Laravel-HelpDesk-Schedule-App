@@ -21,5 +21,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::apiResource('schedules', \App\Http\Controllers\Api\ScheduleController::class);
 
 // Route::apiResource('groups', \App\Http\Controllers\Api\GroupController::class);
-Route::get('/groups/active', [\App\Http\Controllers\Api\GroupController::class, 'getActiveGroups']);
-Route::get('/groups/deactivated', [\App\Http\Controllers\Api\GroupController::class, 'getDeactivatedGroups']);
+Route::get('/groups/view/active', [\App\Http\Controllers\Api\GroupController::class, 'getActiveGroups']);
+Route::get('/groups/view/deactivated', [\App\Http\Controllers\Api\GroupController::class, 'getDeactivatedGroups']);
+Route::get('/groups/{group}', [\App\Http\Controllers\Api\GroupController::class, 'show'])->name('groups.show');
+
+Route::post('/requests/groups', [\App\Http\Controllers\Api\RequestController::class, 'storeGroupRequest']);
+
+Route::post('/requests', [\App\Http\Controllers\Api\RequestController::class, 'updateRequest'])->name('requests.update');
