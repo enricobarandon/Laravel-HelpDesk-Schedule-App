@@ -12,6 +12,7 @@ use App\Models\ActivityLog;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
 use Auth;
+use App\Models\UserType;
 
 class RegisterController extends Controller
 {
@@ -91,8 +92,19 @@ class RegisterController extends Controller
         ]);
 
         return $this->registered($request, $user)
-                            ?: redirect($this->redirectPath())->with('success','User successfully created.');
+                            ?: redirect('/users')->with('success','User successfully created.');
 
+    }
+
+    public function showRegistrationForm() {
+        $user = Auth::user();
+        $userType = UserType::get();
+        if ($user->user_type_id != '1') {
+            return redirect('/users')->withError('Permission denied.');
+        }
+        return view('auth.register', [
+            'userTypes' => $userType
+        ]);
     }
 
 }

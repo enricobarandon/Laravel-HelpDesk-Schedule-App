@@ -95,7 +95,7 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
          
           <li class="nav-item">
-            <a href="/home" class="nav-link active">
+            <a href="/home" class="nav-link {{ (request()->is('home')) ? 'active' : '' }}">
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Dashboard
@@ -103,7 +103,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{ url('schedules') }}" class="nav-link">
+            <a href="/schedules" class="nav-link {{ (request()->is('schedules*')) ? 'active' : '' }}">
               <i class="nav-icon fa fa-calendar"></i>
               <p>
                 Schedule
@@ -111,7 +111,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="/users" class="nav-link">
+            <a href="/users" class="nav-link {{ (request()->is('users')) ? 'active' : '' }}">
               <i class="nav-icon fa fa-users"></i>
               <p>
                 Users
@@ -119,7 +119,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="/accounts" class="nav-link">
+            <a href="/accounts" class="nav-link {{ (request()->is('accounts*')) ? 'active' : '' }}">
               <i class="nav-icon fa fa-list"></i>
               <p>
                 Accounts
@@ -127,7 +127,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="/data" class="nav-link">
+            <a href="/data" class="nav-link {{ (request()->is('data*')) ? 'active' : '' }}">
               <i class="nav-icon fa fa-list"></i>
               <p>
                 Sync Data
@@ -135,19 +135,19 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="/requests" class="nav-link">
+            <a href="/requests" class="nav-link {{ (request()->is('requests*')) ? 'active' : '' }}">
               <i class="nav-icon fa fa-list"></i>
               <p>
                 Requests
               </p>
             </a>
           </li>
-          <li class="nav-item menu-is-opening menu-open">
-            <a href="#" class="nav-link active">
+          <li class="nav-item {{ (request()->is('groups/*')) ? 'menu-is-opening menu-open' : 'menu-close' }}">
+            <a href="#" class="nav-link  {{ (request()->is('groups/*')) ? 'active' : '' }}">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>Groups<i class="right fas fa-angle-left"></i></p>
             </a>
-            <ul class="nav nav-treeview" style="display: block;">
+            <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="/groups/view/active" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
@@ -167,6 +167,15 @@
                 </a>
               </li>
             </ul>
+          </li>
+          
+          <li class="nav-item">
+            <a href="/logs" class="nav-link {{ (request()->is('logs')) ? 'active' : '' }}">
+              <i class="nav-icon fa fa-list"></i>
+              <p>
+                Activity Logs
+              </p>
+            </a>
           </li>
         </ul>
       </nav>

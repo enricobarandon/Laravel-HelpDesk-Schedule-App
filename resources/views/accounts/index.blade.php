@@ -90,7 +90,11 @@
                                                 @endforeach
                                             </tbody>
                                         </table>
-                                        {{ $accounts->links() }}
+                                        <div class="col">
+                                            <div class="float-right">
+                                                {{ $accounts->links('pagination::bootstrap-4') }}
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 

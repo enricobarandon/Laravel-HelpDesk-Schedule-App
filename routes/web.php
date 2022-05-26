@@ -49,4 +49,6 @@ Route::middleware(['auth'])->group(function(){
     Route::post('requests/groups', [\App\Http\Controllers\RequestController::class, 'groupStatusUpdate'])->name('requests.groups.update');
 
     Route::get('requests', [\App\Http\Controllers\RequestController::class, 'index'])->name('requests.index');
+    
+    Route::get('logs', [\App\Http\Controllers\ActivityLogsController::class, 'index'])->name('logs.index');
 });
