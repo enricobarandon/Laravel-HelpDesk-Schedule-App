@@ -9,6 +9,8 @@ use App\Http\Requests\ApiRequests;
 use App\Http\Resources\ApiRequestResource;
 use Illuminate\Support\Facades\Http;
 use DB;
+use App\Models\Group;
+use App\Models\User;
 
 class RequestController extends Controller
 {
@@ -79,7 +81,7 @@ class RequestController extends Controller
         if (!$checkInRequests) {
             $apiRequest = RequestModel::create($request->validated());
             if ($apiRequest) {
-
+                
                 $this->postRequestToKiosk($request->all());
 
                 return response([
@@ -103,7 +105,7 @@ class RequestController extends Controller
 
     public function postRequestToKiosk($postInput)
     {
-        
+
         $apiURL = 'https://development.wpc2040.live/api/v4/requests';
 
         $apiKey = env('KIOSK_API_KEY');
@@ -158,11 +160,13 @@ class RequestController extends Controller
                 $operation = '';
                 list($table, $operation) = explode('.', $request->operation);
 
+                $data = json_decode($request->data, true);
+
                 if ($table == 'groups') {
 
                     if ($operation == 'update') {
     
-                        $result = Group::where('uuid', $requestInfo->request_uuid)->update($data);
+                        $result = Group::where('uuid', $request->uuid)->update($data);
     
                     }
     
@@ -170,7 +174,7 @@ class RequestController extends Controller
     
                     if ($operation == 'update') {
     
-                        $result = User::where('uuid', $requestInfo->request_uuid)->update($data);
+                        $result = User::where('uuid', $request->uuid)->update($data);
     
                     }
                 }

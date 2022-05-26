@@ -280,7 +280,7 @@ class ScheduleGroupController extends Controller
                 'groups' => $scheduledGroups,
                 'groupedByAccounts' => $groupedByAccounts
             ]),
-            'schedule.csv'
+            'schedule.xlsx'
         );
 
         return view('schedules.view', [

@@ -9,6 +9,7 @@ export default function useRequests() {
     const errors = ref('')
     
     const storeRequest = async (data) => {
+        console.log(data)
         errors.value = '';
         try {
             let store = await axios.post('/api/requests/groups', data)

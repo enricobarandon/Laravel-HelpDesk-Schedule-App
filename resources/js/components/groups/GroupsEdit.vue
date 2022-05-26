@@ -128,7 +128,7 @@ export default {
 
         const postUpdateRequest = async (uuid) => {
             console.log(group.value.name)
-            form.api_key = process.env.KIOSK_API_KEY
+            form.api_key = '4e829e510539afcc43365a18acc91ede41fb555e'
             form.uuid = uuid
             form.operation = 'groups.update'
             form.data = JSON.stringify({
