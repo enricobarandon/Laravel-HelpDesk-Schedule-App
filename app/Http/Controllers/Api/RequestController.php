@@ -8,6 +8,7 @@ use App\Models\RequestModel;
 use App\Http\Requests\ApiRequests;
 use App\Http\Resources\ApiRequestResource;
 use Illuminate\Support\Facades\Http;
+use DB;
 
 class RequestController extends Controller
 {
@@ -102,6 +103,7 @@ class RequestController extends Controller
 
     public function postRequestToKiosk($postInput)
     {
+        
         $apiURL = 'https://development.wpc2040.live/api/v4/requests';
 
         $apiKey = env('KIOSK_API_KEY');
@@ -109,7 +111,7 @@ class RequestController extends Controller
         $headers = [
             'X-header' => 'value',
             'Content-Type' => 'application/json',
-            'accepts' => 'application/json'
+            'accept' => 'application/json'
         ];
         
         $response = Http::withHeaders($headers)->post($apiURL, $postInput);
@@ -145,10 +147,34 @@ class RequestController extends Controller
                                 ->where('status', 'pending')
                                 ->update([
                                     'status' => $request->status,
-                                    'remarks' => $request->remarks
+                                    'remarks' => DB::raw('remarks') . ' ; ' . $request->remarks
                                 ]);
                                 
             if ($acceptChanges) {
+
+                // Update Helpdesk groups and users table
+
+                $table = '';
+                $operation = '';
+                list($table, $operation) = explode('.', $request->operation);
+
+                if ($table == 'groups') {
+
+                    if ($operation == 'update') {
+    
+                        $result = Group::where('uuid', $requestInfo->request_uuid)->update($data);
+    
+                    }
+    
+                } else if ($table == 'users') {
+    
+                    if ($operation == 'update') {
+    
+                        $result = User::where('uuid', $requestInfo->request_uuid)->update($data);
+    
+                    }
+                }
+
                 return response([
                     'status' => 'ok',
                     'message' => 'Row updated.'
