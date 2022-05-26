@@ -12,6 +12,8 @@ use App\Models\ScheduledAccount;
 use App\Models\Schedule;
 use App\Models\ActivityLog;
 use App\Models\Province;
+use Excel;
+use App\Exports\ScheduledGroupExport;
 
 class ScheduleGroupController extends Controller
 {
@@ -272,6 +274,14 @@ class ScheduleGroupController extends Controller
                             ->get();
 
         $groupedByAccounts = ScheduledAccount::createAccountsAssocArr($scheduleId);
+        return Excel::download(
+            new ScheduledGroupExport('schedules.tables.fullview', [
+                'scheduleInfo' => $scheduleInfo,
+                'groups' => $scheduledGroups,
+                'groupedByAccounts' => $groupedByAccounts
+            ]),
+            'schedule.csv'
+        );
 
         return view('schedules.view', [
             'scheduleInfo' => $scheduleInfo,
