@@ -8,6 +8,7 @@
     </div>
 
     <form @submit.prevent="saveSchedule">
+        <a href='/schedules' class="btn btn-primary">Back to Schedule Management page</a>
         <div class="form-group">
             <label for="name">Name</label>
             <input type="text" name="name" class="form-control" id="name" placeholder="Description" v-model="schedule.name">

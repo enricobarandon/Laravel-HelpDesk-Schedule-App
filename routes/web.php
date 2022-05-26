@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Auth::routes();
@@ -48,16 +48,7 @@ Route::middleware(['auth'])->group(function(){
 
     Route::post('/requests/groups', [\App\Http\Controllers\RequestController::class, 'groupStatusUpdate'])->name('requests.groups.update');
 
-    Route::get('/requests', [\App\Http\Controllers\RequestController::class, 'index'])->name('requests.index');
-
+    Route::get('requests', [\App\Http\Controllers\RequestController::class, 'index'])->name('requests.index');
+    
+    Route::get('logs', [\App\Http\Controllers\ActivityLogsController::class, 'index'])->name('logs.index');
 });
-
-// Route::view('/{any}', 'welcome')
-// ->middleware('auth')
-// ->where('any', '.*');
-
-// Route::get('{path}', function () {
-//     return view('welcome');
-// })->where( 'path', '([A-z\d-\/_.]+)?' );
-
-Route::get('/{any}', [\App\Http\Controllers\SpaController::class, 'index'])->middleware('auth')->where('any', '.*');
