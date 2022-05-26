@@ -1,6 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
+@php
+if (! function_exists('removeParam')) {
+    function removeParam($url, $param) {
+        $url = preg_replace('/(&|\?)'.preg_quote($param).'=[^&]*$/', '', $url);
+        $url = preg_replace('/(&|\?)'.preg_quote($param).'=[^&]*&/', '$1', $url);
+        return $url;
+    }
+}
+@endphp
 <!-- Main content -->
 <div class="content">
     <div class="container-fluid">
@@ -18,6 +27,7 @@
 
                 <div class="card-header">
                     <h3 class="card-title"><i class="fa fa-cog"></i> Schedule Management</h3>
+                    <a class="btn btn-secondary float-right" href="{{ removeParam(request()->fullUrlWithQuery(['download' => '1']), 'downloadcurrent') }}">Download Excel</a>
                 </div>
 
                 <div class="card-body">

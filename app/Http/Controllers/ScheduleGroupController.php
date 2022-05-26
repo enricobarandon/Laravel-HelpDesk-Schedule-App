@@ -262,7 +262,7 @@ class ScheduleGroupController extends Controller
         }
     }
 
-    public function view()
+    public function view(Request $request)
     {
         $scheduleId = request()->id;
 
@@ -274,14 +274,17 @@ class ScheduleGroupController extends Controller
                             ->get();
 
         $groupedByAccounts = ScheduledAccount::createAccountsAssocArr($scheduleId);
-        return Excel::download(
-            new ScheduledGroupExport('schedules.tables.fullview', [
-                'scheduleInfo' => $scheduleInfo,
-                'groups' => $scheduledGroups,
-                'groupedByAccounts' => $groupedByAccounts
-            ]),
-            'schedule.xlsx'
-        );
+        if ($request->has('download') || $request->has('downloadcurrent')) {
+
+            return Excel::download(
+                new ScheduledGroupExport('schedules.tables.fullview', [
+                    'scheduleInfo' => $scheduleInfo,
+                    'groups' => $scheduledGroups,
+                    'groupedByAccounts' => $groupedByAccounts
+                ]),
+                'schedule.xlsx'
+            );
+        }
 
         return view('schedules.view', [
             'scheduleInfo' => $scheduleInfo,

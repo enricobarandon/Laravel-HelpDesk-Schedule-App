@@ -168,7 +168,7 @@
               </li>
             </ul>
           </li>
-          
+          @if(Auth::user()->user_type_id == 1)
           <li class="nav-item">
             <a href="/logs" class="nav-link {{ (request()->is('logs')) ? 'active' : '' }}">
               <i class="nav-icon fa fa-list"></i>
@@ -177,6 +177,7 @@
               </p>
             </a>
           </li>
+          @endif
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
