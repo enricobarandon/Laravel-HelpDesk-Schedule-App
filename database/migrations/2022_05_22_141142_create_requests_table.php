@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('operation');
             $table->char('status');
             $table->text('data');
+            $table->string('remarks');
             $table->timestamps();
         });
     }

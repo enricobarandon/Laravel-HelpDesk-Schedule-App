@@ -18,7 +18,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('schedules', \App\Http\Controllers\Api\ScheduleController::class);
+Route::apiResource('/schedules', \App\Http\Controllers\Api\ScheduleController::class);
 
 // Route::apiResource('groups', \App\Http\Controllers\Api\GroupController::class);
 Route::get('/groups/view/active', [\App\Http\Controllers\Api\GroupController::class, 'getActiveGroups']);
