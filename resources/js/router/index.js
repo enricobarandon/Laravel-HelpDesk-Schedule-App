@@ -19,7 +19,7 @@ const routes = [
         component: SchedulesCreate
     },
     {
-        path: '/schedules/edit',
+        path: '/schedules/edit/:id',
         name: 'schedules.edit',
         component: SchedulesEdit,
         props: true
@@ -35,7 +35,7 @@ const routes = [
         component: GroupsDeactivated
     },
     {
-        path: '/groups/edit',
+        path: '/groups/edit/:id',
         name: 'groups.edit',
         component: GroupsEdit,
         props: true

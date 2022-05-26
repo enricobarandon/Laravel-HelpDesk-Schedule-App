@@ -16,8 +16,9 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
+                    
                     <router-view />
+
                 </div>
             </div>
         </div>

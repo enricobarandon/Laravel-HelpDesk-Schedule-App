@@ -20,7 +20,9 @@ class Group extends Model
         'code',
         'owner',
         'contact',
-        'address'
+        'address',
+        'installed_pc',
+        'active_staff'
     ];
     
 }

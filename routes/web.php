@@ -52,3 +52,10 @@ Route::middleware(['auth'])->group(function(){
     
     Route::get('logs', [\App\Http\Controllers\ActivityLogsController::class, 'index'])->name('logs.index');
 });
+
+// Route::view('/{any}', 'schedules.index')
+//     ->middleware('auth')
+//     ->where('any', '.*');
+
+Route::get('/{any}', [\App\Http\Controllers\SpaController::class, 'index'])->middleware('auth')
+    ->where('any', '.*');

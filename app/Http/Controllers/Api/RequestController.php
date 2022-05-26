@@ -111,11 +111,11 @@ class RequestController extends Controller
             'Content-Type' => 'application/json',
             'accepts' => 'application/json'
         ];
-
+        
         $response = Http::withHeaders($headers)->post($apiURL, $postInput);
-  
+        
         $statusCode = $response->status();
-
+        
         $responseBody = json_decode($response->getBody(), true);
         
         return $responseBody;
@@ -144,7 +144,8 @@ class RequestController extends Controller
                                 ->where('operation', $request->operation)
                                 ->where('status', 'pending')
                                 ->update([
-                                    'status' => $request->status
+                                    'status' => $request->status,
+                                    'remarks' => $request->remarks
                                 ]);
                                 
             if ($acceptChanges) {

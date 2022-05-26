@@ -8,6 +8,6 @@ class SpaController extends Controller
 {
     public function index()
     {
-        return view('/welcome');
+        return view('schedules.index');
     }
 }

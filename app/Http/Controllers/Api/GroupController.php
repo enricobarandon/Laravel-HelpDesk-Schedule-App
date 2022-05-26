@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Resources\GroupResource;
 use App\Models\Group;
+use App\Http\Requests\GroupRequest;
 
 class GroupController extends Controller
 {
@@ -54,7 +55,7 @@ class GroupController extends Controller
      */
     public function show(Group $group)
     {
-        $group = Group::select('groups.id','groups.name','groups.uuid','groups.group_type','owner','contact','code','provinces.site as site','provinces.name as province_name','active_staff','installed_pc','address','guarantor')
+        $group = Group::select('groups.id','groups.uuid','groups.name','groups.uuid','groups.group_type','owner','contact','code','provinces.site as site','provinces.name as province_name','active_staff','installed_pc','address','guarantor')
                     ->leftjoin('provinces','provinces.id','groups.province_id')
                     ->where('groups.id', $group->id)
                     ->first();
@@ -68,9 +69,11 @@ class GroupController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(GroupRequest $request, Group $group)
     {
-        //
+        $group->update($request->validated());
+
+        return new GroupResource($group);
     }
 
     /**

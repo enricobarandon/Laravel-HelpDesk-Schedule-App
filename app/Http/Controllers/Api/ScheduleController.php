@@ -21,7 +21,8 @@ class ScheduleController extends Controller
      */
     public function index()
     {
-        return ScheduleResource::collection(Schedule::all());
+        $schedules = Schedule::select('id','name','date_time')->orderBy('date_time','desc')->get();
+        return ScheduleResource::collection($schedules);
     }
 
     /**
@@ -47,6 +48,11 @@ class ScheduleController extends Controller
         // ]);
 
         return new ScheduleResource($schedule);
+    }
+
+    public function create()
+    {
+        return view('schedules.index');
     }
 
     /**

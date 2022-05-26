@@ -1,5 +1,6 @@
 <template>
     <router-link :to="{ name: 'schedules.create' }"  class="btn btn-primary float-right"><i class="fas fa-plus"></i> Create Schedule</router-link>
+    <!-- <a href="/schedules/create" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Create Schedule</a> -->
         <table class="table table-bordered table-striped global-table">
             <thead>
                 <tr>
@@ -46,7 +47,7 @@ export default {
     methods: { 
       format_date(value){
          if (value) {
-           return moment(String(value)).format('MMMM DD YYYY')
+           return moment(String(value)).format('MMMM DD, YYYY')
           }
       },
    }

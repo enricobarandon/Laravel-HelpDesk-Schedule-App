@@ -13,7 +13,7 @@ class GroupRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,8 @@ class GroupRequest extends FormRequest
     public function rules()
     {
         return [
-            ''
+            'active_staff' => ['required'],
+            'installed_pc' => ['required'],
         ];
     }
 }

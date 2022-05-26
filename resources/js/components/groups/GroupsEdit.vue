@@ -10,64 +10,64 @@
             </div>
         </div>
 
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label>Group Name</label>
-                    <textarea id="group-name" name="group-name" class="form-control" rows="2" v-model="group.name"></textarea>
-                </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Group Name</label>
+                <textarea id="group-name" name="group-name" class="form-control" rows="2" v-model="group.name"></textarea>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Address</label>
+                <textarea id="group-address" name="group-address" class="form-control" rows="2" v-model="group.address"></textarea>
+            </div>
+        </div>
+
+
+        <div class="col-md-4">
+
+            <div class="form-group">
+                <label>Group Type</label>
+                <input type="text" class="form-control" id="group-type" name="group-type" v-model="group.group_type" readonly>
             </div>
 
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label>Address</label>
-                    <textarea id="group-address" name="group-address" class="form-control" rows="2" v-model="group.address"></textarea>
-                </div>
+            <div class="form-group">
+                <label>Group Code</label>
+                <input type="text" class="form-control" id="group-code" name="group-code" v-model="group.code">
             </div>
 
+        </div>
 
-            <div class="col-md-4">
+        <div class="col-md-4">
 
-                <div class="form-group">
-                    <label>Group Type</label>
-                    <input type="text" class="form-control" id="group-type" name="group-type" v-model="group.group_type">
-                </div>
-
-                <div class="form-group">
-                    <label>Group Code</label>
-                    <input type="text" class="form-control" id="group-code" name="group-code" v-model="group.code">
-                </div>
-
+            <div class="form-group">
+                <label>Operator</label>
+                <input type="text" class="form-control" id="group-operator" name="group-operator" v-model="group.owner">
             </div>
 
-            <div class="col-md-4">
+            <div class="form-group">
+                <label>Site</label>
+                <input type="text" class="form-control" id="group-site" name="group-site" v-model="group.site" readonly>
+            </div>
+            
+        </div>
 
-                <div class="form-group">
-                    <label>Operator</label>
-                    <input type="text" class="form-control" id="group-operator" name="group-operator" v-model="group.owner">
-                </div>
+        <div class="col-md-4">
 
-                <div class="form-group">
-                    <label>Site</label>
-                    <input type="text" class="form-control" id="group-site" name="group-site" v-model="group.site" readonly>
-                </div>
-                
+            <div class="form-group">
+                <label>Contact</label>
+                <input type="text" class="form-control" id="group-contact" name="group-contact" v-model="group.contact">
             </div>
 
-            <div class="col-md-4">
-
-                <div class="form-group">
-                    <label>Contact</label>
-                    <input type="text" class="form-control" id="group-contact" name="group-contact" v-model="group.contact">
-                </div>
-
-                <div class="form-group">
-                    <label>Guarantor</label>
-                    <input type="text" class="form-control" id="group-guarantor" name="group-guarantor" v-model="group.guarantor">
-                </div>
-
+            <div class="form-group">
+                <label>Guarantor</label>
+                <input type="text" class="form-control" id="group-guarantor" name="group-guarantor" v-model="group.guarantor">
             </div>
 
-            <button type="submit" class="btn btn-primary">Submit Update Request</button>
+        </div>
+
+        <button type="submit" class="btn btn-primary" @click="postUpdateRequest(group.uuid)">Submit Update Request</button>
 
         <hr/>
 
@@ -95,8 +95,9 @@
 </template>
 
 <script>
-import { onMounted } from 'vue'
+import { reactive, onMounted } from 'vue'
 import useGroups from '../../composables/groups'
+import useRequests from '../../composables/requests'
 
 export default {
     props: {
@@ -106,7 +107,18 @@ export default {
         }
     },
     setup(props) {
+
         const { errors, group, getGroup, updateGroup } = useGroups()
+
+        const { storeRequest } = useRequests()
+
+        const form = reactive({
+            'api_key' : '',
+            'uuid' : '',
+            'operation' : '',
+            'status' : 'pending',
+            'data' : ''
+        })
 
         onMounted(getGroup(props.id))
 
@@ -114,10 +126,29 @@ export default {
             await updateGroup(props.id)
         }
 
+        const postUpdateRequest = async (uuid) => {
+            console.log(group.value.name)
+            form.api_key = process.env.KIOSK_API_KEY
+            form.uuid = uuid
+            form.operation = 'groups.update'
+            form.data = JSON.stringify({
+                'name': group.value.name,
+                'address' : group.value.address,
+                // 'group_type' : group.value.group_type,
+                'owner' : group.value.owner,
+                'contact' : group.value.contact,
+                'code' : group.value.code,
+                'guarantor' : group.value.guarantor
+            })
+            await storeRequest({...form})
+        }
+
         return {
             errors,
             group,
-            saveGroup
+            saveGroup,
+            form,
+            postUpdateRequest
         }
     }
 }
