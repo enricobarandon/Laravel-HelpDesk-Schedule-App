@@ -84,7 +84,7 @@
                                                         <td>--</td>
                                                         <td>{{ $account->is_active ? 'Active' : 'Deactivated'}}</td>
                                                         <td class="display-center">
-                                                        <a href="/accounts/{{ $account->acc_id }}" type="button" class="btn btn-secondary"><i class="fas fa-cog"></i> Update Account</button>
+                                                        <a href="/accounts/{{ $account->acc_id }}" type="button" class="btn btn-primary"><i class="fas fa-cog"></i> Edit</button>
                                                         </td>
                                                     </tr>
                                                 @endforeach

@@ -20,8 +20,8 @@ export default function useSchedules() {
             let store = await axios.post('/api/schedules', data)
             if (store.status === 201) {
                 Swal.fire({
-                    title: "Wow!",
-                    text: "Message!",
+                    title: "Schedule Created!",
+                    text: "",
                     icon: "success"
                 }).then(function() {
                     router.push({ name: 'schedules.index' })

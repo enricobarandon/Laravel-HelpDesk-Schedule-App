@@ -17,6 +17,15 @@ class AccountController extends Controller
 
     public function show(Account $account)
     {
-        dd($account);
+        $allowedSides = [
+            'm' => 'Meron only',
+            'w' => 'Wala only',
+            'a' => 'All sides',
+            'n' => 'None'
+        ];
+        return view('accounts.edit', [
+            'account' => $account,
+            'allowedSides' => $allowedSides
+        ]);
     }
 }
