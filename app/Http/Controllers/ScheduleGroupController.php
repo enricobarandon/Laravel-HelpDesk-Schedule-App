@@ -45,11 +45,25 @@ class ScheduleGroupController extends Controller
             "
         ));
                                 
-        $groupsForSelect = Group::select('id','name','address')
-                            ->where('is_active', 1)
-                            ->whereNotIn('id', $scheduledGroups)
-                            ->orderBy('name', 'asc')
-                            ->get();
+        // $groupsForSelect = Group::select('id','name','address')
+        //                     ->where('is_active', 1)
+        //                     ->whereNotIn('id', $scheduledGroups)
+        //                     ->orderBy('name', 'asc')
+        //                     ->get();
+
+        $groupsForSelect = DB::select(
+            DB::raw(
+                "
+                select 
+                    `id`, 
+                    `name`, 
+                    `address` 
+                from `groups` 
+                where `is_active` = 1 and `id` not in ($arrToStr) 
+                order by `name` asc
+                "
+            )
+        );
 
         // $groupsForDisplay = ScheduledGroup::select('groups.id')
         //                         ->join('groups')
