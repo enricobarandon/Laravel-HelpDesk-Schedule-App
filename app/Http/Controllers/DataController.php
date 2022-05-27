@@ -85,11 +85,14 @@ class DataController extends Controller
 
             $groups = collect(Group::all()->toArray());
             // dd($groups->where('name','LUCKY 8 STAR QUEST INC. OFFICE - B'));
-
+            // dd($groups);
+            // dd($responseBody['data']);
+            // $insertArr = [];
             foreach($responseBody['data'] as $data){
 
                 // $groupInfo = Group::where('name', $data['group_name'])->first();
-                $groupInfo = $groups->where('name', '=', $data['group_name']);
+                $groupInfo = $groups->where('name', '=', $data['group_name'])->first();
+                // dd($groupInfo['name']);
 
                 $newAccountArr = [
                     'uuid' => $data['uuid'],
@@ -103,10 +106,12 @@ class DataController extends Controller
                     'contact' => $data['contact']
                 ];
 
-                // Account::create($newAccountArr);
+                Account::create($newAccountArr);
+                // array_push($insertArr, $newAccountArr);
 
             }
-
+            // dd($insertArr);
+            // Account::insert($insertArr);
             return 'end';
 
         }

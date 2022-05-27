@@ -14,4 +14,9 @@ class AccountController extends Controller
                         
         return view('accounts.index', compact('accounts'));
     }
+
+    public function show(Account $account)
+    {
+        dd($account);
+    }
 }
