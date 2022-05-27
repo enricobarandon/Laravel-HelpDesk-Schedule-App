@@ -87,7 +87,9 @@ class RegisterController extends Controller
             'user_id' => Auth::id(),
             'assets' => json_encode([
                 'action' => 'created a user account',
-                'data' => json_encode($request->all())
+                'name' => $request->name,
+                'email' => $request->email,
+                'role' => UserType::getUserRole($request->user_type_id)->role
             ])
         ]);
 

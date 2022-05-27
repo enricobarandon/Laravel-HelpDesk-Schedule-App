@@ -28,26 +28,28 @@
                                     </div>
                                     <div class="card-body">
 
-                                        <form class="form-horizontal">
+                                        <form class="form-horizontal" method="get">
                                             <div class="form-group row">
+
                                                 <div class="col-md-3">
-                                                    <input type="text" class="filter-group form-control" placeholder="Group Code">
+                                                    <input type="text" class="form-control" name="filterName" id="filterName" placeholder="Name / Username">
                                                 </div>
 
                                                 <div class="col-md-3">
-                                                    <input type="text" class="filter-group form-control" placeholder="Name / Username">
+                                                    <input type="text" class="form-control" name="filterGname" id="filterGname" placeholder="Group Code">
                                                 </div>
 
                                                 <div class="col-md-2">
-                                                    <select id="selectStatus" name="selectStatus" class="form-control">
+                                                    <select class="form-control" name="filterStatus" id="filterStatus">
                                                         <option selected disabled value="">SELECT STATUS</option>
-                                                        <option value="active">ACTIVE</option>
-                                                        <option value="deactivated">Inactive</option>
+                                                        <option value="1">ACTIVE</option>
+                                                        <option value="0">DEACTIVATED</option>
                                                     </select>
                                                 </div>
 
                                                 <div class="col">
-                                                    <button type="button" class="btn btn-success"><i class="fas fa-search"></i> Submit</button>
+                                                    <button type="submit" class="btn btn-success"><i class="fas fa-search"></i> Submit</button>
+                                                    <a href="{{ url('/accounts') }}" class="btn btn-danger">Reset</a>
                                                 </div>
                                             </div>
                                         </form>
@@ -58,7 +60,7 @@
                                                 <tr>
                                                     <th>#</th>
                                                     <th>Group</th>
-                                                    <th>Guarantor</th>
+                                                    <!-- <th>Guarantor</th> -->
                                                     <th>Full Name</th>
                                                     <th>Contact #</th>
                                                     <th>Role</th>
@@ -76,7 +78,7 @@
                                                     <tr>
                                                         <td>{{ $accountCount++ }}</td>
                                                         <td>{{ $account->group_name }}</td>
-                                                        <td>--</td>
+                                                        <!-- <td>--</td> -->
                                                         <td>{{ $account->first_name }} {{ $account->last_name }}</td>
                                                         <td>{{ $account->contact }}</td>
                                                         <td>{{ $account->position }}</td>

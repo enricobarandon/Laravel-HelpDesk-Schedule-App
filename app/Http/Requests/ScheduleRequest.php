@@ -19,7 +19,7 @@ class ScheduleRequest extends FormRequest
     protected function prepareForValidation()
     {
         if ($this->date_time != "")
-            $this->merge(['date_time' => date('Y-m-d', strtotime($this->date_time))]);
+            $this->merge(['date_time' => date('Y-m-d 00:00:00', strtotime($this->date_time) + 28800)]);
     }
 
     /**

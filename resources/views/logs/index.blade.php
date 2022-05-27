@@ -8,7 +8,19 @@
                 <div class="card-header">{{ __('Activity Logs') }}</div>
 
                 <div class="card-body">
-                    
+                    <form class="form-horizontal" method="get">
+                        <div class="form-group row">
+
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" name="keyword" id="keyword" placeholder="keyword">
+                            </div>
+
+                            <div class="col">
+                                <button type="submit" class="btn btn-success"><i class="fas fa-search"></i> Submit</button>
+                                <a href="{{ url('/logs') }}" class="btn btn-danger">Reset</a>
+                            </div>
+                        </div>
+                    </form>
                     <table id="tblLogs" class="table table-bordered global-table table-hover position-relative">
                         <thead>
                             <tr>
