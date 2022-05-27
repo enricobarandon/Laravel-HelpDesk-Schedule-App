@@ -97,7 +97,7 @@ class DataController extends Controller
                     'last_name' => $data['lastname'] ? $data['lastname'] : '--',
                     'username' => $data['username'],
                     'is_active' => $data['is_active'],
-                    'group_id' => $groupInfo ? $groupInfo[0]['id'] : 0,
+                    'group_id' => $groupInfo ? $groupInfo['id'] : 0,
                     'allowed_sides' => $data['allowed_sides'],
                     'position' => $data['user_type'],
                     'contact' => $data['contact']
