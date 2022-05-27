@@ -153,6 +153,7 @@ return [
     | this array to grant expanded functionality to your applications.
     |
     */
+    'KIOSK_API_KEY' => env('KIOSK_API_KEY', 'Laravel'),
 
     'providers' => [
 

@@ -70,6 +70,7 @@
                                             </tbody>
                                         </table>
                                         
+                                        {{ $requests->links() }}
                                     </div>
                                 </div>
 

@@ -83,9 +83,13 @@ class DataController extends Controller
         
         if ($responseBody['status'] == 'ok') {
 
+            $groups = collect(Group::all()->toArray());
+            // dd($groups->where('name','LUCKY 8 STAR QUEST INC. OFFICE - B'));
+
             foreach($responseBody['data'] as $data){
 
-                $groupInfo = Group::where('name', $data['group_name'])->first();
+                // $groupInfo = Group::where('name', $data['group_name'])->first();
+                $groupInfo = $groups->where('name', '=', $data['group_name']);
 
                 $newAccountArr = [
                     'uuid' => $data['uuid'],
@@ -99,7 +103,7 @@ class DataController extends Controller
                     'contact' => $data['contact']
                 ];
 
-                Account::create($newAccountArr);
+                // Account::create($newAccountArr);
 
             }
 

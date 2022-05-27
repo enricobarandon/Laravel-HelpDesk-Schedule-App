@@ -24,10 +24,11 @@ class ApiRequests extends FormRequest
     public function rules()
     {
         return [
-            'uuid' => ['required'],
-            'operation' => ['required'],
-            'status' => ['required'],
-            'data' => ['required']
+            'uuid' => 'required',
+            'operation' => 'required',
+            'status' => 'required',
+            'data' => 'required',
+            'remarks' => 'nullable|string'
         ];
     }
 }

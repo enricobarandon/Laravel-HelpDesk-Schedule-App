@@ -13,7 +13,8 @@ class RequestController extends Controller
         $requests = RequestModel::select('requests.id','requests.operation','requests.status','requests.data','groups.name as group_name','accounts.username')
                         ->leftjoin('groups','groups.uuid', 'requests.uuid')
                         ->leftjoin('accounts','accounts.uuid','requests.uuid')
-                        ->get();
+                        ->orderBy('id','desc')
+                        ->paginate(50);
         return view('requests.index', ['requests' => $requests]);
     }
 }
