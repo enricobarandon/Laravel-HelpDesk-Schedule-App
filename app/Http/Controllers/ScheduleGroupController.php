@@ -34,36 +34,70 @@ class ScheduleGroupController extends Controller
         //                         ->whereIn('groups.id', $scheduledGroups)
         //                         ->get();
         $arrToStr = implode(",", $scheduledGroups);
-        
-        $groupsForDisplay = DB::select(DB::raw(
-            "
-            select 
-                `groups`.`id`, `groups`.`name` as `group_name`, `address`, `provinces`.`site`, `province_id`, `provinces`.`name` as `province_name` 
-            from `groups` 
-            inner join `provinces` on `provinces`.`id` = `groups`.`province_id` 
-                where `groups`.`id` in ($arrToStr)
-            "
-        ));
-                                
-        // $groupsForSelect = Group::select('id','name','address')
-        //                     ->where('is_active', 1)
-        //                     ->whereNotIn('id', $scheduledGroups)
-        //                     ->orderBy('name', 'asc')
-        //                     ->get();
 
-        $groupsForSelect = DB::select(
-            DB::raw(
+        $groupsForDisplay = [];
+        $groupsForSelect = [];
+        
+        if ($arrToStr != "") {
+
+            $groupsForDisplay = DB::select(DB::raw(
                 "
                 select 
-                    `id`, 
-                    `name`, 
-                    `address` 
+                    `groups`.`id`, 
+                    `groups`.`name` as `group_name`, 
+                    `address`, 
+                    `provinces`.`site`, 
+                    `province_id`, 
+                    `provinces`.`name` as `province_name`,
+                    code,
+                    groups.group_type
                 from `groups` 
-                where `is_active` = 1 and `id` not in ($arrToStr) 
-                order by `name` asc
+                inner join `provinces` on `provinces`.`id` = `groups`.`province_id` 
+                    where `groups`.`id` in ($arrToStr)
                 "
-            )
-        );
+            ));
+                                    
+            // $groupsForSelect = Group::select('id','name','address')
+            //                     ->where('is_active', 1)
+            //                     ->whereNotIn('id', $scheduledGroups)
+            //                     ->orderBy('name', 'asc')
+            //                     ->get();
+
+            $groupsForSelect = DB::select(
+                DB::raw(
+                    "
+                    select 
+                        `id`, 
+                        `name`, 
+                        `address` 
+                    from `groups` 
+                    where `is_active` = 1 and `id` not in ($arrToStr) 
+                    order by `name` asc
+                    "
+                )
+            );
+
+            $groupsForDisplay = collect($groupsForDisplay);
+            $groupsForSelect = collect($groupsForSelect);
+
+                            
+            if($request->filterGroup){
+                $groupsForDisplay = $groupsForDisplay->where('code', $request->filterGroup);
+            }
+
+            if($request->selectProvince){
+                $groupsForDisplay = $groupsForDisplay->where('province_id', $request->selectProvince);
+            }
+
+            if($request->selectType){
+                $groupsForDisplay = $groupsForDisplay->where('group_type', $request->selectType);
+            }
+
+            if($request->siteID){
+                $groupsForDisplay = $groupsForDisplay->where('site', $request->siteID);
+            }
+                
+        }
 
         // $groupsForDisplay = ScheduledGroup::select('groups.id')
         //                         ->join('groups')
@@ -72,25 +106,10 @@ class ScheduleGroupController extends Controller
         
         $provinces = Province::select('id','name','site')
                             ->get();
-        
-        
-        // if($request->filterGroup){
-        //     $groupsForDisplay = $groupsForDisplay->where('groups.name', 'like', '%' . $request->filterGroup . '%');
-        // }
+                            // dd($groupsForDisplay);
+            
 
-        // if($request->selectProvince){
-        //     $groupsForDisplay = $groupsForDisplay->where('provinces.id', $request->selectProvince);
-        // }
-
-        // if($request->selectType){
-        //     $groupsForDisplay = $groupsForDisplay->where('groups.group_type', $request->selectType);
-        // }
-
-        // if($request->siteID){
-        //     $groupsForDisplay = $groupsForDisplay->where('provinces.site', $request->siteID);
-        // }
-
-        // $groupsForDisplay = $groupsForDisplay->get();
+        // $groupsForDisplay = $groupsForDisplay->all();
 
         return view('schedules.manage', [
             'scheduleId' => $scheduleId,

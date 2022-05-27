@@ -72,7 +72,7 @@
                             <form class="form-horizontal" method="get">
                                 <div class="form-group row">
                                     <div class="col-md-3">
-                                        <input type="text" class="filter-group form-control" name="filterGroup" id="filterGroup" placeholder="Group Name / Code">
+                                        <input type="text" class="filter-group form-control" name="filterGroup" id="filterGroup" placeholder="Group Code">
                                     </div>
 
                                     <div class="col-md-3">
@@ -136,39 +136,45 @@
                                             'wpc2040' => 'td-blue',
                                             'wpc2040aa' => 'td-red'   
                                         ];
+                                        $groupsForDisplayCount = count($groupsForDisplay);
                                     @endphp
-                                    @foreach($groupsForDisplay as $group)
-                                        <tr>
-                                            <td>{{ $groupCount++ }}</td>
-                                            <td>
-                                                {{ $group->group_name }}
-                                                @if($group->address)
-                                                    ({{ $group->address }})
-                                                @endif
-                                            </td>
-                                            <td>--</td>
-                                            <td class="
-                                                <?php
-                                                    if($group->site == 'wpc2040') {
-                                                        echo 'td-blue';
-                                                    } else if($group->site == 'wpc2040aa'){
-                                                        echo 'td-red';
-                                                    }
-                                                ?>
-                                            ">
-                                                {{ strtoupper($group->site) }}
-                                            </td>
-                                            <td>{{ $group->province_name }}</td>
-                                            <td>--</td>
-                                            <td class="display-center">
-                                                <a href='{{ url("/schedules/$scheduleId/groups/$group->id") }}' class="btn btn-primary"><i class="fas fa-eye"></i> Manage Group</a>
-                                                <form action='{{ url("/schedules/$scheduleId/remove/$group->id") }}' method="POST">
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-danger"><i class="fas fa-times"></i> Remove</button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @endforeach
+
+                                    @if($groupsForDisplayCount > 0)
+                                        @foreach($groupsForDisplay as $group)
+                                            <tr>
+                                                <td>{{ $groupCount++ }}</td>
+                                                <td>
+                                                    {{ $group->group_name }}
+                                                    @if($group->address)
+                                                        ({{ $group->address }})
+                                                    @endif
+                                                </td>
+                                                <td>--</td>
+                                                <td class="
+                                                    <?php
+                                                        if($group->site == 'wpc2040') {
+                                                            echo 'td-blue';
+                                                        } else if($group->site == 'wpc2040aa'){
+                                                            echo 'td-red';
+                                                        }
+                                                    ?>
+                                                ">
+                                                    {{ strtoupper($group->site) }}
+                                                </td>
+                                                <td>{{ $group->province_name }}</td>
+                                                <td>--</td>
+                                                <td class="display-center">
+                                                    <a href='{{ url("/schedules/$scheduleId/groups/$group->id") }}' class="btn btn-primary"><i class="fas fa-eye"></i> Manage</a>
+                                                    <form action='{{ url("/schedules/$scheduleId/remove/$group->id") }}' method="POST">
+                                                        @csrf
+                                                        <button type="submit" class="btn btn-danger"><i class="fas fa-times"></i> Remove</button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                        <tr><td colspan=7 class="text-center">No Data</td></tr>
+                                    @endif
                                 </tbody>
                             </table>
                         </div>
