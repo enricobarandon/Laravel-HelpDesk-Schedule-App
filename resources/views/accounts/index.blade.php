@@ -82,9 +82,9 @@
                                                         <td>{{ $account->position }}</td>
                                                         <td>{{ $account->username }}</td>
                                                         <td>--</td>
-                                                        <td>{{ $account->is_active ? 'Active' : 'Inactive'}}</td>
+                                                        <td>{{ $account->is_active ? 'Active' : 'Deactivated'}}</td>
                                                         <td class="display-center">
-                                                        <button type="button" class="btn btn-secondary"><i class="fas fa-cog"></i> Update Account</button>
+                                                        <a href="/accounts/edit/{{ $account->acc_id }}" type="button" class="btn btn-secondary"><i class="fas fa-cog"></i> Update Account</button>
                                                         </td>
                                                     </tr>
                                                 @endforeach
