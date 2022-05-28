@@ -29,3 +29,5 @@ Route::put('/groups/{group}', [\App\Http\Controllers\Api\GroupController::class,
 Route::post('/requests/groups', [\App\Http\Controllers\Api\RequestController::class, 'storeGroupRequest']);
 
 Route::post('/requests', [\App\Http\Controllers\Api\RequestController::class, 'updateRequest'])->name('requests.update');
+
+Route::put('/ocbs', [\App\Http\Controllers\Api\OcbsController::class, 'update'])->name('ocbs.update');

@@ -368,7 +368,7 @@ class ScheduleGroupController extends Controller
             $tbody .=           '<thead>';
             $tbody .=               '<tr>';
             $tbody .=                   '<td style="text-align: center;">ARENA NAME</td>';
-            $tbody .=                   '<td colspan="3" style="background-color: darkgreen; color: white; font-weight: bold;" >'. $group->name .'</td>';
+            $tbody .=                   '<td colspan="3" style="background-color: darkgreen; color: white; font-weight: bold;" >'. htmlspecialchars($group->name) .'</td>';
             $tbody .=                   '<td colspan="4" style="text-align: center;">'. $group->remarks .'</td>';
             $tbody .=               '</tr>';
             $tbody .=           '</thead>';
@@ -387,7 +387,7 @@ class ScheduleGroupController extends Controller
             $tbody .=               '</tr>';
             $tbody .=               '<tr>';
             $tbody .=                   '<td style="text-align: center;">OPERATOR NAME</td>';
-            $tbody .=                   '<td colspan="3" style="text-align: center;">'. strtoupper($group->owner) .'</td>';
+            $tbody .=                   '<td colspan="3" style="text-align: center;">'. strtoupper(htmlspecialchars($group->owner)) .'</td>';
             $tbody .=                   '<td colspan="2" style="text-align: center;">'. date('l, M d Y', strtotime($scheduleInfo->date_time)) .'</td>';
             $tbody .=                   '<td colspan="2" style="text-align: center;">'. date('H:i A', strtotime($group->operation_time)) .'</td>';
             $tbody .=               '</tr>';
@@ -420,17 +420,15 @@ class ScheduleGroupController extends Controller
             $tbody .= '</tbody>';
         }
 
-        // if ($request->has('download') || $request->has('downloadcurrent')) {
+        if ($request->has('download') || $request->has('downloadcurrent')) {
 
-        //     return Excel::download(
-        //         new ScheduledGroupExport('schedules.tables.fullview', [
-        //             'scheduleInfo' => $scheduleInfo,
-        //             'groups' => $scheduledGroups,
-        //             'groupedByAccounts' => $groupedByAccounts
-        //         ]),
-        //         'schedule.xlsx'
-        //     );
-        // }
+            return Excel::download(
+                new ScheduledGroupExport('schedules.tables.fullview', [
+                    'tbody' => $tbody
+                ]),
+                'schedule.xlsx'
+            );
+        }
 
         // return view('schedules.view', [
         //     'scheduleInfo' => $scheduleInfo,
