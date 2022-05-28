@@ -97,7 +97,22 @@ class ScheduleGroupController extends Controller
                 $groupsForDisplay = $groupsForDisplay->where('site', $request->siteID);
             }
                 
+        } else {
+            $groupsForSelect = DB::select(
+                DB::raw(
+                    "
+                    select 
+                        `id`, 
+                        `name`, 
+                        `address` 
+                    from `groups` 
+                    where `is_active` = 1 and `id` not in (0) 
+                    order by `name` asc
+                    "
+                )
+            );
         }
+
 
         // $groupsForDisplay = ScheduledGroup::select('groups.id')
         //                         ->join('groups')
