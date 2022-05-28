@@ -241,11 +241,18 @@ class ScheduleGroupController extends Controller
                                 ->where('schedule_id', $scheduleId)
                                 ->where('group_id', $groupId)
                                 ->first();
+                                // dd($scheduledGroupInfo);
 
         $groupAccounts = Account::select('accounts.id as acc_id','scheduled_accounts.id as sched_id','first_name','last_name','username','contact','position','scheduled_group_id')
-                            ->leftJoin('scheduled_accounts','scheduled_accounts.account_id', 'accounts.id')
+                            // ->leftJoin('scheduled_accounts','scheduled_accounts.account_id', 'accounts.id')
+                            ->leftjoin('scheduled_accounts', function($join) use ($scheduleId){
+                                $join->on('scheduled_accounts.account_id', 'accounts.id')
+                                    ->where('scheduled_accounts.schedule_id','=', $scheduleId);
+                            })
                             ->where('accounts.group_id', $groupId)
+                            // ->where('scheduled_accounts.schedule_id', $scheduleId)
                             ->get();
+                            // dd($groupAccounts);
 
         return view('schedules.groups.index', [
             'scheduleId' => $scheduleId,
@@ -339,22 +346,100 @@ class ScheduleGroupController extends Controller
                             ->get();
 
         $groupedByAccounts = ScheduledAccount::createAccountsAssocArr($scheduleId);
-        if ($request->has('download') || $request->has('downloadcurrent')) {
+        // dd($groupedByAccounts);
+        $tbody = '';
+        $groupCount = 1;
 
-            return Excel::download(
-                new ScheduledGroupExport('schedules.tables.fullview', [
-                    'scheduleInfo' => $scheduleInfo,
-                    'groups' => $scheduledGroups,
-                    'groupedByAccounts' => $groupedByAccounts
-                ]),
-                'schedule.xlsx'
-            );
+        foreach($scheduledGroups as $group) {
+
+            $accounts = '';
+
+            if (isset($groupedByAccounts[$group->group_id])) {
+                $accounts = $this->concatAccounts($groupedByAccounts, $group->group_id);
+            } else {
+                $accounts = '<tr><td colspan="8" style="text-align: center;">No confirmed staff</td></tr>';
+            }
+
+            $tbody .= '<tbody>';
+            $tbody .= '<tr colspan="1">';
+            $tbody .=   '<td><h3>' . $groupCount++ .'</h3></td>';
+            $tbody .=   '<td>';
+            $tbody .=       '<table class="table table-bordered full-sched-table" cellspacing="0">';
+            $tbody .=           '<thead>';
+            $tbody .=               '<tr>';
+            $tbody .=                   '<td style="text-align: center;">ARENA NAME</td>';
+            $tbody .=                   '<td colspan="3" style="background-color: darkgreen; color: white; font-weight: bold;" >'. $group->name .'</td>';
+            $tbody .=                   '<td colspan="4" style="text-align: center;">'. $group->remarks .'</td>';
+            $tbody .=               '</tr>';
+            $tbody .=           '</thead>';
+            $tbody .=           '<tbody>';
+            $tbody .=               '<tr>';
+            $tbody .=                   '<td style="text-align: center;">Address</td>';
+            $tbody .=                   '<td colspan="3" style="text-align: center;">'. $group->address .'</td>';
+            $tbody .=                   '<td colspan="2" style="background-color: darkgreen; color: white; text-align: center; font-weight: bold;">'. $group->code .'</td>';
+            $tbody .=                   '<td colspan="2" style="text-align: center; font-weight: bold;">'. $group->site .'</td>';
+            $tbody .=               '</tr>';
+            $tbody .=               '<tr>';
+            $tbody .=                   '<td style="text-align: center;">Site</td>';
+            $tbody .=                   '<td colspan="3" style="text-align: center;">'. $group->group_type .'</td>';
+            $tbody .=                   '<td colspan="2" style="text-align: center;">Date</td>';
+            $tbody .=                   '<td colspan="2" style="text-align: center;">Time</td>';
+            $tbody .=               '</tr>';
+            $tbody .=               '<tr>';
+            $tbody .=                   '<td style="text-align: center;">OPERATOR NAME</td>';
+            $tbody .=                   '<td colspan="3" style="text-align: center;">'. strtoupper($group->owner) .'</td>';
+            $tbody .=                   '<td colspan="2" style="text-align: center;">'. date('l, M d Y', strtotime($scheduleInfo->date_time)) .'</td>';
+            $tbody .=                   '<td colspan="2" style="text-align: center;">'. date('H:i A', strtotime($group->operation_time)) .'</td>';
+            $tbody .=               '</tr>';
+            $tbody .=               '<tr>';
+            $tbody .=                   '<td style="text-align: center;">CONTACT DETAILS</td>';
+            $tbody .=                   '<td colspan="3" style="text-align: center;">'. $group->contact .'</td>';
+            $tbody .=               '</tr>';
+            $tbody .=               '<tr>';
+            $tbody .=                   '<td style="text-align: center;"># OF PC INSTALLED</td>';
+            $tbody .=                   '<td colspan="3" style="text-align: center;">'. $group->installed_pc .'</td>';
+            $tbody .=               '</tr>';
+            $tbody .=               '<tr>';
+            $tbody .=                   '<td style="text-align: center;"># OF ACTIVE STAFFS</td>';
+            $tbody .=                   '<td colspan="3" style="text-align: center;">'. $group->active_staff .'</td>';
+            $tbody .=               '</tr>';
+            $tbody .=               '<tr>';
+            $tbody .=                   '<th style="background-color: black; color: yellow; text-align: center;">NAMES</th>';
+            $tbody .=                   '<th colspan="2" style="background-color: black; color: yellow; text-align: center;">CONTACT</th>';
+            $tbody .=                   '<th style="background-color: black; color: yellow; text-align: center;">POSITION</th>';
+            $tbody .=                   '<th style="background-color: black; color: yellow; text-align: center;">REMARKS</th>';
+            $tbody .=                   '<th style="background-color: black; color: yellow; text-align: center;">USERNAME</th>';
+            $tbody .=                   '<th style="background-color: black; color: yellow; text-align: center;">PASSWORD</th>';
+            $tbody .=                   '<th style="background-color: black; color: yellow; text-align: center;">STATUS</th>';
+            $tbody .=               '</tr>';
+            $tbody .=               $accounts;
+            $tbody .=           '</tbody>';
+            $tbody .=       '</table>';
+            $tbody .=   '<td>';
+            $tbody .= '</tr>';
+            $tbody .= '</tbody>';
         }
 
+        // if ($request->has('download') || $request->has('downloadcurrent')) {
+
+        //     return Excel::download(
+        //         new ScheduledGroupExport('schedules.tables.fullview', [
+        //             'scheduleInfo' => $scheduleInfo,
+        //             'groups' => $scheduledGroups,
+        //             'groupedByAccounts' => $groupedByAccounts
+        //         ]),
+        //         'schedule.xlsx'
+        //     );
+        // }
+
+        // return view('schedules.view', [
+        //     'scheduleInfo' => $scheduleInfo,
+        //     'groups' => $scheduledGroups,
+        //     'groupedByAccounts' => $groupedByAccounts
+        // ]);
+
         return view('schedules.view', [
-            'scheduleInfo' => $scheduleInfo,
-            'groups' => $scheduledGroups,
-            'groupedByAccounts' => $groupedByAccounts
+            'tbody' => $tbody
         ]);
     }
 
@@ -388,6 +473,23 @@ class ScheduleGroupController extends Controller
             return redirect("/schedules/$scheduleId/groups/$groupId")->with('error', 'Something went wrong!');
         }
 
+    }
+
+    public function concatAccounts($accountsArr, $groupId)
+    {
+        $tableRow = '';
+        foreach($accountsArr[$groupId] as $account) {
+            $tableRow .= '<tr>';
+            $tableRow .=    '<td style="text-align: center;">'. strtoupper($account['first_name']) .' '. strtoupper($account['last_name']) .'</td>';
+            $tableRow .=    '<td colspan="2" style="text-align: center;">'. $account['contact'] .'</td>';
+            $tableRow .=    '<td style="text-align: center;">'. strtoupper($account['position']) .'</td>';
+            $tableRow .=    '<td style="text-align: center;">'. $account['allowed_sides'] .'</td>';
+            $tableRow .=    '<td style="text-align: center;">'. $account['username'] .'</td>';
+            $tableRow .=    '<td style="text-align: center;"></td>';
+            $tableRow .=    '<td style="background-color: lightskyblue; text-align: center;">ACCOUNT CONFIRMED</td>';
+            $tableRow .= '</tr>';
+        }
+        return $tableRow;
     }
 
 }
