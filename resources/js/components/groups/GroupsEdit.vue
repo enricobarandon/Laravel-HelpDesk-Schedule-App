@@ -156,7 +156,7 @@ export default {
         }
 
         const postUpdateRequest = async (uuid) => {
-            console.log(group.value.name)
+            console.log(group.value)
             form.api_key = '4e829e510539afcc43365a18acc91ede41fb555e'
             form.uuid = uuid
             form.operation = 'groups.update'

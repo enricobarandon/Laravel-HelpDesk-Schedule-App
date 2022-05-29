@@ -34,7 +34,6 @@
                         <router-link :to="{ name: 'groups.edit', params: {id: item.id} }"  class="btn btn-primary">
                             <i class="fas fa-cog"></i>Edit
                         </router-link>
-                        <button type="button" class="btn btn-danger" @click="testFilter()"><i class="fas fa-times"></i> test</button>
                     </td>
                 </tr>
             </template>
@@ -74,17 +73,12 @@ export default {
             await storeRequest({...form})
         }
 
-        const testFilter = async () => {
-            groups.value = []
-            console.log(groups)
-        }
-
         return {
             groups,
             count,
             form,
             postDeactivationRequest,
-            testFilter
+            // testFilter
         }
     }
 }
