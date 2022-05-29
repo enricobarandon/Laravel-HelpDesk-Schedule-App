@@ -110,6 +110,7 @@
               </p>
             </a>
           </li>
+          @if(Auth::user()->user_type_id == 1)
           <li class="nav-item">
             <a href="/users" class="nav-link {{ (request()->is('users')) ? 'active' : '' }}">
               <i class="nav-icon fa fa-users"></i>
@@ -118,6 +119,7 @@
               </p>
             </a>
           </li>
+          @endif
           <li class="nav-item">
             <a href="/accounts" class="nav-link {{ (request()->is('accounts*')) ? 'active' : '' }}">
               <i class="nav-icon fa fa-list"></i>

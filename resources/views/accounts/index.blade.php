@@ -54,7 +54,7 @@
                                             </div>
                                         </form>
 
-                                        <button type="button" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Create Account</button>
+                                        <!-- <button type="button" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Create Account</button> -->
                                         <table class="table table-bordered table-striped global-table">
                                             <thead>
                                                 <tr>
@@ -86,7 +86,7 @@
                                                         <td>--</td>
                                                         <td>{{ $account->is_active ? 'Active' : 'Deactivated'}}</td>
                                                         <td class="display-center">
-                                                        <a href="/accounts/{{ $account->acc_id }}" type="button" class="btn btn-primary"><i class="fas fa-cog"></i> Edit</button>
+                                                        <a href="/accounts/{{ $account->acc_id }}" type="button" class="btn btn-sm btn-primary"><i class="fas fa-cog"></i> Edit</button>
                                                         </td>
                                                     </tr>
                                                 @endforeach

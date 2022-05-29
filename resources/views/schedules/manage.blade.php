@@ -149,7 +149,7 @@
                                                         ({{ $group->address }})
                                                     @endif
                                                 </td>
-                                                <td>--</td>
+                                                <td>{{ $group->code }}</td>
                                                 <td class="
                                                     <?php
                                                         if($group->site == 'wpc2040') {

@@ -340,10 +340,26 @@ class ScheduleGroupController extends Controller
 
         $scheduleInfo = Schedule::find($scheduleId, ['name','date_time']);
         
-        $scheduledGroups = ScheduledGroup::select('scheduled_groups.schedule_id','scheduled_groups.operation_time','scheduled_groups.group_id','groups.group_type','name','code','owner','contact','address','active_staff','installed_pc','remarks','site')
+        $scheduledGroups = ScheduledGroup::select('scheduled_groups.schedule_id','scheduled_groups.operation_time','scheduled_groups.group_id','groups.group_type','groups.name','code','owner','contact','address','active_staff','installed_pc','remarks','provinces.site')
                             ->join('groups','groups.id', 'scheduled_groups.group_id')
-                            ->where('scheduled_groups.schedule_id', $scheduleId)
-                            ->get();
+                            ->join('provinces','provinces.id', 'groups.province_id')
+                            ->where('scheduled_groups.schedule_id', $scheduleId);
+
+        $groupedByAccounts = ScheduledAccount::createAccountsAssocArr($scheduleId);
+
+        if($request->groupCode){
+            $scheduledGroups = $scheduledGroups->where('groups.code', 'like', '%' . $request->groupCode .'%');
+        }
+
+        if($request->selectType){
+            $scheduledGroups = $scheduledGroups->where('groups.group_type', $request->selectType);
+        }
+
+        if($request->selectSite){
+            $scheduledGroups = $scheduledGroups->where('provinces.site', $request->selectSite);
+        }
+
+        $scheduledGroups = $scheduledGroups->paginate(100);
 
         $groupedByAccounts = ScheduledAccount::createAccountsAssocArr($scheduleId);
         // dd($groupedByAccounts);
@@ -437,7 +453,9 @@ class ScheduleGroupController extends Controller
         // ]);
 
         return view('schedules.view', [
-            'tbody' => $tbody
+            'tbody' => $tbody,
+            'scheduledGroups' => $scheduledGroups,
+            'scheduleId' => $scheduleId
         ]);
     }
 
