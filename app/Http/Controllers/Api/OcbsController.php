@@ -36,7 +36,7 @@ class OcbsController extends Controller
                     'action' => 'Received update from ocbs',
                     'uuid' => $uuid,
                     'target_table' => $table
-                ], $request))
+                ], $request->except(['table'])))
             ]);
 
             return response(json_encode([
@@ -81,7 +81,7 @@ class OcbsController extends Controller
                 'assets' => json_encode(array_merge([
                     'action' => 'Received create from ocbs',
                     'target_table' => $table
-                ], $request))
+                ], $request->except(['table','group_uuid'])))
             ]);
 
             return response(json_encode([
