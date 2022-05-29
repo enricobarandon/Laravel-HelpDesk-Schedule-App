@@ -32,11 +32,11 @@ class OcbsController extends Controller
             ActivityLog::create([
                 'type' => 'ocbs-update-group',
                 'user_id' => 0,
-                'assets' => json_encode([
+                'assets' => json_encode(array_merge([
                     'action' => 'Received update from ocbs',
                     'uuid' => $uuid,
                     'target_table' => $table
-                ])
+                ], $request))
             ]);
 
             return response(json_encode([
@@ -74,6 +74,16 @@ class OcbsController extends Controller
         }
 
         if ($create) {
+
+            ActivityLog::create([
+                'type' => 'ocbs-create-group',
+                'user_id' => 0,
+                'assets' => json_encode(array_merge([
+                    'action' => 'Received create from ocbs',
+                    'target_table' => $table
+                ], $request))
+            ]);
+
             return response(json_encode([
                 'status' => 'ok',
                 'message' => 'Created'
