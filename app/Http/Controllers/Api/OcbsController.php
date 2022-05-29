@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Group;
+use App\Models\ActivityLog;
+use App\Models\Account;
 
 class OcbsController extends Controller
 {
@@ -26,6 +28,17 @@ class OcbsController extends Controller
         
 
         if ($update) {
+
+            ActivityLog::create([
+                'type' => 'ocbs-update-group',
+                'user_id' => 0,
+                'assets' => json_encode([
+                    'action' => 'Received update from ocbs',
+                    'uuid' => $uuid,
+                    'target_table' => $table
+                ])
+            ]);
+
             return response(json_encode([
                 'status' => 'ok',
                 'message' => 'Updated'
@@ -44,12 +57,33 @@ class OcbsController extends Controller
 
         if ($table == 'groups') {
 
-            $update = Group::create($request->all());
+            $create = Group::create($request->except(['table']));
 
         } else if ($table == 'users') {
 
-            $update = 0;
+            // $request->group_uuid convert to group id
+            $groupInfo = Group::select('id')->where('uuid', $request->group_uuid)->first();
+
+            if ($groupInfo) {
+
+                $request->merge(['group_id' => $groupInfo->id]);
+
+                $create = Account::create($request->except(['table','group_uuid']));
+            }
 
         }
+
+        if ($create) {
+            return response(json_encode([
+                'status' => 'ok',
+                'message' => 'Created'
+            ]), 200);
+        } else {
+            return response(json_encode([
+                'status' => 'error',
+                'message' => 'Something went wrong'
+            ]), 200);
+        }
+
     }
 }
