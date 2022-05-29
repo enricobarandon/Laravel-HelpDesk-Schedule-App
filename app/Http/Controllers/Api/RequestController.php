@@ -149,7 +149,7 @@ class RequestController extends Controller
                                 ->where('status', 'pending')
                                 ->update([
                                     'status' => $request->status,
-                                    'remarks' => DB::raw('remarks') . ' ; ' . $request->remarks
+                                    // 'remarks' => DB::raw('remarks') . ' ; ' . $request->remarks
                                 ]);
                                 
             if ($acceptChanges) {

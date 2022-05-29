@@ -15,6 +15,7 @@ class RequestModel extends Model
         'uuid',
         'operation',
         'status',
-        'data'
+        'data',
+        'remarks'
     ];
 }
