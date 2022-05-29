@@ -31,3 +31,4 @@ Route::post('/requests/groups', [\App\Http\Controllers\Api\RequestController::cl
 Route::post('/requests', [\App\Http\Controllers\Api\RequestController::class, 'updateRequest'])->name('requests.update');
 
 Route::put('/ocbs', [\App\Http\Controllers\Api\OcbsController::class, 'update'])->name('ocbs.update');
+Route::post('/ocbs', [\App\Http\Controllers\Api\OcbsController::class, 'create'])->name('ocbs.create');

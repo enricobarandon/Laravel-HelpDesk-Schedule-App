@@ -31,10 +31,7 @@ D   EActivated 123123
                     <td>{{ item.active_staff }}</td>
                     <td>{{ item.installed_pc }}</td>
                     <td class="display-center">
-                        <button type="button" class="btn btn-success" @click="postActivateRequest(item.uuid)"><i class="fas fa-plus"></i> Activate</button>
-                        <!-- <a :href="'/groups/edit/'+item.id" class="btn btn-primary">
-                            <i class="fas fa-cog"></i>Edit 2
-                        </a> -->
+                        <!-- <button type="button" class="btn btn-success" @click="postActivateRequest(item.uuid)"><i class="fas fa-plus"></i> Activate</button> -->
                         <router-link :to="{ name: 'groups.edit', params: {id: item.id} }"  class="btn btn-primary">
                             <i class="fas fa-cog"></i>Edit
                         </router-link>

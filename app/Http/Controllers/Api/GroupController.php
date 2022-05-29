@@ -55,7 +55,7 @@ class GroupController extends Controller
      */
     public function show(Group $group)
     {
-        $group = Group::select('groups.id','groups.uuid','groups.name','groups.uuid','groups.group_type','owner','contact','code','provinces.site as site','provinces.name as province_name','active_staff','installed_pc','address','guarantor')
+        $group = Group::select('groups.id','groups.uuid','groups.name','groups.uuid','groups.group_type','owner','contact','code','provinces.site as site','provinces.name as province_name','active_staff','installed_pc','address','guarantor','groups.is_active')
                     ->leftjoin('provinces','provinces.id','groups.province_id')
                     ->where('groups.id', $group->id)
                     ->first();

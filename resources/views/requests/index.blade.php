@@ -34,7 +34,7 @@
                                                     <th>Operation</th>
                                                     <th>Status</th>
                                                     <th>Requested Data</th>
-                                                    <th>Action</th>
+                                                    <th>Remarks</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -64,7 +64,7 @@
                                                             @endphp
                                                             {!! $dataHtml !!}
                                                         </td>
-                                                        <td>--</td>
+                                                        <td>{{ $request->remarks }}</td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>

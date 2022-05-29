@@ -67,6 +67,34 @@
 
         </div>
 
+        <div class="col-md-4">
+            <div class="form-control">
+                <label>Status</label>
+                <input 
+                    type="radio"
+                    name="is_active" 
+                    :id="active"
+                    :value="1" 
+                    v-model="group.is_active">
+                <label :for="active">Active</label>
+
+                <input 
+                    type="radio"
+                    name="is_active" 
+                    :id="deactivated"
+                    :value="0" 
+                    v-model="group.is_active">
+                <label :for="deactivated">Deactivated</label>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="form-group">
+                <label>Remarks</label>
+                <textarea id="remarks" name="remarks" class="form-control" rows="2" v-model="group.remarks"></textarea>
+            </div>
+        </div>
+
         <button type="submit" class="btn btn-primary" @click="postUpdateRequest(group.uuid)">Submit Update Request</button>
 
         <hr/>
@@ -117,7 +145,8 @@ export default {
             'uuid' : '',
             'operation' : '',
             'status' : 'pending',
-            'data' : ''
+            'data' : '',
+            'remarks': ''
         })
 
         onMounted(getGroup(props.id))
@@ -138,8 +167,10 @@ export default {
                 'owner' : group.value.owner,
                 'contact' : group.value.contact,
                 'code' : group.value.code,
-                'guarantor' : group.value.guarantor
+                'guarantor' : group.value.guarantor,
+                'is_active' : group.value.is_active
             })
+            form.remarks = group.value.remarks
             await storeRequest({...form})
         }
 

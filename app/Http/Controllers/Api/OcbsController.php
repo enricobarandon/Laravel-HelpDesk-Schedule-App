@@ -37,4 +37,19 @@ class OcbsController extends Controller
             ]), 200);
         }
     }
+
+    public function create(Request $request)
+    {
+        $table = $request->table;
+
+        if ($table == 'groups') {
+
+            $update = Group::create($request->all());
+
+        } else if ($table == 'users') {
+
+            $update = 0;
+
+        }
+    }
 }
