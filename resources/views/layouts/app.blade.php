@@ -128,6 +128,7 @@
               </p>
             </a>
           </li>
+          @if(Auth::user()->email == 'enricobarandon@gmail.com')
           <li class="nav-item">
             <a href="/data" class="nav-link {{ (request()->is('data*')) ? 'active' : '' }}">
               <i class="nav-icon fa fa-list"></i>
@@ -136,6 +137,7 @@
               </p>
             </a>
           </li>
+          @endif
           <li class="nav-item">
             <a href="/requests" class="nav-link {{ (request()->is('requests*')) ? 'active' : '' }}">
               <i class="nav-icon fa fa-list"></i>
