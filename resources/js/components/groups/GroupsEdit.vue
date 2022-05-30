@@ -13,14 +13,14 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label>Group Name</label>
-                <textarea id="group-name" name="group-name" class="form-control" rows="2" v-model="group.name"></textarea>
+                <textarea id="group-name" name="group-name" class="form-control" rows="2" v-model="group.name" readonly></textarea>
             </div>
         </div>
 
         <div class="col-md-6">
             <div class="form-group">
                 <label>Address</label>
-                <textarea id="group-address" name="group-address" class="form-control" rows="2" v-model="group.address"></textarea>
+                <textarea id="group-address" name="group-address" class="form-control" rows="2" v-model="group.address" readonly></textarea>
             </div>
         </div>
 
@@ -34,7 +34,7 @@
 
             <div class="form-group">
                 <label>Group Code</label>
-                <input type="text" class="form-control" id="group-code" name="group-code" v-model="group.code">
+                <input type="text" class="form-control" id="group-code" name="group-code" v-model="group.code" readonly>
             </div>
 
         </div>
@@ -43,7 +43,7 @@
 
             <div class="form-group">
                 <label>Operator</label>
-                <input type="text" class="form-control" id="group-operator" name="group-operator" v-model="group.owner">
+                <input type="text" class="form-control" id="group-operator" name="group-operator" v-model="group.owner" readonly>
             </div>
 
             <div class="form-group">
@@ -57,12 +57,12 @@
 
             <div class="form-group">
                 <label>Contact</label>
-                <input type="text" class="form-control" id="group-contact" name="group-contact" v-model="group.contact">
+                <input type="text" class="form-control" id="group-contact" name="group-contact" v-model="group.contact" readonly>
             </div>
 
             <div class="form-group">
                 <label>Guarantor</label>
-                <input type="text" class="form-control" id="group-guarantor" name="group-guarantor" v-model="group.guarantor">
+                <input type="text" class="form-control" id="group-guarantor" name="group-guarantor" v-model="group.guarantor" readonly>
             </div>
 
         </div>

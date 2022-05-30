@@ -94,9 +94,10 @@
                           <th>Full Name</td>
                           <th>Contact</td>
                           <th>Role</td>
+                          <th>Side</td>
                           <th>Username</td>
                           <th>Password</td>
-                          <th>Allowed Sides</td>
+                          <th>Remarks</td>
                           <th>Status</td>
                           <th>Action</td>
                         </tr>
@@ -110,10 +111,19 @@
                         @foreach($groupAccounts as $account)
                           @php
                             $status = '';
+                            $statusCSS = '';
                             if($account->scheduled_group_id){
                               $status = 'Confirmed';
+                              $statusCSS = 'td-green';
                             } else {
                               $status = 'Unconfirmed';
+                              $statusCSS = '';
+                            }
+                            $remarksCSS = '';
+                            if($account->is_active == 0){
+                              $remarksCSS = 'td-blue';
+                            }else{
+                              $remarksCSS = 'td-red';
                             }
                           @endphp
                           <tr>
@@ -130,23 +140,26 @@
                               <input type="text" value="{{ $account->position }}" class="form-control" disabled>
                             </td>
                             <td>
-                              <input type="text" value="{{ $account->username }}" class="form-control" disabled>
-                            </td>
-                            <td>
-                              <input type="text" value="--" class="form-control" disabled>
-                            </td>
-                            <td>
                               <input type="text" value="{{ $account->allowed_sides }}" class="form-control" disabled>
                             </td>
                             <td>
-                              <input type="text" value="{{ $status }}" class="form-control" disabled>
+                              <input type="text" value="{{ $account->username }}" class="form-control" disabled>
+                            </td>
+                            <td>
+                              <input type="text" value="{{ $account->password }}" class="form-control" disabled>
+                            </td>
+                            <td>
+                              <input type="text" value="{{ $account->is_active == 0 ? 'ACTIVATED' : 'DEACTIVATED' }}" class="form-control {{ $remarksCSS }}" disabled>
+                            </td>
+                            <td>
+                              <input type="text" value="{{ $status }}" class="form-control {{ $statusCSS }}" disabled>
                             </td>
                             <td>
                               @if($account->scheduled_group_id)
                                 <form action='{{ url("/scheduledaccount/$scheduledGroupInfo->id/account/$account->acc_id") }}' method="POST">
                                   @csrf
                                   @method('delete')
-                                  <button class="btn btn-danger"><i class="fa fa-times"></i> Remove</button>
+                                  <button class="btn btn-danger btn-sm"><i class="fa fa-times"></i> Remove</button>
                                 </form>
                               @else
                                 <form action='{{ url("/scheduledaccount/$scheduledGroupInfo->id/account/$account->acc_id") }}' method="POST">
@@ -154,7 +167,7 @@
                                   @method('post')
                                   <input type="hidden" name="groupId" value="{{ $groupId }}">
                                   <input type="hidden" name="scheduleId" value="{{ $scheduleId }}">
-                                  <button class="btn btn-success"><i class="fa fa-plus"></i> Confirm</button>
+                                  <button class="btn btn-success btn-sm"><i class="fa fa-plus"></i> Confirm</button>
                                 </form>
                               @endif
                               <!-- <button class="btn btn-primary"><i class="fa fa-wrench"></i> Edit</button> -->

@@ -152,20 +152,20 @@
               <p>Groups<i class="right fas fa-angle-left"></i></p>
             </a>
             <ul class="nav nav-treeview">
-              <li class="nav-item">
+              <li class="nav-item {{ (request()->is('groups/view/active')) ? 'custom-active' : '' }}">
                 <a href="/groups/view/active" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Active Group</p>
                 </a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item {{ (request()->is('groups/view/deactivated')) ? 'custom-active' : '' }}">
                 <a href="/groups/view/deactivated" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Deactivated</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./index3.html" class="nav-link">
+                <a href="#" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Pullout</p>
                 </a>

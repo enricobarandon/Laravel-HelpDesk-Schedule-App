@@ -70,7 +70,11 @@
                                             </tbody>
                                         </table>
                                         
-                                        {{ $requests->links() }}
+                                        <div class="col">
+                                            <div class="float-right">
+                                                {{ $requests->links('pagination::bootstrap-4') }}
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 

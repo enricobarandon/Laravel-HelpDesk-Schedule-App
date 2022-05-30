@@ -26,17 +26,17 @@ class ScheduleGroupController extends Controller
         $scheduleInfo = Schedule::find($scheduleId);
 
         $scheduledGroups = ScheduledGroup::select('group_id','operation_time')
-                                ->where('schedule_id', $scheduleId)
-                                ->get();
-                                // ->pluck('group_id');
-                                // ->toArray();
-                                
+        ->where('schedule_id', $scheduleId)
+        ->get();
+        // ->pluck('group_id');
+        // ->toArray();
+        
         $scheduledGroupsIds = $scheduledGroups->pluck('group_id')->toArray();
         $scheduledGroupsOperationHours = $scheduledGroups->keyBy('group_id')->toArray();
         // dd($scheduledGroupsOperationHours);
 
-        
-                                
+
+                
         // $groupsForDisplay = Group::select('groups.id','groups.name as group_name','address','provinces.site','province_id','provinces.name as province_name')
         //                         ->join('provinces','provinces.id', 'groups.province_id')
         //                         ->whereIn('groups.id', $scheduledGroups)
@@ -253,7 +253,7 @@ class ScheduleGroupController extends Controller
                                 ->first();
                                 // dd($scheduledGroupInfo);
 
-        $groupAccounts = Account::select('accounts.id as acc_id','scheduled_accounts.id as sched_id','first_name','last_name','username','contact','position','scheduled_group_id','allowed_sides')
+        $groupAccounts = Account::select('accounts.id as acc_id','scheduled_accounts.id as sched_id','first_name','last_name','username','contact','position','scheduled_group_id','allowed_sides','is_active')
                             // ->leftJoin('scheduled_accounts','scheduled_accounts.account_id', 'accounts.id')
                             ->leftjoin('scheduled_accounts', function($join) use ($scheduleId){
                                 $join->on('scheduled_accounts.account_id', 'accounts.id')
@@ -389,9 +389,9 @@ class ScheduleGroupController extends Controller
             $siteColor = '';
 
             if ($group->site == 'wpc2040') {
-                $siteColor = 'background-color: #007bff;color: #fff;';
+                $siteColor = 'background-color: #007bff;color: #ffffff;';
             } else if ($group->site == 'wpc2040aa') {
-                $siteColor = 'background-color: #dc3545;color: #fff;';
+                $siteColor = 'background-color: #dc3545;color: #ffffff;';
             }
 
             $tbody .= '<tbody>';
@@ -402,8 +402,8 @@ class ScheduleGroupController extends Controller
             $tbody .=           '<thead>';
             $tbody .=               '<tr>';
             $tbody .=                   '<td style="text-align: center;">ARENA NAME</td>';
-            $tbody .=                   '<td colspan="3" style="background-color: darkgreen; color: white; font-weight: bold;" >'. htmlspecialchars($group->name) .'</td>';
-            $tbody .=                   '<td colspan="4" style="text-align: center;">'. $group->remarks .'</td>';
+            $tbody .=                   '<td colspan="3" style="background-color: darkgreen; color: white; font-weight: bold; width: 500px;" >'. htmlspecialchars($group->name) .'</td>';
+            $tbody .=                   '<td colspan="4" style="background-color: darkgreen; color: white; text-align: center;">'. $group->remarks .'</td>';
             $tbody .=               '</tr>';
             $tbody .=           '</thead>';
             $tbody .=           '<tbody>';
@@ -473,7 +473,8 @@ class ScheduleGroupController extends Controller
         return view('schedules.view', [
             'tbody' => $tbody,
             'scheduledGroups' => $scheduledGroups,
-            'scheduleId' => $scheduleId
+            'scheduleId' => $scheduleId,
+            'scheduleInfo' => $scheduleInfo
         ]);
     }
 
