@@ -23,6 +23,8 @@ class ScheduleGroupController extends Controller
     {
         $scheduleId = request()->segment(3);
 
+        $scheduleInfo = Schedule::find($scheduleId);
+
         $scheduledGroups = ScheduledGroup::select('group_id')
                                 ->where('schedule_id', $scheduleId)
                                 ->get()
@@ -128,6 +130,7 @@ class ScheduleGroupController extends Controller
 
         return view('schedules.manage', [
             'scheduleId' => $scheduleId,
+            'scheduleInfo' => $scheduleInfo,
             'groupsForDisplay' => $groupsForDisplay,
             'groupsForSelect' => $groupsForSelect,
             'provinces' => $provinces
@@ -243,7 +246,7 @@ class ScheduleGroupController extends Controller
                                 ->first();
                                 // dd($scheduledGroupInfo);
 
-        $groupAccounts = Account::select('accounts.id as acc_id','scheduled_accounts.id as sched_id','first_name','last_name','username','contact','position','scheduled_group_id')
+        $groupAccounts = Account::select('accounts.id as acc_id','scheduled_accounts.id as sched_id','first_name','last_name','username','contact','position','scheduled_group_id','allowed_sides')
                             // ->leftJoin('scheduled_accounts','scheduled_accounts.account_id', 'accounts.id')
                             ->leftjoin('scheduled_accounts', function($join) use ($scheduleId){
                                 $join->on('scheduled_accounts.account_id', 'accounts.id')
@@ -348,7 +351,7 @@ class ScheduleGroupController extends Controller
         $groupedByAccounts = ScheduledAccount::createAccountsAssocArr($scheduleId);
 
         if($request->groupCode){
-            $scheduledGroups = $scheduledGroups->where('groups.code', 'like', '%' . $request->groupCode .'%');
+            $scheduledGroups = $scheduledGroups->where('groups.code', '=', $request->groupCode);
         }
 
         if($request->selectType){
@@ -376,6 +379,14 @@ class ScheduleGroupController extends Controller
                 $accounts = '<tr><td colspan="8" style="text-align: center;">No confirmed staff</td></tr>';
             }
 
+            $siteColor = '';
+
+            if ($group->site == 'wpc2040') {
+                $siteColor = 'background-color: #007bff;color: #fff;';
+            } else if ($group->site == 'wpc2040aa') {
+                $siteColor = 'background-color: #dc3545;color: #fff;';
+            }
+
             $tbody .= '<tbody>';
             $tbody .= '<tr colspan="1">';
             $tbody .=   '<td><h3>' . $groupCount++ .'</h3></td>';
@@ -393,7 +404,7 @@ class ScheduleGroupController extends Controller
             $tbody .=                   '<td style="text-align: center;">Address</td>';
             $tbody .=                   '<td colspan="3" style="text-align: center;">'. $group->address .'</td>';
             $tbody .=                   '<td colspan="2" style="background-color: darkgreen; color: white; text-align: center; font-weight: bold;">'. $group->code .'</td>';
-            $tbody .=                   '<td colspan="2" style="text-align: center; font-weight: bold;">'. $group->site .'</td>';
+            $tbody .=                   '<td colspan="2" style="text-align: center; font-weight: bold; '. $siteColor .'">'. $group->site .'</td>';
             $tbody .=               '</tr>';
             $tbody .=               '<tr>';
             $tbody .=                   '<td style="text-align: center;">Site</td>';

@@ -6,6 +6,7 @@
                 <tr>
                     <th>Schedule Name</th>
                     <th>Schedule Date</th>
+                    <th>Created At</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -14,6 +15,7 @@
                     <tr>
                         <td>{{ item.name }}</td>
                         <td>{{ format_date(item.date_time) }}</td>
+                        <td>{{ format_datetime(item.created_at) }}</td>
                         <td class="display-center">
                             <router-link :to="{ name: 'schedules.edit', params: {id: item.id} }"  class="btn btn-primary">
                                 <i class="fas fa-cog"></i>Edit
@@ -50,6 +52,11 @@ export default {
            return moment(String(value)).format('MMMM DD, YYYY')
           }
       },
+      format_datetime(value){
+         if (value) {
+           return moment(String(value)).format('MMMM DD, YYYY hh:mm a')
+          }
+      }
    }
 }
 </script>

@@ -96,6 +96,7 @@
                           <th>Role</td>
                           <th>Username</td>
                           <th>Password</td>
+                          <th>Allowed Sides</td>
                           <th>Status</td>
                           <th>Action</td>
                         </tr>
@@ -133,6 +134,9 @@
                             </td>
                             <td>
                               <input type="text" value="--" class="form-control" disabled>
+                            </td>
+                            <td>
+                              <input type="text" value="{{ $account->allowed_sides }}" class="form-control" disabled>
                             </td>
                             <td>
                               <input type="text" value="{{ $status }}" class="form-control" disabled>

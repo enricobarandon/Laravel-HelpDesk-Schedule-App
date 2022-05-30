@@ -8,8 +8,8 @@
 
         <div class="row">
             <main class="py-4">
-                <h3><i class="fa fa-info-circle"></i> Wpc2021 OCBS Schedule</h3>
-                <h5>May 2, 2022</h5>
+                <h3><i class="fa fa-info-circle"></i> {{ $scheduleInfo->name }}</h3>
+                <h5>{{ date('M d, Y', strtotime($scheduleInfo->date_time)) }}</h5>
 
                 <div class="card card-info">
 

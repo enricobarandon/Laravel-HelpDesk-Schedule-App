@@ -41,8 +41,8 @@
                                     @endif
                                         @csrf
                                         <div class="form-group">
-                                            <label for="email" >Username</label>
-                                                <input id="email" type="text" placeholder="Enter your username" class="form-control login-textbox" name="email" required autofocus>
+                                            <label for="email" >Email</label>
+                                                <input id="email" type="text" placeholder="Enter your email" class="form-control login-textbox" name="email" required autofocus>
                                         </div>
 
                                         <div class="form-group">
