@@ -25,17 +25,23 @@ class ScheduleGroupController extends Controller
 
         $scheduleInfo = Schedule::find($scheduleId);
 
-        $scheduledGroups = ScheduledGroup::select('group_id')
+        $scheduledGroups = ScheduledGroup::select('group_id','operation_time')
                                 ->where('schedule_id', $scheduleId)
-                                ->get()
-                                ->pluck('group_id')
-                                ->toArray();
+                                ->get();
+                                // ->pluck('group_id');
+                                // ->toArray();
+                                
+        $scheduledGroupsIds = $scheduledGroups->pluck('group_id')->toArray();
+        $scheduledGroupsOperationHours = $scheduledGroups->keyBy('group_id')->toArray();
+        // dd($scheduledGroupsOperationHours);
+
+        
                                 
         // $groupsForDisplay = Group::select('groups.id','groups.name as group_name','address','provinces.site','province_id','provinces.name as province_name')
         //                         ->join('provinces','provinces.id', 'groups.province_id')
         //                         ->whereIn('groups.id', $scheduledGroups)
         //                         ->get();
-        $arrToStr = implode(",", $scheduledGroups);
+        $arrToStr = implode(",", $scheduledGroupsIds);
 
         $groupsForDisplay = [];
         $groupsForSelect = [];
@@ -133,7 +139,8 @@ class ScheduleGroupController extends Controller
             'scheduleInfo' => $scheduleInfo,
             'groupsForDisplay' => $groupsForDisplay,
             'groupsForSelect' => $groupsForSelect,
-            'provinces' => $provinces
+            'provinces' => $provinces,
+            'scheduledGroupsOperationHours' => $scheduledGroupsOperationHours
         ]);
         
     }

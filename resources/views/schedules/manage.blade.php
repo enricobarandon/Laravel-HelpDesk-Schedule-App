@@ -162,7 +162,13 @@
                                                     {{ strtoupper($group->site) }}
                                                 </td>
                                                 <td>{{ $group->province_name }}</td>
-                                                <td>--</td>
+                                                <td>
+                                                    @if($scheduledGroupsOperationHours[$group->id]['operation_time'])
+                                                        {{ date('h:i A',strtotime($scheduledGroupsOperationHours[$group->id]['operation_time'])) }}
+                                                    @else
+                                                        {{ 'null' }}
+                                                    @endif
+                                                </td>
                                                 <td class="display-center">
                                                     <a href='{{ url("/schedules/$scheduleId/groups/$group->id") }}' class="btn btn-primary"><i class="fas fa-eye"></i> Manage</a>
                                                     <form action='{{ url("/schedules/$scheduleId/remove/$group->id") }}' method="POST">
