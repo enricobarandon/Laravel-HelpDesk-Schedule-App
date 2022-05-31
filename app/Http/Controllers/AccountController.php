@@ -12,6 +12,8 @@ class AccountController extends Controller
         $accounts = Account::select('accounts.id as acc_id','groups.name as group_name','first_name','last_name','accounts.contact','position','username','accounts.is_active')
                         ->leftjoin('groups','groups.id','accounts.group_id');
         
+        $filterStatus = $request->filterStatus;
+
         if($request->filterGname){
             $accounts = $accounts->where('code', 'like', '%' . $request->filterGname . '%');
         }
@@ -25,7 +27,7 @@ class AccountController extends Controller
         }
         
         $accounts = $accounts->paginate(100);
-        return view('accounts.index', compact('accounts'));
+        return view('accounts.index', compact('accounts','filterStatus'));
     }
 
     public function show(Account $account)

@@ -15,12 +15,14 @@ class ActivityLogsController extends Controller
                         ->orderBy('id','desc');
                         // ->paginate(30);
         
+        $keyword = $request->keyword;
+        
         if($request->keyword){
             $activityLogs = $activityLogs->where(DB::raw('concat(activity_logs.type,activity_logs.assets)'), 'like', '%' . $request->keyword . '%');
         }
         
         $activityLogs = $activityLogs->paginate(30);
 
-        return view('logs.index', compact('activityLogs'));
+        return view('logs.index', compact('activityLogs','keyword'));
     }
 }

@@ -42,8 +42,8 @@
                                                 <div class="col-md-2">
                                                     <select class="form-control" name="filterStatus" id="filterStatus">
                                                         <option selected disabled value="">SELECT STATUS</option>
-                                                        <option value="1">ACTIVE</option>
-                                                        <option value="0">DEACTIVATED</option>
+                                                        <option value="1" {{ $filterStatus == '1' ? 'selected' : '' }}>ACTIVE</option>
+                                                        <option value="0" {{ $filterStatus == '0' ? 'selected' : '' }}>DEACTIVATED</option>
                                                     </select>
                                                 </div>
 
@@ -72,7 +72,7 @@
                                             </thead>
                                             <tbody>
                                                 @php
-                                                    $accountCount = 1;
+                                                    $accountCount = ($accounts->currentpage()-1)* $accounts->perpage() + 1;
                                                 @endphp
                                                 @foreach($accounts as $account)
                                                     <tr>
@@ -94,7 +94,7 @@
                                         </table>
                                         <div class="col">
                                             <div class="float-right">
-                                                {{ $accounts->links('pagination::bootstrap-4') }}
+                                                {{ $accounts->appends(['filterStatus' => $filterStatus])->links('pagination::bootstrap-4') }}
                                             </div>
                                         </div>
                                     </div>

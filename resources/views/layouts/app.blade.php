@@ -75,7 +75,7 @@
     <!-- Brand Logo -->
     <a href="#" class="brand-link">
       <!-- <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8"> -->
-      <h3 class="brand-text font-weight-light">Sample</h3>
+      <h3 class="brand-text font-weight-light">CRM OCBS</h3>
     </a>
 
     <!-- Sidebar -->
@@ -86,7 +86,13 @@
           <img src="{{ asset('dist/img/default-150x150.png') }}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
+        @if(Auth::user()->user_type_id == 1)
           <a href="#" class="d-block">Admin</a>
+        @elseif(Auth::user()->user_type_id == 2)
+          <a href="#" class="d-block">Tech</a>
+        @elseif(Auth::user()->user_type_id == 3)
+          <a href="#" class="d-block">HelpDesk</a>
+        @endif
         </div>
       </div>
 

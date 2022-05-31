@@ -27,7 +27,7 @@ class UserController extends Controller
         $usersInfo = User::select('id','name','email','user_type_id')
                     ->where('users.id', $userId)
                     ->first();
-        return view('users.UpdateUsers', compact('usersInfo','userTypes','operation'));
+        return view('users.updateUsers', compact('usersInfo','userTypes','operation'));
     }
 
     public function submitUser(Request $request){

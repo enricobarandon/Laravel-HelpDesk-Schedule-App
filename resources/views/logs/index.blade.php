@@ -12,7 +12,7 @@
                         <div class="form-group row">
 
                             <div class="col-md-3">
-                                <input type="text" class="form-control" name="keyword" id="keyword" placeholder="keyword">
+                                <input type="text" class="form-control" name="keyword" id="keyword" placeholder="keyword" value="{{ $keyword }}">
                             </div>
 
                             <div class="col">
@@ -33,7 +33,7 @@
                         </thead>
                         <tbody>
                         @php
-                            $i = 1;
+                            $i = ($activityLogs->currentpage()-1)* $activityLogs->perpage() + 1;;
                         @endphp
                             @if(!$activityLogs->isEmpty())
                             
@@ -84,7 +84,7 @@
                     </table>
                     <div class="col">
                         <div class="float-right">
-                            {{ $activityLogs->links('pagination::bootstrap-4') }}
+                            {{ $activityLogs->appends(['keyword' => $keyword])->links('pagination::bootstrap-4') }}
                         </div>
                     </div>
 
