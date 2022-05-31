@@ -52,6 +52,10 @@ Route::middleware(['auth'])->group(function(){
     Route::get('requests', [\App\Http\Controllers\RequestController::class, 'index'])->name('requests.index');
     
     Route::get('logs', [\App\Http\Controllers\ActivityLogsController::class, 'index'])->name('logs.index');
+
+    Route::get('users/update/{id}/info', [\App\Http\Controllers\UserController::class, 'updateUser'])->name('users.updateUsers');
+    Route::get('users/update/{id}/password', [\App\Http\Controllers\UserController::class, 'updateUser'])->name('users.updateUsers');
+    Route::post('submitUser', [\App\Http\Controllers\UserController::class, 'submitUser'])->name('users.updateUsers');
 });
 
 // Route::view('/{any}', 'schedules.index')
