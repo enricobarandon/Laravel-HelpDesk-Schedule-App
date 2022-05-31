@@ -215,3 +215,6 @@
     color: #007bff;
     font-weight: 600;
 }
+.radio-deactivated {
+    margin-left: 15px;
+}

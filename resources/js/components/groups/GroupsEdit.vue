@@ -68,23 +68,24 @@
         </div>
 
         <div class="col-md-4">
-            <div class="form-control">
-                <label>Status</label>
+            <label>Status</label>
+            <div class="form-control text-center">
+                <label class="radio-active" :for="active">
                 <input 
                     type="radio"
                     name="is_active" 
                     :id="active"
                     :value="1" 
                     v-model="group.is_active">
-                <label :for="active">Active</label>
-
+                Active</label>
+                <label class="radio-deactivated" :for="deactivated">
                 <input 
                     type="radio"
                     name="is_active" 
                     :id="deactivated"
                     :value="0" 
                     v-model="group.is_active">
-                <label :for="deactivated">Deactivated</label>
+                Deactivated</label>
             </div>
         </div>
 

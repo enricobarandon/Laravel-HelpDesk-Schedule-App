@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('script')
+<script src="{{ asset('js/timepicker.min.js') }}"></script>
+<script src="{{ asset('js/script.js') }}"></script>
+@endsection
 @section('content')
 <div class="content">
     <div class="container-fluid">
@@ -171,9 +175,10 @@
                                                 </td>
                                                 <td class="display-center">
                                                     <a href='{{ url("/schedules/$scheduleId/groups/$group->id") }}' class="btn btn-primary"><i class="fas fa-eye"></i> Manage</a>
-                                                    <form action='{{ url("/schedules/$scheduleId/remove/$group->id") }}' method="POST">
+                                                    <form action='{{ url("/schedules/$scheduleId/remove/$group->id") }}' method="POST" id="frmRemoveGroup">
                                                         @csrf
-                                                        <button type="submit" class="btn btn-danger"><i class="fas fa-times"></i> Remove</button>
+                                                        <input type="hidden" id="hdnSchedId" value="{{ $scheduleId }}"/>
+                                                        <button type="button" id="{{ $group->id }}" class="btn btn-danger btnRemoveGroup"><i class="fas fa-times"></i> Remove</button>
                                                     </form>
                                                 </td>
                                             </tr>
