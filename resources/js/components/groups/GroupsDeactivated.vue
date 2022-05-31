@@ -1,5 +1,19 @@
 <template>
-D   EActivated 123123
+
+    <form class="form-horizontal">
+        <div class="form-group row">
+
+            <div class="col-md-3">
+                <input type="text" class="form-control" name="filterCode" id="filterCode" placeholder="Group Code" v-model='filter.code'>
+            </div>
+
+            <div class="col">
+                <button type="button" class="btn btn-success" @click="postFilterGroup()"><i class="fas fa-search"></i> Submit</button>
+                <a href="#" class="btn btn-danger" @click="resetFilter()">Reset</a>
+            </div>
+        </div>
+    </form>
+
     <!-- <router-link :to="{ name: 'groups.create' }"  class="btn btn-primary float-right"><i class="fas fa-plus"></i> Create Group</router-link> -->
     <table class="table table-bordered table-striped global-table">
         <thead>
@@ -18,9 +32,9 @@ D   EActivated 123123
             </tr>
         </thead>
         <tbody>
-            <template v-for="item in groups" :key="item.id">
+            <template v-for="(item, itemKey) in filteredDeactivatedGroups" :key="item.id">
                 <tr>
-                    <td>{{ count++ }}</td>
+                    <td>{{ itemKey+1 }}</td>
                     <td>{{ item.name }}</td>
                     <td>{{ item.group_type }}</td>
                     <td>{{ item.owner }}</td>
@@ -50,8 +64,6 @@ import useRequests from '../../composables/requests'
 export default {
     setup() {
 
-        const count = 1;
-
         const form = reactive({
             'api_key' : '',
             'uuid' : '',
@@ -60,7 +72,11 @@ export default {
             'data' : ''
         })
 
-        const { groups, getDeactivatedGroups } = useGroups()
+        const filter = reactive({
+            'code' : ''
+        })
+
+        const { groups, filteredDeactivatedGroups, getDeactivatedGroups } = useGroups()
 
         const { storeRequest } = useRequests()
 
@@ -74,11 +90,22 @@ export default {
             await storeRequest({...form})
         }
 
+        const postFilterGroup = async () => {
+            filteredDeactivatedGroups.value = groups.value.filter(val => val.code.toLowerCase() == filter.code.toLowerCase())
+        }
+
+        const resetFilter = () => {
+            filteredDeactivatedGroups.value = groups.value
+        }
+
         return {
             groups,
-            count,
             form,
-            postActivateRequest
+            postActivateRequest,
+            filteredDeactivatedGroups,
+            filter,
+            postFilterGroup,
+            resetFilter
         }
     }
 }

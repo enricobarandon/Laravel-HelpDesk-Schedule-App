@@ -11470,12 +11470,12 @@ textarea.form-control-lg {
 }
 .td-red {
     background-color: #dc3545 !important;
-    color: #fff;
+    color: #fff !important;
     text-align: center;
 }
 .td-blue {
     background-color: #007bff !important;
-    color: #fff;
+    color: #fff !important;
     text-align: center;
 }
 .f-bold {
@@ -11502,7 +11502,7 @@ textarea.form-control-lg {
 }
 .td-green {
     background-color: #006400 !important;
-    color: #fff;
+    color: #fff !important;
     text-align: center;
 }
 .full-sched-table td, 
@@ -11513,4 +11513,13 @@ textarea.form-control-lg {
 .td-sblue {
     background-color: #00BFFF !important;
     text-align: center;
+}
+.custom-active {
+    background: #dee2e638;
+    border-radius: 5px;
+}
+
+.custom-active i {
+    color: #007bff;
+    font-weight: 600;
 }

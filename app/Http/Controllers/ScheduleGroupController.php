@@ -15,6 +15,8 @@ use App\Models\Province;
 use Excel;
 use App\Exports\ScheduledGroupExport;
 use DB;
+use Illuminate\Support\Str;
+use Illuminate\Support\Collection;
 
 class ScheduleGroupController extends Controller
 {
@@ -26,21 +28,12 @@ class ScheduleGroupController extends Controller
         $scheduleInfo = Schedule::find($scheduleId);
 
         $scheduledGroups = ScheduledGroup::select('group_id','operation_time')
-        ->where('schedule_id', $scheduleId)
-        ->get();
-        // ->pluck('group_id');
-        // ->toArray();
+                                ->where('schedule_id', $scheduleId)
+                                ->get();
         
         $scheduledGroupsIds = $scheduledGroups->pluck('group_id')->toArray();
         $scheduledGroupsOperationHours = $scheduledGroups->keyBy('group_id')->toArray();
-        // dd($scheduledGroupsOperationHours);
 
-
-                
-        // $groupsForDisplay = Group::select('groups.id','groups.name as group_name','address','provinces.site','province_id','provinces.name as province_name')
-        //                         ->join('provinces','provinces.id', 'groups.province_id')
-        //                         ->whereIn('groups.id', $scheduledGroups)
-        //                         ->get();
         $arrToStr = implode(",", $scheduledGroupsIds);
 
         $groupsForDisplay = [];
@@ -64,12 +57,6 @@ class ScheduleGroupController extends Controller
                     where `groups`.`id` in ($arrToStr)
                 "
             ));
-                                    
-            // $groupsForSelect = Group::select('id','name','address')
-            //                     ->where('is_active', 1)
-            //                     ->whereNotIn('id', $scheduledGroups)
-            //                     ->orderBy('name', 'asc')
-            //                     ->get();
 
             $groupsForSelect = DB::select(
                 DB::raw(
@@ -85,12 +72,22 @@ class ScheduleGroupController extends Controller
                 )
             );
 
+            // Collection::macro('toUpper', function () {
+            //     return $this->map(function ($key, $value) {
+            //         return Str::upper($value);
+            //     });
+            // });
+
             $groupsForDisplay = collect($groupsForDisplay);
             $groupsForSelect = collect($groupsForSelect);
 
                             
             if($request->filterGroup){
-                $groupsForDisplay = $groupsForDisplay->where('code', $request->filterGroup);
+                // $groupsForDisplay = $groupsForDisplay->where('code', $request->filterGroup);
+                $groupsForDisplay = $groupsForDisplay->filter(function ($item) use ($request) {
+                    return strtolower($item->code) == strtolower($request->filterGroup);
+                    // dd(strtolower($item->code), strtolower($request->filterGroup));
+                });
             }
 
             if($request->selectProvince){

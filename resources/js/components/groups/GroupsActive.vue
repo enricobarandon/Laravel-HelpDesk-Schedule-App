@@ -1,4 +1,23 @@
 <template>
+
+    <div class="form-horizontal">
+        <div class="form-group row">
+
+            <!-- <div class="col-md-3">
+                <input type="text" class="form-control" name="filterName" id="filterName" placeholder="Group Name" v-model='filter.name'>
+            </div> -->
+
+            <div class="col-md-3">
+                <input type="text" class="form-control" name="filterCode" id="filterCode" placeholder="Group Code" v-model='filter.code'>
+            </div>
+
+            <div class="col">
+                <button type="button" class="btn btn-success" @click="postFilterGroup()"><i class="fas fa-search"></i> Submit</button>
+                <a href="#" class="btn btn-danger" @click="resetFilter()">Reset</a>
+            </div>
+        </div>
+    </div>
+
     <!-- <router-link :to="{ name: 'groups.create' }"  class="btn btn-primary float-right"><i class="fas fa-plus"></i> Create Group</router-link> -->
     <table class="table table-bordered table-striped global-table">
         <thead>
@@ -17,9 +36,9 @@
             </tr>
         </thead>
         <tbody>
-            <template v-for="item in groups" :key="item.id">
+            <template v-for="(item, itemKey) in filteredGroups" :key="item.id">
                 <tr>
-                    <td>{{ count++ }}</td>
+                    <td>{{ itemKey+1 }}</td>
                     <td>{{ item.name }}</td>
                     <td>{{ item.group_type }}</td>
                     <td>{{ item.owner }}</td>
@@ -45,11 +64,11 @@
 import { onMounted, reactive } from 'vue'
 import useGroups from '../../composables/groups'
 import useRequests from '../../composables/requests'
+// import { useRouter } from 'vue-router'
 
 export default {
     setup() {
-
-        const count = 1;
+        // const router = useRouter()
 
         const form = reactive({
             'api_key' : '',
@@ -59,7 +78,12 @@ export default {
             'data' : ''
         })
 
-        const { groups, getActiveGroups } = useGroups()
+        const filter = reactive({
+            // 'name' : '',
+            'code' : ''
+        })
+
+        const { groups, filteredGroups, getActiveGroups } = useGroups()
 
         const { storeRequest } = useRequests()
 
@@ -73,12 +97,25 @@ export default {
             await storeRequest({...form})
         }
 
+        const postFilterGroup = async () => {
+            // let filtered = groups.value.filter(val => val.code == 'kik')
+            // let filtered = groups.value.filter(val => val.code == filter.code.toUpperCase())
+            filteredGroups.value = groups.value.filter(val => val.code.toLowerCase() == filter.code.toLowerCase())
+        }
+
+        const resetFilter = () => {
+            // router.go()
+            filteredGroups.value = groups.value
+        }
+
         return {
             groups,
-            count,
             form,
             postDeactivationRequest,
-            // testFilter
+            filter,
+            postFilterGroup,
+            resetFilter,
+            filteredGroups
         }
     }
 }
