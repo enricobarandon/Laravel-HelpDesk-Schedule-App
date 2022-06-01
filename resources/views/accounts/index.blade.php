@@ -1,7 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-
+@php
+if (! function_exists('removeParam')) {
+    function removeParam($url, $param) {
+        $url = preg_replace('/(&|\?)'.preg_quote($param).'=[^&]*$/', '', $url);
+        $url = preg_replace('/(&|\?)'.preg_quote($param).'=[^&]*&/', '$1', $url);
+        return $url;
+    }
+}
+@endphp
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-12">
@@ -25,6 +33,7 @@
                                 <div class="card card-info">
                                     <div class="card-header">
                                         <h3 class="card-title"><i class="fa fa-info-circle"></i> Accounts Page</h3>
+                                        <a class="btn btn-success float-right" href="{{ removeParam(request()->fullUrlWithQuery(['download' => '1']), 'downloadcurrent') }}">Download Excel</a>
                                     </div>
                                     <div class="card-body">
 
@@ -77,7 +86,7 @@
                                                 @foreach($accounts as $account)
                                                     <tr>
                                                         <td>{{ $accountCount++ }}</td>
-                                                        <td>{{ $account->group_name }}</td>
+                                                        <td>{{ htmlspecialchars($account->group_name) }}</td>
                                                         <!-- <td>--</td> -->
                                                         <td>{{ $account->first_name }} {{ $account->last_name }}</td>
                                                         <td>{{ $account->contact }}</td>
@@ -92,6 +101,7 @@
                                                 @endforeach
                                             </tbody>
                                         </table>
+
                                         <div class="col">
                                             <div class="float-right">
                                                 {{ $accounts->appends(['filterStatus' => $filterStatus])->links('pagination::bootstrap-4') }}

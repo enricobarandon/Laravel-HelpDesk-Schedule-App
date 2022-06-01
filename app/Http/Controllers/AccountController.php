@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Account;
 use DB;
+use Excel;
+use App\Exports\ScheduledGroupExport;
 
 class AccountController extends Controller
 {
@@ -27,6 +29,17 @@ class AccountController extends Controller
         }
         
         $accounts = $accounts->paginate(100);
+
+        if ($request->has('download') || $request->has('downloadcurrent')) {
+
+            return Excel::download(
+                new ScheduledGroupExport('accounts.tables.accountsTable', [
+                    'accounts' => $accounts
+                ]),
+                'accounts.xlsx'
+            );
+        }
+        
         return view('accounts.index', compact('accounts','filterStatus'));
     }
 
