@@ -22,7 +22,7 @@ class OcbsController extends Controller
 
         } else if ($table == 'users') {
 
-            $update = Account::where('uuid', $uuid)->update($request->expect(['table']));
+            $update = Account::where('uuid', $uuid)->update($request->except(['table']));
 
         }
         
