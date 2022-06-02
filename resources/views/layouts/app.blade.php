@@ -69,7 +69,9 @@
     </ul>
   </nav>
   <!-- /.navbar -->
-
+@php 
+  $users = Auth::user();
+@endphp
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
@@ -86,12 +88,16 @@
           <img src="{{ asset('dist/img/default-150x150.png') }}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-        @if(Auth::user()->user_type_id == 1)
+        @if($users->user_type_id == 1)
           <a href="#" class="d-block">Admin</a>
-        @elseif(Auth::user()->user_type_id == 2)
+        @elseif($users->user_type_id == 2)
           <a href="#" class="d-block">Tech</a>
-        @elseif(Auth::user()->user_type_id == 3)
+        @elseif($users->user_type_id == 3)
           <a href="#" class="d-block">HelpDesk</a>
+        @elseif($users->user_type_id == 4)
+          <a href="#" class="d-block">Finance</a>
+        @elseif($users->user_type_id == 5)
+          <a href="#" class="d-block">C-BAND</a>
         @endif
         </div>
       </div>
@@ -108,6 +114,7 @@
               </p>
             </a>
           </li>
+        @if($users->user_type_id == 1 || $users->user_type_id == 2 || $users->user_type_id == 3)
           <li class="nav-item">
             <a href="/schedules" class="nav-link {{ (request()->is('schedules*')) ? 'active' : '' }}">
               <i class="nav-icon fa fa-calendar"></i>
@@ -116,7 +123,8 @@
               </p>
             </a>
           </li>
-          @if(Auth::user()->user_type_id == 1)
+
+          @if($users->user_type_id == 1)
           <li class="nav-item">
             <a href="/users" class="nav-link {{ (request()->is('users')) ? 'active' : '' }}">
               <i class="nav-icon fa fa-users"></i>
@@ -134,7 +142,7 @@
               </p>
             </a>
           </li>
-          @if(Auth::user()->email == 'enricobarandon@gmail.com')
+          @if($users->email == 'enricobarandon@gmail.com')
           <li class="nav-item">
             <a href="/data" class="nav-link {{ (request()->is('data*')) ? 'active' : '' }}">
               <i class="nav-icon fa fa-list"></i>
@@ -144,6 +152,7 @@
             </a>
           </li>
           @endif
+        @endif
           <li class="nav-item">
             <a href="/requests" class="nav-link {{ (request()->is('requests*')) ? 'active' : '' }}">
               <i class="nav-icon fa fa-list"></i>
@@ -152,6 +161,7 @@
               </p>
             </a>
           </li>
+
           <li class="nav-item {{ (request()->is('groups/*')) ? 'menu-is-opening menu-open' : 'menu-close' }}">
             <a href="#" class="nav-link  {{ (request()->is('groups/*')) ? 'active' : '' }}">
               <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -178,7 +188,8 @@
               </li>
             </ul>
           </li>
-          @if(Auth::user()->user_type_id == 1)
+
+          @if($users->user_type_id == 1)
           <li class="nav-item">
             <a href="/logs" class="nav-link {{ (request()->is('logs')) ? 'active' : '' }}">
               <i class="nav-icon fa fa-list"></i>

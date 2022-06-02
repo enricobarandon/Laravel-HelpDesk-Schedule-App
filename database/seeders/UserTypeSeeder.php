@@ -26,5 +26,13 @@ class UserTypeSeeder extends Seeder
         UserType::create([
             'role' => 'Help Desk'
         ]);
+
+        UserType::create([
+            'role' => 'Finance'
+        ]);
+        
+        UserType::create([
+            'role' => 'C Band'
+        ]);
     }
 }
