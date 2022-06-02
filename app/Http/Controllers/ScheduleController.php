@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Schedule;
+use Excel;
+use App\Exports\ScheduledGroupExport;
 
 class ScheduleController extends Controller
 {
@@ -11,9 +14,20 @@ class ScheduleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('schedules.index', []);
+        $schedules = Schedule::select('name','date_time','created_at')->get();
+
+        if ($request->has('download') || $request->has('downloadcurrent')) {
+
+            return Excel::download(
+                new ScheduledGroupExport('schedules.tables.scheduleTable', [
+                    'schedules' => $schedules
+                ]),
+                'schedules.xlsx'
+            );
+        }
+        return view('schedules.index', ['schedules' => $schedules]);
     }
 
     /**
