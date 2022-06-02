@@ -22,7 +22,7 @@ class OcbsController extends Controller
 
         } else if ($table == 'users') {
 
-            $update = 0;
+            $update = Account::where('uuid', $uuid)->update($request->expect(['table']));
 
         }
         
@@ -43,11 +43,14 @@ class OcbsController extends Controller
                 'status' => 'ok',
                 'message' => 'Updated'
             ]), 200);
+
         } else {
+
             return response(json_encode([
                 'status' => 'error',
                 'message' => 'Something went wrong'
             ]), 200);
+
         }
     }
 
