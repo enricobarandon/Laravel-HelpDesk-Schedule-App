@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Resources\GroupResource;
 use App\Models\Group;
 use App\Http\Requests\GroupRequest;
+use App\Models\ActivityLog;
 
 class GroupController extends Controller
 {
@@ -71,6 +72,16 @@ class GroupController extends Controller
      */
     public function update(GroupRequest $request, Group $group)
     {
+        $user = auth()->user();
+
+        $logs = ActivityLog::create([
+            'type' => 'update-group-fields',
+            'user_id' => $user->id,
+            'assets' => json_encode(array_merge([
+                'action' => 'Update group local fields'
+            ],$request->only(['id','active_staff','installed_pc'])))
+        ]);
+
         $group->update($request->validated());
 
         return new GroupResource($group);

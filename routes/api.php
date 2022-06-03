@@ -18,15 +18,17 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::apiResource('/schedules', \App\Http\Controllers\Api\ScheduleController::class);
+Route::apiResource('/schedules', \App\Http\Controllers\Api\ScheduleController::class)->middleware('auth:sanctum');
 
 // Route::apiResource('groups', \App\Http\Controllers\Api\GroupController::class);
-Route::get('/groups/view/active', [\App\Http\Controllers\Api\GroupController::class, 'getActiveGroups']);
-Route::get('/groups/view/deactivated', [\App\Http\Controllers\Api\GroupController::class, 'getDeactivatedGroups']);
-Route::get('/groups/{group}', [\App\Http\Controllers\Api\GroupController::class, 'show'])->name('groups.show');
-Route::put('/groups/{group}', [\App\Http\Controllers\Api\GroupController::class, 'update'])->name('groups.update');
+Route::get('/groups/view/active', [\App\Http\Controllers\Api\GroupController::class, 'getActiveGroups'])->middleware('auth:sanctum');
+Route::get('/groups/view/deactivated', [\App\Http\Controllers\Api\GroupController::class, 'getDeactivatedGroups'])->middleware('auth:sanctum');
+Route::get('/groups/{group}', [\App\Http\Controllers\Api\GroupController::class, 'show'])->name('groups.show')->middleware('auth:sanctum');
+Route::put('/groups/{group}', [\App\Http\Controllers\Api\GroupController::class, 'update'])->name('groups.update')->middleware('auth:sanctum');
 
-Route::post('/requests/groups', [\App\Http\Controllers\Api\RequestController::class, 'storeGroupRequest']);
+Route::post('/requests/groups', [\App\Http\Controllers\Api\RequestController::class, 'storeGroupRequest'])->middleware('auth:sanctum');
+
+
 
 Route::post('/requests', [\App\Http\Controllers\Api\RequestController::class, 'updateRequest'])->name('requests.update');
 

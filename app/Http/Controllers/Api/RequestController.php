@@ -12,7 +12,7 @@ use DB;
 use App\Models\Group;
 use App\Models\User;
 use App\Models\ActivityLog;
-use Auth;
+// use Auth;
 
 class RequestController extends Controller
 {
@@ -73,8 +73,7 @@ class RequestController extends Controller
 
     public function storeGroupRequest(ApiRequests $request)
     {
-        // $user = Auth::user();
-        dd(Auth::guard('api')->check());
+        $user = auth()->user();
         $uuid = request()->uuid;
         $requestName = request()->operation;
         $checkInRequests = RequestModel::where('operation', $requestName)
@@ -88,14 +87,14 @@ class RequestController extends Controller
                 
                 $this->postRequestToKiosk($request->all());
 
-                // $logs = ActivityLog::create([
-                //     'type' => 'post-request',
-                //     'user_id' => $user->id,
-                //     'assets' => json_encode(array_merge([
-                //         'action' => 'Posted a request to OCBS application',
-                //         'request-type' => $requestName
-                //     ],$request->all()))
-                // ]);
+                $logs = ActivityLog::create([
+                    'type' => 'post-request',
+                    'user_id' => $user->id,
+                    'assets' => json_encode(array_merge([
+                        'action' => 'Posted a request to OCBS application',
+                        'request-type' => $requestName
+                    ],$request->except(['api_key'])))
+                ]);
 
                 // dd($logs);
 
