@@ -149,7 +149,7 @@
                               <input type="text" value="{{ $account->password }}" class="form-control" disabled>
                             </td>
                             <td>
-                              <input type="text" value="{{ $account->is_active == 0 ? 'ACTIVATED' : 'DEACTIVATED' }}" class="form-control {{ $remarksCSS }}" disabled>
+                              <input type="text" value="{{ $account->is_active == 0 ? 'DEACTIVATED' : 'ACTIVE' }}" class="form-control {{ $remarksCSS }}" disabled>
                             </td>
                             <td>
                               <input type="text" value="{{ $status }}" class="form-control {{ $statusCSS }}" disabled>
