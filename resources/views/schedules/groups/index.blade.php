@@ -121,9 +121,9 @@
                             }
                             $remarksCSS = '';
                             if($account->is_active == 0){
-                              $remarksCSS = 'td-blue';
-                            }else{
                               $remarksCSS = 'td-red';
+                            }else{
+                              $remarksCSS = 'td-blue';
                             }
                           @endphp
                           <tr>
