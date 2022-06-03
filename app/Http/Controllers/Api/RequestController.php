@@ -12,7 +12,7 @@ use DB;
 use App\Models\Group;
 use App\Models\User;
 use App\Models\ActivityLog;
-// use Auth;
+use Auth;
 
 class RequestController extends Controller
 {
@@ -74,6 +74,7 @@ class RequestController extends Controller
     public function storeGroupRequest(ApiRequests $request)
     {
         // $user = Auth::user();
+        dd(Auth::guard('api')->check());
         $uuid = request()->uuid;
         $requestName = request()->operation;
         $checkInRequests = RequestModel::where('operation', $requestName)
