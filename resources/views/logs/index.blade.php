@@ -33,7 +33,7 @@
                         </thead>
                         <tbody>
                         @php
-                            $i = ($activityLogs->currentpage()-1)* $activityLogs->perpage() + 1;;
+                            $i = ($activityLogs->currentpage()-1)* $activityLogs->perpage() + 1;
                         @endphp
                             @if(!$activityLogs->isEmpty())
                             

@@ -45,9 +45,10 @@
                                                 <input id="email" type="text" placeholder="Enter your email" class="form-control login-textbox" name="email" required autofocus>
                                         </div>
 
-                                        <div class="form-group">
+                                        <div class="form-group position-relative">
                                             <label for="password">Password</label>
                                                 <input id="password" type="password" placeholder="Enter your password" class="form-control login-textbox" name="password" required>
+                                                <img class="view-password" src="{{ asset('images/icons/eye.png') }}">
                                         </div>
 
                                         <div class="form-group form-group--sm">
@@ -72,7 +73,18 @@
     </div>
 </body>
 
+<script src="{{ asset('js/jquery.min.js') }}"></script>
 <link href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css" rel="stylesheet">
+<script>
+            $("document").ready(function(){
+                $("#btnLogin").off("submit");
+                $('.view-password').hover(function () {
+                   $('#password').attr('type', 'text'); 
+                }, function () {
+                   $('#password').attr('type', 'password'); 
+                });
+            });
+        </script>
 </html>
 
 

@@ -218,3 +218,12 @@
 .radio-deactivated {
     margin-left: 15px;
 }
+.view-password {
+    width: 35px;
+    position: absolute;
+    right: 5px;
+    top: 45px;
+}
+.position-relative {
+    position: relative
+}
