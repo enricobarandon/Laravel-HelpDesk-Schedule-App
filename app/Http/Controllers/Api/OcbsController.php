@@ -30,10 +30,10 @@ class OcbsController extends Controller
         if ($update) {
 
             ActivityLog::create([
-                'type' => 'ocbs-update-group',
+                'type' => 'ocbs-manual-update',
                 'user_id' => 0,
                 'assets' => json_encode(array_merge([
-                    'action' => 'Received update from ocbs',
+                    'action' => 'Received a manual update from ocbs',
                     'uuid' => $uuid,
                     'target_table' => $table
                 ], $request->except(['table'])))

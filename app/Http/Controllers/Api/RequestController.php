@@ -195,10 +195,22 @@ class RequestController extends Controller
                     }
                 }
 
+                
+                ActivityLog::create([
+                    'type' => 'received-update',
+                    'user_id' => 0,
+                    'assets' => json_encode(array_merge([
+                        'action' => 'Received update from a processed request. From ocbs.',
+                        'uuid' => $uuid,
+                        'target_table' => $table
+                    ], $request->except(['table'])))
+                ]);
+
                 return response([
                     'status' => 'ok',
                     'message' => 'Row updated.'
                 ], 200);
+
             } else {
                 return response([
                     'status' => 'error',
