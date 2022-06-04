@@ -2,8 +2,6 @@
 
 @section('content')
 <div class="container-fluid">
-    
-    <!-- <a href='{{ url("schedules") }}' class="btn btn-primary"><< Back to Schedule Management page</a> -->
 
     <div class="row justify-content-center">
         <div class="col-md-12">
@@ -24,19 +22,18 @@
 
                     <form action="{{ route('storeAccountRequest') }}" method="post">
                         @csrf
-                        <input type="hidden" name="uuid" value="{{ $account->uuid }}">
-                        <input type="hidden" name="operation" value="users.update">
+                        <input type="hidden" name="operation" value="users.create">
 
                         <div class="col-md-4">
 
                             <div class="form-group">
                                 <label>First Name</label>
-                                <input type="text" class="form-control" id="first-name" name="first-name" value="{{ $account->first_name }}">
+                                <input type="text" class="form-control" id="first-name" name="first-name">
                             </div>
 
                             <div class="form-group">
                                 <label>Last Name</label>
-                                <input type="text" class="form-control" id="last-name" name="last-name" value="{{ $account->last_name }}">
+                                <input type="text" class="form-control" id="last-name" name="last-name">
                             </div>
 
                         </div>
@@ -45,12 +42,24 @@
 
                             <div class="form-group">
                                 <label>Username</label>
-                                <input type="text" class="form-control" id="username" name="username" value="{{ $account->username }}">
+                                <input type="text" class="form-control" id="username" name="username">
                             </div>
 
                             <div class="form-group">
                                 <label>Contact</label>
-                                <input type="text" class="form-control" id="contact" name="contact" value="{{ $account->contact }}">
+                                <input type="text" class="form-control" id="contact" name="contact">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Group</label>
+                                <select class="form-control" id="group-code" name="group-code">
+                                    <option selected disabled> -- Select Group --</option>
+                                    @foreach($groups as $group)
+                                        <option value="{{ $group->code }}">
+                                            {{ $group->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
                             
                         </div>
@@ -59,15 +68,10 @@
 
                             <div class="form-group">
                                 <label>Position</label>
-                                <!-- <input type="text" class="form-control" id="position" name="position" value="{{ $account->position }}"> -->
                                 <select class="form-control" id="position" name="position">
                                     <option selected disabled> -- Select Position --</option>
                                     @foreach($positions as $position)
-                                        <option value="{{ $position }}"
-                                            <?php
-                                                echo $account->position == $position ? 'selected' : ''
-                                            ?>
-                                        >
+                                        <option value="{{ $position }}">
                                             {{ $position }}
                                         </option>
                                     @endforeach
@@ -76,15 +80,10 @@
 
                             <div class="form-group">
                                 <label>Allowed Sides</label>
-                                <!-- <input type="text" class="form-control" id="group-guarantor" name="group-guarantor"> -->
                                 <select class="form-control" id="allowed-sides" name="allowed-sides">
                                     <option selected disabled> -- Select Allowed Sides --</option>
-                                    <!-- <option value="m">Meron Only</option>
-                                    <option value="w">Wala Only</option>
-                                    <option value="a">All Sides</option>
-                                    <option value="n">None</option> -->
                                     @foreach($allowedSides as $key => $side)
-                                        <option value="{{ $key }}" <?php echo $account->allowed_sides == $side ? 'selected' : '' ?>>
+                                        <option value="{{ $key }}">
                                             {{ $side }}
                                     </option>
                                     @endforeach
@@ -102,18 +101,14 @@
                                     type="radio"
                                     name="is-active" 
                                     id="active"
-                                    value="1" 
-                                    <?php echo $account->is_active ? 'checked' : '' ?>
-                                >
+                                    value="1">
                                 Active</label>
                                 <label class="radio-deactivated" for="deactivated">
                                 <input 
                                     type="radio"
                                     name="is-active" 
                                     id="deactivated"
-                                    value="0" 
-                                    <?php echo $account->is_active ? '' : 'checked' ?>
-                                >
+                                    value="0">
                                 Deactivated</label>
                             </div>
 

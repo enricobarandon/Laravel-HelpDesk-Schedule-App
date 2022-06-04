@@ -7,6 +7,7 @@ use App\Models\Account;
 use DB;
 use Excel;
 use App\Exports\ScheduledGroupExport;
+use App\Models\Group;
 
 class AccountController extends Controller
 {
@@ -45,14 +46,52 @@ class AccountController extends Controller
 
     public function show(Account $account)
     {
-        // dd($account);
+        // dd('test');
         $allowedSides = [
             'm' => 'Meron only',
             'w' => 'Wala only',
             'n' => 'None',
             'a' => 'All sides'
         ];
+
+        $positions = [
+            'Teller',
+            'Cashier',
+            'Teller/Cashier',
+            'Supervisor',
+            'Operator'
+        ];
+
+        $groups = Group::select('code','name')
+                    ->where('is_active',1)
+                    ->orderBy('name','asc')
+                    ->get();
         
-        return view('accounts.edit', compact('account','allowedSides'));
+        return view('accounts.edit', compact('account','allowedSides','positions','groups'));
+    }
+
+    public function create()
+    {
+        $allowedSides = [
+            'm' => 'Meron only',
+            'w' => 'Wala only',
+            'n' => 'None',
+            'a' => 'All sides'
+        ];
+
+        $positions = [
+            'Teller',
+            'Cashier',
+            'Teller/Cashier',
+            'Supervisor',
+            'Operator'
+        ];
+
+        $groups = Group::select('code','name')
+                    ->where('is_active',1)
+                    ->orderBy('name','asc')
+                    ->get();
+
+        return view('accounts.create', compact('allowedSides','positions','groups'));
     }
 }

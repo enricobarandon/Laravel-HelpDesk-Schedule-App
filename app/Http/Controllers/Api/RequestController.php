@@ -15,6 +15,7 @@ use App\Models\ActivityLog;
 // use Auth;
 use Validator;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Str;
 
 class RequestController extends Controller
 {
@@ -245,12 +246,22 @@ class RequestController extends Controller
     public function storeAccountRequest(Request $request)
     {
         $user = auth()->user();
-        $uuid = request()->uuid;
         $requestName = request()->operation;
-        $checkInRequests = RequestModel::where('operation', $requestName)
-                            ->where('uuid', $uuid)
-                            ->where('status','pending')
-                            ->first();
+
+        $table = '';
+        $operation = '';
+        list($table, $operation) = explode('.', $requestName);
+
+        if ($operation == 'create') {
+            $uuid = (string) Str::uuid();
+            $checkInRequests = false;
+        } else {
+            $uuid = request()->uuid;
+            $checkInRequests = RequestModel::where('operation', $requestName)
+                                ->where('uuid', $uuid)
+                                ->where('status','pending')
+                                ->first();
+        }
 
         // $validated = request()->validate([
         $validator = Validator::make(request()->all(), [
@@ -261,7 +272,9 @@ class RequestController extends Controller
             'contact' => 'required|max:50',
             'position' => ['required', Rule::in(['Cashier','Teller','Teller/Cashier','Supervisor','Operator'])],
             'allowed-sides' => ['required', Rule::in(['m','w','n','a'])],
-            'is-active' => 'required|boolean'
+            'is-active' => 'required|boolean',
+            'remarks' => 'nullable|string|max:300',
+            'group-code' => 'required|max:10'
         ]);
 
         if ($validator->fails()) {
@@ -280,9 +293,10 @@ class RequestController extends Controller
                 'contact' => $request->contact,
                 'position' => $request->position,
                 'allowed_sides' => $request->input('allowed-sides'),
-                'is_active' => $request->input('is-active')
+                'is_active' => $request->input('is-active'),
+                'group_code' => $request->input('group-code')
             ]),
-            'remarks' => ''
+            'remarks' => $request->remarks
         ];
 
         if (!$checkInRequests) {

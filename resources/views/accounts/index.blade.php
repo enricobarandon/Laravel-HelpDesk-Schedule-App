@@ -34,6 +34,7 @@ if (! function_exists('removeParam')) {
                                     <div class="card-header">
                                         <h3 class="card-title"><i class="fa fa-info-circle"></i> Accounts Page</h3>
                                         <a class="btn btn-success float-right" href="{{ removeParam(request()->fullUrlWithQuery(['download' => '1']), 'downloadcurrent') }}">Download Excel</a>
+                                        <a class="btn btn-primary float-right" href="{{ route('accounts.create') }}"><i class="fa fa-plus"></i> Create Account</a>
                                     </div>
                                     <div class="card-body">
 

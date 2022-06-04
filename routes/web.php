@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Auth::routes();
@@ -37,6 +37,7 @@ Route::middleware(['auth'])->group(function(){
     Route::put('/schedules/{scheduleId}/groups/{groupId}', [App\Http\Controllers\ScheduleGroupController::class, 'updateGroup'])->name('schedules.groups.update');
 
     Route::get('/accounts', [App\Http\Controllers\AccountController::class, 'index'])->name('accounts.index');
+    Route::get('/accounts/create', [App\Http\Controllers\AccountController::class, 'create'])->name('accounts.create');
     Route::get('/accounts/{account}', [App\Http\Controllers\AccountController::class, 'show'])->name('accounts.edit');
 
     Route::get('/data', [App\Http\Controllers\DataController::class, 'index'])->name('data.index');
