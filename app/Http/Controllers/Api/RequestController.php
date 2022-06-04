@@ -177,7 +177,7 @@ class RequestController extends Controller
                 list($table, $operation) = explode('.', $request->operation);
 
                 $data = json_decode($request->data, true);
-
+                
                 if ($table == 'groups') {
 
                     if ($operation == 'update') {
@@ -189,6 +189,26 @@ class RequestController extends Controller
                 } else if ($table == 'users') {
     
                     if ($operation == 'update') {
+
+                        if (isset($data['firstname'])) {
+                            $data['first_name'] = $data['firstname'];
+                            unset($data['firstname']);
+                        }
+
+                        if (isset($data['lastname'])) {
+                            $data['last_name'] = $data['lastname'];
+                            unset($data['lastname']);
+                        }
+
+                        if (isset($data['allowed_sides'])) {
+                            $allowedSides = [
+                                'm' => 'Meron only',
+                                'w' => 'Wala only',
+                                'n' => 'None',
+                                'a' => 'All sides'
+                            ];
+                            $data['allowed_sides'] = $allowedSides[$data['allowed_sides']];
+                        }
     
                         $result = Account::where('uuid', $request->uuid)->update($data);
     
@@ -201,7 +221,7 @@ class RequestController extends Controller
                     'user_id' => 0,
                     'assets' => json_encode(array_merge([
                         'action' => 'Received update from a processed request. From ocbs.',
-                        'uuid' => $uuid,
+                        'uuid' => $request->uuid,
                         'target_table' => $table
                     ], $request->except(['table'])))
                 ]);
