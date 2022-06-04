@@ -10,6 +10,8 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
 
+    <link rel="shortcut icon" href="{{ asset('favicon.png')}}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('favicon.png') }}" type="image/x-icon">
     <!-- Styles -->
     <link href="{{ asset('css/min/backend.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
