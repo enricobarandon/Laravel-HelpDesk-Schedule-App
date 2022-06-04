@@ -11,13 +11,21 @@
                 <div class="card-header">{{ __('Accounts Management - Under development') }}</div>
 
                 <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
+                    
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
                         </div>
                     @endif
 
-                    <form>
+                    <form action="{{ route('storeAccountRequest') }}" method="post">
+                        @csrf
+                        <input type="hidden" name="uuid" value="{{ $account->uuid }}">
+                        <input type="hidden" name="operation" value="users.update">
 
                         <div class="col-md-4">
 

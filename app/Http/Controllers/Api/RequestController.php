@@ -10,9 +10,11 @@ use App\Http\Resources\ApiRequestResource;
 use Illuminate\Support\Facades\Http;
 use DB;
 use App\Models\Group;
-use App\Models\User;
+use App\Models\Account;
 use App\Models\ActivityLog;
 // use Auth;
+use Validator;
+use Illuminate\Validation\Rule;
 
 class RequestController extends Controller
 {
@@ -188,7 +190,7 @@ class RequestController extends Controller
     
                     if ($operation == 'update') {
     
-                        $result = User::where('uuid', $request->uuid)->update($data);
+                        $result = Account::where('uuid', $request->uuid)->update($data);
     
                     }
                 }
@@ -207,4 +209,83 @@ class RequestController extends Controller
         }
 
     }
+
+    public function storeAccountRequest(Request $request)
+    {
+        $user = auth()->user();
+        $uuid = request()->uuid;
+        $requestName = request()->operation;
+        $checkInRequests = RequestModel::where('operation', $requestName)
+                            ->where('uuid', $uuid)
+                            ->where('status','pending')
+                            ->first();
+
+        // $validated = request()->validate([
+        $validator = Validator::make(request()->all(), [
+            'operation' => 'required',
+            'first-name' => 'required|string|max:50',
+            'last-name' => 'required|string|max:50',
+            'username' => 'required|string|max:50',
+            'contact' => 'required|max:50',
+            'position' => ['required', Rule::in(['Cashier','Teller','Teller/Cashier','Supervisor','Operator'])],
+            'allowed-sides' => ['required', Rule::in(['m','w','n','a'])],
+            'is-active' => 'required|boolean'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->with('errors', $validator->messages());
+        }
+
+        $form = [
+            'api_key' => '4e829e510539afcc43365a18acc91ede41fb555e',
+            'uuid' => $uuid,
+            'operation' => $requestName,
+            'status' => 'pending',
+            'data' => json_encode([
+                'firstname' => $request->input('first-name'),
+                'lastname' => $request->input('last-name'),
+                'username' => $request->username,
+                'contact' => $request->contact,
+                'position' => $request->position,
+                'allowed_sides' => $request->input('allowed-sides'),
+                'is_active' => $request->input('is-active')
+            ]),
+            'remarks' => ''
+        ];
+
+        if (!$checkInRequests) {
+            $apiRequest = RequestModel::create($form);
+            if ($apiRequest) {
+                
+                $this->postRequestToKiosk($form);
+
+                $logs = ActivityLog::create([
+                    'type' => 'post-request',
+                    'user_id' => $user->id,
+                    'assets' => json_encode(array_merge([
+                        'action' => 'Posted a request to OCBS application',
+                        'request-type' => $requestName
+                    ],$request->except(['api_key','_token'])))
+                ]);
+
+                // dd($logs);
+
+                return response([
+                    'result' => 1,
+                    'message' => 'Please monitor the status of your requests on the Requests tab!'
+                ], 201);
+            } else {
+                return response([
+                    'result' => 0,
+                    'message' => 'Something went wrong! Please try again.'
+                ], 200);
+            }
+        } else {
+            return response([
+                'result' => 0,
+                'message' => 'Request already exists.'
+            ], 200);
+        }
+    }
+
 }
