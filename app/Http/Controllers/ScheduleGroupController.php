@@ -117,6 +117,16 @@ class ScheduleGroupController extends Controller
                 )
             );
         }
+        if ($request->has('download') || $request->has('downloadcurrent')) {
+
+            return Excel::download(
+                new ScheduledGroupExport('schedules.tables.manageTable', [
+                    'groupsForDisplay' => $groupsForDisplay,
+                    'scheduledGroupsOperationHours' => $scheduledGroupsOperationHours
+                ]),
+                'schedule.xlsx'
+            );
+        }
 
 
         // $groupsForDisplay = ScheduledGroup::select('groups.id')
@@ -137,7 +147,11 @@ class ScheduleGroupController extends Controller
             'groupsForDisplay' => $groupsForDisplay,
             'groupsForSelect' => $groupsForSelect,
             'provinces' => $provinces,
-            'scheduledGroupsOperationHours' => $scheduledGroupsOperationHours
+            'scheduledGroupsOperationHours' => $scheduledGroupsOperationHours,
+            'siteID' => $request->siteID,
+            'selectType' => $request->selectType,
+            'selectProvince' => $request->selectProvince,
+            
         ]);
         
     }
@@ -371,7 +385,7 @@ class ScheduleGroupController extends Controller
         $groupedByAccounts = ScheduledAccount::createAccountsAssocArr($scheduleId);
         // dd($groupedByAccounts);
         $tbody = '';
-        $groupCount = 1;
+        $groupCount = ($scheduledGroups->currentpage()-1)* $scheduledGroups->perpage() + 1;;
 
         foreach($scheduledGroups as $group) {
 

@@ -4,6 +4,15 @@
 <script src="{{ asset('js/timepicker.min.js') }}"></script>
 <script src="{{ asset('js/script.js') }}"></script>
 @endsection
+@php
+if (! function_exists('removeParam')) {
+    function removeParam($url, $param) {
+        $url = preg_replace('/(&|\?)'.preg_quote($param).'=[^&]*$/', '', $url);
+        $url = preg_replace('/(&|\?)'.preg_quote($param).'=[^&]*&/', '$1', $url);
+        return $url;
+    }
+}
+@endphp
 @section('content')
 <div class="content">
     <div class="container-fluid">
@@ -69,6 +78,10 @@
 
                     <div class="card-header">
                         <h3 class="card-title"><i class="fa fa-list"></i> Scheduled Groups</h3>
+                        <a class="btn btn-success float-right" href="{{ removeParam(request()->fullUrlWithQuery(['siteID' => $siteID,
+                                                                                                            'selectType' => $selectType,
+                                                                                                            'selectProvince' => $selectProvince,
+                                                                                                            'download' => '1',]), 'downloadcurrent') }}">Download Excel</a>
                     </div>
 
                     <div class="card-body">
