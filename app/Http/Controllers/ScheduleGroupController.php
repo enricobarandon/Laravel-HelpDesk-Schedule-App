@@ -359,7 +359,7 @@ class ScheduleGroupController extends Controller
     {
         $scheduleId = request()->id;
 
-        $scheduleInfo = Schedule::find($scheduleId, ['name','date_time']);
+        $scheduleInfo = Schedule::find($scheduleId, ['name','date_time','status']);
         
         $scheduledGroups = ScheduledGroup::select('scheduled_groups.schedule_id','scheduled_groups.operation_time','scheduled_groups.group_id','groups.group_type','groups.name','code','owner','contact','address','active_staff','installed_pc','remarks','provinces.site')
                             ->join('groups','groups.id', 'scheduled_groups.group_id')

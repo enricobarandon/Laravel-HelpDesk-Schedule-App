@@ -1,5 +1,16 @@
 @extends('layouts.app')
 
+@section('style')
+
+@if(Auth::user()->user_type_id == 2)
+<style>
+    .btn-create, .btn-edit, .btn-manage {
+        display: none;
+    }
+</style>
+@endif
+@endsection
+
 @section('content')
 @php
 if (! function_exists('removeParam')) {
@@ -18,7 +29,7 @@ if (! function_exists('removeParam')) {
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    Schedules
+                    <h3 class="card-title"><i class="fa fa-info-circle"></i> Active Schedules</h3>
                     <a class="btn btn-success float-right" href="{{ removeParam(request()->fullUrlWithQuery(['download' => '1']), 'downloadcurrent') }}">Download Excel</a>
                 </div>
 
@@ -28,8 +39,8 @@ if (! function_exists('removeParam')) {
                             {{ session('status') }}
                         </div>
                     @endif
-
                     <router-view />
+
                 </div>
             </div>
         </div>

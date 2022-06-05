@@ -13,9 +13,11 @@ if (! function_exists('removeParam')) {
 <!-- Main content -->
 <div class="content">
     <div class="container-fluid">
-
+    @if($scheduleInfo->status == 'active')
     <a href='{{ url("schedules") }}' class="btn btn-primary"><< Back to Schedule Management page</a>
-    
+    @else
+    <a href='{{ url("schedules-past") }}' class="btn btn-primary"><< Back to Past Schedules page</a>
+    @endif
     <div class="row">
         <main class="py-4">
 

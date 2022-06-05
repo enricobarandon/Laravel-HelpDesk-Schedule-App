@@ -1,5 +1,5 @@
 <template>
-    <router-link :to="{ name: 'schedules.create' }"  class="btn btn-primary float-right"><i class="fas fa-plus"></i> Create Schedule</router-link>
+    <router-link :to="{ name: 'schedules.create' }"  class="btn btn-primary float-right btn-create"><i class="fas fa-plus"></i> Create Schedule</router-link>
     <!-- <a href="/schedules/create" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Create Schedule</a> -->
         <table class="table table-bordered table-striped global-table">
             <thead>
@@ -17,11 +17,11 @@
                         <td>{{ format_date(item.date_time) }}</td>
                         <td>{{ format_datetime(item.created_at) }}</td>
                         <td class="display-center">
-                            <router-link :to="{ name: 'schedules.edit', params: {id: item.id} }"  class="btn btn-primary">
+                            <router-link :to="{ name: 'schedules.edit', params: {id: item.id} }"  class="btn btn-primary btn-edit">
                                 <i class="fas fa-cog"></i>Edit
                             </router-link>
-                            <a class="btn btn-secondary" :href="'/schedules/manage/' + item.id"><i class="fas fa-cog"></i> Manage Schedule</a>
-                            <a class="btn btn-info" :href="'/schedules/view/' + item.id"><i class="fas fa-eye"></i> View Schedule</a>
+                            <a class="btn btn-secondary btn-manage" :href="'/schedules/manage/' + item.id"><i class="fas fa-cog"></i> Manage Schedule</a>
+                            <a class="btn btn-info btn-view" :href="'/schedules/view/' + item.id"><i class="fas fa-eye"></i> View Schedule</a>
                             <!-- <button type="button" class="btn btn-info"><i class="fas fa-eye"></i> View Schedule</button> -->
                         </td>
                     </tr>

@@ -16,10 +16,10 @@ class ScheduleController extends Controller
      */
     public function index(Request $request)
     {
-        $schedules = Schedule::select('name','date_time','created_at')->get();
+        $schedules = Schedule::select('name','date_time','created_at')->where('status','active')->get();
 
-        if ($request->has('download') || $request->has('downloadcurrent')) {
-
+        
+        if ($request->has('download')) {
             return Excel::download(
                 new ScheduledGroupExport('schedules.tables.scheduleTable', [
                     'schedules' => $schedules
@@ -70,7 +70,8 @@ class ScheduleController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('schedules.edit', []);
+        
     }
 
     /**
@@ -94,5 +95,19 @@ class ScheduleController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function finishSchedule(Request $request){
+
+        $finishSchedules = Schedule::select('id','name','date_time','created_at')->where('status', 'finish')->orderBy('date_time','desc')->get();
+        if($request->has('download-finish')) {
+            return Excel::download(
+                new ScheduledGroupExport('schedules.tables.finish-schedule-table', [
+                    'finishSchedules' => $finishSchedules
+                ]),
+                'finish-schedules.xlsx'
+            ); 
+        }
+        return view('schedules.past-schedules', ['finishSchedules' => $finishSchedules]);
     }
 }

@@ -117,13 +117,26 @@
             </a>
           </li>
         @if($users->user_type_id == 1 || $users->user_type_id == 2 || $users->user_type_id == 3)
-          <li class="nav-item">
-            <a href="/schedules" class="nav-link {{ (request()->is('schedules*')) ? 'active' : '' }}">
-              <i class="nav-icon fa fa-calendar"></i>
-              <p>
-                Schedule
-              </p>
+          
+          <li class="nav-item {{ (request()->is('schedules*')) ? 'menu-is-opening menu-open' : 'menu-close' }}">
+            <a href="#" class="nav-link  {{ (request()->is('schedules*')) ? 'active' : '' }}">
+            <i class="nav-icon fa fa-calendar"></i>
+              <p>Schedules<i class="right fas fa-angle-left"></i></p>
             </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item {{ (request()->is('schedules')) ? 'custom-active' : '' }}">
+                <a href="/schedules" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Active Schedules</p>
+                </a>
+              </li>
+              <li class="nav-item {{ (request()->is('schedules-past')) ? 'custom-active' : '' }}">
+                <a href="/schedules-past" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Past Schedules</p>
+                </a>
+              </li>
+            </ul>
           </li>
 
           @if($users->user_type_id == 1)

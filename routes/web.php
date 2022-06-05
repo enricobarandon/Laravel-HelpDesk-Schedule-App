@@ -25,6 +25,7 @@ Route::middleware(['auth'])->group(function(){
     
     Route::resource('/schedules', \App\Http\Controllers\ScheduleController::class);
 
+    Route::get('/schedules-past', [App\Http\Controllers\ScheduleController::class, 'finishSchedule'])->name('schedules.past-schedules');
     Route::get('/schedules/manage/{id}', [App\Http\Controllers\ScheduleGroupController::class, 'index'])->name('schedules.groups.manage');
     Route::post('/schedules/manage/{id?}', [App\Http\Controllers\ScheduleGroupController::class, 'addGroup'])->name('schedules.groups.addGroup');
     Route::post('/schedules/{scheduleId}/remove/{groupId}', [App\Http\Controllers\ScheduleGroupController::class, 'removeGroup'])->name('schedules.groups.removeGroup');
