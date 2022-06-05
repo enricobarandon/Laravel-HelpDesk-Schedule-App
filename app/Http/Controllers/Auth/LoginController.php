@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Auth;
+use App\Models\ActivityLog;
+use App\Models\UserType;
 
 class LoginController extends Controller
 {
@@ -26,8 +29,33 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    // protected $redirectTo = RouteServiceProvider::HOME;
+    public function redirectTo() 
+    {
+        $user = Auth::user();
+        ActivityLog::create([
+            'type' => 'login',
+            'user_id' => $user->id,
+            'assets' => json_encode([
+                'email' => $user->email,
+                'user_role' => UserType::getUserRole($user->user_type_id)->role
+            ])
+        ]);
+    }
 
+    public function logout() {
+        $user = Auth::user();
+        ActivityLog::create([
+            'type' => 'logout',
+            'user_id' => $user->id,
+            'assets' => json_encode(['
+                email' => $user->email,
+                'user_role' => UserType::getUserRole($user->user_type_id)->role
+            ])
+        ]);
+        Auth::logout();
+        return redirect('/');
+    }
     /**
      * Create a new controller instance.
      *
@@ -37,4 +65,6 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    
 }

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\RequestModel;
 use Excel;
 use App\Exports\ScheduledGroupExport;
+use Auth;
 
 class RequestController extends Controller
 {
@@ -15,8 +16,13 @@ class RequestController extends Controller
         $requests = RequestModel::select('requests.id','requests.operation','requests.status','requests.data','groups.name as group_name','accounts.username','requests.remarks')
                         ->leftjoin('groups','groups.uuid', 'requests.uuid')
                         ->leftjoin('accounts','accounts.uuid','requests.uuid')
-                        ->orderBy('id','desc')
-                        ->paginate(100);
+                        ->orderBy('id','desc');
+        
+        if(Auth::user()->user_type_id == 5){
+            $requests = $requests->where('requests.operation', 'groups.update');
+        }
+
+        $requests = $requests->paginate(100);
 
         if ($request->has('download') || $request->has('downloadcurrent')) {
 

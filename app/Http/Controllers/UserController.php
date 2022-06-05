@@ -7,6 +7,8 @@ use App\Models\User;
 use App\Models\UserType;
 use Illuminate\Support\Facades\Validator;
 use Hash;
+use App\Models\ActivityLog;
+use Auth;
 
 class UserController extends Controller
 {
@@ -32,7 +34,11 @@ class UserController extends Controller
 
     public function submitUser(Request $request){
 
+        $user = Auth::user();
+        
         $updateUsers = '';
+
+        $logs = '';
 
         if($request->operation == 'info'){
             $validator = Validator::make($request->all(), [
@@ -51,6 +57,12 @@ class UserController extends Controller
                         'email' => $request->email,
                         'user_type_id' => $request->user_type_id
                     )
+                );
+                $logs = array(
+                    'action' => 'Update Users Details',
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'user_role' => UserType::getUserRole($request->user_type_id)->role
                 );
             }
         }else{
@@ -72,6 +84,10 @@ class UserController extends Controller
                             'password' => $newPassword
                         )
                     );
+                    $logs = array(
+                        'action' => 'Update password',
+                        'email' => User::getUserInfo($request->id)->email,
+                    );
                 }else{
                     return redirect('/users/update/'.$request->id.'/password')
                     ->withErrors('Password and Confirm password not match!');
@@ -81,6 +97,11 @@ class UserController extends Controller
         }
         
         if($updateUsers){
+            ActivityLog::create([
+                'type' => 'update-user',
+                'user_id' => $user->id,
+                'assets' => json_encode($logs)
+            ]);
             return redirect('/users')->with('success','User successfully updated.');
         }
     }
