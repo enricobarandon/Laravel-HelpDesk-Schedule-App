@@ -95,7 +95,7 @@
                         <div class="col-md-4">
 
                             <div class="form-group">
-                                <label>Status</label>
+                                <label>Status: </label>
                                 <label class="radio-active" for="active">
                                 <input 
                                     type="radio"

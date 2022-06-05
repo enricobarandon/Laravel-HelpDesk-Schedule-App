@@ -62,7 +62,7 @@ class AccountController extends Controller
             'Operator'
         ];
 
-        $groups = Group::select('code','name')
+        $groups = Group::select('id','code','name')
                     ->where('is_active',1)
                     ->orderBy('name','asc')
                     ->get();

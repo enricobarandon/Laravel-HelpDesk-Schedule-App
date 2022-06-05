@@ -52,6 +52,22 @@
                                 <label>Contact</label>
                                 <input type="text" class="form-control" id="contact" name="contact" value="{{ $account->contact }}">
                             </div>
+
+                            <div class="form-group">
+                                <label>Group</label>
+                                <select class="form-control" id="group-code" name="group-code">
+                                    <option selected disabled> -- Select Group --</option>
+                                    @foreach($groups as $group)
+                                        <option value="{{ $group->code }}"
+                                            <?php
+                                                echo $account->group_id == $group->id ? 'selected' : ''
+                                            ?>
+                                        >
+                                            {{ $group->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
                             
                         </div>
 
@@ -59,7 +75,6 @@
 
                             <div class="form-group">
                                 <label>Position</label>
-                                <!-- <input type="text" class="form-control" id="position" name="position" value="{{ $account->position }}"> -->
                                 <select class="form-control" id="position" name="position">
                                     <option selected disabled> -- Select Position --</option>
                                     @foreach($positions as $position)
@@ -76,13 +91,8 @@
 
                             <div class="form-group">
                                 <label>Allowed Sides</label>
-                                <!-- <input type="text" class="form-control" id="group-guarantor" name="group-guarantor"> -->
                                 <select class="form-control" id="allowed-sides" name="allowed-sides">
                                     <option selected disabled> -- Select Allowed Sides --</option>
-                                    <!-- <option value="m">Meron Only</option>
-                                    <option value="w">Wala Only</option>
-                                    <option value="a">All Sides</option>
-                                    <option value="n">None</option> -->
                                     @foreach($allowedSides as $key => $side)
                                         <option value="{{ $key }}" <?php echo $account->allowed_sides == $side ? 'selected' : '' ?>>
                                             {{ $side }}
@@ -96,7 +106,7 @@
                         <div class="col-md-4">
 
                             <div class="form-group">
-                                <label>Status</label>
+                                <label>Status: </label>
                                 <label class="radio-active" for="active">
                                 <input 
                                     type="radio"

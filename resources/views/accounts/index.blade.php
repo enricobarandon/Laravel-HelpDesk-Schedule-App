@@ -17,9 +17,13 @@ if (! function_exists('removeParam')) {
                 <div class="card-header">{{ __('Schedule Management') }}</div>
 
                 <div class="card-body">
-                    @if (session('status'))
+                    @if (session('success'))
                         <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
+                            {{ session('success') }}
+                        </div>
+                    @elseif(session('error'))
+                        <div class="alert alert-danger" role="alert">
+                            {{ session('error') }}
                         </div>
                     @endif
 

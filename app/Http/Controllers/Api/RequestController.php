@@ -314,23 +314,26 @@ class RequestController extends Controller
                     ],$request->except(['api_key','_token'])))
                 ]);
 
-                // dd($logs);
+                // return response([
+                //     'result' => 1,
+                //     'message' => 'Please monitor the status of your requests on the Requests tab!'
+                // ], 201);
+                return redirect()->route('accounts.index')->with('success', 'Request posted! Please monitor the status of your requests on the Requests tab!'); 
 
-                return response([
-                    'result' => 1,
-                    'message' => 'Please monitor the status of your requests on the Requests tab!'
-                ], 201);
             } else {
-                return response([
-                    'result' => 0,
-                    'message' => 'Something went wrong! Please try again.'
-                ], 200);
+                // return response([
+                //     'result' => 0,
+                //     'message' => 'Something went wrong! Please try again.'
+                // ], 200);
+                
+                return redirect()->route('accounts.index')->with('error', 'Something went wrong! Please try again.'); 
             }
         } else {
-            return response([
-                'result' => 0,
-                'message' => 'Request already exists.'
-            ], 200);
+            // return response([
+            //     'result' => 0,
+            //     'message' => 'Request already exists.'
+            // ], 200);
+            return redirect()->route('accounts.index')->with('error', 'Request already exists.'); 
         }
     }
 
