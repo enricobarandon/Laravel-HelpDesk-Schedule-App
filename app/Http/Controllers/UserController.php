@@ -14,7 +14,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::select('users.id','name','email','user_types.role as role')
+        $users = User::select('users.id','name','email','user_types.role as role','users.created_at as created_at')
                     ->join('user_types', 'user_types.id','users.user_type_id')
                     ->get();
         return view('users.index', compact('users'));

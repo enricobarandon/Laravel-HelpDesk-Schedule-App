@@ -5,7 +5,9 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card card-info">
-                <div class="card-header">{{ __('Users Page') }}</div>
+                <div class="card-header">
+                    <h3 class="card-title"><i class="fa fa-info-circle"></i> Users Page</h3>
+                </div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -22,7 +24,7 @@
                         </div>
                     @endif
 
-                    <a href='/register' class="btn btn-primary"><i class="fas fa-plus"></i> Create User</a>
+                    <a href='/register' class="btn btn-primary float-right"><i class="fas fa-plus"></i> Create User</a>
                     <table class="table table-bordered table-striped global-table">
                         <thead>
                             <tr>
@@ -30,6 +32,7 @@
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>User Role</th>
+                                <th>Created At</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -43,6 +46,7 @@
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->role }}</td>
+                                    <td>{{ date("M d, Y h:i:s a",strtotime($user->created_at)) }}</td>
                                     <td class="text-center">
                                         <a href="{{ url('users/update') }}/{{ $user->id }}/info" name="updateUser" class="btn btn-primary"><i class="fas fa-cog"></i> Edit</a>
                                         

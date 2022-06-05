@@ -5,10 +5,13 @@
     
     <!-- <a href='{{ url("schedules") }}' class="btn btn-primary"><< Back to Schedule Management page</a> -->
 
-    <div class="row justify-content-center">
-        <div class="col-md-12">
+    <div class="justify-content-center">
+        <div>
+        <a href='{{ url("accounts") }}' class="btn btn-primary"><< Back to Accounts Page</a>
             <div class="card">
-                <div class="card-header">{{ __('Accounts Management') }}</div>
+                <div class="card-header">
+                    <h3 class="card-title"><i class="fa fa-info-circle"></i> Accounts Management</h3>
+                </div>
 
                 <div class="card-body">
                     
@@ -22,17 +25,21 @@
                         </div>
                     @endif
 
-                    <form action="{{ route('storeAccountRequest') }}" method="post">
+                    <form action="{{ route('storeAccountRequest') }}" class="row" method="post">
                         @csrf
                         <input type="hidden" name="uuid" value="{{ $account->uuid }}">
                         <input type="hidden" name="operation" value="users.update">
 
-                        <div class="col-md-4">
+                        <div class="col-md-6">
 
                             <div class="form-group">
                                 <label>First Name</label>
                                 <input type="text" class="form-control" id="first-name" name="first-name" value="{{ $account->first_name }}">
                             </div>
+
+                        </div>
+                        
+                        <div class="col-md-6">
 
                             <div class="form-group">
                                 <label>Last Name</label>
@@ -41,17 +48,25 @@
 
                         </div>
 
-                        <div class="col-md-4">
+                        <div class="col-md-6">
 
                             <div class="form-group">
                                 <label>Username</label>
                                 <input type="text" class="form-control" id="username" name="username" value="{{ $account->username }}">
                             </div>
+                            
+                        </div>
+                        
+                        <div class="col-md-6">
 
-                            <div class="form-group">
+                        <div class="form-group">
                                 <label>Contact</label>
                                 <input type="text" class="form-control" id="contact" name="contact" value="{{ $account->contact }}">
                             </div>
+
+                        </div>
+
+                        <div class="col-md-6">
 
                             <div class="form-group">
                                 <label>Group</label>
@@ -68,10 +83,10 @@
                                     @endforeach
                                 </select>
                             </div>
-                            
-                        </div>
 
-                        <div class="col-md-4">
+                        </div>
+                        
+                        <div class="col-md-6">
 
                             <div class="form-group">
                                 <label>Position</label>
@@ -89,6 +104,10 @@
                                 </select>
                             </div>
 
+                        </div>
+
+                        <div class="col-md-6">
+
                             <div class="form-group">
                                 <label>Allowed Sides</label>
                                 <select class="form-control" id="allowed-sides" name="allowed-sides">
@@ -103,33 +122,35 @@
 
                         </div>
 
-                        <div class="col-md-4">
-
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label>Status: </label>
-                                <label class="radio-active" for="active">
-                                <input 
-                                    type="radio"
-                                    name="is-active" 
-                                    id="active"
-                                    value="1" 
-                                    <?php echo $account->is_active ? 'checked' : '' ?>
-                                >
-                                Active</label>
-                                <label class="radio-deactivated" for="deactivated">
-                                <input 
-                                    type="radio"
-                                    name="is-active" 
-                                    id="deactivated"
-                                    value="0" 
-                                    <?php echo $account->is_active ? '' : 'checked' ?>
-                                >
-                                Deactivated</label>
+
+                                <div class="form-control">
+                                    <label class="radio-active" for="active">
+                                    <input 
+                                        type="radio"
+                                        name="is-active" 
+                                        id="active"
+                                        value="1" 
+                                        <?php echo $account->is_active ? 'checked' : '' ?>
+                                    >
+                                    Active</label>
+                                    <label class="radio-deactivated" for="deactivated">
+                                    <input 
+                                        type="radio"
+                                        name="is-active" 
+                                        id="deactivated"
+                                        value="0" 
+                                        <?php echo $account->is_active ? '' : 'checked' ?>
+                                    >
+                                    Deactivated</label>
+                                </div>
                             </div>
 
                         </div>
 
-                        <div class="col-md-4">
+                        <div class="col-md-6">
 
                             <div class="form-group">
                                 <label>Request Remarks</label>
@@ -138,7 +159,9 @@
                             
                         </div>
 
-                        <input type="submit" class="btn btn-success" value="Submit Update Request">
+                        <div class="col-md-12 text-center">
+                            <input type="submit" class="btn btn-success" value="Submit Update Request">
+                        </div>
 
                     </form>
 
