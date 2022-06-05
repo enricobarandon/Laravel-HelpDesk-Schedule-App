@@ -18,6 +18,13 @@
             <!-- <input type="text" name="date_time" class="form-control" id="date_time" placeholder="Y-m-d H:i:s a" v-model="schedule.date_time"> -->
             <Datepicker :format="formatDate" name="date_time" id="date_time" placeholder="Y-m-d" v-model="schedule.date_time" />
         </div>
+        <div class="form-group">
+            <label for="status">Status</label>
+            <select class="form-control" name="status" v-model="schedule.status">
+                <option selected value="active">Active</option>
+                <option value="finished">Finished</option>
+            </select>
+        </div>
 
         <button type="submit" class="btn btn-primary">Submit</button>
 

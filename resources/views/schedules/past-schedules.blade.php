@@ -41,7 +41,7 @@ if (! function_exists('removeParam')) {
                             @php
                                 $scheduleCount = 1;
                             @endphp
-                            @foreach($finishSchedules as $schedule)
+                            @foreach($pastSchedules as $schedule)
                                 <tr>
                                     <td>{{ $scheduleCount++ }}</td>
                                     <td>{{ $schedule->name }}</td>

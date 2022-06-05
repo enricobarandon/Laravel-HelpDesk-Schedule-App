@@ -21,7 +21,8 @@ class ScheduleController extends Controller
      */
     public function index()
     {
-        $schedules = Schedule::select('id','name','date_time','created_at')->where('status', 'active')->orderBy('date_time','desc')->get();
+        $schedules = Schedule::select('id','name','status','date_time','created_at')->where('status', 'active')->orderBy('date_time','desc')->get();
+
         return ScheduleResource::collection($schedules);
     }
 
@@ -34,18 +35,19 @@ class ScheduleController extends Controller
     public function store(ScheduleRequest $request)
     {
         $request->date_time = date('Y-m-d h:i:s', strtotime($request->date_time));
+
         $schedule = Schedule::create($request->validated());
 
-        $user = Auth::user();
+        $user = auth()->user();
 
-        // ActivityLog::create([
-        //     'type' => 'store-schedule',
-        //     'user_id' => Auth::id(),
-        //     'assets' => json_encode([
-        //         'action' => 'Created a schedule',
-        //         'data' => json_encode($request->all())
-        //     ])
-        // ]);
+        ActivityLog::create([
+            'type' => 'store-schedule',
+            'user_id' => $user->id,
+            'assets' => json_encode([
+                'action' => 'Created a schedule',
+                'data' => json_encode($request->all())
+            ])
+        ]);
 
         return new ScheduleResource($schedule);
     }

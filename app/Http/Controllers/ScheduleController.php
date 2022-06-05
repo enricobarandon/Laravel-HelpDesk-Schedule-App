@@ -97,17 +97,21 @@ class ScheduleController extends Controller
         //
     }
 
-    public function finishSchedule(Request $request){
-
-        $finishSchedules = Schedule::select('id','name','date_time','created_at')->where('status', 'finish')->orderBy('date_time','desc')->get();
+    public function pastSchedules(Request $request){
+        $pastSchedules = Schedule::select('id','name','status','date_time','created_at')
+                                ->where('status', 'finished')
+                                ->orderBy('date_time','desc')
+                                ->get();
+                                
         if($request->has('download-finish')) {
             return Excel::download(
                 new ScheduledGroupExport('schedules.tables.finish-schedule-table', [
-                    'finishSchedules' => $finishSchedules
+                    'pastSchedules' => $pastSchedules
                 ]),
-                'finish-schedules.xlsx'
+                'past-schedules.xlsx'
             ); 
         }
-        return view('schedules.past-schedules', ['finishSchedules' => $finishSchedules]);
+
+        return view('schedules.past-schedules', ['pastSchedules' => $pastSchedules]);
     }
 }
