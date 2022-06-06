@@ -63,7 +63,7 @@ class AccountController extends Controller
         ];
 
         $groups = Group::select('id','code','name')
-                    ->where('is_active',1)
+                    // ->where('is_active',1)
                     ->orderBy('name','asc')
                     ->get();
         
@@ -88,7 +88,7 @@ class AccountController extends Controller
         ];
 
         $groups = Group::select('code','name')
-                    ->where('is_active',1)
+                    // ->where('is_active',1)
                     ->orderBy('name','asc')
                     ->get();
 
