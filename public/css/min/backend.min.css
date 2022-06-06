@@ -22488,6 +22488,10 @@ a.text-dark:focus {
 .position-relative {
     position: relative
 }
+.hr-css {
+    margin: 10px 0;
+    padding: 0 !important;
+}
 
 /*! jQuery UI - v1.13.1 - 2022-01-20
 * http://jqueryui.com

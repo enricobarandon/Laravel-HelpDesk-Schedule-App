@@ -11535,3 +11535,7 @@ textarea.form-control-lg {
 .position-relative {
     position: relative
 }
+.hr-css {
+    margin: 10px 0;
+    padding: 0 !important;
+}

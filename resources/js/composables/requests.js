@@ -20,7 +20,7 @@ export default function useRequests() {
                     text: store.data.message,
                     icon: "success"
                 }).then(function() {
-                    router.push({ name: 'requests.index' })
+                    window.location.href = '/requests'
                 });
             } else {
                 Swal.fire({
