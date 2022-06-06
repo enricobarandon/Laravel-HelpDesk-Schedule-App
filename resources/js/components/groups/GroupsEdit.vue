@@ -96,9 +96,11 @@
             </div>
         </div>
 
-        <button type="submit" class="btn btn-primary" @click="postUpdateRequest(group.uuid)">Submit Update Request</button>
+        <div class="col-md-12 text-center">
+            <button type="submit" class="btn btn-primary" @click="postUpdateRequest(group.uuid)">Submit Update Request</button>
+        </div>
 
-        <hr/>
+        <hr class="hr-css"/>
 
         <form @submit.prevent="saveGroup">
             <div class="col-md-6">
@@ -115,7 +117,9 @@
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <div class="col-md-12 text-center">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
 
         </form>
 
