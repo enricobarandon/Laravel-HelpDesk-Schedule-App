@@ -21,7 +21,7 @@ class OcbsController extends Controller
             $update = Group::where('uuid', $uuid)->update($request->except(['table']));
 
         } else if ($table == 'users') {
-
+            
             $updateAccountForm = $request->except(['table']);
 
             $findGroup = Group::select('id')->where('uuid', $request->group_uuid)->first();

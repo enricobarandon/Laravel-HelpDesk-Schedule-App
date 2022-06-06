@@ -20,7 +20,7 @@ export default function useRequests() {
                     text: store.data.message,
                     icon: "success"
                 }).then(function() {
-                    // router.push({ name: 'schedules.index' })
+                    router.push({ name: 'requests.index' })
                 });
             } else {
                 Swal.fire({
