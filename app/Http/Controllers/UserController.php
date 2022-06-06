@@ -9,15 +9,43 @@ use Illuminate\Support\Facades\Validator;
 use Hash;
 use App\Models\ActivityLog;
 use Auth;
+use DB;
+use Excel;
+use App\Exports\ScheduledGroupExport;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $userTypes = UserType::get();
+
         $users = User::select('users.id','name','email','user_types.role as role','users.created_at as created_at')
-                    ->join('user_types', 'user_types.id','users.user_type_id')
-                    ->get();
-        return view('users.index', compact('users'));
+                    ->join('user_types', 'user_types.id','users.user_type_id');
+
+        $keyword = $request->keyword;
+
+        if($request->keyword){
+            $users = $users->where(DB::raw('concat(users.name,users.email)'), 'like', '%' . $request->keyword . '%');
+        }
+
+        $userType = $request->userType;
+
+        if($request->userType){
+            $users = $users->where('users.user_type_id', $request->userType);
+        }
+
+        $users = $users->get();
+
+        if ($request->has('download')) {
+            return Excel::download(
+                new ScheduledGroupExport('users.tables.usersTable', [
+                    'users' => $users
+                ]),
+                'users.xlsx'
+            );
+        }
+
+        return view('users.index', compact('users','userTypes','keyword','userType'));
     }
     public function updateUser(Request $request){
         $userTypes = UserType::get();

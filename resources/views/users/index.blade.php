@@ -1,5 +1,14 @@
 @extends('layouts.app')
 
+@php
+if (! function_exists('removeParam')) {
+    function removeParam($url, $param) {
+        $url = preg_replace('/(&|\?)'.preg_quote($param).'=[^&]*$/', '', $url);
+        $url = preg_replace('/(&|\?)'.preg_quote($param).'=[^&]*&/', '$1', $url);
+        return $url;
+    }
+}
+@endphp
 @section('content')
 <div class="container-fluid">
     <div class="row justify-content-center">
@@ -7,6 +16,8 @@
             <div class="card card-info">
                 <div class="card-header">
                     <h3 class="card-title"><i class="fa fa-info-circle"></i> Users Page</h3>
+                    <a class="btn btn-success float-right" href="{{ removeParam(request()->fullUrlWithQuery(['download' => '1']), 'downloadcurrent') }}">Download Excel</a>
+                    <a href='/register' class="btn btn-primary float-right"><i class="fas fa-plus"></i> Create User</a>
                 </div>
 
                 <div class="card-body">
@@ -24,7 +35,31 @@
                         </div>
                     @endif
 
-                    <a href='/register' class="btn btn-primary float-right"><i class="fas fa-plus"></i> Create User</a>
+                    
+                    <form class="form-horizontal" method="get">
+                        <div class="form-group row">
+
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" name="keyword" id="keyword" placeholder="keyword" value="{{ $keyword }}">
+                            </div>
+
+                            <div class="col-md-3">
+                                <select class="form-control" name="userType" id="userType">
+                                    <option value="" selected disabled>Select All Type</option>
+                                    @foreach($userTypes as $type)
+                                    <option value="{{ $type->id }}" {{ $userType == $type->id ? 'selected' : '' }}>{{ $type->role }}</option>
+                                    @endforeach
+                                    
+                                </select>
+                            </div>
+
+                            <div class="col">
+                                <button type="submit" class="btn btn-success"><i class="fas fa-search"></i> Submit</button>
+                                <a href="{{ url('/users') }}" class="btn btn-danger">Reset</a>
+                            </div>
+                        </div>
+                    </form>
+
                     <table class="table table-bordered table-striped global-table">
                         <thead>
                             <tr>

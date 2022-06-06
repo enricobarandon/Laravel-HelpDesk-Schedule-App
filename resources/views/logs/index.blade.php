@@ -44,7 +44,7 @@
                                         <td>{{ $value->type }}</td>
                                         
                                         <td>
-                                            {{ $value->name }}
+                                            {{ $value->name. ' - ' . $value->role  }}
                                         </td>
                                         <td>
                                             @php

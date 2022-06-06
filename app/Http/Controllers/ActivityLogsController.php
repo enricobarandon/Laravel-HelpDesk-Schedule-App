@@ -10,8 +10,9 @@ class ActivityLogsController extends Controller
 {
     public function index(Request $request)
     {
-        $activityLogs = ActivityLog::select('activity_logs.id as id','type','users.name as name','assets','activity_logs.created_at as created_at')
+        $activityLogs = ActivityLog::select('activity_logs.id as id','type','users.name as name','assets','activity_logs.created_at as created_at','user_types.role')
                         ->leftjoin('users','users.id','activity_logs.user_id')
+                        ->leftjoin('user_types','user_types.id','users.user_type_id')
                         ->orderBy('id','desc');
                         // ->paginate(30);
         
