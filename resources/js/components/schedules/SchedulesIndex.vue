@@ -4,6 +4,7 @@
         <table class="table table-bordered table-striped global-table">
             <thead>
                 <tr>
+                    <th>ID</th>
                     <th>Schedule Name</th>
                     <th>Schedule Date</th>
                     <th>Created At</th>
@@ -13,6 +14,7 @@
             <tbody>
                 <template v-for="item in schedules" :key="item.id">
                     <tr>
+                        <td>{{ item.id }}</td>
                         <td>{{ item.name }}</td>
                         <td>{{ format_date(item.date_time) }}</td>
                         <td>{{ format_datetime(item.created_at) }}</td>
