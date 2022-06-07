@@ -141,7 +141,7 @@ class RequestController extends Controller
                         'contact' => $request->input('group-contact'),
                         'province_id' => $request->input('province-id'),
                         'address' => $request->input('group-address'),
-                        'status' => $request->input('is_active'),
+                        'is_active' => $request->input('is_active'),
                         'type' => $request->input('group-type'),
                         'guarantor' => $request->input('group-guarantor')
                     ]),
