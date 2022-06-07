@@ -16,7 +16,7 @@ class ScheduleController extends Controller
      */
     public function index(Request $request)
     {
-        $schedules = Schedule::select('name','date_time','created_at')->where('status','active')->get();
+        $schedules = Schedule::select('id','name','date_time','created_at')->where('status','active')->orderBy('date_time','desc')->get();
 
         
         if ($request->has('download')) {

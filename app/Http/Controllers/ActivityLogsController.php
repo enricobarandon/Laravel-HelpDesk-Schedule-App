@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\ActivityLog;
 use DB;
+use Excel;
+use App\Exports\ScheduledGroupExport;
 
 class ActivityLogsController extends Controller
 {
@@ -19,10 +21,18 @@ class ActivityLogsController extends Controller
         $keyword = $request->keyword;
         
         if($request->keyword){
-            $activityLogs = $activityLogs->where(DB::raw('concat(activity_logs.type,activity_logs.assets)'), 'like', '%' . $request->keyword . '%');
+            $activityLogs = $activityLogs->where(DB::raw('concat(activity_logs.type,activity_logs.assets,users.name)'), 'like', '%' . $request->keyword . '%');
         }
         
-        $activityLogs = $activityLogs->paginate(30);
+        $activityLogs = $activityLogs->paginate(100);
+        if ($request->has('download')) {
+            return Excel::download(
+                new ScheduledGroupExport('logs.tables.logs-table', [
+                    'activityLogs' => $activityLogs
+                ]),
+                'activityLogs.xlsx'
+            );
+        }
 
         return view('logs.index', compact('activityLogs','keyword'));
     }

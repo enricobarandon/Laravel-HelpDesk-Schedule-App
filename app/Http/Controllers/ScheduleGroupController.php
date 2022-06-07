@@ -164,17 +164,18 @@ class ScheduleGroupController extends Controller
 
         $user = Auth::user();
 
-        ActivityLog::create([
-            'type' => 'add-group',
-            'user_id' => $user->id,
-            'assets' => json_encode([
-                'action' => 'added group to schedule',
-                'group_id' => $groupId,
-                'schedule_id' => $scheduleId
-            ])
-        ]);
-
         if ($groupId == 'all') {
+
+            ActivityLog::create([
+                'type' => 'add-group',
+                'user_id' => $user->id,
+                'assets' => json_encode([
+                    'action' => 'added group to schedule',
+                    'group_id' => $groupId,
+                    'schedule_id' => $scheduleId,
+                    'group_code' => 'All Active Groups'
+                ])
+            ]);
 
             $allGroups = Group::select('id')->where('is_active', 1)->orderBy('name','asc')->get();
 
@@ -200,6 +201,19 @@ class ScheduleGroupController extends Controller
             
         } else if ($groupId > 0)  {
 
+            $groupCode = Group::select('code')->where('groups.id',$groupId)->first();
+
+            ActivityLog::create([
+                'type' => 'add-group',
+                'user_id' => $user->id,
+                'assets' => json_encode([
+                    'action' => 'added group to schedule',
+                    'group_id' => $groupId,
+                    'schedule_id' => $scheduleId,
+                    'group_code' => $groupCode
+                ])
+            ]);
+
             $scheduledGroup = ScheduledGroup::create([
                 'schedule_id' => $scheduleId,
                 'group_id' => $groupId,
@@ -215,6 +229,7 @@ class ScheduleGroupController extends Controller
         } else {
             return redirect('/schedules/manage/' . $scheduleId)->with('error', 'Something went wrong!');
         }
+        
     }
 
     public function removeGroup()
@@ -234,13 +249,17 @@ class ScheduleGroupController extends Controller
         $deleteScheduledAccounts = ScheduledAccount::where('scheduled_group_id', $scheduledGroupInfo->id)
                                         ->delete();
 
+
+        $groupCode = Group::select('code')->where('groups.id',$groupId)->first();
+        
         ActivityLog::create([
             'type' => 'remove-group',
             'user_id' => $user->id,
             'assets' => json_encode([
                 'action' => 'removed group from a schedule',
                 'group_id' => $groupId,
-                'schedule_id' => $scheduleId
+                'schedule_id' => $scheduleId,
+                'group_code' => $groupCode
             ])
         ]);
 
