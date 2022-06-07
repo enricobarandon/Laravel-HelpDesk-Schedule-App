@@ -279,10 +279,20 @@ class RequestController extends Controller
                 
                 if ($table == 'groups') {
 
+                    // dd($data);
+                    if (isset($data['type'])) {
+                        $data['group_type'] = $data['type'];
+                        unset($data['type']);
+                    }
+
                     if ($operation == 'update') {
     
                         $result = Group::where('uuid', $request->uuid)->update($data);
     
+                    } else if($operation == 'create') {
+
+                        $result = Group::create($data);
+
                     }
     
                 } else if ($table == 'users') {
@@ -307,13 +317,19 @@ class RequestController extends Controller
                         $data['allowed_sides'] = $allowedSides[$data['allowed_sides']];
                     }
 
+                    if (isset($data['group_code'])) {
+                        $groupInfo = Group::select('id')->where('code', $data['group_code'])->first();
+                        $data['group_id'] = $groupInfo->id;
+                        unset($data['group_code']);
+                    }
+
     
                     if ($operation == 'update') {
     
                         $result = Account::where('uuid', $request->uuid)->update($data);
     
                     } else if($operation == 'create') {
-                        dd($data);
+
                         $result = Account::create($data);
 
                     }

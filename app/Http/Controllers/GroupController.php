@@ -40,7 +40,18 @@ class GroupController extends Controller
 
     public function create()
     {
+        $types = [
+            '1' => 'ARENA',
+            '2' => 'OCBS-LOTTO',
+            '3' => 'OCBS-OTB',
+            4 =>'OCBS-RESTOBAR',
+            5 =>'OCBS-STORE',
+            6 =>'OCBS-MALL',
+            7 =>'OCBS',
+            8 =>'OCBS-EGAMES',
+            9 =>'OCBS-CASINO'
+        ];
         $provinces = Province::all();
-        return view('groups.create', compact('provinces'));
+        return view('groups.create', compact('provinces','types'));
     }
 }

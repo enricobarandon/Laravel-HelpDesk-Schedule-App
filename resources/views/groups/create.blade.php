@@ -26,7 +26,13 @@
 
             <div class="form-group">
                 <label>Group Type</label>
-                <input type="text" class="form-control" id="group-type" name="group-type">
+                <!-- <input type="text" class="form-control" id="group-type" name="group-type"> -->
+                <select  class="form-control" id="group-type" name="group-type">
+                    <option selected disabled>--SELECT TYPE--</option>
+                    @foreach($types as $index => $type)
+                        <option value="{{ $index }}">{{ $type }}</option>
+                    @endforeach
+                </select>
             </div>
 
             <div class="form-group">
