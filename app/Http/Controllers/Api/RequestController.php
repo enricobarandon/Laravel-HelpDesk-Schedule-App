@@ -116,18 +116,18 @@ class RequestController extends Controller
                     return redirect()->back()->with('errors', $validator->messages());
                 }
 
-                $type = [
-                    'foo',
-                    'ARENA',
-                    'OCBS-LOTTO',
-                    'OCBS-OTB',
-                    'OCBS-RESTOBAR',
-                    'OCBS-STORE',
-                    'OCBS-MALL',
-                    'OCBS',
-                    'OCBS-EGAMES',
-                    'OCBS-CASINO'
-                ];
+                // $type = [
+                //     'foo',
+                //     'ARENA',
+                //     'OCBS-LOTTO',
+                //     'OCBS-OTB',
+                //     'OCBS-RESTOBAR',
+                //     'OCBS-STORE',
+                //     'OCBS-MALL',
+                //     'OCBS',
+                //     'OCBS-EGAMES',
+                //     'OCBS-CASINO'
+                // ];
                 
                 $form = [
                     'api_key' => '4e829e510539afcc43365a18acc91ede41fb555e',
@@ -142,7 +142,7 @@ class RequestController extends Controller
                         'province_id' => $request->input('province-id'),
                         'address' => $request->input('group-address'),
                         'status' => $request->input('is_active'),
-                        'type' => array_search($request->input('group-type'), $type),
+                        'type' => $request->input('group-type'),
                         'guarantor' => $request->input('group-guarantor')
                     ]),
                     'remarks' => $request->remarks
