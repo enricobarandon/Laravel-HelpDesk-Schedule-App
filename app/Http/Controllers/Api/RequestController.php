@@ -135,6 +135,7 @@ class RequestController extends Controller
                     'operation' => $requestName,
                     'status' => 'pending',
                     'data' => json_encode([
+                        'uuid' => $uuid,
                         'name' => $request->input('group-name'),
                         'code' => $request->input('group-code'),
                         'owner' => $request->input('group-operator'),
@@ -389,6 +390,7 @@ class RequestController extends Controller
             'operation' => $requestName,
             'status' => 'pending',
             'data' => json_encode([
+                'uuid' => $uuid,
                 'firstname' => $request->input('first-name'),
                 'lastname' => $request->input('last-name'),
                 'username' => $request->username,
