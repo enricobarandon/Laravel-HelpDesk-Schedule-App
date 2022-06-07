@@ -142,7 +142,8 @@ class RequestController extends Controller
                         'province_id' => $request->input('province-id'),
                         'address' => $request->input('group-address'),
                         'status' => $request->input('is_active'),
-                        'type' => array_search($request->input('group-type'), $type)
+                        'type' => array_search($request->input('group-type'), $type),
+                        'guarantor' => $request->input('group-guarantor')
                     ]),
                     'remarks' => $request->remarks
                 ];
