@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Group;
 use Excel;
 use App\Exports\ScheduledGroupExport;
+use App\Models\Province;
 
 class GroupController extends Controller
 {
@@ -35,5 +36,11 @@ class GroupController extends Controller
 
         return view('groups.index', ['groups' => $groups]);
         // return view('groups.index');
+    }
+
+    public function create()
+    {
+        $provinces = Province::all();
+        return view('groups.create', compact('provinces'));
     }
 }

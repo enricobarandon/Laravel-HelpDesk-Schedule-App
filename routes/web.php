@@ -48,6 +48,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/users', [App\Http\Controllers\UserController::class, 'index'])->name('users.index');
 
     Route::get('/groups/view/{status}', [\App\Http\Controllers\GroupController::class, 'index'])->name('groups.index');
+    Route::get('/groups/create', [App\Http\Controllers\GroupController::class, 'create'])->name('groups.create');
 
     Route::post('/requests/groups', [\App\Http\Controllers\RequestController::class, 'groupStatusUpdate'])->name('requests.groups.update');
 

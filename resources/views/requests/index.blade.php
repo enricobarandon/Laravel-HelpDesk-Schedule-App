@@ -37,7 +37,7 @@ if (! function_exists('removeParam')) {
                                     </div>
                                     <div class="card-body">
 
-                                        @include('requests.tables.requestsTable');
+                                        @include('requests.tables.requestsTable')
                                         
                                         <div class="col">
                                             <div class="float-right">

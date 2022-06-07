@@ -74,21 +74,100 @@ class RequestController extends Controller
         //
     }
 
-    public function storeGroupRequest(ApiRequests $request)
+    public function storeGroupRequest(Request $request)
     {
         $user = auth()->user();
         $uuid = request()->uuid;
         $requestName = request()->operation;
-        $checkInRequests = RequestModel::where('operation', $requestName)
-                            ->where('uuid', $uuid)
-                            ->where('status','pending')
-                            ->first();
+
+        $table = '';
+        $operation = '';
+        list($table, $operation) = explode('.', $requestName);
+
+        if ($operation == 'create') {
+            $uuid = (string) Str::uuid();
+            $checkInRequests = false;
+        } else if ($operation == 'update') {
+            $checkInRequests = RequestModel::where('operation', $requestName)
+                                ->where('uuid', $uuid)
+                                ->where('status','pending')
+                                ->first();
+        }
+
 
         if (!$checkInRequests) {
-            $apiRequest = RequestModel::create($request->validated());
+
+            if ($operation == 'create') {
+
+                $validator = Validator::make(request()->all(), [
+                    'group-name' => 'required',
+                    'group-address' => 'required',
+                    'group-type' => 'required|max:20',
+                    'group-code' => 'required',
+                    'group-operator' => 'required',
+                    'province-id' => 'required|numeric',
+                    'group-contact' => 'required',
+                    'group-guarantor' => 'required',
+                    'is_active' => 'required|boolean',
+                    'remarks' => 'nullable|string'
+                ]);
+        
+                if ($validator->fails()) {
+                    return redirect()->back()->with('errors', $validator->messages());
+                }
+
+                $type = [
+                    'foo',
+                    'ARENA',
+                    'OCBS-LOTTO',
+                    'OCBS-OTB',
+                    'OCBS-RESTOBAR',
+                    'OCBS-STORE',
+                    'OCBS-MALL',
+                    'OCBS',
+                    'OCBS-EGAMES',
+                    'OCBS-CASINO'
+                ];
+                
+                $form = [
+                    'api_key' => '4e829e510539afcc43365a18acc91ede41fb555e',
+                    'uuid' => $uuid,
+                    'operation' => $requestName,
+                    'status' => 'pending',
+                    'data' => json_encode([
+                        'name' => $request->input('group-name'),
+                        'code' => $request->input('group-code'),
+                        'owner' => $request->input('group-operator'),
+                        'contact' => $request->input('group-contact'),
+                        'province_id' => $request->input('province-id'),
+                        'address' => $request->input('group-address'),
+                        'status' => $request->input('is_active'),
+                        'type' => array_search($request->input('group-type'), $type)
+                    ]),
+                    'remarks' => $request->remarks
+                ];
+                
+                $apiRequest = RequestModel::create($form);
+
+            } else if($operation == 'update') {
+
+                $validator = Validator::make(request()->all(), [
+                    'uuid' => 'required',
+                    'operation' => 'required',
+                    'status' => 'required',
+                    'data' => 'required',
+                    'remarks' => 'nullable|string'
+                ]);
+        
+                if ($validator->fails()) {
+                    return redirect()->back()->with('errors', $validator->messages());
+                }
+
+                $apiRequest = RequestModel::create($request->all());
+            }
+
             if ($apiRequest) {
                 
-                $this->postRequestToKiosk($request->all());
 
                 $logs = ActivityLog::create([
                     'type' => 'post-request',
@@ -101,21 +180,38 @@ class RequestController extends Controller
 
                 // dd($logs);
 
-                return response([
-                    'result' => 1,
-                    'message' => 'Please monitor the status of your requests on the Requests tab!'
-                ], 201);
+                if ($operation == 'update') {
+                    
+                    $this->postRequestToKiosk($request->all());
+
+                    return response([
+                        'result' => 1,
+                        'message' => 'Please monitor the status of your requests on the Requests tab!'
+                    ], 201);
+                }
+
+                
+                $this->postRequestToKiosk($form);
+                return redirect()->route('requests.index')->with('success', 'Please monitor the status of your requests on the Requests tab!'); 
+
             } else {
+
                 return response([
                     'result' => 0,
                     'message' => 'Something went wrong! Please try again.'
                 ], 200);
+
             }
         } else {
-            return response([
-                'result' => 0,
-                'message' => 'Request already exists.'
-            ], 200);
+            if ($operation == 'update') {
+                return response([
+                    'result' => 0,
+                    'message' => 'Request already exists.'
+                ], 200);
+            }
+
+            return redirect()->back()->with('error', 'Request already exists'); 
+
         }
         // return new ApiRequestResource($apiRequest);
     }
@@ -188,31 +284,36 @@ class RequestController extends Controller
                     }
     
                 } else if ($table == 'users') {
+
+                    if (isset($data['firstname'])) {
+                        $data['first_name'] = $data['firstname'];
+                        unset($data['firstname']);
+                    }
+
+                    if (isset($data['lastname'])) {
+                        $data['last_name'] = $data['lastname'];
+                        unset($data['lastname']);
+                    }
+
+                    if (isset($data['allowed_sides'])) {
+                        $allowedSides = [
+                            'm' => 'Meron only',
+                            'w' => 'Wala only',
+                            'n' => 'None',
+                            'a' => 'All sides'
+                        ];
+                        $data['allowed_sides'] = $allowedSides[$data['allowed_sides']];
+                    }
+
     
                     if ($operation == 'update') {
-
-                        if (isset($data['firstname'])) {
-                            $data['first_name'] = $data['firstname'];
-                            unset($data['firstname']);
-                        }
-
-                        if (isset($data['lastname'])) {
-                            $data['last_name'] = $data['lastname'];
-                            unset($data['lastname']);
-                        }
-
-                        if (isset($data['allowed_sides'])) {
-                            $allowedSides = [
-                                'm' => 'Meron only',
-                                'w' => 'Wala only',
-                                'n' => 'None',
-                                'a' => 'All sides'
-                            ];
-                            $data['allowed_sides'] = $allowedSides[$data['allowed_sides']];
-                        }
     
                         $result = Account::where('uuid', $request->uuid)->update($data);
     
+                    } else if($operation == 'create') {
+                        dd($data);
+                        $result = Account::create($data);
+
                     }
                 }
 
@@ -314,25 +415,12 @@ class RequestController extends Controller
                     ],$request->except(['api_key','_token'])))
                 ]);
 
-                // return response([
-                //     'result' => 1,
-                //     'message' => 'Please monitor the status of your requests on the Requests tab!'
-                // ], 201);
                 return redirect()->route('accounts.index')->with('success', 'Request posted! Please monitor the status of your requests on the Requests tab!'); 
 
             } else {
-                // return response([
-                //     'result' => 0,
-                //     'message' => 'Something went wrong! Please try again.'
-                // ], 200);
-                
                 return redirect()->route('accounts.index')->with('error', 'Something went wrong! Please try again.'); 
             }
         } else {
-            // return response([
-            //     'result' => 0,
-            //     'message' => 'Request already exists.'
-            // ], 200);
             return redirect()->route('accounts.index')->with('error', 'Request already exists.'); 
         }
     }
