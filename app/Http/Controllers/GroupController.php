@@ -51,7 +51,13 @@ class GroupController extends Controller
             8 =>'OCBS-EGAMES',
             9 =>'OCBS-CASINO'
         ];
+
         $provinces = Province::all();
+
         return view('groups.create', compact('provinces','types'));
+    }
+    public function show(Group $group)
+    {
+        dd($group);
     }
 }

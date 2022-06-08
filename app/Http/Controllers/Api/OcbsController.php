@@ -74,7 +74,7 @@ class OcbsController extends Controller
 
             // $request->group_uuid convert to group id
             $groupInfo = Group::select('id')->where('uuid', $request->group_uuid)->first();
-
+            
             if ($groupInfo) {
 
                 $request->merge(['group_id' => $groupInfo->id]);

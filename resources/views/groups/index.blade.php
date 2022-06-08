@@ -29,7 +29,7 @@ if (! function_exists('removeParam')) {
                             {{ session('error') }}
                         </div>
                     @endif
-                    <router-view />
+                    <router-view :user="{{ Auth::user() }}" />
                 </div>
             </div>
         </div>

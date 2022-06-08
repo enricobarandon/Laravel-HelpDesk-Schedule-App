@@ -1,5 +1,5 @@
 <template>
-
+    <div v-bind="$attrs">
     <div class="form-horizontal">
         <div class="form-group row">
 
@@ -50,14 +50,20 @@
                     <td>{{ item.installed_pc }}</td>
                     <td class="display-center">
                         <!-- <button type="button" class="btn btn-danger" @click="postDeactivationRequest(item.uuid)"><i class="fas fa-times"></i> Deactivate</button> -->
-                        <router-link :to="{ name: 'groups.edit', params: {id: item.id} }"  class="btn btn-primary">
+                        <router-link :to="{ name: 'groups.edit', params: {id: item.id} }"  class="btn btn-primary" v-if="props.user.user_type_id == '1'">
                             <i class="fas fa-cog"></i>Edit
+                        </router-link>
+                        <!-- <a :to="'{{ /groups/request/edit/' + item.id" class="btn btn-danger">Edit 3</a>
+                        <button type="button" class="btn btn-danger" @click="redirectToEditForm(item.id)">Edit 2</button> -->
+                        <router-link :to="{ name: 'groups.requests.edit', params: {id: item.id} }"  class="btn btn-primary" v-else>
+                            <i class="fas fa-cog"></i>Edit 2
                         </router-link>
                     </td>
                 </tr>
             </template>
         </tbody>
     </table>
+    </div>
 </template>
 
 <script>
@@ -67,8 +73,14 @@ import useRequests from '../../composables/requests'
 // import { useRouter } from 'vue-router'
 
 export default {
-    setup() {
+    // inheritAttrs: false,
+    props: {
+        user: Object
+    },
+    setup(props) {
         // const router = useRouter()
+
+        console.log('type: ' + props.user.user_type_id)
 
         const form = reactive({
             'api_key' : '',
@@ -108,6 +120,10 @@ export default {
             filteredGroups.value = groups.value
         }
 
+        // const redirectToEditForm = (id) => {
+        //     window.location.href = '/groups/request/edit/' + id
+        // }
+
         return {
             groups,
             form,
@@ -115,7 +131,9 @@ export default {
             filter,
             postFilterGroup,
             resetFilter,
-            filteredGroups
+            filteredGroups,
+            props,
+            // redirectToEditForm
         }
     }
 }

@@ -8,6 +8,7 @@ use DB;
 use Excel;
 use App\Exports\ScheduledGroupExport;
 use App\Models\Group;
+use App\Models\UserType;
 
 class AccountController extends Controller
 {
@@ -66,8 +67,10 @@ class AccountController extends Controller
                     // ->where('is_active',1)
                     ->orderBy('name','asc')
                     ->get();
+
+        $userTypes = UserType::all();
         
-        return view('accounts.edit', compact('account','allowedSides','positions','groups'));
+        return view('accounts.edit', compact('account','allowedSides','positions','groups','userTypes'));
     }
 
     public function create()

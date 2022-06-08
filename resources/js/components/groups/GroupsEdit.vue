@@ -141,6 +141,8 @@ export default {
     },
     setup(props) {
 
+        console.log(props.user)
+
         const { errors, group, getGroup, updateGroup } = useGroups()
 
         const { storeRequest } = useRequests()

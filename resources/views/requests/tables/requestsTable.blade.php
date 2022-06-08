@@ -2,7 +2,7 @@
     <thead>
         <tr>
             <th>#</th>
-            <th>Group Name</th>
+            <th>Account/Group Name</th>
             <th>Operation</th>
             <th>Status</th>
             <th>Requested Data</th>

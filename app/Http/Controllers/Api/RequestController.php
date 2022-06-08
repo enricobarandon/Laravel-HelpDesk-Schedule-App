@@ -382,19 +382,47 @@ class RequestController extends Controller
                                 ->first();
         }
 
-        // $validated = request()->validate([
-        $validator = Validator::make(request()->all(), [
-            'operation' => 'required',
-            'first-name' => 'required|string|max:50',
-            'last-name' => 'required|string|max:50',
-            'username' => 'required|string|max:50',
-            'contact' => 'required|max:50',
-            'position' => ['required', Rule::in(['Cashier','Teller','Teller/Cashier','Supervisor','Operator'])],
-            'allowed-sides' => ['required', Rule::in(['m','w','n','a'])],
-            'is-active' => 'required|boolean',
-            'remarks' => 'nullable|string|max:300',
-            'group-code' => 'required|max:10'
-        ]);
+        
+        if($user->user_type_id == 1) {
+            $validator = Validator::make(request()->all(), [
+                'operation' => 'required',
+                'first-name' => 'required|string|max:50',
+                'last-name' => 'required|string|max:50',
+                'username' => 'required|string|max:50',
+                'contact' => 'required|max:50',
+                'position' => ['required', Rule::in(['Cashier','Teller','Teller/Cashier','Supervisor','Operator'])],
+                'allowed-sides' => ['required', Rule::in(['m','w','n','a'])],
+                'is-active' => 'required|boolean',
+                'remarks' => 'nullable|string|max:300',
+                'group-code' => 'required|max:10'
+            ]);
+
+            $formData = [
+                'uuid' => $uuid,
+                'firstname' => $request->input('first-name'),
+                'lastname' => $request->input('last-name'),
+                'username' => $request->username,
+                'contact' => $request->contact,
+                'position' => $request->position,
+                'allowed_sides' => $request->input('allowed-sides'),
+                'is_active' => $request->input('is-active'),
+                'group_code' => $request->input('group-code')
+            ];
+
+        } else {
+
+            $validator = Validator::make(request()->all(), [
+                'operation' => 'required',
+                'is-active' => 'required|boolean',
+                'remarks' => 'nullable|string|max:300'
+            ]);
+
+            $formData = [
+                'uuid' => $uuid,
+                'is_active' => $request->input('is-active'),
+            ];
+
+        }
 
         if ($validator->fails()) {
             return redirect()->back()->with('errors', $validator->messages());
@@ -405,17 +433,7 @@ class RequestController extends Controller
             'uuid' => $uuid,
             'operation' => $requestName,
             'status' => 'pending',
-            'data' => json_encode([
-                'uuid' => $uuid,
-                'firstname' => $request->input('first-name'),
-                'lastname' => $request->input('last-name'),
-                'username' => $request->username,
-                'contact' => $request->contact,
-                'position' => $request->position,
-                'allowed_sides' => $request->input('allowed-sides'),
-                'is_active' => $request->input('is-active'),
-                'group_code' => $request->input('group-code')
-            ]),
+            'data' => json_encode($formData),
             'remarks' => $request->remarks
         ];
 
