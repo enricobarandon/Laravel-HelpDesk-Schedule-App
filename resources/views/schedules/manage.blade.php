@@ -1,9 +1,5 @@
 @extends('layouts.app')
 
-@section('script')
-<script src="{{ asset('js/timepicker.min.js') }}"></script>
-<script src="{{ asset('js/script.js') }}"></script>
-@endsection
 @php
 if (! function_exists('removeParam')) {
     function removeParam($url, $param) {
@@ -92,7 +88,7 @@ if (! function_exists('removeParam')) {
                                         <input type="text" class="filter-group form-control" name="filterGroup" id="filterGroup" placeholder="Group Code">
                                     </div>
 
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <!-- <input type="text" class="filter-group form-control" name="filterProvince" id="filterProvince" placeholder="Province"> -->
                                         <select class="form-control" name="selectProvince" id="selectProvince">
                                             <option selected disabled value="">Select Province</option>
@@ -102,8 +98,8 @@ if (! function_exists('removeParam')) {
                                         </select>
                                     </div>
 
-                                    <div class="col-md-2">
-                                        <select id="selectType" name="selectType" class="form-control">
+                                    <div class="col-md-3">
+                                        <select id="selectType" name="selectType[]" multiple="multiple" class="form-control">
                                             <option selected value="">SELECT ALL TYPE</option>
                                             <option value="ARENA">ARENA</option>
                                             <option value="OCBS-LOTTO">OCBS-LOTTO</option>
@@ -211,4 +207,22 @@ if (! function_exists('removeParam')) {
     </div><!-- /.container-fluid -->
 </div>
 
+@endsection
+@section('style')
+<link href="{{ asset('css/bootstrap-multiselect.min.css') }}" rel="stylesheet">
+<style>
+    .multiselect-native-select .btn-group {
+        width: 100%;
+    }
+</style>
+@endsection
+@section('script')
+<script src="{{ asset('js/bootstrap-multiselect.min.js') }}"></script>
+<script src="{{ asset('js/timepicker.min.js') }}"></script>
+<script src="{{ asset('js/script.js') }}"></script>
+<script>
+$(document).ready(function() {
+    $('#selectType').multiselect();
+});
+</script>
 @endsection

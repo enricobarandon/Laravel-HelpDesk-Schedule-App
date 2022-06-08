@@ -95,7 +95,9 @@ class ScheduleGroupController extends Controller
             }
 
             if($request->selectType){
-                $groupsForDisplay = $groupsForDisplay->where('group_type', $request->selectType);
+                if(!empty(array_filter($request->selectType,'strlen'))){
+                    $groupsForDisplay = $groupsForDisplay->whereIn('group_type', $request->selectType);
+                }
             }
 
             if($request->siteID){
