@@ -321,13 +321,19 @@ class ScheduleGroupController extends Controller
 
         if ($deleteAccountFromScheduledGroup) {
 
+            $groupCode = Group::select('code')->where('groups.id',$scheduledGroupInfo->group_id)->first();
+
+            $accountInfo = Account::find($accountId);
+
             ActivityLog::create([
                 'type' => 'remove-confirmed-account',
                 'user_id' => $user->id,
                 'assets' => json_encode([
                     'action' => 'Removed account from a scheduled group',
                     'account_id' => $accountId,
-                    'schedule_group_id' => $scheduledGroupId
+                    'schedule_group_id' => $scheduledGroupId,
+                    'account_username' => $accountInfo->username,
+                    'group_code' => $groupCode->code
                 ])
             ]);
 
@@ -360,6 +366,10 @@ class ScheduleGroupController extends Controller
 
         if ($storeAccountFromScheduledGroup) {
 
+            $groupCode = Group::select('code')->where('groups.id',$scheduledGroupInfo->group_id)->first();
+
+            $accountInfo = Account::find($accountId);
+
             ActivityLog::create([
                 'type' => 'confirmed-account',
                 'user_id' => $user->id,
@@ -368,7 +378,9 @@ class ScheduleGroupController extends Controller
                     'account_id' => $accountId,
                     'schedule_group_id' => $scheduledGroupId,
                     'scheduleId' => $scheduleId,
-                    'groupId' => $groupId
+                    'groupId' => $groupId,
+                    'account_username' => $accountInfo->username,
+                    'group_code' => $groupCode->code
                 ])
             ]);
 
