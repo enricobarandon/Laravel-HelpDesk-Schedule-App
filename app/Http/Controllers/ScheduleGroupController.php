@@ -210,7 +210,7 @@ class ScheduleGroupController extends Controller
                     'action' => 'added group to schedule',
                     'group_id' => $groupId,
                     'schedule_id' => $scheduleId,
-                    'group_code' => $groupCode
+                    'group_code' => $groupCode->code
                 ])
             ]);
 
@@ -259,7 +259,7 @@ class ScheduleGroupController extends Controller
                 'action' => 'removed group from a schedule',
                 'group_id' => $groupId,
                 'schedule_id' => $scheduleId,
-                'group_code' => $groupCode
+                'group_code' => $groupCode->code
             ])
         ]);
 
@@ -392,7 +392,9 @@ class ScheduleGroupController extends Controller
         }
 
         if($request->selectType){
-            $scheduledGroups = $scheduledGroups->where('groups.group_type', $request->selectType);
+            if(!empty(array_filter($request->selectType,'strlen'))){
+                $scheduledGroups = $scheduledGroups->whereIn('groups.group_type', $request->selectType);
+            }
         }
 
         if($request->selectSite){
@@ -504,7 +506,9 @@ class ScheduleGroupController extends Controller
             'tbody' => $tbody,
             'scheduledGroups' => $scheduledGroups,
             'scheduleId' => $scheduleId,
-            'scheduleInfo' => $scheduleInfo
+            'scheduleInfo' => $scheduleInfo,
+            'selectSite' => $request->selectSite,
+            'selectType' => $request->selectType
         ]);
     }
 

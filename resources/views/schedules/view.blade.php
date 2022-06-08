@@ -47,8 +47,8 @@ if (! function_exists('removeParam')) {
                             </select>
                         </div>
 
-                        <div class="col-md-2">
-                            <select id="selectType" name="selectType" class="form-control">
+                        <div class="col-md-3">
+                            <select id="selectType" name="selectType[]" class="form-control"  multiple="multiple">
                                 <option selected value="">SELECT ALL TYPE</option>
                                 <option value="ARENA">ARENA</option>
                                 <option value="OCBS-LOTTO">OCBS-LOTTO</option>
@@ -73,7 +73,7 @@ if (! function_exists('removeParam')) {
                     
                     <div class="col">
                         <div class="float-right">
-                            {{ $scheduledGroups->links('pagination::bootstrap-4') }}
+                            {{ $scheduledGroups->appends(['selectSite' => $selectSite, 'selectType' => $selectType])->links('pagination::bootstrap-4') }}
                         </div>
                     </div>
 
@@ -89,4 +89,20 @@ if (! function_exists('removeParam')) {
 <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+@endsection
+@section('style')
+<link href="{{ asset('css/bootstrap-multiselect.min.css') }}" rel="stylesheet">
+<style>
+    .multiselect-native-select .btn-group {
+        width: 100%;
+    }
+</style>
+@endsection
+@section('script')
+<script src="{{ asset('js/bootstrap-multiselect.min.js') }}"></script>
+<script>
+$(document).ready(function() {
+    $('#selectType').multiselect();
+});
+</script>
 @endsection
