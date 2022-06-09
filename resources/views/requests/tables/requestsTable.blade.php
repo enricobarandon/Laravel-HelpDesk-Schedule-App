@@ -11,7 +11,7 @@
     </thead>
     <tbody>
         @php
-            $requestCount = 1;
+            $requestCount = ($requests->currentpage()-1)* $requests->perpage() + 1;
         @endphp
         @foreach($requests as $request)
             <tr>

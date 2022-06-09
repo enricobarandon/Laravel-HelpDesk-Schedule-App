@@ -78,6 +78,16 @@ class ScheduleController extends Controller
      */
     public function update(ScheduleRequest $request, Schedule $schedule)
     {
+        $user = auth()->user();
+
+        $logs = ActivityLog::create([
+            'type' => 'update-schedule',
+            'user_id' => $user->id,
+            'assets' => json_encode(array_merge([
+                'action' => 'Update schedule'
+            ],$request->only(['id','name','date_time','status'])))
+        ]);
+
         $schedule->update($request->validated());
 
         return new ScheduleResource($schedule);
