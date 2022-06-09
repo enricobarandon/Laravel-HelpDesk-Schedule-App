@@ -33,6 +33,9 @@ class LoginController extends Controller
     public function redirectTo() 
     {
         $user = Auth::user();
+        
+        $role = $user->user_type_id;
+
         ActivityLog::create([
             'type' => 'login',
             'user_id' => $user->id,
@@ -41,7 +44,18 @@ class LoginController extends Controller
                 'user_role' => UserType::getUserRole($user->user_type_id)->role
             ])
         ]);
-        // return redirect('/home');
+        
+        switch ($role) {
+            case '1':
+                return '/home';
+                break;
+            case '2':
+                return '/home';
+                break;
+            default:
+                return '/home';
+                break;
+        }
     }
 
     public function logout() {

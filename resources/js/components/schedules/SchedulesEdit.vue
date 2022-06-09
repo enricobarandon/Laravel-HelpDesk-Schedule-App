@@ -7,7 +7,7 @@
         </div>
     </div>
 
-    <form @submit.prevent="saveSchedule">
+    <form @submit.prevent="saveSchedule" ref="form">
         <a href='/schedules' class="btn btn-primary">Back to Schedule Management page</a>
         <div class="form-group">
             <label for="name">Name</label>
@@ -26,7 +26,8 @@
             </select>
         </div>
 
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="button" v-on:click="sweetAlert" class="btn btn-primary">Submit</button>
+        <button type="submit" ref="submit" style="display: none">Submit</button>
 
     </form>
 </template>
@@ -66,6 +67,24 @@ export default {
     methods: {
         formatDate(date){
             return moment(date).format('YYYY-MM-DD');
+        },
+        sweetAlert(e) {
+            e.preventDefault();
+            this.$swal({
+            title: 'Are you sure?',
+            text: 'You want to update this schedule?',
+            type: 'warning',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'Cancel',
+            showCloseButton: true,
+            showLoaderOnConfirm: true
+            }).then((result) => {
+            if(result.value) {
+                this.$refs.submit.click();
+            }
+            })
         }
     }
 }

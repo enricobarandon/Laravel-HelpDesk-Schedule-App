@@ -540,6 +540,8 @@ class ScheduleGroupController extends Controller
 
         if ($updateOperationTime) {
 
+            $groupCode = Group::select('code')->where('groups.id',$groupId)->first();
+
             ActivityLog::create([
                 'type' => 'update-operation-time',
                 'user_id' => $user->id,
@@ -547,6 +549,7 @@ class ScheduleGroupController extends Controller
                     'action' => 'Updated operation time',
                     'scheduleId' => $scheduleId,
                     'groupId' => $groupId,
+                    'group_code' => $groupCode->code,
                     'newOperationTime' => $newOperationTime
                 ])
             ]);
