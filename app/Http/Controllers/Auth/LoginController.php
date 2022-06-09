@@ -41,6 +41,7 @@ class LoginController extends Controller
                 'user_role' => UserType::getUserRole($user->user_type_id)->role
             ])
         ]);
+        // return redirect('/home');
     }
 
     public function logout() {

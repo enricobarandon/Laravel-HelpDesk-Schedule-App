@@ -16,6 +16,7 @@ use App\Models\ActivityLog;
 use Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Str;
+use App\Models\UserType;
 
 class RequestController extends Controller
 {
@@ -146,7 +147,8 @@ class RequestController extends Controller
                         'type' => $type[$request->input('group-type')],
                         'guarantor' => $request->input('group-guarantor')
                     ]),
-                    'remarks' => $request->remarks
+                    'remarks' => $request->remarks,
+                    'requested_by' => $user->name . '('. UserType::find($user->user_type_id)->role .')'
                 ];
                 
                 $apiRequest = RequestModel::create($form);
@@ -165,7 +167,11 @@ class RequestController extends Controller
                     return redirect()->back()->with('errors', $validator->messages());
                 }
 
-                $apiRequest = RequestModel::create($request->all());
+                $form = $request->all();
+
+                $form['requested_by'] = $user->name . '('. UserType::find($user->user_type_id)->role .')';
+
+                $apiRequest = RequestModel::create($form);
             }
 
             if ($apiRequest) {
@@ -220,6 +226,7 @@ class RequestController extends Controller
 
     public function postRequestToKiosk($postInput)
     {
+        $user = auth()->user();
 
         $apiURL = 'https://development.wpc2040.live/api/v4/requests';
 
@@ -230,6 +237,8 @@ class RequestController extends Controller
             'Content-Type' => 'application/json',
             'accept' => 'application/json'
         ];
+
+        $postInput['requested_by'] = '.' . $user->name . '('. UserType::find($user->user_type_id)->role .')';
         
         $response = Http::withHeaders($headers)->post($apiURL, $postInput);
         
@@ -434,7 +443,8 @@ class RequestController extends Controller
             'operation' => $requestName,
             'status' => 'pending',
             'data' => json_encode($formData),
-            'remarks' => $request->remarks
+            'remarks' => $request->remarks,
+            'requested_by' => $user->name . '('. UserType::find($user->user_type_id)->role .')'
         ];
 
         if (!$checkInRequests) {

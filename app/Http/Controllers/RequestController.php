@@ -13,7 +13,7 @@ class RequestController extends Controller
     public function index(Request $request)
     {
         // $requests = RequestModel::select('operation','status','data')->get();
-        $requests = RequestModel::select('requests.id','requests.operation','requests.status','requests.data','groups.name as group_name','accounts.username','requests.remarks')
+        $requests = RequestModel::select('requests.id','requests.operation','requests.status','requests.data','groups.name as group_name','accounts.username','requests.remarks','requests.created_at','requested_by')
                         ->leftjoin('groups','groups.uuid', 'requests.uuid')
                         ->leftjoin('accounts','accounts.uuid','requests.uuid')
                         ->orderBy('id','desc');
@@ -22,7 +22,7 @@ class RequestController extends Controller
             $requests = $requests->where('requests.operation', 'groups.update');
         }
 
-        $requests = $requests->paginate(100);
+        $requests = $requests->paginate(20);
 
         if ($request->has('download') || $request->has('downloadcurrent')) {
 

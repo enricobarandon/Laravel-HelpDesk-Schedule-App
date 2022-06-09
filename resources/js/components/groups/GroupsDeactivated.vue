@@ -46,11 +46,11 @@
                     <td>{{ item.installed_pc }}</td>
                     <td class="display-center">
                         <!-- <button type="button" class="btn btn-success" @click="postActivateRequest(item.uuid)"><i class="fas fa-plus"></i> Activate</button> -->
-                        <router-link :to="{ name: 'groups.edit', params: {id: item.id} }"  class="btn btn-primary" v-if="props.user.user_type_id == '1'">
+                        <router-link :to="{ name: 'groups.edit', params: {id: item.id} }"  class="btn btn-primary" v-if="user_type == '1' || user_type == '2'">
                             <i class="fas fa-cog"></i>Edit
                         </router-link>
-                        <router-link :to="{ name: 'groups.requests.edit', params: {id: item.id} }"  class="btn btn-primary" v-else>
-                            <i class="fas fa-cog"></i>Edit 2
+                        <router-link :to="{ name: 'groups.requests.edit', params: {id: item.id} }"  class="btn btn-primary" v-else-if="user_type == '3'">
+                            <i class="fas fa-cog"></i>Edit
                         </router-link>
                     </td>
                 </tr>
@@ -69,6 +69,8 @@ export default {
         user: Object
     },
     setup(props) {
+
+        const user_type = props.user.user_type_id
 
         const form = reactive({
             'api_key' : '',
@@ -112,7 +114,7 @@ export default {
             filter,
             postFilterGroup,
             resetFilter,
-            props
+            user_type
         }
     }
 }

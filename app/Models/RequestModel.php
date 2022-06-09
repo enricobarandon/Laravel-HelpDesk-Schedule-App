@@ -16,6 +16,7 @@ class RequestModel extends Model
         'operation',
         'status',
         'data',
-        'remarks'
+        'remarks',
+        'requested_by'
     ];
 }

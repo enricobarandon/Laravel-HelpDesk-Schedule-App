@@ -2,6 +2,9 @@
     <thead>
         <tr>
             <th>#</th>
+            <th>ID</th>
+            <th>Requested At</th>
+            <th>Requested By</th>
             <th>Account/Group Name</th>
             <th>Operation</th>
             <th>Status</th>
@@ -11,11 +14,14 @@
     </thead>
     <tbody>
         @php
-            $requestCount = 1;
+            $requestCount = ($requests->currentpage()-1)* $requests->perpage() + 1;
         @endphp
         @foreach($requests as $request)
             <tr>
                 <td>{{ $requestCount++ }}</td>
+                <td>{{ $request->id }}</td>
+                <td>{{ date('M d, Y h:i:s A', strtotime($request->created_at)) }}</td>
+                <td>{{ $request->requested_by }}</td>
                 <td>
                     @php
                         echo $request->group_name ? htmlspecialchars($request->group_name) : $request->username

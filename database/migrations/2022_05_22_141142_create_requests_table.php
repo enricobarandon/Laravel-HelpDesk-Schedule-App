@@ -19,6 +19,7 @@ return new class extends Migration
             $table->char('status');
             $table->text('data');
             $table->string('remarks');
+            $table->string('requested_by');
             $table->timestamps();
         });
     }
