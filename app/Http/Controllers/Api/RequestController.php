@@ -386,10 +386,13 @@ class RequestController extends Controller
         $table = '';
         $operation = '';
         list($table, $operation) = explode('.', $requestName);
+        
+        $unique = '';
 
         if ($operation == 'create') {
             $uuid = (string) Str::uuid();
             $checkInRequests = false;
+            $unique = '|unique:accounts';
         } else {
             $uuid = request()->uuid;
             $checkInRequests = RequestModel::where('operation', $requestName)
@@ -399,12 +402,12 @@ class RequestController extends Controller
         }
 
         
-        if($user->user_type_id == 1) {
+        if($user->user_type_id == 1 || $user->user_type_id == 2) {
             $validator = Validator::make(request()->all(), [
                 'operation' => 'required',
                 'first-name' => 'required|string|max:50',
                 'last-name' => 'required|string|max:50',
-                'username' => 'required|string|max:50|unique:accounts',
+                'username' => 'required|string|max:50'.$unique,
                 'contact' => 'required|max:50',
                 'position' => ['required', Rule::in(['Cashier','Teller','Teller/Cashier','Supervisor','Operator'])],
                 'allowed-sides' => ['required', Rule::in(['m','w','n','a'])],

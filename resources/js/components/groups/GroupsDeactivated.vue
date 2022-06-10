@@ -49,7 +49,7 @@
                         <router-link :to="{ name: 'groups.edit', params: {id: item.id} }"  class="btn btn-primary" v-if="user_type == '1' || user_type == '2'">
                             <i class="fas fa-cog"></i>Edit
                         </router-link>
-                        <router-link :to="{ name: 'groups.requests.edit', params: {id: item.id} }"  class="btn btn-primary" v-else-if="user_type == '3'">
+                        <router-link :to="{ name: 'groups.requests.edit', params: {id: item.id} }"  class="btn btn-primary" v-else-if="user_type == '3' || user_type == '4'">
                             <i class="fas fa-cog"></i>Edit
                         </router-link>
                     </td>

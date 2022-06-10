@@ -55,7 +55,7 @@
                         </router-link>
                         <!-- <a :to="'{{ /groups/request/edit/' + item.id" class="btn btn-danger">Edit 3</a>
                         <button type="button" class="btn btn-danger" @click="redirectToEditForm(item.id)">Edit 2</button> -->
-                        <router-link :to="{ name: 'groups.requests.edit', params: {id: item.id} }"  class="btn btn-primary" v-else-if="user_type == '3'">
+                        <router-link :to="{ name: 'groups.requests.edit', params: {id: item.id} }"  class="btn btn-primary" v-else-if="user_type == '3' || user_type == '4'">
                             <i class="fas fa-cog"></i>Edit
                         </router-link>
                     </td>

@@ -69,7 +69,7 @@ class LoginController extends Controller
             ])
         ]);
         Auth::logout();
-        return redirect('/');
+        return redirect('/login');
     }
     /**
      * Create a new controller instance.
