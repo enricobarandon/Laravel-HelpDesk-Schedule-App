@@ -34,7 +34,7 @@ class UserController extends Controller
             $users = $users->where('users.user_type_id', $request->userType);
         }
 
-        $users = $users->get();
+        $users = $users->paginate(20);
 
         if ($request->has('download')) {
             return Excel::download(

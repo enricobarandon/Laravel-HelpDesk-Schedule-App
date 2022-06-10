@@ -15,7 +15,7 @@ if (! function_exists('removeParam')) {
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    {{ __('Requests') }}
+                    <h3 class="card-title"><i class="fa fa-info-circle"></i> Requests Page</h3>
                     <a class="btn btn-success float-right" href="{{ removeParam(request()->fullUrlWithQuery(['download' => '1']), 'downloadcurrent') }}">Download Excel</a>
                 </div>
                  <div class="card-body">
@@ -25,34 +25,36 @@ if (! function_exists('removeParam')) {
                         </div>
                     @endif
 
-                    <!-- Main content -->
-                    <div class="content">
-                        <div class="container-fluid">
-                            <div class="row">
-                                <main class="py-4">
+                    <form class="form-horizontal" method="get">
+                        <div class="form-group row">
 
-                                <div class="card card-info">
-                                    <div class="card-header">
-                                        <h3 class="card-title"><i class="fa fa-info-circle"></i> Requests Page</h3>
-                                    </div>
-                                    <div class="card-body">
-
-                                        @include('requests.tables.requestsTable')
-                                        
-                                        <div class="col">
-                                            <div class="float-right">
-                                                {{ $requests->links('pagination::bootstrap-4') }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                </main>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" name="keyword" id="keyword" placeholder="keyword" value="">
                             </div>
-                            <!-- /.row -->
-                        </div><!-- /.container-fluid -->
+
+                            <div class="col-md-3">
+                                <select class="form-control" name="status" id="status">
+                                    <option value="" selected disabled>Select All Status</option>
+                                    <option value="pending">Pending</option>
+                                    <option value="approved">Approved</option>
+                                    <option value="rejected">Rejected</option>
+                                </select>
+                            </div>
+
+                            <div class="col">
+                                <button type="submit" class="btn btn-success"><i class="fas fa-search"></i> Submit</button>
+                                <a href="{{ url('/requests') }}" class="btn btn-danger">Reset</a>
+                            </div>
+                        </div>
+                    </form>
+                    
+                    @include('requests.tables.requestsTable')
+                                        
+                    <div class="col">
+                        <div class="float-right">
+                            {{ $requests->appends(['keyword' => $keyword, 'status' => $status])->links('pagination::bootstrap-4') }}
+                        </div>
                     </div>
-                    <!-- /.content -->
 
                 </div>
             </div>

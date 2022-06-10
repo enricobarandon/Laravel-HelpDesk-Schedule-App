@@ -7,6 +7,7 @@ use App\Models\RequestModel;
 use Excel;
 use App\Exports\ScheduledGroupExport;
 use Auth;
+use DB;
 
 class RequestController extends Controller
 {
@@ -21,6 +22,18 @@ class RequestController extends Controller
         if(Auth::user()->user_type_id == 5){
             $requests = $requests->where('requests.operation', 'groups.update');
         }
+        
+        $keyword = $request->keyword;
+
+        if($request->keyword){
+            $requests = $requests->where(DB::raw('concat(requests.operation,requests.data,requests.remarks)'), 'like', '%' . $request->keyword . '%');
+        }
+
+        $status = $request->status;
+
+        if($request->status != ""){
+            $requests = $requests->where('requests.status', $request->status);
+        }
 
         $requests = $requests->paginate(20);
 
@@ -30,9 +43,9 @@ class RequestController extends Controller
                 new ScheduledGroupExport('requests.tables.requestsTable', [
                     'requests' => $requests
                 ]),
-                'accounts.xlsx'
+                'requests.xlsx'
             );
         }
-        return view('requests.index', ['requests' => $requests]);
+        return view('requests.index', ['requests' => $requests, 'keyword' => $keyword, 'status' => $status]);
     }
 }

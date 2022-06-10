@@ -1,3 +1,4 @@
+
 <table class="table table-bordered table-striped global-table">
     <thead>
         <tr>
@@ -17,6 +18,16 @@
             $requestCount = ($requests->currentpage()-1)* $requests->perpage() + 1;
         @endphp
         @foreach($requests as $request)
+@php
+            $tdClass = '';
+            if($request->status == 'approved'){
+                $tdClass = 'td-green';
+            }elseif($request->status == 'rejected'){
+                $tdClass = 'td-red';
+            }else{
+                $tdClass = 'td-blue';
+            }
+            @endphp
             <tr>
                 <td>{{ $requestCount++ }}</td>
                 <td>{{ $request->id }}</td>
@@ -28,7 +39,7 @@
                     @endphp
                 </td>
                 <td>{{ $request->operation }}</td>
-                <td>{{ $request->status }}</td>
+                <td class="{{ $tdClass }}">{{ strtoupper($request->status) }}</td>
                 <td>
                     @php
                         $dataHtml = '';

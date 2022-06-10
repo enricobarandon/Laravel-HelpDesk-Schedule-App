@@ -73,7 +73,7 @@ if (! function_exists('removeParam')) {
                         </thead>
                         <tbody>
                             @php
-                                $usersCount = 1;
+                                $usersCount = ($users->currentpage()-1)* $users->perpage() + 1;
                             @endphp
                             @foreach($users as $user)
                                 <tr>
@@ -91,7 +91,12 @@ if (! function_exists('removeParam')) {
                             @endforeach
                         </tbody>
                     </table>
-                                        
+                                
+                    <div class="col">
+                        <div class="float-right">
+                            {{ $users->appends(['userType' => $userType])->links('pagination::bootstrap-4') }}
+                        </div>
+                    </div>        
 
                 </div>
             </div>

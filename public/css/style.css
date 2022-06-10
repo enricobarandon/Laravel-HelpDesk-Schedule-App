@@ -231,3 +231,31 @@
     margin: 10px 0;
     padding: 0 !important;
 }
+.update-password {
+    position: absolute;
+    right: 0;
+    padding: 7px 11px;
+    z-index: 999;
+    border: none;
+}
+.cancel-update {
+    position: absolute;
+    right: 40px;
+    padding: 7px 14px;
+    z-index: 999;
+    display: none;
+    border: none;
+}
+input.form-control.edit-password {
+    width: 200px !important;
+    background: transparent;
+    border: transparent;
+}
+.submit-password {
+    position: absolute;
+    right: 0;
+    padding: 7px 11px;
+    z-index: 999;
+    display: none;
+    border: none;
+}
