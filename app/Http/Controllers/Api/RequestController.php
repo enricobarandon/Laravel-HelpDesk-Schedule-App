@@ -276,7 +276,7 @@ class RequestController extends Controller
                                     // 'remarks' => DB::raw('remarks') . ' ; ' . $request->remarks
                                 ]);
                                 
-            if ($acceptChanges) {
+            if ($acceptChanges && $request->status == 'approved') {
 
                 // Update Helpdesk groups and users table
 
@@ -360,6 +360,13 @@ class RequestController extends Controller
                     'message' => 'Row updated.'
                 ], 200);
 
+            } else if ($acceptChanges && $request->status == 'rejected') {
+
+                return response([
+                    'status' => 'ok',
+                    'message' => 'Row updated. Request rejected.'
+                ], 200);
+                
             } else {
                 return response([
                     'status' => 'error',
