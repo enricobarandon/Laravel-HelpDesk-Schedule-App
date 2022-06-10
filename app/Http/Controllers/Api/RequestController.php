@@ -101,10 +101,10 @@ class RequestController extends Controller
             if ($operation == 'create') {
 
                 $validator = Validator::make(request()->all(), [
-                    'group-name' => 'required',
+                    'group-name' => 'required|unique:groups,name',
                     'group-address' => 'required',
                     'group-type' => 'required|max:20',
-                    'group-code' => 'required',
+                    'group-code' => 'required|unique:groups,code',
                     'group-operator' => 'required',
                     'province-id' => 'required|numeric',
                     'group-contact' => 'required',
@@ -404,7 +404,7 @@ class RequestController extends Controller
                 'operation' => 'required',
                 'first-name' => 'required|string|max:50',
                 'last-name' => 'required|string|max:50',
-                'username' => 'required|string|max:50',
+                'username' => 'required|string|max:50|unique:accounts',
                 'contact' => 'required|max:50',
                 'position' => ['required', Rule::in(['Cashier','Teller','Teller/Cashier','Supervisor','Operator'])],
                 'allowed-sides' => ['required', Rule::in(['m','w','n','a'])],
