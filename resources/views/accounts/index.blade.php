@@ -9,6 +9,8 @@ if (! function_exists('removeParam')) {
         return $url;
     }
 }
+$allowedToCreate = [1,2,3];
+$user = auth()->user();
 @endphp
 <div class="container-fluid">
     <div class="row justify-content-center">
@@ -17,8 +19,8 @@ if (! function_exists('removeParam')) {
                 <div class="card-header">
                     <h3 class="card-title"><i class="fa fa-info-circle"></i> Accounts Page</h3>
                     <a class="btn btn-success float-right" href="{{ removeParam(request()->fullUrlWithQuery(['download' => '1']), 'downloadcurrent') }}">Download Excel</a>
-                    @if(Auth::user()->user_type_id == 1 || Auth::user()->user_type_id == 2)
-                    <a class="btn btn-primary float-right" href="{{ route('accounts.create') }}"><i class="fa fa-plus"></i> Create Account</a>
+                    @if(in_array($user->user_type_id, $allowedToCreate))
+                        <a class="btn btn-primary float-right" href="{{ route('accounts.create') }}"><i class="fa fa-plus"></i> Create Account</a>
                     @endif
                 </div>
 

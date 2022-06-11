@@ -107,7 +107,7 @@ class RequestController extends Controller
                     'group-code' => 'required|unique:groups,code',
                     'group-operator' => 'required',
                     'province-id' => 'required|numeric',
-                    'group-contact' => 'required',
+                    'group-contact' => 'required|numeric|max:11',
                     'group-guarantor' => 'required',
                     'is_active' => 'required|boolean',
                     'remarks' => 'nullable|string'
@@ -381,6 +381,7 @@ class RequestController extends Controller
     public function storeAccountRequest(Request $request)
     {
         $user = auth()->user();
+        $allowedUsersToCreate = [1,2,3];
         $requestName = request()->operation;
 
         $table = '';
@@ -402,13 +403,13 @@ class RequestController extends Controller
         }
 
         
-        if($user->user_type_id == 1 || $user->user_type_id == 2) {
+        if(in_array($user->user_type_id, $allowedUsersToCreate)) {
             $validator = Validator::make(request()->all(), [
                 'operation' => 'required',
                 'first-name' => 'required|string|max:50',
                 'last-name' => 'required|string|max:50',
                 'username' => 'required|string|max:50'.$unique,
-                'contact' => 'required|max:50',
+                'contact' => 'required|max:11|numeric',
                 'position' => ['required', Rule::in(['Cashier','Teller','Teller/Cashier','Supervisor','Operator'])],
                 'allowed-sides' => ['required', Rule::in(['m','w','n','a'])],
                 'is-active' => 'required|boolean',
