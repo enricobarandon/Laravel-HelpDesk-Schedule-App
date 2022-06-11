@@ -17,9 +17,18 @@ class ActivityLogsController extends Controller
                         ->leftjoin('user_types','user_types.id','users.user_type_id')
                         ->orderBy('id','desc');
                         // ->paginate(30);
+
+        $datepicker = $request->datepicker;
         
+        if($request->datepicker){
+            $activityLogs = $activityLogs->whereBetween('activity_logs.created_at', [
+                                            $datepicker . ' 00:00:00',
+                                            $datepicker . ' 23:59:59',
+                                        ]);
+        }
+
         $keyword = $request->keyword;
-        
+
         if($request->keyword){
             $activityLogs = $activityLogs->where(DB::raw('concat(activity_logs.type,activity_logs.assets,users.name)'), 'like', '%' . $request->keyword . '%');
         }
@@ -34,6 +43,6 @@ class ActivityLogsController extends Controller
             );
         }
 
-        return view('logs.index', compact('activityLogs','keyword'));
+        return view('logs.index', compact('activityLogs','keyword','datepicker'));
     }
 }
