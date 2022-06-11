@@ -30,7 +30,6 @@
                         <input type="hidden" name="uuid" value="{{ $account->uuid }}">
                         <input type="hidden" name="operation" value="users.update">
 
-                        @if(auth()->user()->user_type_id == 1 || auth()->user()->user_type_id == 2)
                         <div class="col-md-6">
 
                             <div class="form-group">
@@ -122,7 +121,7 @@
                             </div>
 
                         </div>
-                        @endif
+                        
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Status: </label>

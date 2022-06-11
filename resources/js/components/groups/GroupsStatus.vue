@@ -10,6 +10,13 @@
             </div>
         </div>
 
+        <div class="col-md-12">
+            <div class="form-group"> 
+                <label>Group Name</label>
+                <textarea id="group-name" name="group-name" class="form-control" rows="2" v-model="group.name" disabled></textarea>
+            </div>
+        </div>
+        
         <div class="col-md-4">
             <label>Status</label>
             <div class="form-control text-center">
@@ -86,7 +93,7 @@ export default {
             form.uuid = uuid
             form.operation = 'groups.update'
             form.data = JSON.stringify({
-                // 'name': group.value.name,
+                'name': group.value.name,
                 // 'address' : group.value.address,
                 // 'group_type' : group.value.group_type,
                 // 'owner' : group.value.owner,
