@@ -24,8 +24,8 @@ class OcbsController extends Controller
             
             $updateAccountForm = $request->except(['table']);
 
-            if (array_key_exists('group_uuid', $request)) {
-                
+            if (array_key_exists('group_uuid', $updateAccountForm)) {
+
                 $findGroup = Group::select('id')->where('uuid', $request->group_uuid)->first();
     
                 $updateAccountForm['group_id'] = $findGroup->id;
