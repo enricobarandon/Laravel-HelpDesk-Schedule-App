@@ -19,7 +19,7 @@ class GroupController extends Controller
      */
     public function getActiveGroups()
     {
-        $groups = Group::select('groups.id','groups.name','groups.uuid','groups.group_type','owner','contact','code','provinces.site as site','provinces.name as province_name','active_staff','installed_pc','address')
+        $groups = Group::select('groups.id','groups.name','groups.uuid','groups.group_type','owner','contact','code','provinces.site as site','provinces.name as province_name','active_staff','installed_pc','address','status')
                     ->leftjoin('provinces','provinces.id','groups.province_id')
                     ->where('groups.is_active', 1)
                     ->get();
@@ -29,9 +29,24 @@ class GroupController extends Controller
 
     public function getDeactivatedGroups()
     {
-        $groups = Group::select('groups.id','groups.name','groups.uuid','groups.group_type','owner','contact','code','provinces.site as site','provinces.name as province_name','active_staff','installed_pc','address')
+        $groups = Group::select('groups.id','groups.name','groups.uuid','groups.group_type','owner','contact','code','provinces.site as site','provinces.name as province_name','active_staff','installed_pc','address','status')
                     ->leftjoin('provinces','provinces.id','groups.province_id')
                     ->where('groups.is_active', 0)
+                    ->where(function($query) {
+                        $query->whereIn('status', ['onhold','temporarydeactivated'])
+                            ->orWhereNull('status');
+                    })
+                    ->get();
+
+        return GroupResource::collection($groups);
+    }
+
+    public function getPulledOutGroups()
+    {
+        $groups = Group::select('groups.id','groups.name','groups.uuid','groups.group_type','owner','contact','code','provinces.site as site','provinces.name as province_name','active_staff','installed_pc','address','status')
+                    ->leftjoin('provinces','provinces.id','groups.province_id')
+                    ->where('groups.is_active', 0)
+                    ->where('status','pullout')
                     ->get();
 
         return GroupResource::collection($groups);
@@ -56,7 +71,7 @@ class GroupController extends Controller
      */
     public function show(Group $group)
     {
-        $group = Group::select('groups.id','groups.uuid','groups.name','groups.uuid','groups.group_type','owner','contact','code','provinces.site as site','provinces.name as province_name','active_staff','installed_pc','address','guarantor','groups.is_active')
+        $group = Group::select('groups.id','groups.uuid','groups.name','groups.uuid','groups.group_type','owner','contact','code','provinces.site as site','provinces.name as province_name','active_staff','installed_pc','address','guarantor','groups.is_active','groups.status')
                     ->leftjoin('provinces','provinces.id','groups.province_id')
                     ->where('groups.id', $group->id)
                     ->first();

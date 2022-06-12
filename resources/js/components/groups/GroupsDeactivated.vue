@@ -28,6 +28,7 @@
                 <th>Province</th>
                 <th>Active Staff</th>
                 <th>Installed PC</th>
+                <th>Status</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -44,6 +45,7 @@
                     <td>{{ item.province_name }}</td>
                     <td>{{ item.active_staff }}</td>
                     <td>{{ item.installed_pc }}</td>
+                    <td>{{ item.status }}</td>
                     <td class="display-center">
                         <!-- <button type="button" class="btn btn-success" @click="postActivateRequest(item.uuid)"><i class="fas fa-plus"></i> Activate</button> -->
                         <router-link :to="{ name: 'groups.edit', params: {id: item.id} }"  class="btn btn-primary" v-if="user_type == '1' || user_type == '2'">

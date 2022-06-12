@@ -195,8 +195,8 @@
                 <p>Deactivated</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
+              <li class="nav-item {{ (request()->is('groups/view/pullout')) ? 'custom-active' : '' }}">
+                <a href="/groups/view/pullout" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Pullout</p>
                 </a>

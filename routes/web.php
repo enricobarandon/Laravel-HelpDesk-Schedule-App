@@ -62,6 +62,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('users/update/{id}/info', [\App\Http\Controllers\UserController::class, 'updateUser'])->name('users.updateUsers');
     Route::get('users/update/{id}/password', [\App\Http\Controllers\UserController::class, 'updateUser'])->name('users.updateUsers');
     Route::post('submitUser', [\App\Http\Controllers\UserController::class, 'submitUser'])->name('users.updateUsers');
+    Route::post('users/{user}',[\App\Http\Controllers\UserController::class, 'changeUserStatus'])->name('users.changeUserStatus');
 });
 
 // Route::view('/{any}', 'schedules.index')

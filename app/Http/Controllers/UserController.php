@@ -19,7 +19,7 @@ class UserController extends Controller
     {
         $userTypes = UserType::get();
 
-        $users = User::select('users.id','name','email','user_types.role as role','users.created_at as created_at')
+        $users = User::select('users.id','name','email','user_types.role as role','users.created_at as created_at','is_active')
                     ->join('user_types', 'user_types.id','users.user_type_id');
 
         $keyword = $request->keyword;
@@ -131,6 +131,17 @@ class UserController extends Controller
                 'assets' => json_encode($logs)
             ]);
             return redirect('/users')->with('success','User successfully updated.');
+        }
+    }
+
+    public function changeUserStatus(User $user)
+    {
+        $userId = $user->id;
+        $update = User::where('id', $userId)->update(['is_active' => DB::raw('!is_active')]);
+        if ($update) {
+            return redirect('/users')->with('success','User status updated');
+        }else {
+            return redirect('/users')->with('error','Something went wrong');
         }
     }
     

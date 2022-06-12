@@ -7,6 +7,7 @@ import GroupsActive from '../components/groups/GroupsActive';
 import GroupsDeactivated from '../components/groups/GroupsDeactivated';
 import GroupsEdit from '../components/groups/GroupsEdit';
 import GroupsStatus from '../components/groups/GroupsStatus';
+import GroupsPullout from '../components/groups/GroupsPullout';
 
 const routes = [
     {
@@ -48,6 +49,11 @@ const routes = [
         name: 'groups.requests.edit',
         component: GroupsStatus,
         props: true
+    },
+    {
+        path: '/groups/view/pullout',
+        name: 'groups.pullout',
+        component: GroupsPullout
     }
 ]
 

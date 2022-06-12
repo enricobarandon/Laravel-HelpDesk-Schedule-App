@@ -29,6 +29,7 @@ return new class extends Migration
             $table->text('remarks')->nullable();
             $table->string('site');
             $table->string('guarantor');
+            $table->char('status')->nullable();
             $table->timestamps();
         });
     }

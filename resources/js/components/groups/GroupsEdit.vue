@@ -117,6 +117,18 @@
                 </div>
             </div>
 
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Status</label>
+                    <select class="form-control" id="group-status" name="group-status" v-model="group.status">
+                        <option selected disabled value="">-- Select Status --</option>
+                        <option value="pullout">Pullout</option>
+                        <option value="onhold">On Hold</option>
+                        <option value="temporarydeactivated">Temporarily Deactivated</option>
+                    </select>
+                </div>
+            </div>
+
             <div class="col-md-12 text-center">
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>

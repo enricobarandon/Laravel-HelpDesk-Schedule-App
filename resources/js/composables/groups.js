@@ -9,6 +9,7 @@ export default function useGroups () {
     const group = ref([])
     const filteredGroups = ref([])
     const filteredDeactivatedGroups = ref([])
+    const filteredPulledOutGroups = ref([])
     const router = useRouter()
 
     const getActiveGroups = async () => {
@@ -21,6 +22,12 @@ export default function useGroups () {
         let response = await axios.get('/api/groups/view/deactivated')
         groups.value = response.data.data
         filteredDeactivatedGroups.value = response.data.data
+    }
+
+    const getPulledOutGroups = async () => {
+        let response = await axios.get('/api/groups/view/pullout')
+        groups.value = response.data.data
+        filteredPulledOutGroups.value = response.data.data
     }
 
     const getGroup = async (id) => {
@@ -68,6 +75,8 @@ export default function useGroups () {
         updateGroup,
         // filterActiveGroups,
         filteredGroups,
-        filteredDeactivatedGroups
+        filteredDeactivatedGroups,
+        getPulledOutGroups,
+        filteredPulledOutGroups
     }
 }

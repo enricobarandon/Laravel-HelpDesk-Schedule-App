@@ -68,6 +68,7 @@ if (! function_exists('removeParam')) {
                                 <th>Email</th>
                                 <th>User Role</th>
                                 <th>Created At</th>
+                                <th>Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -82,9 +83,27 @@ if (! function_exists('removeParam')) {
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->role }}</td>
                                     <td>{{ date("M d, Y h:i:s a",strtotime($user->created_at)) }}</td>
+                                    <td>
+                                        @if($user->is_active)
+                                            Active
+                                        @else
+                                            Deactivated
+                                        @endif
+                                    </td>
                                     <td class="text-center">
+                                        <form action='{{ url("/users/$user->id") }}' method="POST">
+                                            @csrf
+                                                @if($user->is_active)
+                                                    <button type="submit" class="btn btn-danger">
+                                                        <i class="fas fa-times"></i> Deactivate
+                                                    </button>
+                                                @else
+                                                    <button type="submit" class="btn btn-success">
+                                                        <i class="fas fa-plus"></i> Activate
+                                                    </button>
+                                                @endif
+                                        </form>
                                         <a href="{{ url('users/update') }}/{{ $user->id }}/info" name="updateUser" class="btn btn-primary"><i class="fas fa-cog"></i> Edit</a>
-                                        
                                         <a href="{{ url('users/update') }}/{{ $user->id }}/password" name="updateUser" class="btn btn-info"><i class="fas fa-cog"></i> Change Password</a>
                                     </td>
                                 </tr>

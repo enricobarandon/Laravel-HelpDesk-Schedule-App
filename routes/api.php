@@ -25,6 +25,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
     // Route::apiResource('groups', \App\Http\Controllers\Api\GroupController::class);
     Route::get('/groups/view/active', [\App\Http\Controllers\Api\GroupController::class, 'getActiveGroups']);
     Route::get('/groups/view/deactivated', [\App\Http\Controllers\Api\GroupController::class, 'getDeactivatedGroups']);
+    Route::get('/groups/view/pullout', [\App\Http\Controllers\Api\GroupController::class, 'getPulledOutGroups']);
     Route::get('/groups/{group}', [\App\Http\Controllers\Api\GroupController::class, 'show'])->name('groups.show');
     Route::put('/groups/{group}', [\App\Http\Controllers\Api\GroupController::class, 'update'])->name('groups.update');
     
