@@ -124,7 +124,7 @@ class AccountController extends Controller
                     ])
             ]);
 
-            return redirect('/accounts')->with('success', 'Updated password!');
+            return redirect($request->currentURL)->with('success', 'Updated password!');
         }
     }
 }
