@@ -136,9 +136,20 @@ class UserController extends Controller
 
     public function changeUserStatus(User $user)
     {
+        $auth = auth()->user();
         $userId = $user->id;
         $update = User::where('id', $userId)->update(['is_active' => DB::raw('!is_active')]);
+        
         if ($update) {
+            ActivityLog::create([
+                'type' => 'change-user-status',
+                'user_id' => $auth->id,
+                'assets' => json_encode([
+                    'action' => 'Change user status',
+                    'old status' => $user->is_active,
+                    'new status' => !$user->is_active
+                ])
+            ]);
             return redirect('/users')->with('success','User status updated');
         }else {
             return redirect('/users')->with('error','Something went wrong');
