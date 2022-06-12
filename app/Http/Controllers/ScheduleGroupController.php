@@ -285,7 +285,7 @@ class ScheduleGroupController extends Controller
                                 ->first();
                                 // dd($scheduledGroupInfo);
 
-        $groupAccounts = Account::select('accounts.id as acc_id','scheduled_accounts.id as sched_id','first_name','last_name','username','contact','position','scheduled_group_id','allowed_sides','is_active')
+        $groupAccounts = Account::select('accounts.id as acc_id','scheduled_accounts.id as sched_id','first_name','last_name','username','contact','position','scheduled_group_id','allowed_sides','is_active','password')
                             // ->leftJoin('scheduled_accounts','scheduled_accounts.account_id', 'accounts.id')
                             ->leftjoin('scheduled_accounts', function($join) use ($scheduleId){
                                 $join->on('scheduled_accounts.account_id', 'accounts.id')
@@ -571,7 +571,7 @@ class ScheduleGroupController extends Controller
             $tableRow .=    '<td style="text-align: center;">'. strtoupper($account['position']) .'</td>';
             $tableRow .=    '<td style="text-align: center;">'. $account['allowed_sides'] .'</td>';
             $tableRow .=    '<td style="text-align: center;">'. $account['username'] .'</td>';
-            $tableRow .=    '<td style="text-align: center;"></td>';
+            $tableRow .=    '<td style="text-align: center;">'. $account['password'] .'</td>';
             $tableRow .=    '<td style="background-color: lightskyblue; text-align: center;">ACCOUNT CONFIRMED</td>';
             $tableRow .= '</tr>';
         }

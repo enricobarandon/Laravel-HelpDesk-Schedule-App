@@ -27,6 +27,10 @@ if (! function_exists('removeParam')) {
                                 <input type="text" class="form-control" name="keyword" id="keyword" placeholder="keyword" value="{{ $keyword }}">
                             </div>
 
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" name="datepicker" id="datepicker" placeholder="Select Date" value="">
+                            </div>
+
                             <div class="col">
                                 <button type="submit" class="btn btn-success"><i class="fas fa-search"></i> Submit</button>
                                 <a href="{{ url('/logs') }}" class="btn btn-danger">Reset</a>
@@ -38,7 +42,7 @@ if (! function_exists('removeParam')) {
 
                     <div class="col">
                         <div class="float-right">
-                            {{ $activityLogs->appends(['keyword' => $keyword])->links('pagination::bootstrap-4') }}
+                            {{ $activityLogs->appends(['keyword' => $keyword, 'datepicker' => $datepicker])->links('pagination::bootstrap-4') }}
                         </div>
                     </div>
 
@@ -47,4 +51,19 @@ if (! function_exists('removeParam')) {
         </div>
     </div>
 </div>
+@endsection
+
+@section('style')
+<link href="{{ asset('css/bootstrap-datepicker.min.css') }}" rel="stylesheet">
+@endsection
+
+@section('script')
+<script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
+<script>
+    $("document").ready(function(){
+        $('#datepicker').datepicker({
+            format: 'yyyy-mm-dd',
+        });
+    });
+</script>
 @endsection

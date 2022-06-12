@@ -100,14 +100,17 @@ class RequestController extends Controller
 
             if ($operation == 'create') {
 
+                $messages = [
+                    'digits_between' => 'Mobile Number must be 10 to 15 digits',
+                ];
                 $validator = Validator::make(request()->all(), [
                     'group-name' => 'required|unique:groups,name',
                     'group-address' => 'required',
                     'group-type' => 'required|max:20',
                     'group-code' => 'required|unique:groups,code',
-                    'group-operator' => 'required',
+                    'group-operator' => 'required|string',
                     'province-id' => 'required|numeric',
-                    'group-contact' => 'required|numeric|max:11',
+                    'group-contact' => 'required|numeric|digits_between:10,15',
                     'group-guarantor' => 'required',
                     'is_active' => 'required|boolean',
                     'remarks' => 'nullable|string'
@@ -404,12 +407,15 @@ class RequestController extends Controller
 
         
         if(in_array($user->user_type_id, $allowedUsersToCreate)) {
+            $messages = [
+                'digits_between' => 'Mobile Number must be 10 to 15 digits',
+            ];
             $validator = Validator::make(request()->all(), [
                 'operation' => 'required',
                 'first-name' => 'required|string|max:50',
                 'last-name' => 'required|string|max:50',
                 'username' => 'required|string|max:50'.$unique,
-                'contact' => 'required|max:11|numeric',
+                'contact' => 'required|digits_between:10,15|numeric',
                 'position' => ['required', Rule::in(['Cashier','Teller','Teller/Cashier','Supervisor','Operator'])],
                 'allowed-sides' => ['required', Rule::in(['m','w','n','a'])],
                 'is-active' => 'required|boolean',
