@@ -58,7 +58,7 @@
 
                         <div class="form-group">
                                 <label>Contact</label>
-                                <input type="text" class="form-control" id="contact" name="contact">
+                                <input type="number" class="form-control" id="contact" name="contact">
                             </div>
 
                         </div>

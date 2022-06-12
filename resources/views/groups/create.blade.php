@@ -80,7 +80,7 @@
 
                 <div class="form-group">
                     <label>Contact</label>
-                    <input type="text" class="form-control" id="group-contact" name="group-contact">
+                    <input type="number" class="form-control" id="group-contact" name="group-contact">
                 </div>
 
                 <div class="form-group">
