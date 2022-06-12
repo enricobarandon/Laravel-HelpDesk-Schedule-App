@@ -95,6 +95,7 @@ $user = auth()->user();
                                         <form method="post" action="{{ url('/accounts/update-password/'.$account->acc_id)}}">
                                         @csrf
                                             <div class="input-group">
+                                                <input type="hidden" name="currentURL" value="{{ $_SERVER['REQUEST_URI'] }}">
                                                 <input type="hidden" name="accountId" value="{{ $account->acc_id }}">
                                                 <input class="form-control edit-password" name="password" type="text" disabled value="{{ $account->password }}"/>
                                                 @if($user->user_type_id == 1 || $user->user_type_id == 2)
