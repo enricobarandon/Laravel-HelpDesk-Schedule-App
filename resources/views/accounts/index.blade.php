@@ -98,7 +98,9 @@ $user = auth()->user();
                                                 <input type="hidden" name="accountId" value="{{ $account->acc_id }}">
                                                 <input class="form-control edit-password" name="password" type="text" disabled value="{{ $account->password }}"/>
                                                 
-                                                <button type="button" class="update-password btn-secondary"><i class="fa fa-edit"></i></button>
+                                                @if($user->user_type_id != 3)
+                                                    <button type="button" class="update-password btn-secondary"><i class="fa fa-edit"></i></button>
+                                                @endif
                                                 <a href="/accounts" class="cancel-update btn-danger"><i class="fa fa-times"></i></a>
                                                 <button type="submit" class="submit-password btn-success"><i class="fa fa-check"></i></button>
                                             </div>
