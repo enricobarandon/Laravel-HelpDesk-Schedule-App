@@ -415,7 +415,15 @@ class ScheduleGroupController extends Controller
             $scheduledGroups = $scheduledGroups->where('provinces.site', $request->selectSite);
         }
 
-        $scheduledGroups = $scheduledGroups->paginate(100);
+        if($request->pagination){
+            if($request->pagination == 'all'){
+                $scheduledGroups = $scheduledGroups->paginate(999999);
+            }else{
+                $scheduledGroups = $scheduledGroups->paginate(100);
+            }
+        }else{
+            $scheduledGroups = $scheduledGroups->paginate(100);
+        }
 
         $groupedByAccounts = ScheduledAccount::createAccountsAssocArr($scheduleId);
         // dd($groupedByAccounts);

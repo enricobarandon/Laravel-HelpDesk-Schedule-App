@@ -62,6 +62,14 @@ if (! function_exists('removeParam')) {
                             </select>
                         </div>
 
+                        <div class="col-md-2">
+                            <select id="pagination" name="pagination" class="form-select">
+                                <option selected value="">Show Entries</option>
+                                <option value="100">100</option>
+                                <option value="all">Show All</option>
+                            </select>
+                        </div>
+
                         <div class="col">
                             <button type="submit" class="btn btn-success"><i class="fas fa-search"></i> Submit</button>
                             <a href="{{ url('/schedules/view') }}/{{ $scheduleId }}" class="btn btn-danger">Reset</a>
