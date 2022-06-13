@@ -146,6 +146,7 @@ class UserController extends Controller
                 'user_id' => $auth->id,
                 'assets' => json_encode([
                     'action' => 'Change user status',
+                    'email' => $user->email,
                     'old status' => $user->is_active,
                     'new status' => !$user->is_active
                 ])
