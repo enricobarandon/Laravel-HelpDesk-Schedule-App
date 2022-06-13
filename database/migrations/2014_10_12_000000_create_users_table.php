@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('password');
             $table->integer('user_type_id');
             $table->boolean('is_active')->default(1);
+            $table->text('session_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

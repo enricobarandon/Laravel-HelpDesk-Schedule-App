@@ -21,6 +21,21 @@
                   <h3 class="card-title"><i class="fa fa-cog"></i> Group Management</h3>
                 </div>
                 <div class="card-body">
+
+                  @if (session('status'))
+                      <div class="alert alert-success" role="alert">
+                          {{ session('status') }}
+                      </div>
+                  @elseif (session('success'))
+                      <div class="alert alert-success" role="alert">
+                          {{ session('success') }}
+                      </div>
+                  @elseif(session('error'))
+                      <div class="alert alert-danger" role="alert">
+                          {{ session('error') }}
+                      </div>
+                  @endif
+
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">

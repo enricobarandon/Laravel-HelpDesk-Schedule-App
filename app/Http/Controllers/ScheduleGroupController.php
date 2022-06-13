@@ -168,34 +168,42 @@ class ScheduleGroupController extends Controller
 
         if ($groupId == 'all') {
 
-            ActivityLog::create([
-                'type' => 'add-group',
-                'user_id' => $user->id,
-                'assets' => json_encode([
-                    'action' => 'added group to schedule',
-                    'group_id' => $groupId,
-                    'schedule_id' => $scheduleId,
-                    'group_code' => 'All Active Groups'
-                ])
-            ]);
-
-            $allGroups = Group::select('id')->where('is_active', 1)->orderBy('name','asc')->get();
-
+            $allGroups = Group::select('groups.id','scheduled_groups.id as scheduled_groups_id')
+                            ->leftjoin('scheduled_groups', function($join) use ($scheduleId){
+                                $join->on('scheduled_groups.group_id', 'groups.id')
+                                    ->where('scheduled_groups.schedule_id','=', $scheduleId);
+                            })
+                            ->where('is_active', 1)
+                            ->orderBy('name','asc')
+                            ->get();
+                            
             $groupArray = [];
 
             foreach($allGroups as $index => $group) {
-                $groupArray[$index] = [
-                    'schedule_id' => $scheduleId,
-                    'group_id' => $group->id,
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now(),
-                    'user_id' => $user->id
-                ];
+                if (!$group->scheduled_groups_id) {
+                    $groupArray[$index] = [
+                        'schedule_id' => $scheduleId,
+                        'group_id' => $group->id,
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                        'user_id' => $user->id
+                    ];
+                }
             }
             
             $insertScheduledGroups = ScheduledGroup::insert($groupArray);
 
             if ($insertScheduledGroups) {
+                ActivityLog::create([
+                    'type' => 'add-group',
+                    'user_id' => $user->id,
+                    'assets' => json_encode([
+                        'action' => 'added group to schedule',
+                        'group_id' => $groupId,
+                        'schedule_id' => $scheduleId,
+                        'group_code' => 'All Active Groups'
+                    ])
+                ]);
                 return redirect('/schedules/manage/' . $scheduleId)->with('success', 'All active groups added!');
             } else {
                 return redirect('/schedules/manage/' . $scheduleId)->with('error', 'Something went wrong!');
@@ -352,6 +360,15 @@ class ScheduleGroupController extends Controller
         $groupId = request()->groupId;
         
         $user = Auth::user();
+
+        $checkIfExisting = ScheduledAccount::select('id')
+                            ->where('scheduled_group_id', $scheduledGroupId)
+                            ->where('account_id', $accountId)
+                            ->first();
+
+        if ($checkIfExisting) {
+            return back()->with('error','Account already confirmed');
+        }
 
         $storeAccountFromScheduledGroup = ScheduledAccount::insert([
             'scheduled_group_id' => $scheduledGroupId,
