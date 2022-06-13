@@ -26,6 +26,7 @@ class GroupRequest extends FormRequest
         return [
             'active_staff' => ['required'],
             'installed_pc' => ['required'],
+            'status' => ['required']
         ];
     }
 }

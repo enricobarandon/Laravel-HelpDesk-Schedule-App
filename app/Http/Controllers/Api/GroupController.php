@@ -96,7 +96,7 @@ class GroupController extends Controller
                 'action' => 'Update group local fields'
             ],$request->only(['id','active_staff','installed_pc'])))
         ]);
-
+        
         $group->update($request->validated());
 
         return new GroupResource($group);

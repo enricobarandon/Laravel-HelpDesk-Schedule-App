@@ -23,7 +23,8 @@ class Group extends Model
         'address',
         'installed_pc',
         'active_staff',
-        'guarantor'
+        'guarantor',
+        'status'
     ];
     
 }
