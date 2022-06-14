@@ -31,7 +31,7 @@
 
                             <div class="form-group">
                                 <label>First Name</label>
-                                <input type="text" class="form-control" id="first-name" name="first-name">
+                                <input type="text" class="form-control" id="first-name" name="first-name" value="{{ old('first-name') }}">
                             </div>
 
                         </div>
@@ -40,7 +40,7 @@
 
                             <div class="form-group">
                                 <label>Last Name</label>
-                                <input type="text" class="form-control" id="last-name" name="last-name">
+                                <input type="text" class="form-control" id="last-name" name="last-name" value="{{ old('last-name') }}">
                             </div>
 
                         </div>
@@ -58,7 +58,7 @@
 
                         <div class="form-group">
                                 <label>Contact</label>
-                                <input type="number" class="form-control" id="contact" name="contact">
+                                <input type="number" class="form-control" id="contact" name="contact" value="{{ old('contact') }}">
                             </div>
 
                         </div>
@@ -139,7 +139,7 @@
 
                             <div class="form-group">
                                 <label>Request Remarks</label>
-                                <textarea id="remarks" name="remarks" class="form-control" rows="2"></textarea>
+                                <textarea id="remarks" name="remarks" class="form-control" rows="2" >{{ old('remarks') }}</textarea>
                             </div>
                             
                         </div>

@@ -451,7 +451,7 @@ class RequestController extends Controller
         }
 
         if ($validator->fails()) {
-            return redirect()->back()->with('errors', $validator->messages());
+            return redirect()->back()->withInput()->with('errors', $validator->messages());
         }
 
         $form = [

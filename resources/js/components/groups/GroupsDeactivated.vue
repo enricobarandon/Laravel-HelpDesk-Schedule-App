@@ -7,6 +7,14 @@
                 <input type="text" class="form-control" name="filterCode" id="filterCode" placeholder="Group Code" v-model='filter.code'>
             </div>
 
+            <div class="col-md-3">
+                <select class="form-control" name="filterStatus" v-model='filter.status' placeholder="Status">
+                    <option selected disabled>-- Select Status --</option>
+                    <option value="onhold">On Hold</option>
+                    <option value="temporarydeactivated">Temporarily Deactivated</option>
+                </select>
+            </div>
+
             <div class="col">
                 <button type="button" class="btn btn-success" @click="postFilterGroup()"><i class="fas fa-search"></i> Submit</button>
                 <a href="#" class="btn btn-danger" @click="resetFilter()">Reset</a>
@@ -83,7 +91,8 @@ export default {
         })
 
         const filter = reactive({
-            'code' : ''
+            'code' : '',
+            'status' : ''
         })
 
         const { groups, filteredDeactivatedGroups, getDeactivatedGroups } = useGroups()
@@ -101,7 +110,7 @@ export default {
         }
 
         const postFilterGroup = async () => {
-            filteredDeactivatedGroups.value = groups.value.filter(val => val.code.toLowerCase() == filter.code.toLowerCase())
+            filteredDeactivatedGroups.value = groups.value.filter(val => val.code.toLowerCase() == filter.code.toLowerCase() || val.status == filter.status)
         }
 
         const resetFilter = () => {
