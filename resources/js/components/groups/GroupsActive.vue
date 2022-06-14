@@ -3,12 +3,16 @@
         <div class="form-horizontal">
             <div class="form-group row">
 
-                <!-- <div class="col-md-3">
-                    <input type="text" class="form-control" name="filterName" id="filterName" placeholder="Group Name" v-model='filter.name'>
-                </div> -->
-
                 <div class="col-md-3">
                     <input type="text" class="form-control" name="filterCode" id="filterCode" placeholder="Group Code" v-model='filter.code'>
+                </div>
+
+                <div class="col-md-3">
+                    <select class="form-control" name="filterSite" placeholder="Site" v-model='filter.site'>
+                        <option selected value="">Select Site</option>
+                        <option value="wpc2040">WPC2040</option>
+                        <option value="wpc2040aa">WPC2040AA</option>
+                    </select>
                 </div>
 
                 <div class="col">
@@ -92,7 +96,8 @@ export default {
 
         const filter = reactive({
             // 'name' : '',
-            'code' : ''
+            'code' : '',
+            'site' : ''
         })
 
         const { groups, filteredGroups, getActiveGroups } = useGroups()
@@ -110,14 +115,24 @@ export default {
         }
 
         const postFilterGroup = async () => {
-            // let filtered = groups.value.filter(val => val.code == 'kik')
-            // let filtered = groups.value.filter(val => val.code == filter.code.toUpperCase())
-            filteredGroups.value = groups.value.filter(val => val.code.toLowerCase() == filter.code.toLowerCase())
+            // filteredGroups.value = groups.value.filter(val => val.code.toLowerCase() == filter.code.toLowerCase())
+            filteredGroups.value = groups.value.filter((val) => {
+                if (filter.code) {
+                    return val.code.toLowerCase() == filter.code.toLowerCase()
+                }
+                if (filter.site) {
+                    return val.site == filter.site
+                }
+
+                return true;
+            })
         }
 
         const resetFilter = () => {
             // router.go()
             filteredGroups.value = groups.value
+            filter.code = ''
+            filter.site = ''
         }
 
         // const redirectToEditForm = (id) => {

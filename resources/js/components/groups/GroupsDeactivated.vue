@@ -1,6 +1,6 @@
 <template>
 
-    <form class="form-horizontal">
+    <form class="form-horizontal" id="frmDeactivatedGroupFilters">
         <div class="form-group row">
 
             <div class="col-md-3">
@@ -8,10 +8,18 @@
             </div>
 
             <div class="col-md-3">
-                <select class="form-control" name="filterStatus" v-model='filter.status' placeholder="Status">
-                    <option selected disabled>-- Select Status --</option>
+                <select class="form-control" name="filterStatus" placeholder="Status" v-model='filter.status'>
+                    <option selected value="">Select Status</option>
                     <option value="onhold">On Hold</option>
                     <option value="temporarydeactivated">Temporarily Deactivated</option>
+                </select>
+            </div>
+
+            <div class="col-md-3">
+                <select class="form-control" name="filterSite" placeholder="Site" v-model='filter.site'>
+                    <option selected value="">Select Site</option>
+                    <option value="wpc2040">WPC2040</option>
+                    <option value="wpc2040aa">WPC2040AA</option>
                 </select>
             </div>
 
@@ -92,7 +100,8 @@ export default {
 
         const filter = reactive({
             'code' : '',
-            'status' : ''
+            'status' : '',
+            'site' : ''
         })
 
         const { groups, filteredDeactivatedGroups, getDeactivatedGroups } = useGroups()
@@ -110,11 +119,28 @@ export default {
         }
 
         const postFilterGroup = async () => {
-            filteredDeactivatedGroups.value = groups.value.filter(val => val.code.toLowerCase() == filter.code.toLowerCase() || val.status == filter.status)
+            // filteredDeactivatedGroups.value = groups.value.filter(val => val.code.toLowerCase() == filter.code.toLowerCase() || val.status == filter.status || val.site == filter.site)
+            filteredDeactivatedGroups.value = groups.value.filter((val) => {
+                if (filter.code) {
+                    return val.code.toLowerCase() == filter.code.toLowerCase()
+                }
+                if (filter.status) {
+                    return val.status == filter.status
+                }
+                if (filter.site) {
+                    return val.site == filter.site
+                }
+
+                return true;
+            })
         }
 
         const resetFilter = () => {
             filteredDeactivatedGroups.value = groups.value
+            filter.code = ''
+            filter.status = ''
+            filter.site = ''
+
         }
 
         return {
