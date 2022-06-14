@@ -102,7 +102,7 @@
 
         <hr class="hr-css"/>
 
-        <form @submit.prevent="saveGroup">
+        <form @submit.prevent="saveGroup" ref="form">
             <div class="col-md-6">
                 <div class="form-group">
                     <label>No. of Staff</label>
@@ -130,7 +130,8 @@
             </div>
 
             <div class="col-md-12 text-center">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="button" v-on:click="sweetAlert" class="btn btn-primary">Submit</button>
+                <button type="submit" ref="submit" style="display: none">Submit</button>
             </div>
 
         </form>
@@ -199,6 +200,26 @@ export default {
             saveGroup,
             form,
             postUpdateRequest
+        }
+    },
+    methods: {
+        sweetAlert(e) {
+            e.preventDefault();
+            this.$swal({
+            title: 'Are you sure?',
+            text: 'You want to update this Group?',
+            type: 'warning',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'Cancel',
+            showCloseButton: true,
+            showLoaderOnConfirm: true
+            }).then((result) => {
+            if(result.value) {
+                this.$refs.submit.click();
+            }
+            })
         }
     }
 }

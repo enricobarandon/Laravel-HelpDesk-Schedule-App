@@ -20,6 +20,8 @@ class AccountController extends Controller
                         ->leftjoin('groups','groups.id','accounts.group_id');
         
         $filterStatus = $request->filterStatus;
+        
+        $filterRole = $request->filterRole;
 
         if($request->filterGname){
             $accounts = $accounts->where('code', 'like', '%' . $request->filterGname . '%');
@@ -29,8 +31,12 @@ class AccountController extends Controller
             $accounts = $accounts->where(DB::raw('concat(accounts.first_name,accounts.last_name,accounts.username)'), 'like', '%' . $request->filterName . '%');
         }
 
+        if($request->filterRole != ""){
+            $accounts = $accounts->where('accounts.position', $request->filterRole);
+        }
+
         if($request->filterStatus != ""){
-            $accounts = $accounts->where('accounts.is_active', 'like', $request->filterStatus);
+            $accounts = $accounts->where('accounts.is_active', $request->filterStatus);
         }
         
         $accounts = $accounts->paginate(100);
@@ -45,7 +51,7 @@ class AccountController extends Controller
             );
         }
         
-        return view('accounts.index', compact('accounts','filterStatus'));
+        return view('accounts.index', compact('accounts','filterStatus','filterRole'));
     }
 
     public function show(Account $account)

@@ -53,6 +53,17 @@ $user = auth()->user();
                                     <option value="0" {{ $filterStatus == '0' ? 'selected' : '' }}>DEACTIVATED</option>
                                 </select>
                             </div>
+                            
+                            <div class="col-md-2">
+                                <select class="form-control" name="filterRole" id="filterStatus">
+                                    <option selected disabled value="">SELECT ROLE</option>
+                                    <option value="Teller/Cashier">Teller/Cashier</option>
+                                    <option value="Teller">Teller</option>
+                                    <option value="Cashier">Cashier</option>
+                                    <option value="Supervisor">Supervisor</option>
+                                    <option value="Operator">Operator</option>
+                                </select>
+                            </div>
 
                             <div class="col">
                                 <button type="submit" class="btn btn-success"><i class="fas fa-search"></i> Submit</button>
@@ -117,7 +128,7 @@ $user = auth()->user();
 
                     <div class="col">
                         <div class="float-right">
-                            {{ $accounts->appends(['filterStatus' => $filterStatus])->links('pagination::bootstrap-4') }}
+                            {{ $accounts->appends(Request::except('page'))->links('pagination::bootstrap-4') }}
                         </div>
                     </div>
                 </div>

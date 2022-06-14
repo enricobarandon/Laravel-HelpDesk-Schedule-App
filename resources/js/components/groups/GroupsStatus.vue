@@ -17,6 +17,13 @@
             </div>
         </div>
         
+        <div class="col-md-12">
+            <div class="form-group">
+                <label>Address</label>
+                <textarea id="group-address" name="group-address" class="form-control" rows="2" v-model="group.address" disabled></textarea>
+            </div>
+        </div>
+        
         <div class="col-md-4">
             <label>Status</label>
             <div class="form-control text-center">
@@ -94,7 +101,7 @@ export default {
             form.operation = 'groups.update'
             form.data = JSON.stringify({
                 'name': group.value.name,
-                // 'address' : group.value.address,
+                'address' : group.value.address,
                 // 'group_type' : group.value.group_type,
                 // 'owner' : group.value.owner,
                 // 'contact' : group.value.contact,
