@@ -21,7 +21,7 @@ class ScheduleController extends Controller
      */
     public function index()
     {
-        $schedules = Schedule::select('id','name','status','date_time','created_at')->where('status', 'active')->orderBy('date_time','desc')->get();
+        $schedules = Schedule::select('id','name','status','date_time','created_at')->where('status', 'active')->orderBy('id','desc')->get();
 
         return ScheduleResource::collection($schedules);
     }

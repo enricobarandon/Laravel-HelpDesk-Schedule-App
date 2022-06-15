@@ -1,10 +1,10 @@
 <template>
 
-    <form class="form-horizontal" id="frmDeactivatedGroupFilters">
+    <!-- <form class="form-horizontal" id="frmDeactivatedGroupFilters"> -->
         <div class="form-group row">
 
             <div class="col-md-3">
-                <input type="text" class="form-control" name="filterCode" id="filterCode" placeholder="Group Code" v-model='filter.code'>
+                <input type="text" class="form-control" name="filterCode" id="filterCode" placeholder="Group Code" @keyup.enter="postFilterGroup()" v-model='filter.code'>
             </div>
 
             <div class="col-md-3">
@@ -36,7 +36,7 @@
                 <a href="#" class="btn btn-danger" @click="resetFilter()">Reset</a>
             </div>
         </div>
-    </form>
+    <!-- </form> -->
 
     <!-- <router-link :to="{ name: 'groups.create' }"  class="btn btn-primary float-right"><i class="fas fa-plus"></i> Create Group</router-link> -->
     <table class="table table-bordered table-striped global-table">
