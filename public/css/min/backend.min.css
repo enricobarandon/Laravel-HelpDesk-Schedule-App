@@ -22520,6 +22520,23 @@ input.form-control.edit-password {
     display: none;
     border: none;
 }
+.pending-requests {
+    background: red;
+    width: 20px;
+    border-radius: 10px;
+    font-size: 11px;
+    padding: 4px 0;
+    position: absolute;
+    right: -10px;
+    top: -3px;
+}
+
+#updateGroupRemarks{
+    position: absolute;
+    right: 0;
+    top: 32px;
+    height: 62px;
+}
 
 /*! jQuery UI - v1.13.1 - 2022-01-20
 * http://jqueryui.com

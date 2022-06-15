@@ -65,6 +65,18 @@ export default function useGroups () {
     //     groups.value = response.data.data
     // }
 
+    const groupTypes = [
+        'ARENA',
+        'OCBS-LOTTO',
+        'OCBS-OTB',
+        'OCBS-RESTOBAR',
+        'OCBS-STORE',
+        'OCBS-MALL',
+        'OCBS',
+        'OCBS-EGAMES',
+        'OCBS-CASINO'
+    ];
+
     return {
         groups,
         getActiveGroups,
@@ -77,6 +89,7 @@ export default function useGroups () {
         filteredGroups,
         filteredDeactivatedGroups,
         getPulledOutGroups,
-        filteredPulledOutGroups
+        filteredPulledOutGroups,
+        groupTypes
     }
 }

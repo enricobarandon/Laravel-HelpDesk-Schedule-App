@@ -24,6 +24,13 @@
                 </select>
             </div>
 
+            <div class="col-md-3">
+                    <select class="form-control" name="filterType" placeholder="Group Type" v-model='filter.type'>
+                        <option selected value="">Select Group Type</option>
+                        <option :value="value" v-for="(value, name) in groupTypes" :key="name">{{ value }}</option>
+                    </select>
+                </div>
+
             <div class="col">
                 <button type="button" class="btn btn-success" @click="postFilterGroup()"><i class="fas fa-search"></i> Submit</button>
                 <a href="#" class="btn btn-danger" @click="resetFilter()">Reset</a>
@@ -102,10 +109,11 @@ export default {
         const filter = reactive({
             'code' : '',
             'status' : '',
-            'site' : ''
+            'site' : '',
+            'type' : ''
         })
 
-        const { groups, filteredDeactivatedGroups, getDeactivatedGroups } = useGroups()
+        const { groups, filteredDeactivatedGroups, getDeactivatedGroups, groupTypes } = useGroups()
 
         const { storeRequest } = useRequests()
 
@@ -131,6 +139,9 @@ export default {
                 if (filter.site) {
                     return val.site == filter.site
                 }
+                if (filter.type) {
+                    return val.group_type == filter.type
+                }
 
                 return true;
             })
@@ -141,6 +152,7 @@ export default {
             filter.code = ''
             filter.status = ''
             filter.site = ''
+            filter.type = ''
 
         }
 
@@ -152,7 +164,8 @@ export default {
             filter,
             postFilterGroup,
             resetFilter,
-            user_type
+            user_type,
+            groupTypes
         }
     }
 }
