@@ -102,7 +102,7 @@
 
         <hr class="hr-css"/>
 
-        <form @submit.prevent="saveGroup" ref="form">
+        <form @submit.prevent="saveGroup" ref="form" class="row">
             <div class="col-md-6">
                 <div class="form-group">
                     <label>No. of Staff</label>
@@ -122,6 +122,7 @@
                     <label>Status</label>
                     <select class="form-control" id="group-status" name="group-status" v-model="group.status">
                         <option selected disabled value="">-- Select Status --</option>
+                        <option value="forpullout">For Pullout</option>
                         <option value="pullout">Pullout</option>
                         <option value="onhold">On Hold</option>
                         <option value="temporarydeactivated">Temporarily Deactivated</option>

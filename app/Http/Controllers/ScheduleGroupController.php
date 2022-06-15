@@ -168,7 +168,7 @@ class ScheduleGroupController extends Controller
 
         if ($groupId == 'all') {
 
-            $allGroups = Group::select('groups.id','scheduled_groups.id as scheduled_groups_id')
+            $allGroups = Group::select('groups.id','scheduled_groups.id as scheduled_groups_id','groups.remarks')
                             ->leftjoin('scheduled_groups', function($join) use ($scheduleId){
                                 $join->on('scheduled_groups.group_id', 'groups.id')
                                     ->where('scheduled_groups.schedule_id','=', $scheduleId);
@@ -186,7 +186,8 @@ class ScheduleGroupController extends Controller
                         'group_id' => $group->id,
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now(),
-                        'user_id' => $user->id
+                        'user_id' => $user->id,
+                        'remarks' => $group->remarks
                     ];
                 }
             }
@@ -211,7 +212,7 @@ class ScheduleGroupController extends Controller
             
         } else if ($groupId > 0)  {
 
-            $groupCode = Group::select('code')->where('groups.id',$groupId)->first();
+            $groupInfo = Group::select('code','remarks')->where('groups.id',$groupId)->first();
 
             ActivityLog::create([
                 'type' => 'add-group',
@@ -220,14 +221,15 @@ class ScheduleGroupController extends Controller
                     'action' => 'added group to schedule',
                     'group_id' => $groupId,
                     'schedule_id' => $scheduleId,
-                    'group_code' => $groupCode->code
+                    'group_code' => $groupInfo->code
                 ])
             ]);
-
+            
             $scheduledGroup = ScheduledGroup::create([
                 'schedule_id' => $scheduleId,
                 'group_id' => $groupId,
-                'user_id' => $user->id
+                'user_id' => $user->id,
+                'remarks' => $groupInfo->remarks
             ]);
 
             if ($scheduledGroup) {
@@ -287,7 +289,7 @@ class ScheduleGroupController extends Controller
                             ->join('provinces', 'provinces.id', 'groups.province_id')
                             ->first();
 
-        $scheduledGroupInfo = ScheduledGroup::select('id','operation_time')
+        $scheduledGroupInfo = ScheduledGroup::select('id','operation_time','remarks')
                                 ->where('schedule_id', $scheduleId)
                                 ->where('group_id', $groupId)
                                 ->first();
@@ -411,7 +413,7 @@ class ScheduleGroupController extends Controller
 
         $scheduleInfo = Schedule::find($scheduleId, ['name','date_time','status']);
         
-        $scheduledGroups = ScheduledGroup::select('scheduled_groups.schedule_id','scheduled_groups.operation_time','scheduled_groups.group_id','groups.group_type','groups.name','code','owner','contact','address','active_staff','installed_pc','remarks','provinces.site')
+        $scheduledGroups = ScheduledGroup::select('scheduled_groups.schedule_id','scheduled_groups.operation_time','scheduled_groups.group_id','groups.group_type','groups.name','code','owner','contact','address','active_staff','installed_pc','scheduled_groups.remarks','provinces.site')
                             ->join('groups','groups.id', 'scheduled_groups.group_id')
                             ->join('provinces','provinces.id', 'groups.province_id')
                             ->where('scheduled_groups.schedule_id', $scheduleId);
@@ -559,23 +561,43 @@ class ScheduleGroupController extends Controller
         
         $user = Auth::user();
 
-        $newOperationTime = date('H:i:s',strtotime(request()->operation_time));
-        
-        $updateOperationTime = ScheduledGroup::where('schedule_id', $scheduleId)->where('group_id', $groupId)->update(['operation_time' => $newOperationTime]);
+        $updateScheduledGroupInfo = '';
 
-        if ($updateOperationTime) {
+        $action = '';
+        
+        $data = '';
+
+        if(request()->info == 'time'){
+
+            $action = 'Updated operation time';
+
+            $data = date('H:i:s',strtotime(request()->operation_time));
+        
+            $updateScheduledGroupInfo = ScheduledGroup::where('schedule_id', $scheduleId)->where('group_id', $groupId)->update(['operation_time' => $data]);
+        }elseif(request()->info == 'remarks'){
+
+            $action = 'Updated Remarks';
+
+            $data = request()->gRemarks;
+
+            $updateScheduledGroupInfo = ScheduledGroup::where('schedule_id', $scheduleId)->where('group_id', $groupId)->update(['remarks' => $data]);
+
+        }
+
+
+        if ($updateScheduledGroupInfo) {
 
             $groupCode = Group::select('code')->where('groups.id',$groupId)->first();
 
             ActivityLog::create([
-                'type' => 'update-operation-time',
+                'type' => 'update-group-schedule-info',
                 'user_id' => $user->id,
                 'assets' => json_encode([
-                    'action' => 'Updated operation time',
+                    'action' => $action,
+                    'data' => $data,
                     'scheduleId' => $scheduleId,
                     'groupId' => $groupId,
-                    'group_code' => $groupCode->code,
-                    'newOperationTime' => $newOperationTime
+                    'group_code' => $groupCode->code
                 ])
             ]);
 

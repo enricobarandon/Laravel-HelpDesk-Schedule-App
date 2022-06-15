@@ -11,5 +11,5 @@ class ScheduledGroup extends Model
 
     protected $table = 'scheduled_groups';
 
-    protected $fillable = ['schedule_id', 'group_id', 'user_id'];
+    protected $fillable = ['schedule_id', 'group_id', 'user_id', 'remarks'];
 }

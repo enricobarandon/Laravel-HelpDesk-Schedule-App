@@ -297,6 +297,10 @@ class RequestController extends Controller
                         unset($data['type']);
                     }
 
+                    if ($request->remarks) {
+                        $data['remarks'] = $request->remarks;
+                    }
+
                     if ($operation == 'update') {
     
                         $result = Group::where('uuid', $request->uuid)->update($data);
@@ -335,6 +339,9 @@ class RequestController extends Controller
                         unset($data['group_code']);
                     }
 
+                    if ($request->remarks) {
+                        $data['remarks'] = $request->remarks;
+                    }
     
                     if ($operation == 'update') {
     

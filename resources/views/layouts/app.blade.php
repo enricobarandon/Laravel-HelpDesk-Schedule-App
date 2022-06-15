@@ -174,6 +174,7 @@
               <p>
                 Requests
               </p>
+              <i class="nav-icon fa fa-bell float-right"><label class="pending-requests"><span>0</span></label></i>
             </a>
           </li>
 

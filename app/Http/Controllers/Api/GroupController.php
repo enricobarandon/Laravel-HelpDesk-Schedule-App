@@ -33,7 +33,7 @@ class GroupController extends Controller
                     ->leftjoin('provinces','provinces.id','groups.province_id')
                     ->where('groups.is_active', 0)
                     ->where(function($query) {
-                        $query->whereIn('status', ['onhold','temporarydeactivated'])
+                        $query->whereIn('status', ['onhold','temporarydeactivated','forpullout'])
                             ->orWhereNull('status');
                     })
                     ->get();
@@ -71,7 +71,7 @@ class GroupController extends Controller
      */
     public function show(Group $group)
     {
-        $group = Group::select('groups.id','groups.uuid','groups.name','groups.uuid','groups.group_type','owner','contact','code','provinces.site as site','provinces.name as province_name','active_staff','installed_pc','address','guarantor','groups.is_active','groups.status')
+        $group = Group::select('groups.id','groups.uuid','groups.name','groups.uuid','groups.group_type','owner','contact','code','provinces.site as site','provinces.name as province_name','active_staff','installed_pc','address','guarantor','groups.is_active','groups.status','groups.remarks')
                     ->leftjoin('provinces','provinces.id','groups.province_id')
                     ->where('groups.id', $group->id)
                     ->first();
@@ -88,13 +88,16 @@ class GroupController extends Controller
     public function update(GroupRequest $request, Group $group)
     {
         $user = auth()->user();
+        
+        $groupInfo = Group::select('code')->where('groups.id', $request->id)->first();
 
         $logs = ActivityLog::create([
             'type' => 'update-group-fields',
             'user_id' => $user->id,
             'assets' => json_encode(array_merge([
-                'action' => 'Update group local fields'
-            ],$request->only(['id','active_staff','installed_pc'])))
+                'action' => 'Update group local fields',
+                'group_code' => $groupInfo->code,
+            ],$request->only(['id','active_staff','installed_pc','status'])))
         ]);
         
         $group->update($request->validated());

@@ -10,6 +10,7 @@
             <div class="col-md-3">
                 <select class="form-control" name="filterStatus" placeholder="Status" v-model='filter.status'>
                     <option selected value="">Select Status</option>
+                    <option value="forpullout">For Pullout</option>
                     <option value="onhold">On Hold</option>
                     <option value="temporarydeactivated">Temporarily Deactivated</option>
                 </select>

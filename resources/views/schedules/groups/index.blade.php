@@ -95,9 +95,22 @@
                         <form action='{{ url("/schedules/$scheduleId/groups/$groupId") }}' method="POST">
                             @csrf
                             @method('put')
+                            <input type="hidden" name="info" value="time">
                             <label>Time of Operation</label>
                             <input type="text" value="{{ date('h:i A', strtotime($scheduledGroupInfo->operation_time)) }}" class="form-control" id="operation_time" name="operation_time">
                             <button type="submit" class="btn btn-primary pull-right" id="updateGroupTime"><i class="fa fa-wrench"aria-hidden="true"></i> Update</button>
+                        </form>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group">
+                      <form action='{{ url("/schedules/$scheduleId/groups/$groupId") }}' method="POST">
+                            @csrf
+                            @method('put')
+                            <input type="hidden" name="info" value="remarks">
+                            <label>Remarks</label>
+                            <textarea id="gRemarks" name="gRemarks" class="form-control" rows="2">{{ $scheduledGroupInfo->remarks }}</textarea>
+                            <button type="submit" class="btn btn-primary pull-right" id="updateGroupRemarks"><i class="fa fa-wrench"aria-hidden="true"></i> Update</button>
                         </form>
                       </div>
                     </div>
