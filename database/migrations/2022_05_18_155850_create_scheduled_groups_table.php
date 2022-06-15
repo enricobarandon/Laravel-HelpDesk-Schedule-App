@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('group_id');
             $table->integer('user_id');
             $table->time('operation_time')->nullable();
+            $table->text('remarks')->nullable();
             $table->timestamps();
         });
     }
