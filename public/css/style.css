@@ -276,3 +276,18 @@ input.form-control.edit-password {
     top: 32px;
     height: 62px;
 }
+
+.sm-global-table tr th {
+    padding: 2px 5px 2px 10px !important;
+    background: linear-gradient(#969ea6 ,#343a40 100%) !important;
+    color: #ffff;
+    text-transform: uppercase;
+    font-weight:bold;
+    text-align: center;
+    font-size: 13px;
+}
+
+.sm-global-table tr td {
+    padding: 2px 5px !important;
+    font-size: 12px;
+}

@@ -89,14 +89,12 @@ class GroupController extends Controller
     {
         $user = auth()->user();
         
-        $groupInfo = Group::select('code')->where('groups.id', $request->id)->first();
-
         $logs = ActivityLog::create([
             'type' => 'update-group-fields',
             'user_id' => $user->id,
             'assets' => json_encode(array_merge([
                 'action' => 'Update group local fields',
-                'group_code' => $groupInfo->code,
+                'group_code' => $group->code,
             ],$request->only(['id','active_staff','installed_pc','status'])))
         ]);
         

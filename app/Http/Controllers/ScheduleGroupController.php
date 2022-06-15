@@ -561,28 +561,13 @@ class ScheduleGroupController extends Controller
         
         $user = Auth::user();
 
-        $updateScheduledGroupInfo = '';
+        $optime = date('H:i:s',strtotime(request()->operation_time));
+    
+        $remarks = request()->gRemarks;
 
-        $action = '';
-        
-        $data = '';
-
-        if(request()->info == 'time'){
-
-            $action = 'Updated operation time';
-
-            $data = date('H:i:s',strtotime(request()->operation_time));
-        
-            $updateScheduledGroupInfo = ScheduledGroup::where('schedule_id', $scheduleId)->where('group_id', $groupId)->update(['operation_time' => $data]);
-        }elseif(request()->info == 'remarks'){
-
-            $action = 'Updated Remarks';
-
-            $data = request()->gRemarks;
-
-            $updateScheduledGroupInfo = ScheduledGroup::where('schedule_id', $scheduleId)->where('group_id', $groupId)->update(['remarks' => $data]);
-
-        }
+        $updateScheduledGroupInfo = ScheduledGroup::where('schedule_id', $scheduleId)
+                                                ->where('group_id', $groupId)
+                                                ->update(['remarks' => $remarks, 'operation_time' => $optime]);
 
 
         if ($updateScheduledGroupInfo) {
@@ -593,8 +578,9 @@ class ScheduleGroupController extends Controller
                 'type' => 'update-group-schedule-info',
                 'user_id' => $user->id,
                 'assets' => json_encode([
-                    'action' => $action,
-                    'data' => $data,
+                    'action' => 'update group schedule info',
+                    'operation_time' => $optime,
+                    'remarks' => $remarks,
                     'scheduleId' => $scheduleId,
                     'groupId' => $groupId,
                     'group_code' => $groupCode->code

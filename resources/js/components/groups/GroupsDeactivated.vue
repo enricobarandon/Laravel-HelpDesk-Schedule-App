@@ -3,11 +3,11 @@
     <!-- <form class="form-horizontal" id="frmDeactivatedGroupFilters"> -->
         <div class="form-group row">
 
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <input type="text" class="form-control" name="filterCode" id="filterCode" placeholder="Group Code" @keyup.enter="postFilterGroup()" v-model='filter.code'>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <select class="form-control" name="filterStatus" placeholder="Status" v-model='filter.status'>
                     <option selected value="">Select Status</option>
                     <option value="forpullout">For Pullout</option>
@@ -16,7 +16,7 @@
                 </select>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <select class="form-control" name="filterSite" placeholder="Site" v-model='filter.site'>
                     <option selected value="">Select Site</option>
                     <option value="wpc2040">WPC2040</option>
@@ -24,7 +24,7 @@
                 </select>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-2">
                     <select class="form-control" name="filterType" placeholder="Group Type" v-model='filter.type'>
                         <option selected value="">Select Group Type</option>
                         <option :value="value" v-for="(value, name) in groupTypes" :key="name">{{ value }}</option>
@@ -39,7 +39,7 @@
     <!-- </form> -->
 
     <!-- <router-link :to="{ name: 'groups.create' }"  class="btn btn-primary float-right"><i class="fas fa-plus"></i> Create Group</router-link> -->
-    <table class="table table-bordered table-striped global-table">
+    <table class="table table-bordered table-striped sm-global-table">
         <thead>
             <tr>
                 <th>#</th>
@@ -65,7 +65,7 @@
                     <td>{{ item.owner }}</td>
                     <td>{{ item.contact }}</td>
                     <td>{{ item.code }}</td>
-                    <td>{{ item.site }}</td>
+                    <td  :class="item.site == 'wpc2040' ? 'td-blue' : 'td-red'">{{ item.site }}</td>
                     <td>{{ item.province_name }}</td>
                     <td>{{ item.active_staff }}</td>
                     <td>{{ item.installed_pc }}</td>

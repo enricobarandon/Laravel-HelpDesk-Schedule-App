@@ -1,6 +1,6 @@
 <template>
 <div v-bind="$attrs">
-        <table class="table table-bordered table-striped global-table">
+        <table class="table table-bordered table-striped sm-global-table">
             <thead>
                 <tr>
                     <th>#</th>
@@ -25,7 +25,7 @@
                         <td>{{ item.owner }}</td>
                         <td>{{ item.contact }}</td>
                         <td>{{ item.code }}</td>
-                        <td>{{ item.site }}</td>
+                        <td  :class="item.site == 'wpc2040' ? 'td-blue' : 'td-red'">{{ item.site }}</td>
                         <td>{{ item.province_name }}</td>
                         <td>{{ item.active_staff }}</td>
                         <td>{{ item.installed_pc }}</td>

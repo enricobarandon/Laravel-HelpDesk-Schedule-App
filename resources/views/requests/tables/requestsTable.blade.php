@@ -1,5 +1,5 @@
 
-<table class="table table-bordered table-striped global-table">
+<table class="table table-bordered table-striped sm-global-table">
     <thead>
         <tr>
             <th>#</th>

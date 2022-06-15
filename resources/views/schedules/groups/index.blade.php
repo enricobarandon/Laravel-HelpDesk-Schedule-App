@@ -91,28 +91,30 @@
                         <label>Guarantor</label>
                         <input type="text" value="--" class="form-control" id="gGuarantor" disabled>
                       </div>
-                      <div class="form-group p-relative">
-                        <form action='{{ url("/schedules/$scheduleId/groups/$groupId") }}' method="POST">
-                            @csrf
-                            @method('put')
-                            <input type="hidden" name="info" value="time">
-                            <label>Time of Operation</label>
-                            <input type="text" value="{{ date('h:i A', strtotime($scheduledGroupInfo->operation_time)) }}" class="form-control" id="operation_time" name="operation_time">
-                            <button type="submit" class="btn btn-primary pull-right" id="updateGroupTime"><i class="fa fa-wrench"aria-hidden="true"></i> Update</button>
-                        </form>
-                      </div>
                     </div>
-                    <div class="col-md-12">
-                      <div class="form-group">
-                      <form action='{{ url("/schedules/$scheduleId/groups/$groupId") }}' method="POST">
-                            @csrf
-                            @method('put')
-                            <input type="hidden" name="info" value="remarks">
+                    
+                    <div class="col-md-12 card">
+                      <form action='{{ url("/schedules/$scheduleId/groups/$groupId") }}' method="POST" class="row">
+                          @csrf
+                          @method('put')
+                        <div class="col-md-8">
+                          <div class="form-group">
                             <label>Remarks</label>
                             <textarea id="gRemarks" name="gRemarks" class="form-control" rows="2">{{ $scheduledGroupInfo->remarks }}</textarea>
-                            <button type="submit" class="btn btn-primary pull-right" id="updateGroupRemarks"><i class="fa fa-wrench"aria-hidden="true"></i> Update</button>
-                        </form>
-                      </div>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label>Time of Operation</label>
+                            <input type="text" value="{{ date('h:i A', strtotime($scheduledGroupInfo->operation_time)) }}" class="form-control" id="operation_time" name="operation_time">
+                          </div>
+                        </div>
+                        <div class="col-md-12 text-center">
+                          <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                          </div>
+                        </div>
+                      </form>
                     </div>
 
                     <table class="table global-table">

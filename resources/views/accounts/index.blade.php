@@ -73,7 +73,7 @@ $user = auth()->user();
                     </form>
 
                     <!-- <button type="button" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Create Account</button> -->
-                    <table class="table table-bordered table-striped global-table">
+                    <table class="table table-bordered table-striped sm-global-table">
                         <thead>
                             <tr>
                                 <th>#</th>
