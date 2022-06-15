@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import { reactive, onMounted } from 'vue'
+import { reactive, onMounted, watch } from 'vue'
 import useGroups from '../../composables/groups'
 import useRequests from '../../composables/requests'
 
@@ -95,13 +95,12 @@ export default {
         }
 
         const postUpdateRequest = async (uuid) => {
-            console.log(group.value)
             form.api_key = '4e829e510539afcc43365a18acc91ede41fb555e'
             form.uuid = uuid
             form.operation = 'groups.update'
             form.data = JSON.stringify({
-                'name': group.value.name,
-                'address' : group.value.address,
+                // 'name': group.value.name,
+                // 'address' : group.value.address,
                 // 'group_type' : group.value.group_type,
                 // 'owner' : group.value.owner,
                 // 'contact' : group.value.contact,

@@ -45,7 +45,7 @@ const routes = [
         props: true
     },
     {
-        path: '/groups/edit/:id',
+        path: '/groups/request-edit/:id',
         name: 'groups.requests.edit',
         component: GroupsStatus,
         props: true
