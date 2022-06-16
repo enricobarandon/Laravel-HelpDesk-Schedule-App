@@ -180,6 +180,7 @@
           </li>
           @endif
         @endif
+          @if($users->user_type_id != 5)
           <li class="nav-item">
             <a href="/requests" class="nav-link {{ (request()->is('requests*')) ? 'active' : '' }}">
               <i class="nav-icon fa fa-list"></i>
@@ -189,6 +190,7 @@
               <i class="nav-icon fa fa-bell float-right"><label class="pending-requests"><span>0</span></label></i>
             </a>
           </li>
+          @endif
 
           <li class="nav-item {{ (request()->is('groups/*')) ? 'menu-is-opening menu-open' : 'menu-close' }}">
             <a href="#" class="nav-link  {{ (request()->is('groups/*')) ? 'active' : '' }}">
@@ -217,6 +219,18 @@
             </ul>
           </li>
 
+          @if($users->user_type_id == 1 || $users->user_type_id == 5)
+          <li class="nav-item">
+            <a href="/cband" class="nav-link {{ (request()->is('cband')) ? 'active' : '' }}">
+              <i class="nav-icon fa fa-tv"></i>
+              <p>
+                CBand
+              </p>
+              <i class="nav-icon fa fa-bell float-right"><label class="pending-requests"><span>0</span></label></i>
+            </a>
+          </li>
+          @endif
+
           @if($users->user_type_id == 1)
           <li class="nav-item">
             <a href="/logs" class="nav-link {{ (request()->is('logs')) ? 'active' : '' }}">
@@ -227,16 +241,6 @@
             </a>
           </li>
           @endif
-
-          <li class="nav-item">
-            <a href="/cband" class="nav-link {{ (request()->is('requests*')) ? 'active' : '' }}">
-              <i class="nav-icon fa fa-tv"></i>
-              <p>
-                CBand
-              </p>
-              <i class="nav-icon fa fa-bell float-right"><label class="pending-requests"><span>0</span></label></i>
-            </a>
-          </li>
 
         </ul>
       </nav>

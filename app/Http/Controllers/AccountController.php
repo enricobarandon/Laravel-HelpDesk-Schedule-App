@@ -173,11 +173,26 @@ class AccountController extends Controller
 
     public function updateStatus(Request $request){
 
+        $user = Auth::user();
+
+        $accountsInfo = Account::find($request->id);
+
         $accounts = Account::where('id',$request->id)
                             ->update(['accounts.status' => $request->status]);
         
         if($accounts){
-            
+
+            ActivityLog::create([
+                'type' => 'update-account-status',
+                'user_id' => $user->id,
+                'assets' => json_encode([
+                    'action' => 'Update Account Status',
+                    'username' => $accountsInfo->username,
+                    'position' => $accountsInfo->position,
+                    'status' => $request->status
+                    ])
+            ]);
+
             return redirect('accounts/deactivated')->with('success', 'Updated Status!');
 
         }
