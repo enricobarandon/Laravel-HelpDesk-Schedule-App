@@ -39,6 +39,7 @@ Route::middleware(['auth'])->group(function(){
     Route::put('/schedules/{scheduleId}/groups/{groupId}', [App\Http\Controllers\ScheduleGroupController::class, 'updateGroup'])->name('schedules.groups.update');
 
     Route::get('/accounts', [App\Http\Controllers\AccountController::class, 'index'])->name('accounts.index');
+    Route::get('/accounts/deactivated', [App\Http\Controllers\AccountController::class, 'accountsDeactivated'])->name('accounts.accounts-deactivated');
     Route::get('/accounts/create', [App\Http\Controllers\AccountController::class, 'create'])->name('accounts.create');
     Route::get('/accounts/{account}', [App\Http\Controllers\AccountController::class, 'show'])->name('accounts.edit');
     Route::post('/accounts/update-password/{account}', [App\Http\Controllers\AccountController::class, 'updatePassword'])->name('updatePassword');

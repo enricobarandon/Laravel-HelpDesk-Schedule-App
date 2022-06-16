@@ -7,7 +7,7 @@
 
     <div class="justify-content-center">
         <div>
-        <a href='{{ url("accounts") }}' class="btn btn-primary"><< Back to Accounts Page</a>
+        <a href='{{ $account->is_active == 1 ? url("accounts") : url("accounts/deactivated") }}' class="btn btn-primary"><< Back to Accounts Page</a>
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title"><i class="fa fa-info-circle"></i> Accounts Management</h3>

@@ -8,7 +8,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach($finishSchedules as $schedule)
+        @foreach($pastSchedules as $schedule)
             <tr>
                 <td>{{ $schedule->id }}</td>
                 <td>{{ $schedule->name }}</td>

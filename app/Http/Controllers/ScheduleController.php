@@ -103,7 +103,7 @@ class ScheduleController extends Controller
                                 ->orderBy('date_time','desc')
                                 ->get();
                                 
-        if($request->has('download-finish')) {
+        if($request->has('download')) {
             return Excel::download(
                 new ScheduledGroupExport('schedules.tables.finish-schedule-table', [
                     'pastSchedules' => $pastSchedules

@@ -17,7 +17,7 @@ if (! function_exists('removeParam')) {
             <div class="card">
                 <div class="card-header">
                 <h3 class="card-title"><i class="fa fa-info-circle"></i> Past Schedules</h3>
-                    <a class="btn btn-success float-right" href="{{ removeParam(request()->fullUrlWithQuery(['download-finish' => '1']), 'downloadcurrent') }}">Download Excel</a>
+                    <a class="btn btn-success float-right" href="{{ removeParam(request()->fullUrlWithQuery(['download' => '1']), 'downloadcurrent') }}">Download Excel</a>
                 </div>
 
                 <div class="card-body">

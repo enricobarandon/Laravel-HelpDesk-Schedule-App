@@ -149,13 +149,25 @@
             </a>
           </li>
           @endif
-          <li class="nav-item">
-            <a href="/accounts" class="nav-link {{ (request()->is('accounts*')) ? 'active' : '' }}">
-              <i class="nav-icon fa fa-list"></i>
-              <p>
-                Accounts
-              </p>
+          <li class="nav-item {{ (request()->is('accounts*')) ? 'menu-is-opening menu-open' : 'menu-close' }}">
+            <a href="#" class="nav-link  {{ (request()->is('accounts') || request()->is('accounts/*')) ? 'active' : '' }}">
+              <i class="nav-icon fas fa-users"></i>
+              <p>Accounts<i class="right fas fa-angle-left"></i></p>
             </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item {{ (request()->is('accounts')) ? 'custom-active' : '' }}">
+                <a href="/accounts" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Active Accounts</p>
+                </a>
+              </li>
+              <li class="nav-item {{ (request()->is('accounts/deactivated')) ? 'custom-active' : '' }}">
+                <a href="/accounts/deactivated" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Deactivated Accounts</p>
+                </a>
+              </li>
+            </ul>
           </li>
           @if($users->email == 'enricobarandon@gmail.com')
           <li class="nav-item">
