@@ -215,6 +215,17 @@
             </a>
           </li>
           @endif
+
+          <li class="nav-item">
+            <a href="/cband" class="nav-link {{ (request()->is('requests*')) ? 'active' : '' }}">
+              <i class="nav-icon fa fa-tv"></i>
+              <p>
+                CBand
+              </p>
+              <i class="nav-icon fa fa-bell float-right"><label class="pending-requests"><span>0</span></label></i>
+            </a>
+          </li>
+
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

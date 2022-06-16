@@ -63,6 +63,9 @@ Route::middleware(['auth'])->group(function(){
     Route::get('users/update/{id}/password', [\App\Http\Controllers\UserController::class, 'updateUser'])->name('users.updateUsers');
     Route::post('submitUser', [\App\Http\Controllers\UserController::class, 'submitUser'])->name('users.updateUsers');
     Route::post('users/{user}',[\App\Http\Controllers\UserController::class, 'changeUserStatus'])->name('users.changeUserStatus');
+
+    Route::get('cband',[\App\Http\Controllers\CbandController::class, 'index'])->name('cband.index');
+    Route::post('cband',[\App\Http\Controllers\CbandController::class, 'changeViewingStatus'])->name('cband.changeViewingStatus');
 });
 
 // Route::view('/{any}', 'schedules.index')
