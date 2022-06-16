@@ -17,6 +17,7 @@ class RequestModel extends Model
         'status',
         'data',
         'remarks',
-        'requested_by'
+        'requested_by',
+        'reference_number'
     ];
 }

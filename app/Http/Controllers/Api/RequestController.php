@@ -98,6 +98,8 @@ class RequestController extends Controller
 
         if (!$checkInRequests) {
 
+            $form = [];
+
             if ($operation == 'create') {
 
                 $messages = [
@@ -151,7 +153,8 @@ class RequestController extends Controller
                         'guarantor' => $request->input('group-guarantor')
                     ]),
                     'remarks' => $request->remarks,
-                    'requested_by' => $user->name . '('. UserType::find($user->user_type_id)->role .')'
+                    'requested_by' => $user->name . '('. UserType::find($user->user_type_id)->role .')',
+                    'reference_number' => 'KAC' . $user->id . '-' . time()
                 ];
                 
                 $apiRequest = RequestModel::create($form);
@@ -182,6 +185,7 @@ class RequestController extends Controller
                 }
 
                 $form['requested_by'] = $user->name . '('. UserType::find($user->user_type_id)->role .')';
+                $form['reference_number'] = 'KAC' . $user->id . '-' . time();
 
                 $apiRequest = RequestModel::create($form);
             }
@@ -201,9 +205,10 @@ class RequestController extends Controller
                 // dd($logs);
 
                 if ($operation == 'update') {
+                    // dd($request->all());
+                    // $this->postRequestToKiosk($request->all());
+                    $this->postRequestToKiosk($form);
                     
-                    $this->postRequestToKiosk($request->all());
-
                     return response([
                         'result' => 1,
                         'message' => 'Please monitor the status of your requests on the Requests tab!'
@@ -381,6 +386,16 @@ class RequestController extends Controller
 
             } else if ($acceptChanges && $request->status == 'rejected') {
 
+                ActivityLog::create([
+                    'type' => 'received-update',
+                    'user_id' => 0,
+                    'assets' => json_encode([
+                        'action' => 'Received a rejected request. From ocbs.',
+                        'uuid' => $request->uuid,
+                        'target_table' => $table
+                    ])
+                ]);
+
                 return response([
                     'status' => 'ok',
                     'message' => 'Row updated. Request rejected.'
@@ -477,7 +492,8 @@ class RequestController extends Controller
             'status' => 'pending',
             'data' => json_encode($formData),
             'remarks' => $request->remarks,
-            'requested_by' => $user->name . '('. UserType::find($user->user_type_id)->role .')'
+            'requested_by' => $user->name . '('. UserType::find($user->user_type_id)->role .')',
+            'reference_number' => 'KAC' . $user->id . '-' . time()
         ];
 
         if ($operation == 'update') {

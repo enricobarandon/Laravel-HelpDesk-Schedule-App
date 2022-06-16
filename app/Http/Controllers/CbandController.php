@@ -11,7 +11,7 @@ class CbandController extends Controller
 {
     public function index()
     {
-        $requests = RequestModel::select('requests.id','requests.operation','requests.status','requests.data','groups.name as group_name','accounts.username','requests.remarks','requests.created_at','requested_by','groups.viewing_status','groups.id as group_id')
+        $requests = RequestModel::select('requests.id','requests.operation','requests.status','requests.data','groups.name as group_name','accounts.username','requests.remarks','requests.created_at','requested_by','groups.viewing_status','groups.id as group_id','reference_number')
                         ->leftjoin('groups','groups.uuid', 'requests.uuid')
                         ->leftjoin('accounts','accounts.uuid','requests.uuid')
                         ->whereIn('operation', ['groups.create','groups.update'])

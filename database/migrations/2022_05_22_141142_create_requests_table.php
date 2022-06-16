@@ -20,6 +20,7 @@ return new class extends Migration
             $table->text('data');
             $table->string('remarks');
             $table->string('requested_by');
+            $table->char('reference_number')->nullable();
             $table->timestamps();
         });
     }

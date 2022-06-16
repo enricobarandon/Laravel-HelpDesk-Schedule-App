@@ -4,6 +4,7 @@
         <tr>
             <th>#</th>
             <th>ID</th>
+            <th>Ref #</th>
             <th>Requested At</th>
             <th>Requested By</th>
             <th>Account/Group Name</th>
@@ -18,19 +19,20 @@
             $requestCount = ($requests->currentpage()-1)* $requests->perpage() + 1;
         @endphp
         @foreach($requests as $request)
-@php
-            $tdClass = '';
-            if($request->status == 'approved'){
-                $tdClass = 'td-green';
-            }elseif($request->status == 'rejected'){
-                $tdClass = 'td-red';
-            }else{
-                $tdClass = 'td-blue';
-            }
+            @php
+                $tdClass = '';
+                if($request->status == 'approved'){
+                    $tdClass = 'td-green';
+                }elseif($request->status == 'rejected'){
+                    $tdClass = 'td-red';
+                }else{
+                    $tdClass = 'td-blue';
+                }
             @endphp
             <tr>
                 <td>{{ $requestCount++ }}</td>
                 <td>{{ $request->id }}</td>
+                <td>{{ $request->reference_number }}</td>
                 <td>{{ date('M d, Y h:i:s A', strtotime($request->created_at)) }}</td>
                 <td>{{ $request->requested_by }}</td>
                 <td>

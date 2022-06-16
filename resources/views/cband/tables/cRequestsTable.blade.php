@@ -7,6 +7,7 @@ $allowedRolesForActions = [1,5];
         <tr>
             <th>#</th>
             <th>ID</th>
+            <th>Ref #</th>
             <th>Requested At</th>
             <th>Requested By</th>
             <th>Group Name</th>
@@ -40,6 +41,7 @@ $allowedRolesForActions = [1,5];
             <tr>
                 <td>{{ $requestCount++ }}</td>
                 <td>{{ $request->id }}</td>
+                <td>{{ $request->reference_number }}</td>
                 <td>{{ date('M d, Y h:i:s A', strtotime($request->created_at)) }}</td>
                 <td>{{ $request->requested_by }}</td>
                 <td>

@@ -165,7 +165,8 @@ export default {
             'operation' : '',
             'status' : 'pending',
             'data' : '',
-            'remarks': ''
+            'remarks': '',
+            'reference_number' : ''
         })
 
         onMounted(getGroup(props.id))
@@ -189,6 +190,8 @@ export default {
                 'is_active' : group.value.is_active
             })
             form.remarks = group.value.remarks
+            form.reference_number = ''
+
             await storeRequest({...form})
         }
 
