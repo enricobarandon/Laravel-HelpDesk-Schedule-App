@@ -172,6 +172,15 @@ class RequestController extends Controller
 
                 $form = $request->all();
 
+                $noChanges = $this->checkChanges('groups',$uuid, $form['data']);
+
+                if($noChanges) {
+                    return response([
+                        'result' => 0,
+                        'message' => 'No changes in the form detected.'
+                    ], 200);
+                }
+
                 $form['requested_by'] = $user->name . '('. UserType::find($user->user_type_id)->role .')';
 
                 $apiRequest = RequestModel::create($form);
@@ -471,6 +480,14 @@ class RequestController extends Controller
             'requested_by' => $user->name . '('. UserType::find($user->user_type_id)->role .')'
         ];
 
+        if ($operation == 'update') {
+            $noChanges = $this->checkChanges('users',$uuid, $form['data']);
+
+            if($noChanges) {
+                return redirect()->route('accounts.index')->with('error', 'No changes in the form detected.');
+            }
+        }
+
         if (!$checkInRequests) {
             $apiRequest = RequestModel::create($form);
             if ($apiRequest) {
@@ -494,6 +511,59 @@ class RequestController extends Controller
         } else {
             return redirect()->route('accounts.index')->with('error', 'Request already exists.'); 
         }
+    }
+
+    public function checkChanges($table, $uuid, $newData)
+    {
+        $diff = [];
+        $newData = json_decode($newData, true);
+
+        if ($table == 'groups') {
+            $oldData = Group::where('uuid', $uuid)->first()->toArray();
+            foreach($newData as $index => $value) {
+                if ($oldData[$index] != $newData[$index]) {
+                    array_push($diff, $index);
+                }
+            }
+        } else if($table == 'users') {
+            $oldData = Account::where('uuid', $uuid)->first()->toArray();
+
+            // dd($oldData, $newData);
+
+            $allowedSides = [
+                'm' => 'Meron only',
+                'w' => 'Wala only',
+                'n' => 'None',
+                'a' => 'All sides'
+            ];
+
+            if(isset($newData['firstname'])) {
+                $newData['first_name'] = $newData['firstname'];
+                unset($newData['firstname']);
+            }
+            if(isset($newData['lastname'])) {
+                $newData['last_name'] = $newData['lastname'];
+                unset($newData['lastname']);
+            }
+            if(isset($newData['group_code'])) {
+                unset($newData['group_code']);
+            }
+            // if(isset($newData['allowed_sides'])) {
+                
+            // }
+            foreach($newData as $index => $value) {
+                if ($index == 'allowed_sides') {
+                    if ($allowedSides[$newData[$index]] != $oldData[$index]) {
+                        array_push($diff, $index);
+                    }
+                } else if ($oldData[$index] != $newData[$index]) {
+                    array_push($diff, $index);
+                }
+                
+            }
+        }
+        // dd($diff);
+        return empty($diff);
     }
 
 }

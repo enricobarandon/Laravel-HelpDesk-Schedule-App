@@ -75,7 +75,7 @@ export default {
     },
     setup(props) {
 
-        const { errors, group, getGroup, updateGroup } = useGroups()
+        const { errors, group, getGroup, updateGroup, is_active } = useGroups()
 
         const { storeRequest } = useRequests()
 
@@ -88,7 +88,9 @@ export default {
             'remarks': ''
         })
 
-        onMounted(getGroup(props.id))
+        onMounted(() => {
+            getGroup(props.id)
+        })
 
         const saveGroup = async () => {
             await updateGroup(props.id)
@@ -111,6 +113,15 @@ export default {
             form.remarks = group.value.remarks
             await storeRequest({...form})
         }
+
+        watch(() => group.value.is_active, (first, second) => {
+            console.log(
+                "Watch props.selected function called with args:",
+                first,
+                second,
+                "Initial value is " + is_active
+            );
+        });
 
         return {
             errors,

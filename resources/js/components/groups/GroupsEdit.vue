@@ -91,7 +91,7 @@
 
         <div class="col-md-8">
             <div class="form-group">
-                <label>Remarks</label>
+                <label>Request Remarks</label>
                 <textarea id="remarks" name="remarks" class="form-control" rows="2" v-model="group.remarks"></textarea>
             </div>
         </div>
@@ -155,7 +155,7 @@ export default {
     },
     setup(props) {
 
-        const { errors, group, getGroup, updateGroup } = useGroups()
+        const { errors, group, getGroup, updateGroup,oldGroupData } = useGroups()
 
         const { storeRequest } = useRequests()
 
@@ -175,7 +175,6 @@ export default {
         }
 
         const postUpdateRequest = async (uuid) => {
-            console.log(group.value)
             form.api_key = '4e829e510539afcc43365a18acc91ede41fb555e'
             form.uuid = uuid
             form.operation = 'groups.update'
