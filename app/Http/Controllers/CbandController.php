@@ -9,18 +9,27 @@ use App\Models\ActivityLog;
 
 class CbandController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $requests = RequestModel::select('requests.id','requests.operation','requests.status','requests.data','groups.name as group_name','accounts.username','requests.remarks','requests.created_at','requested_by','groups.viewing_status','groups.id as group_id','reference_number')
                         ->leftjoin('groups','groups.uuid', 'requests.uuid')
                         ->leftjoin('accounts','accounts.uuid','requests.uuid')
                         ->whereIn('operation', ['groups.create','groups.update'])
                         ->orderBy('id','desc');
+                
+        $keyword = $request->keyword;
+                
+        if($request->keyword){
+            $requests = $requests->where(DB::raw('concat(requests.operation,requests.data,requests.remarks,reference_number'), 'like', '%' . $keyword . '%');
+        }
+
+        if($request->status != ""){
+            $requests = $requests->where('requests.status', $request->status);
+        }
 
         $requests = $requests->paginate(20);
-        $keyword = '';
-        $status = '';
-        return view('cband.index', compact('requests','keyword','status'));
+        
+        return view('cband.index', compact('requests','keyword'));
     }
     public function changeViewingStatus(Request $request)
     {

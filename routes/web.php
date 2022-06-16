@@ -43,6 +43,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/accounts/create', [App\Http\Controllers\AccountController::class, 'create'])->name('accounts.create');
     Route::get('/accounts/{account}', [App\Http\Controllers\AccountController::class, 'show'])->name('accounts.edit');
     Route::post('/accounts/update-password/{account}', [App\Http\Controllers\AccountController::class, 'updatePassword'])->name('updatePassword');
+    Route::post('/accounts/update-status/{account}', [App\Http\Controllers\AccountController::class, 'updateStatus'])->name('updateStatus');
 
     Route::get('/data', [App\Http\Controllers\DataController::class, 'index'])->name('data.index');
     Route::post('/groups-data', [App\Http\Controllers\DataController::class, 'initialGroupsTransfer'])->name('data.initialGroupsTransfer');

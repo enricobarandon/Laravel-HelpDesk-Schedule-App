@@ -76,7 +76,6 @@ $user = auth()->user();
                                 <th>Role</th>
                                 <th>Username</th>
                                 <th>Password</th>
-                                <th>Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -109,7 +108,6 @@ $user = auth()->user();
                                             </div>
                                         </form>
                                     </td>
-                                    <td>{{ $account->is_active ? 'Active' : 'Deactivated'}}</td>
                                     <td class="display-center">
                                         <a href="/accounts/{{ $account->acc_id }}" type="button" class="btn btn-xs btn-primary"><i class="fas fa-cog"></i> Edit</button>
                                     </td>

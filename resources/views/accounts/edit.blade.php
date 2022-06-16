@@ -165,6 +165,31 @@
 
                     </form>
 
+                    @if($account->is_active == 0)
+                    <hr class="hr-css"/>
+                    
+                    <form action="{{ url('/accounts/update-status/'.$account->id) }}" method="post">
+                        @csrf
+                        <input type="hidden" name="id" value="{{ $account->id }}">
+
+                        <div class="col-md-6">
+
+                            <div class="form-group">
+                                <label>Status</label>
+                                <select id="status" name="status" class="form-control">
+                                    <option selected disabled> Select Status </option>
+                                    <option value="temporarydeactivated"> Temporary Deactivated </option>
+                                    <option value="permanentdeactivated"> Permanent Deactivated </option>
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-12">
+                            <input type="submit" class="btn btn-success" value="Submit">
+                        </div>
+                    </form>
+                    @endif
                 </div>
             </div>
         </div>

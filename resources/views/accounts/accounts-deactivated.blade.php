@@ -42,7 +42,7 @@ $user = auth()->user();
                                 <input type="text" class="form-control" name="filterName" id="filterName" placeholder="Name / Username">
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <input type="text" class="form-control" name="filterGname" id="filterGname" placeholder="Group Code">
                             </div>
                             
@@ -54,6 +54,14 @@ $user = auth()->user();
                                     <option value="Cashier">Cashier</option>
                                     <option value="Supervisor">Supervisor</option>
                                     <option value="Operator">Operator</option>
+                                </select>
+                            </div>
+                            
+                            <div class="col-md-3">
+                                <select class="form-control" name="filterStatus" id="filterStatus">
+                                    <option selected disabled value="">SELECT STATUS</option>
+                                    <option value="temporarydeactivated">Temporary Deactivated</option>
+                                    <option value="permanentdeactivated">Permanent Deactivated</option>
                                 </select>
                             </div>
 
@@ -109,7 +117,7 @@ $user = auth()->user();
                                             </div>
                                         </form>
                                     </td>
-                                    <td>{{ $account->is_active ? 'Active' : 'Deactivated'}}</td>
+                                    <td>{{ $account->status }}</td>
                                     <td class="display-center">
                                         <a href="/accounts/{{ $account->acc_id }}" type="button" class="btn btn-xs btn-primary"><i class="fas fa-cog"></i> Edit</button>
                                     </td>

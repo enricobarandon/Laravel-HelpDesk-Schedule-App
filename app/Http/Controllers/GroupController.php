@@ -12,17 +12,20 @@ class GroupController extends Controller
 {
     public function index(Request $request)
     {
-        $groups = Group::select('groups.name','is_active','group_type','code','owner','contact','provinces.name as province','provinces.site as site','active_staff','installed_pc')
+        $groups = Group::select('groups.name','is_active','group_type','code','owner','contact','provinces.name as province','provinces.site as site','active_staff','installed_pc','status')
                         ->join('provinces','provinces.id','groups.province_id');
 
-        if ($request->has('download-active') || $request->has('download-deactivated')) {
+        if ($request->has('download-active') || $request->has('download-deactivated') || $request->has('download-pullout')) {
 
             if($request->has('download-active')){
                 $groupsStatus = 'active';
                 $groups = $groups->where('is_active', 1)->get();
-            }else{
+            }elseif($request->has('download-deactivated')){
                 $groupsStatus = 'deactivated';
                 $groups = $groups->where('is_active', 0)->get();
+            }elseif($request->has('download-pullout')){
+                $groupsStatus = 'pullout';
+                $groups = $groups->where('is_active', 0)->where('status','pullout')->get();
             }
             return Excel::download(
                 new ScheduledGroupExport('groups.tables.groupsTable', [

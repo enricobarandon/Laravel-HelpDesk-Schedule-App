@@ -16,9 +16,17 @@ class OcbsController extends Controller
 
         $table = $request->table;
 
+        $target = '';
+
+        $targetInfo = '';
+
         if ($table == 'groups') {
 
             $update = Group::where('uuid', $uuid)->update($request->except(['table']));
+
+            $target = Group::where('uuid', $uuid)->first();
+
+            $targetInfo = $target->code;
 
         } else if ($table == 'users') {
             
@@ -36,6 +44,10 @@ class OcbsController extends Controller
 
             $update = Account::where('uuid', $uuid)->update($updateAccountForm);
 
+            $target = Account::where('uuid', $uuid)->first();
+
+            $targetInfo = $target->username;
+
         }
         
 
@@ -47,7 +59,8 @@ class OcbsController extends Controller
                 'assets' => json_encode(array_merge([
                     'action' => 'Received a manual update from ocbs',
                     'uuid' => $uuid,
-                    'target_table' => $table
+                    'target_table' => $table,
+                    'target' => $targetInfo
                 ], $request->except(['table'])))
             ]);
 

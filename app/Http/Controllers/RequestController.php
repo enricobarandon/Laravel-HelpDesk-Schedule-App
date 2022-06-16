@@ -26,7 +26,7 @@ class RequestController extends Controller
         $keyword = $request->keyword;
 
         if($request->keyword){
-            $requests = $requests->where(DB::raw('concat(requests.operation,requests.data,requests.remarks)'), 'like', '%' . $request->keyword . '%');
+            $requests = $requests->where(DB::raw('concat(requests.operation,requests.data,requests.remarks,reference_number)'), 'like', '%' . $request->keyword . '%');
         }
 
         $status = $request->status;

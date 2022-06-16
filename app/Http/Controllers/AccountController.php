@@ -132,7 +132,7 @@ class AccountController extends Controller
     }
 
     public function accountsDeactivated(Request $request) {
-        $accounts = Account::select('accounts.id as acc_id','groups.name as group_name','first_name','last_name','accounts.contact','position','username','accounts.is_active','accounts.uuid','password')
+        $accounts = Account::select('accounts.id as acc_id','groups.name as group_name','first_name','last_name','accounts.contact','position','username','accounts.is_active','accounts.uuid','password','accounts.status')
                         ->leftjoin('groups','groups.id','accounts.group_id')
                         ->where('accounts.is_active', 0);
         
@@ -151,6 +151,10 @@ class AccountController extends Controller
         if($request->filterRole != ""){
             $accounts = $accounts->where('accounts.position', $request->filterRole);
         }
+
+        if($request->filterStatus != ""){
+            $accounts = $accounts->where('accounts.status', $request->filterStatus);
+        }
         
         $accounts = $accounts->paginate(100);
 
@@ -165,5 +169,18 @@ class AccountController extends Controller
         }
         
         return view('accounts.accounts-deactivated', compact('accounts','filterRole'));
+    }
+
+    public function updateStatus(Request $request){
+
+        $accounts = Account::where('id',$request->id)
+                            ->update(['accounts.status' => $request->status]);
+        
+        if($accounts){
+            
+            return redirect('accounts/deactivated')->with('success', 'Updated Status!');
+
+        }
+
     }
 }

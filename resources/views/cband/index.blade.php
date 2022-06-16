@@ -61,7 +61,7 @@ if (! function_exists('removeParam')) {
 
                     <div class="col">
                         <div class="float-right">
-                            {{ $requests->appends(['keyword' => $keyword, 'status' => $status])->links('pagination::bootstrap-4') }}
+                            {{ $requests->appends(Request::except('page'))->links('pagination::bootstrap-4') }}
                         </div>
                     </div>
 

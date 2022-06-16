@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('allowed_sides', 50);
             $table->text('remarks')->nullable();
             $table->string('site')->nullable();
+            $table->char('status')->nullable();
             $table->timestamps();
         });
     }
