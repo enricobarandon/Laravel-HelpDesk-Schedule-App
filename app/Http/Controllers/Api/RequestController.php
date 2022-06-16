@@ -386,6 +386,10 @@ class RequestController extends Controller
 
             } else if ($acceptChanges && $request->status == 'rejected') {
 
+                $table = '';
+                $operation = '';
+                list($table, $operation) = explode('.', $request->operation);
+
                 ActivityLog::create([
                     'type' => 'received-update',
                     'user_id' => 0,
