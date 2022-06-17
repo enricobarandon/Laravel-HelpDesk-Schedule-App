@@ -1,11 +1,5 @@
 @extends('layouts.app')
-@section('style')
-<link href="{{ asset('css/timepicker.min.css') }}" rel="stylesheet">
-@endsection
-@section('script')
-<script src="{{ asset('js/timepicker.min.js') }}"></script>
-<script src="{{ asset('js/script.js') }}"></script>
-@endsection
+
 @section('content')
 <!-- Main content -->
 <div class="content">
@@ -194,18 +188,18 @@
                             </td>
                             <td>
                               @if($account->scheduled_group_id)
-                                <form action='{{ url("/scheduledaccount/$scheduledGroupInfo->id/account/$account->acc_id") }}' method="POST">
+                                <form action='{{ url("/scheduledaccount/$scheduledGroupInfo->id/account/$account->acc_id") }}' id="removeAccount" method="POST">
                                   @csrf
                                   @method('delete')
-                                  <button class="btn btn-danger btn-sm"><i class="fa fa-times"></i> Remove</button>
+                                  <button class="btn btn-danger btn-sm remove-account"><i class="fa fa-times"></i> Remove</button>
                                 </form>
                               @else
-                                <form action='{{ url("/scheduledaccount/$scheduledGroupInfo->id/account/$account->acc_id") }}' method="POST">
+                                <form action='{{ url("/scheduledaccount/$scheduledGroupInfo->id/account/$account->acc_id") }}' id="confirmAccount" method="POST">
                                   @csrf
                                   @method('post')
                                   <input type="hidden" name="groupId" value="{{ $groupId }}">
                                   <input type="hidden" name="scheduleId" value="{{ $scheduleId }}">
-                                  <button class="btn btn-success btn-sm"><i class="fa fa-plus"></i> Confirm</button>
+                                  <button class="btn btn-success btn-sm confirm-account"><i class="fa fa-plus"></i> Confirm</button>
                                 </form>
                               @endif
                               <!-- <button class="btn btn-primary"><i class="fa fa-wrench"></i> Edit</button> -->
@@ -233,3 +227,30 @@
   <!-- /.content-wrapper -->
 
   @endsection
+  
+@section('style')
+<link href="{{ asset('css/timepicker.min.css') }}" rel="stylesheet">
+@endsection
+@section('script')
+<script src="{{ asset('js/timepicker.min.js') }}"></script>
+<script src="{{ asset('js/script.js') }}"></script>
+<script>
+  $(document).ready(function() {
+      $('.remove-account').on('click',function()
+      {
+          $(this).closest('form').find('.remove-account').text('Please wait ...')
+          .attr('disabled','disabled');
+          $('.remove-account, .confirm-account').attr('disabled','disabled');
+          $('#removeAccount').submit();
+      });
+      
+      $('.confirm-account').on('click',function()
+      {
+          $(this).closest('form').find('.confirm-account').text('Please wait ...')
+          .attr('disabled','disabled');
+          $('.remove-account, .confirm-account').attr('disabled','disabled');
+          $('#confirmAccount').submit();
+      });
+  });
+  </script>
+@endsection

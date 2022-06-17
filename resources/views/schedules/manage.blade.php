@@ -39,7 +39,7 @@ if (! function_exists('removeParam')) {
                     @endif
 
 
-                    <form class="form-horizontal" method="POST" action='{{ url("/schedules/manage/$scheduleId") }}'>
+                    <form class="form-horizontal" id="frmAddGroup" method="POST" action='{{ url("/schedules/manage/$scheduleId") }}'>
                         @csrf
                         <div class="card-body">
                             <div class="form-group row">
@@ -62,7 +62,7 @@ if (! function_exists('removeParam')) {
                                     </select>
                                 </div>
                                 <div class="col-sm-2">
-                                    <button type="submit" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Add Group</button>
+                                    <button type="submit" class="btn btn-primary float-right btn-add-group"><i class="fas fa-plus"></i> Add Group</button>
                                 </div>
                             </div>
                         </div>
@@ -223,6 +223,12 @@ if (! function_exists('removeParam')) {
 <script>
 $(document).ready(function() {
     $('#selectType').multiselect();
+    $('.btn-add-group').on('click',function()
+    {
+        $(this).text('Please wait ...')
+        .attr('disabled','disabled');
+        $('#frmAddGroup').submit();
+    });
 });
 </script>
 @endsection

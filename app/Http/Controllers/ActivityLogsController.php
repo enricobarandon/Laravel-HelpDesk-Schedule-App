@@ -30,7 +30,9 @@ class ActivityLogsController extends Controller
         $keyword = $request->keyword;
 
         if($request->keyword){
-            $activityLogs = $activityLogs->where(DB::raw('concat(activity_logs.type,activity_logs.assets,users.name)'), 'like', '%' . $request->keyword . '%');
+            $activityLogs = $activityLogs->where('activity_logs.type', 'like', '%' . $request->keyword . '%')
+                                        ->orWhere('activity_logs.assets', 'like', '%' . $request->keyword . '%')
+                                        ->orWhere('users.name', 'like', '%' . $request->keyword . '%');
         }
         
         $activityLogs = $activityLogs->paginate(100);
