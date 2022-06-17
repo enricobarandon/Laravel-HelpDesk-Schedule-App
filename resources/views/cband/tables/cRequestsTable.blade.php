@@ -1,6 +1,6 @@
 @php
 $user = auth()->user();
-$allowedRolesForActions = [1,5];
+$allowedRolesForActions = [5];
 @endphp
 <table class="table table-bordered table-striped sm-global-table">
     <thead>
