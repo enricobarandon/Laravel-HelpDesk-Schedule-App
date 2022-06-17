@@ -161,10 +161,10 @@ class AccountController extends Controller
         if ($request->has('download') || $request->has('downloadcurrent')) {
 
             return Excel::download(
-                new ScheduledGroupExport('accounts.tables.accountsTable', [
-                    'deactivated-accounts' => $accounts
+                new ScheduledGroupExport('accounts.tables.deactivatedTable', [
+                    'accounts' => $accounts
                 ]),
-                'accounts.xlsx'
+                'deactivated-accounts.xlsx'
             );
         }
         

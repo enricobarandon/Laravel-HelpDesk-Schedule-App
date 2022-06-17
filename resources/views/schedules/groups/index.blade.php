@@ -117,7 +117,7 @@
                       </form>
                     </div>
 
-                    <table class="table global-table">
+                    <table class="table sm-global-table">
                       <thead>
                         <tr>
                           <th>#</td>
@@ -155,28 +155,36 @@
                             }else{
                               $remarksCSS = 'td-blue';
                             }
+                            $trClass = '';
+                            if($account->status == 'temporarydeactivated'){
+                                $trClass = 'tr-yellow';
+                            }elseif($account->status == 'permanentdeactivated'){
+                                $trClass = 'td-red';
+                            }else{
+                                $trClass = '';
+                            }
                           @endphp
                           <tr>
                             <td>
                               {{ $accountCount++ }}
                             </td>
                             <td>
-                              <input type="text" value="{{ $account->first_name }} {{ $account->last_name }}" class="form-control" disabled>
+                              <input type="text" value="{{ $account->first_name }} {{ $account->last_name }}" class="form-control {{ $trClass }}" disabled>
                             </td>
                             <td>
-                              <input type="text" value="{{ $account->contact }}" class="form-control" disabled>
+                              <input type="text" value="{{ $account->contact }}" class="form-control {{ $trClass }}" disabled>
                             </td>
                             <td>
-                              <input type="text" value="{{ $account->position }}" class="form-control" disabled>
+                              <input type="text" value="{{ $account->position }}" class="form-control {{ $trClass }}" disabled>
                             </td>
                             <td>
-                              <input type="text" value="{{ $account->allowed_sides }}" class="form-control" disabled>
+                              <input type="text" value="{{ $account->allowed_sides }}" class="form-control {{ $trClass }}" disabled>
                             </td>
                             <td>
-                              <input type="text" value="{{ $account->username }}" class="form-control" disabled>
+                              <input type="text" value="{{ $account->username }}" class="form-control {{ $trClass }}" disabled>
                             </td>
                             <td>
-                              <input type="text" value="{{ $account->password }}" class="form-control" disabled>
+                              <input type="text" value="{{ $account->password }}" class="form-control {{ $trClass }}" disabled>
                             </td>
                             <td>
                               <input type="text" value="{{ $account->is_active == 0 ? 'DEACTIVATED' : 'ACTIVE' }}" class="form-control {{ $remarksCSS }}" disabled>

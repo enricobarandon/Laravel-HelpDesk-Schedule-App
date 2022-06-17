@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\RequestModel;
 use App\Models\Group;
 use App\Models\ActivityLog;
+use DB;
 
 class CbandController extends Controller
 {
@@ -20,7 +21,7 @@ class CbandController extends Controller
         $keyword = $request->keyword;
                 
         if($request->keyword){
-            $requests = $requests->where(DB::raw('concat(requests.operation,requests.data,requests.remarks,reference_number'), 'like', '%' . $keyword . '%');
+            $requests = $requests->where(DB::raw('CONCAT_WS(requested_by,requests.data,requests.remarks,reference_number)'), 'like', '%' . $keyword . '%');
         }
 
         if($request->status != ""){

@@ -67,7 +67,7 @@ $user = auth()->user();
 
                             <div class="col">
                                 <button type="submit" class="btn btn-success"><i class="fas fa-search"></i> Submit</button>
-                                <a href="{{ url('/accounts') }}" class="btn btn-danger">Reset</a>
+                                <a href="{{ url('/accounts/deactivated') }}" class="btn btn-danger">Reset</a>
                             </div>
                         </div>
                     </form>
@@ -94,7 +94,17 @@ $user = auth()->user();
                                 $user = auth()->user();
                             @endphp
                             @foreach($accounts as $account)
-                                <tr>
+                                @php
+                                    $trClass = '';
+                                    if($account->status == 'temporarydeactivated'){
+                                        $trClass = 'tr-yellow';
+                                    }elseif($account->status == 'permanentdeactivated'){
+                                        $trClass = 'tr-red';
+                                    }else{
+                                        $trClass = '';
+                                    }
+                                @endphp
+                                <tr class="{{ $trClass }}">
                                     <td>{{ $accountCount++ }}</td>
                                     <td>{{ htmlspecialchars($account->group_name) }}</td>
                                     <!-- <td>--</td> -->
@@ -111,7 +121,7 @@ $user = auth()->user();
                                                 <input class="form-control edit-password" name="password" type="text" disabled value="{{ $account->password }}"/>
                                                 @if($user->user_type_id == 1 || $user->user_type_id == 2)
                                                 <button type="button" class="update-password btn-secondary"><i class="fa fa-edit"></i></button>
-                                                <a href="/accounts" class="cancel-update btn-danger"><i class="fa fa-times"></i></a>
+                                                <a href="/accounts/deactivated" class="cancel-update btn-danger"><i class="fa fa-times"></i></a>
                                                 <button type="submit" class="submit-password btn-success"><i class="fa fa-check"></i></button>
                                                 @endif
                                             </div>

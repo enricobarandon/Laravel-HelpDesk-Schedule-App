@@ -291,3 +291,27 @@ input.form-control.edit-password {
     padding: 2px 5px !important;
     font-size: 12px;
 }
+.sm-global-table tr td .form-control {
+    padding: 2px 5px !important;
+    font-size: 12px;
+}
+
+.tr-yellow {
+    background-color: #f9ff55cc !important;
+    text-align: center;
+}
+.tr-yellow td {
+    color: #000 !important;
+}
+.tr-red {
+    background-color: #dc3545 !important;
+    text-align: center;
+}
+.tr-red .form-control {
+    background-color: transparent !important;
+    color: #fff !important;
+    border: none;
+}
+.tr-red td {
+    color: #fff !important;
+}

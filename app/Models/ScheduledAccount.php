@@ -20,7 +20,7 @@ class ScheduledAccount extends Model
 
     public static function createAccountsAssocArr($scheduleId) {
 
-        $accounts = ScheduledAccount::select('account_id','accounts.group_id','first_name','last_name','username','position','allowed_sides','contact','remarks','password')
+        $accounts = ScheduledAccount::select('account_id','accounts.group_id','first_name','last_name','username','position','allowed_sides','contact','remarks','password','accounts.status')
                         ->join('accounts','accounts.id','scheduled_accounts.account_id')
                         ->where('scheduled_accounts.schedule_id', $scheduleId)
                         ->get()
