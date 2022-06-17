@@ -219,7 +219,6 @@
             </ul>
           </li>
 
-          @if($users->user_type_id == 1 || $users->user_type_id == 5)
           <li class="nav-item">
             <a href="/cband" class="nav-link {{ (request()->is('cband')) ? 'active' : '' }}">
               <i class="nav-icon fa fa-tv"></i>
@@ -229,7 +228,6 @@
               <i class="nav-icon fa fa-bell float-right"><label class="pending-requests"><span>0</span></label></i>
             </a>
           </li>
-          @endif
 
           @if($users->user_type_id == 1)
           <li class="nav-item">

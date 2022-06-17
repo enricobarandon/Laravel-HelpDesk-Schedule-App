@@ -12,7 +12,7 @@ class GroupController extends Controller
 {
     public function index(Request $request)
     {
-        $groups = Group::select('groups.name','is_active','group_type','code','owner','contact','provinces.name as province','provinces.site as site','active_staff','installed_pc','status')
+        $groups = Group::select('groups.name','is_active','group_type','code','owner','contact','provinces.name as province','provinces.site as site','active_staff','installed_pc','status','address','guarantor')
                         ->join('provinces','provinces.id','groups.province_id');
 
         if ($request->has('download-active') || $request->has('download-deactivated') || $request->has('download-pullout')) {
