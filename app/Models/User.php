@@ -43,6 +43,27 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function user_type()
+    {
+        return $this->belongsTo(UserType::class);
+    }
+
+    public function isAdmin()
+    {
+        if ($this->user_type->role == 'Administrator') {
+            return true;
+        }
+        return false;
+    }
+
+    public function hasRole($role)
+    {
+        if ($this->user_type->role == $role) {
+            return true;
+        }
+        return false;
+    }
     
     public static function getUserInfo($id){
         return DB::table('users')
