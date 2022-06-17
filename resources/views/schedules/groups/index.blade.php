@@ -156,9 +156,9 @@
                               $remarksCSS = 'td-blue';
                             }
                             $trClass = '';
-                            if($account->status == 'temporarydeactivated'){
+                            if($account->status == 'temporarydeactivated' and $account->is_active == 0){
                                 $trClass = 'tr-yellow';
-                            }elseif($account->status == 'permanentdeactivated'){
+                            }elseif($account->status == 'permanentdeactivated' and $account->is_active == 0){
                                 $trClass = 'td-red';
                             }else{
                                 $trClass = '';

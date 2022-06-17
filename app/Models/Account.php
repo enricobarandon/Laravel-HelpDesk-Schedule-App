@@ -20,6 +20,7 @@ class Account extends Model
         'is_active',
         'allowed_sides',
         'position',
-        'contact'
+        'contact',
+        'status'
     ];
 }
