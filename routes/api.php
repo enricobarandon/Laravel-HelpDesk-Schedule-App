@@ -31,6 +31,8 @@ Route::middleware(['auth:sanctum'])->group(function(){
     
     Route::post('/requests/groups', [\App\Http\Controllers\Api\RequestController::class, 'storeGroupRequest'])->name('storeGroupRequest');
     Route::post('/requests/accounts', [\App\Http\Controllers\Api\RequestController::class, 'storeAccountRequest'])->name('storeAccountRequest');
+
+    Route::get('/requests', [\App\Http\Controllers\Api\RequestController::class, 'index'])->name('requests.index.getData');
 });
 
 Route::post('/requests', [\App\Http\Controllers\Api\RequestController::class, 'updateRequest'])->name('requests.update');

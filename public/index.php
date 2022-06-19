@@ -53,3 +53,17 @@ $response = $kernel->handle(
 )->send();
 
 $kernel->terminate($request, $response);
+
+// $options = array(
+//     'cluster' => 'ap1',
+//     'useTLS' => true
+//   );
+//   $pusher = new Pusher\Pusher(
+//     '82fd521d8358d302e136',
+//     '9f8e67beca77a482fdb1',
+//     '1425523',
+//     $options
+//   );
+
+//   $data['message'] = 'hello world';
+//   $pusher->trigger('requests', 'RequestReceived', $data);

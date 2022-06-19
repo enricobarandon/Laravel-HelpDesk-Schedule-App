@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('remarks');
             $table->string('requested_by');
             $table->char('reference_number')->nullable();
+            $table->boolean('is_processed')->default(0); // is_processed by CBand user; Group requests only
             $table->timestamps();
         });
     }

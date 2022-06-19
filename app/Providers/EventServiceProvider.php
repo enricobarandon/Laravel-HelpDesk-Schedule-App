@@ -27,7 +27,10 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Event::listen(
+            RequestReceived::class,
+            [SendRequestNotification::class, 'handle']
+        );
     }
 
     /**

@@ -187,7 +187,7 @@
               <p>
                 Requests
               </p>
-              <i class="nav-icon fa fa-bell float-right"><label class="pending-requests"><span>0</span></label></i>
+              <i class="nav-icon fa fa-bell float-right"><label class="pending-requests"><span id="pendingRequests">0</span></label></i>
             </a>
           </li>
           @endif
@@ -225,7 +225,7 @@
               <p>
                 CBand
               </p>
-              <i class="nav-icon fa fa-bell float-right"><label class="pending-requests"><span>0</span></label></i>
+              <i class="nav-icon fa fa-bell float-right"><label class="pending-requests"><span id="approvedGroupRequests">0</span></label></i>
             </a>
           </li>
 
@@ -285,5 +285,38 @@
 <!-- Scripts -->
 <script src="{{ asset('js/min/backend.min.js') }}"></script>
 @yield('script')
+<!-- <script src="https://js.pusher.com/7.1/pusher.min.js"></script> -->
+<script>
+
+// $('document').ready(() => {
+//   alert('wfgfddadsfgfdhgfgdsd');
+// });
+
+const getData = async () => {
+    let response = await axios.get('/api/requests');
+
+    if (document.getElementById('pendingRequests')) {
+      document.getElementById('pendingRequests').innerHTML = response.data.pendingRequests
+    }
+
+    if (document.getElementById('approvedGroupRequests')) {
+      document.getElementById('approvedGroupRequests').innerHTML = response.data.approvedGroupRequests
+    }
+}
+getData();
+
+var channel = window.Echo.channel('requests');
+
+channel.listen('RequestReceived', (message) => {
+          if (document.getElementById('pendingRequests')) {
+            document.getElementById('pendingRequests').innerHTML = message.pendingRequestCount
+          }
+
+          if (document.getElementById('approvedGroupRequests')) {
+            document.getElementById('approvedGroupRequests').innerHTML = message.approvedGroupRequestCount
+          }
+        });
+
+</script>
 
 </html>

@@ -17,6 +17,7 @@ use Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Str;
 use App\Models\UserType;
+use App\Jobs\ProcessRequest;
 
 class RequestController extends Controller
 {
@@ -27,7 +28,13 @@ class RequestController extends Controller
      */
     public function index()
     {
-        //
+        $pendingRequests = RequestModel::where('status','pending')->get()->count();
+        $approvedGroupRequests = RequestModel::where('status','approved')->where('is_processed',0)->get()->count();
+
+        return json_encode([
+            'pendingRequests' => $pendingRequests,
+            'approvedGroupRequests' => $approvedGroupRequests
+        ]);
     }
 
     /**
@@ -191,7 +198,8 @@ class RequestController extends Controller
             }
 
             if ($apiRequest) {
-                
+
+                ProcessRequest::dispatch();
 
                 $logs = ActivityLog::create([
                     'type' => 'post-request',
