@@ -305,13 +305,16 @@ class ScheduleGroupController extends Controller
                             // ->where('scheduled_accounts.schedule_id', $scheduleId)
                             ->get();
                             // dd($groupAccounts);
+        
+        $scheduleInfo = Schedule::find($scheduleId);                            
 
         return view('schedules.groups.index', [
             'scheduleId' => $scheduleId,
             'groupId' => $groupId,
             'groupInfo' => $groupInfo,
             'scheduledGroupInfo' => $scheduledGroupInfo,
-            'groupAccounts' => $groupAccounts
+            'groupAccounts' => $groupAccounts,
+            'scheduleInfo' => $scheduleInfo
         ]);
     }
 
