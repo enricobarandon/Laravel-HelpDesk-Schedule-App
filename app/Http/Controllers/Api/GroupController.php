@@ -19,7 +19,7 @@ class GroupController extends Controller
      */
     public function getActiveGroups()
     {
-        $groups = Group::select('groups.id','groups.name','groups.uuid','groups.group_type','owner','contact','code','provinces.site as site','provinces.name as province_name','active_staff','installed_pc','address','status','guarantor')
+        $groups = Group::select('groups.id','groups.name','groups.uuid','groups.group_type','owner','contact','code','provinces.site as site','provinces.name as province_name','active_staff','installed_pc','address','status','guarantor','operation_date','pullout_date')
                     ->leftjoin('provinces','provinces.id','groups.province_id')
                     ->where('groups.is_active', 1)
                     ->get();
@@ -29,7 +29,7 @@ class GroupController extends Controller
 
     public function getDeactivatedGroups()
     {
-        $groups = Group::select('groups.id','groups.name','groups.uuid','groups.group_type','owner','contact','code','provinces.site as site','provinces.name as province_name','active_staff','installed_pc','address','status','guarantor')
+        $groups = Group::select('groups.id','groups.name','groups.uuid','groups.group_type','owner','contact','code','provinces.site as site','provinces.name as province_name','active_staff','installed_pc','address','status','guarantor','operation_date','pullout_date')
                     ->leftjoin('provinces','provinces.id','groups.province_id')
                     ->where('groups.is_active', 0)
                     ->where(function($query) {
@@ -43,7 +43,7 @@ class GroupController extends Controller
 
     public function getPulledOutGroups()
     {
-        $groups = Group::select('groups.id','groups.name','groups.uuid','groups.group_type','owner','contact','code','provinces.site as site','provinces.name as province_name','active_staff','installed_pc','address','status','guarantor')
+        $groups = Group::select('groups.id','groups.name','groups.uuid','groups.group_type','owner','contact','code','provinces.site as site','provinces.name as province_name','active_staff','installed_pc','address','status','guarantor','operation_date','pullout_date')
                     ->leftjoin('provinces','provinces.id','groups.province_id')
                     ->where('groups.is_active', 0)
                     ->where('status','pullout')
@@ -71,7 +71,7 @@ class GroupController extends Controller
      */
     public function show(Group $group)
     {
-        $group = Group::select('groups.id','groups.uuid','groups.name','groups.uuid','groups.group_type','owner','contact','code','provinces.site as site','provinces.name as province_name','active_staff','installed_pc','address','guarantor','groups.is_active','groups.status','groups.remarks')
+        $group = Group::select('groups.id','groups.uuid','groups.name','groups.uuid','groups.group_type','owner','contact','code','provinces.site as site','provinces.name as province_name','active_staff','installed_pc','address','guarantor','groups.is_active','groups.status','groups.remarks','operation_date','pullout_date')
                     ->leftjoin('provinces','provinces.id','groups.province_id')
                     ->where('groups.id', $group->id)
                     ->first();
@@ -89,13 +89,20 @@ class GroupController extends Controller
     {
         $user = auth()->user();
         
+        if($request->operation_date != ''){
+            $request->operation_date = date('Y-m-d', strtotime($request->operation_date));
+        }
+        if($request->pullout_date != ''){
+            $request->pullout_date = date('Y-m-d', strtotime($request->pullout_date));
+        }
+        
         $logs = ActivityLog::create([
             'type' => 'update-group-fields',
             'user_id' => $user->id,
             'assets' => json_encode(array_merge([
                 'action' => 'Update group local fields',
                 'group_code' => $group->code,
-            ],$request->only(['id','active_staff','installed_pc','status'])))
+            ],$request->only(['id','active_staff','installed_pc','status','operation_date','pullout_date'])))
         ]);
         
         $group->update($request->validated());

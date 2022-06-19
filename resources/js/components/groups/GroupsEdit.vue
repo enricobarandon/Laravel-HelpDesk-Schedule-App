@@ -116,6 +116,20 @@
                     <input type="text" class="form-control" id="group-installed-pc" name="group-installed-pc" v-model="group.installed_pc">
                 </div>
             </div>
+            
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Operation Date</label>
+                    <Datepicker :format="formatDate" name="operation-date" id="operation-date" placeholder="Select Date" v-model="group.operation_date" />
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Pullout Date</label>
+                    <Datepicker :format="formatDate" name="pullout-date" id="pullout-date" placeholder="Select Date" v-model="group.pullout_date" />
+                </div>
+            </div> 
 
             <div class="col-md-6">
                 <div class="form-group">
@@ -145,6 +159,9 @@
 import { reactive, onMounted } from 'vue'
 import useGroups from '../../composables/groups'
 import useRequests from '../../composables/requests'
+import Datepicker from '@vuepic/vue-datepicker'
+import '@vuepic/vue-datepicker/dist/main.css'
+import moment from 'moment'
 
 export default {
     props: {
@@ -203,6 +220,9 @@ export default {
             postUpdateRequest
         }
     },
+    components: {
+        Datepicker
+    },
     methods: {
         sweetAlert(e) {
             e.preventDefault();
@@ -221,7 +241,10 @@ export default {
                 this.$refs.submit.click();
             }
             })
-        }
+        },
+        formatDate(date){
+            return moment(date).format('YYYY-MM-DD');
+        },
     }
 }
 </script>

@@ -43,6 +43,7 @@
                     <th>Site</th>
                     <th>Province</th>
                     <th>Guarantor</th>
+                    <th>Operation Date</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -59,6 +60,7 @@
                         <td :class="item.site == 'wpc2040' ? 'td-blue' : 'td-red'">{{ item.site }}</td>
                         <td>{{ item.province_name }}</td>
                         <td>{{ item.guarantor }}</td>
+                        <td>{{ format_date(item.operation_date) }}</td>
                         <td class="display-center">
                             <!-- <button type="button" class="btn btn-danger" @click="postDeactivationRequest(item.uuid)"><i class="fas fa-times"></i> Deactivate</button> -->
                             <router-link :to="{ name: 'groups.edit', params: {id: item.id} }"  class="btn btn-xs btn-primary" v-if="user_type == '1' || user_type == '2'">
@@ -81,6 +83,7 @@
 import { onMounted, reactive } from 'vue'
 import useGroups from '../../composables/groups'
 import useRequests from '../../composables/requests'
+import moment from 'moment'
 // import { useRouter } from 'vue-router'
 
 export default {
@@ -163,6 +166,13 @@ export default {
             // redirectToEditForm
             groupTypes
         }
-    }
+    },
+    methods: { 
+      format_date(value){
+         if (value) {
+           return moment(String(value)).format('MMM DD, YYYY')
+          }
+      }
+   }
 }
 </script>

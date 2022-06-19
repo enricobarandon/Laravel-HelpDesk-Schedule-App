@@ -29,6 +29,8 @@
                 <td>{{ $group->site }}</td>
                 <td>{{ $group->province }}</td>
                 <td>{{ $group->guarantor }}</td>
+                <td>{{ $group->operation_date == '' ? '--' : date("M d, Y",strtotime($group->operation_date))}}</td>
+                <td>{{ $group->pullout_date == '' ? '--' : date("M d, Y",strtotime($group->pullout_date))}}</td>
             </tr>
         @endforeach
     </tbody>

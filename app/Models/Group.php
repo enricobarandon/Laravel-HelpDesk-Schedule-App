@@ -24,7 +24,9 @@ class Group extends Model
         'installed_pc',
         'active_staff',
         'guarantor',
-        'status'
+        'status',
+        'operation_date',
+        'pullout_date'
     ];
     
 }

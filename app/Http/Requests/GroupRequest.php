@@ -16,6 +16,15 @@ class GroupRequest extends FormRequest
         return true;
     }
 
+    protected function prepareForValidation()
+    {
+        if ($this->operation_date != "")
+            $this->merge(['operation_date' => date('Y-m-d', strtotime($this->operation_date))]);
+
+            
+        if ($this->pullout_date != "")
+        $this->merge(['pullout_date' => date('Y-m-d', strtotime($this->pullout_date))]);
+    }
     /**
      * Get the validation rules that apply to the request.
      *
@@ -26,7 +35,9 @@ class GroupRequest extends FormRequest
         return [
             'active_staff' => ['required'],
             'installed_pc' => ['required'],
-            'status' => ['nullable']
+            'status' => ['nullable'],
+            'operation_date' => ['required','date'],
+            'pullout_date' => ['nullable','date']
         ];
     }
 }

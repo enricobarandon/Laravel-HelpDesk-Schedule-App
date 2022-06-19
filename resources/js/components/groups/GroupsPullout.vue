@@ -13,6 +13,8 @@
                     <th>Site</th>
                     <th>Province</th>
                     <th>Guarantor</th>
+                    <th>Operation Date</th>
+                    <th>Pullout Date</th>
                     <th>Status</th>
                 </tr>
             </thead>
@@ -29,6 +31,8 @@
                         <td  :class="item.site == 'wpc2040' ? 'td-blue' : 'td-red'">{{ item.site }}</td>
                         <td>{{ item.province_name }}</td>
                         <td>{{ item.guarantor }}</td>
+                        <td>{{ format_date(item.operation_date) }}</td>
+                        <td>{{ format_date(item.pullout_date) }}</td>
                         <td class="display-center">{{ item.status }}</td>
                     </tr>
                 </template>
@@ -40,6 +44,7 @@
 <script>
 import { onMounted } from 'vue'
 import useGroups from '../../composables/groups'
+import moment from 'moment'
 
 export default {
     setup() {
@@ -52,6 +57,13 @@ export default {
             filteredPulledOutGroups
         }
 
-    }
+    },
+    methods: { 
+      format_date(value){
+         if (value) {
+           return moment(String(value)).format('MMM DD, YYYY')
+          }
+      }
+   }
 }
 </script>
