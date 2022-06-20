@@ -524,6 +524,8 @@ class RequestController extends Controller
             $apiRequest = RequestModel::create($form);
             if ($apiRequest) {
                 
+                ProcessRequest::dispatch();
+                
                 $this->postRequestToKiosk($form);
 
                 $logs = ActivityLog::create([
