@@ -11623,3 +11623,15 @@ input.form-control.edit-password {
 .tr-red td {
     color: #fff !important;
 }
+.span-green {
+    background: #006400; 
+    color: #fff; 
+    padding: 3px 5PX; 
+    border-radius: 4px;
+}
+.span-red {
+    background: #dc3545; 
+    color: #fff; 
+    padding: 3px 5PX; 
+    border-radius: 4px;
+}

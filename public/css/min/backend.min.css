@@ -22576,6 +22576,18 @@ input.form-control.edit-password {
 .tr-red td {
     color: #fff !important;
 }
+.span-green {
+    background: #006400; 
+    color: #fff; 
+    padding: 3px 5PX; 
+    border-radius: 4px;
+}
+.span-red {
+    background: #dc3545; 
+    color: #fff; 
+    padding: 3px 5PX; 
+    border-radius: 4px;
+}
 
 /*! jQuery UI - v1.13.1 - 2022-01-20
 * http://jqueryui.com

@@ -1,5 +1,35 @@
 <template>
-<div v-bind="$attrs">
+    <div v-bind="$attrs">
+
+        <div class="form-horizontal">
+            <div class="form-group row">
+
+                <div class="col-md-3">
+                    <input type="text" class="form-control" name="filterCode" id="filterCode" placeholder="Group Code" @keyup.enter="postFilterGroup()" v-model='filter.code'>
+                </div>
+
+                <div class="col-md-3">
+                    <select class="form-control" name="filterSite" placeholder="Site" @keyup.enter="postFilterGroup()" v-model='filter.site'>
+                        <option selected value="">Select Site</option>
+                        <option value="wpc2040">WPC2040</option>
+                        <option value="wpc2040aa">WPC2040AA</option>
+                    </select>
+                </div>
+
+                <div class="col-md-3">
+                    <select class="form-control" name="filterType" placeholder="Group Type" @keyup.enter="postFilterGroup()" v-model='filter.type'>
+                        <option selected value="">Select Group Type</option>
+                        <option :value="value" v-for="(value, name) in groupTypes" :key="name">{{ value }}</option>
+                    </select>
+                </div>
+
+                <div class="col">
+                    <button type="button" class="btn btn-success" @click="postFilterGroup()"><i class="fas fa-search"></i> Submit</button>
+                    <a href="#" class="btn btn-danger" @click="resetFilter()">Reset</a>
+                </div>
+            </div>
+        </div>
+
         <table class="table table-bordered table-striped sm-global-table">
             <thead>
                 <tr>
@@ -42,19 +72,53 @@
 </template>
 
 <script>
-import { onMounted } from 'vue'
+import { onMounted, reactive } from 'vue'
 import useGroups from '../../composables/groups'
 import moment from 'moment'
 
 export default {
     setup() {
         
-        const { groups, getPulledOutGroups, filteredPulledOutGroups } = useGroups()
+        const { groups, getPulledOutGroups, filteredPulledOutGroups, groupTypes } = useGroups()
 
         onMounted(getPulledOutGroups)
 
+        const filter = reactive({
+            'code' : '',
+            'site' : '',
+            'type' : ''
+        })
+
+        const postFilterGroup = async () => {
+            filteredPulledOutGroups.value = groups.value.filter((val) => {
+                if (filter.code) {
+                    return val.code.toLowerCase() == filter.code.toLowerCase()
+                }
+                if (filter.site) {
+                    return val.site == filter.site
+                }
+                if (filter.type) {
+                    return val.group_type == filter.type
+                }
+
+                return true;
+            })
+        }
+
+        const resetFilter = () => {
+            // router.go()
+            filteredPulledOutGroups.value = groups.value
+            filter.code = ''
+            filter.site = ''
+            filter.type = ''
+        }
+
         return {
-            filteredPulledOutGroups
+            filteredPulledOutGroups,
+            groupTypes,
+            filter,
+            postFilterGroup,
+            resetFilter
         }
 
     },
