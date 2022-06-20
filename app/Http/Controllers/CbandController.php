@@ -47,6 +47,9 @@ class CbandController extends Controller
             $update = Group::where('id', $groupId)->update(['viewing_status' => $newStatus]);
 
             if ($update) {
+
+                RequestModel::where('id', $requestId)->update(['is_processed',1]);
+
                 ActivityLog::create([
                     'type' => 'update-viewing-status',
                     'user_id' => $user->id,
