@@ -178,6 +178,7 @@
                                 <label>Status</label>
                                 <select id="status" name="status" class="form-control">
                                     <option selected disabled> Select Status </option>
+                                    <option value=""> No Status </option>
                                     <option value="temporarydeactivated" {{ $account->status == 'temporarydeactivated' ? 'selected' : '' }}> Temporary Deactivated </option>
                                     <option value="permanentdeactivated" {{ $account->status == 'permanentdeactivated' ? 'selected' : '' }}> Permanent Deactivated </option>
                                 </select>
