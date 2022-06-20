@@ -74,7 +74,7 @@ $allowedRolesForActions = [5];
                                 <input type="hidden" name="group_id" value="{{ $request->group_id }}">
                                 <input type="hidden" name="request_id" value="{{ $request->id }}">
                                 <input type="hidden" name="request_action" value="activate">
-                                <button type="submit" class="btn btn-success btn-sm">Activate</button>
+                                <button type="button" class="btn btn-success btn-sm btn-status-update">Activate</button>
                             </form>
 
                             <form method="POST" action='{{ url("/cband") }}'>
@@ -82,7 +82,7 @@ $allowedRolesForActions = [5];
                                 <input type="hidden" name="group_id" value="{{ $request->group_id }}">
                                 <input type="hidden" name="request_id" value="{{ $request->id }}">
                                 <input type="hidden" name="request_action" value="deactivate">
-                                <button type="submit" class="btn btn-danger btn-sm">Deactivate</button>
+                                <button type="button" class="btn btn-danger btn-sm btn-status-update">Deactivate</button>
                             </form>
                         @endif
                     </td>
@@ -91,3 +91,30 @@ $allowedRolesForActions = [5];
         @endforeach
     </tbody>
 </table>
+
+
+@section('script')
+<script>
+    $("document").ready(function(){
+    $('.btn-status-update').on('click', function(){
+        if($(this).text() == 'Activate'){
+            $text = 'Activate';
+        }else{
+            $text = 'Deactivate';
+        }
+        swal({
+            title: "Are you sure?",
+            text: "You want to "+$text+" Viewing of this group?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+          })
+          .then((willUpdate) => {
+            if (willUpdate) {
+                $(this).closest('form').submit();
+            }
+          });
+    })
+});
+</script>
+@endsection
