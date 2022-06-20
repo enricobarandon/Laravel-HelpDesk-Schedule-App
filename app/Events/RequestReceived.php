@@ -27,7 +27,12 @@ class RequestReceived implements ShouldBroadcast
     public function __construct()
     {
         $this->pendingRequestCount = DB::table('requests')->where('status','pending')->get()->count();
-        $this->approvedGroupRequestCount = DB::table('requests')->where('status','approved')->where('is_processed',0)->get()->count();
+        $this->approvedGroupRequestCount = DB::table('requests')
+                                                ->where('status','approved')
+                                                ->whereIn('operation', ['groups.create','groups.update'])
+                                                ->where('is_processed',0)
+                                                ->get()
+                                                ->count();
     }
 
     /**
