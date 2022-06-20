@@ -140,6 +140,16 @@ class OcbsController extends Controller
                 ])
             ]);
 
+            return response(json_encode([
+                'status' => 'ok',
+                'message' => 'Operators updated'
+            ]), 200);
+
+        } else {
+            return response(json_encode([
+                'status' => 'error',
+                'message' => 'Something went wrong'
+            ]), 200);
         }
     }
 }
