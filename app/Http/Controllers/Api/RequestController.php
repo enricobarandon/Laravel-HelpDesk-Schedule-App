@@ -29,7 +29,11 @@ class RequestController extends Controller
     public function index()
     {
         $pendingRequests = RequestModel::where('status','pending')->get()->count();
-        $approvedGroupRequests = RequestModel::where('status','approved')->where('is_processed',0)->get()->count();
+        $approvedGroupRequests = RequestModel::where('status','approved')
+                                        ->where('is_processed',0)
+                                        ->whereIn('operation', ['groups.create','groups.update'])
+                                        ->get()
+                                        ->count();
 
         return json_encode([
             'pendingRequests' => $pendingRequests,
