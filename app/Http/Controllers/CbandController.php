@@ -48,7 +48,7 @@ class CbandController extends Controller
 
             if ($update) {
 
-                RequestModel::where('id', $requestId)->update(['is_processed',1]);
+                RequestModel::where('id', $requestId)->update(['is_processed' => 1]);
 
                 ActivityLog::create([
                     'type' => 'update-viewing-status',
