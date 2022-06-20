@@ -124,4 +124,22 @@ class OcbsController extends Controller
         }
 
     }
+
+    public function updateOperatorsStatus(Request $request)
+    {
+        $updateOperatorsStatus = Account::where('position','Operator')->update(['is_active' => $request->is_active]);
+
+        if ($updateOperatorsStatus) {
+
+            ActivityLog::create([
+                'type' => 'ocbs-update-operators',
+                'user_id' => 0,
+                'assets' => json_encode([
+                    'action' => 'Received update for operators status',
+                    'new status' => $request->is_active
+                ])
+            ]);
+
+        }
+    }
 }
