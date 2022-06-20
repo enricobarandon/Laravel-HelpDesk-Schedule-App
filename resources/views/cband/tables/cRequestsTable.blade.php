@@ -67,8 +67,9 @@ $allowedRolesForActions = [5];
                 <td>{{ $request->remarks }}</td>
                 <td>{{ $viewingStatus }}</td>
                 @if(in_array($user->user_type_id, $allowedRolesForActions))
-                    <td>
+                    <td class="text-center">
                         @if ($request->status == 'approved' && in_array($user->user_type_id, $allowedRolesForActions))
+                            @if($request->is_processed == '0')
                             <form method="POST" action='{{ url("/cband") }}'>
                                 @csrf
                                 <input type="hidden" name="group_id" value="{{ $request->group_id }}">
@@ -84,6 +85,9 @@ $allowedRolesForActions = [5];
                                 <input type="hidden" name="request_action" value="deactivate">
                                 <button type="button" class="btn btn-danger btn-sm btn-status-update">Deactivate</button>
                             </form>
+                            @else
+                            <span class="span-green">Processed</span>
+                            @endif
                         @endif
                     </td>
                 @endif
