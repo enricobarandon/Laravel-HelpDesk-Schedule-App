@@ -136,6 +136,7 @@
                     <label>Status</label>
                     <select class="form-control" id="group-status" name="group-status" v-model="group.status">
                         <option selected disabled value="">-- Select Status --</option>
+                        <option value="">No Status</option>
                         <option value="forpullout">For Pullout</option>
                         <option value="pullout">Pullout</option>
                         <option value="onhold">On Hold</option>
