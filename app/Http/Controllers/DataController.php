@@ -49,7 +49,9 @@ class DataController extends Controller
                     'is_active' => $data['is_active'],
                     'province_id' => $provinceInfo->id,
                     'group_type' => $data['type'],
-                    'code' => $data['code']
+                    'code' => $data['code'],
+                    'address' => $data['address'],
+                    'guarantor' => $data['guarantor']
                 ];
 
                 Group::create($newGroupArr);
