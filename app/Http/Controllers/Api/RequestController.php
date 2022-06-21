@@ -301,6 +301,8 @@ class RequestController extends Controller
 
         } else {
             // update request
+            ProcessRequest::dispatch();
+            
             $acceptChanges = RequestModel::where('uuid', $request->uuid)
                                 ->where('operation', $request->operation)
                                 ->where('status', 'pending')
