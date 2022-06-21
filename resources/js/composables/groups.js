@@ -45,17 +45,28 @@ export default function useGroups () {
                     text: "",
                     icon: "success"
                 }).then(function() {
-                    if (update.data.data.is_active == 1) {
-                        router.push({ name: 'groups.active' })
-                    } else {
-                        router.push({ name: 'groups.deactivated' })
-                    }
+                    // if (update.data.data.is_active == 1) {
+                    //     router.push({ name: 'groups.active' })
+                    // } else {
+                    //     router.push({ name: 'groups.deactivated' })
+                    // }
                 });
-            }
+            } 
             // await router.push({name: 'groups.index'})
         } catch (e) {
             if (e.response.status === 422) {
                 errors.value = e.response.data.errors
+                let messages = '';
+                Object.keys(e.response.data.errors).forEach(function(key) {
+
+                    // console.log(key, obj[key]);
+                    messages += e.response.data.errors[key]
+                });
+                Swal.fire({
+                    title: "Request Failed!",
+                    text: messages,
+                    icon: "error"
+                })
             }
         }
     }

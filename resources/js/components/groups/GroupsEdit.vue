@@ -2,14 +2,6 @@
 
     <div class="row">
 
-        <div v-if="errors">
-            <div v-for="(v, k) in errors" :key="k">
-                <p v-for="error in v" :key="error" class="text-sm text-red">
-                {{ error }}
-                </p>
-            </div>
-        </div>
-
         <div class="col-md-6">
             <div class="form-group"> 
                 <label>Group Name</label>
@@ -102,6 +94,14 @@
 
         <hr class="hr-css"/>
 
+        <div v-if="errors">
+            <div v-for="(v, k) in errors" :key="k">
+                <p v-for="error in v" :key="error" class="text-sm text-red">
+                {{ error }}
+                </p>
+            </div>
+        </div>
+
         <form @submit.prevent="saveGroup" ref="form" class="row">
             <div class="col-md-6">
                 <div class="form-group">
@@ -146,7 +146,7 @@
             </div>
 
             <div class="col-md-12 text-center">
-                <button type="button" v-on:click="sweetAlert" class="btn btn-primary">Submit</button>
+                <button type="button" v-on:click="sweetAlert" class="btn btn-primary">Update</button>
                 <button type="submit" ref="submit" style="display: none">Submit</button>
             </div>
 
