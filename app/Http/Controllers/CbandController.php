@@ -7,6 +7,7 @@ use App\Models\RequestModel;
 use App\Models\Group;
 use App\Models\ActivityLog;
 use DB;
+use App\Jobs\ProcessRequest;
 
 class CbandController extends Controller
 {
@@ -49,6 +50,8 @@ class CbandController extends Controller
             if ($update) {
 
                 RequestModel::where('id', $requestId)->update(['is_processed' => 1]);
+
+                ProcessRequest::dispatch();
 
                 ActivityLog::create([
                     'type' => 'update-viewing-status',
