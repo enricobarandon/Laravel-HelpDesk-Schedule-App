@@ -301,8 +301,7 @@ class RequestController extends Controller
 
         } else {
             // update request
-            ProcessRequest::dispatch();
-            
+
             $acceptChanges = RequestModel::where('uuid', $request->uuid)
                                 ->where('operation', $request->operation)
                                 ->where('status', 'pending')
@@ -310,6 +309,8 @@ class RequestController extends Controller
                                     'status' => $request->status,
                                     // 'remarks' => DB::raw('remarks') . ' ; ' . $request->remarks
                                 ]);
+                
+            ProcessRequest::dispatch();
                                 
             if ($acceptChanges && $request->status == 'approved') {
 
