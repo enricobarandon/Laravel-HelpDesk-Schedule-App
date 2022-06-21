@@ -15,7 +15,7 @@ $allowedRolesForActions = [5];
             <th>Status</th>
             <th>Requested Data</th>
             <th>Remarks</th>
-            <th>Viewing Status</th>
+            <th>Current Viewing Status</th>
             @if(in_array($user->user_type_id, $allowedRolesForActions))
                 <th>Action</th>
             @endif
@@ -54,37 +54,44 @@ $allowedRolesForActions = [5];
                 <td>
                     @php
                         $dataHtml = '';
+                        $is_active = '';
                         if ($request->data != 'null') {
                             $data = json_decode($request->data);
                             $dataHtml = '';
                             foreach($data as $key => $value) {
                                 $dataHtml .= "<li>$key : $value</li>";
+                                $is_active = $data->is_active;
                             }
                         }
                     @endphp
                     {!! $dataHtml !!}
+                    <!-- {{ $is_active }} -->
                 </td>
                 <td>{{ $request->remarks }}</td>
-                <td>{{ $viewingStatus }}</td>
+                <td class="{{ $viewingStatus == 'Active' ? 'td-blue' : 'td-red' }}">{{ $viewingStatus }}</td>
                 @if(in_array($user->user_type_id, $allowedRolesForActions))
                     <td class="text-center">
                         @if ($request->status == 'approved' && in_array($user->user_type_id, $allowedRolesForActions))
                             @if($request->is_processed == '0')
-                            <form method="POST" action='{{ url("/cband") }}'>
-                                @csrf
-                                <input type="hidden" name="group_id" value="{{ $request->group_id }}">
-                                <input type="hidden" name="request_id" value="{{ $request->id }}">
-                                <input type="hidden" name="request_action" value="activate">
-                                <button type="button" class="btn btn-success btn-sm btn-status-update">Activate</button>
-                            </form>
-
-                            <form method="POST" action='{{ url("/cband") }}'>
-                                @csrf
-                                <input type="hidden" name="group_id" value="{{ $request->group_id }}">
-                                <input type="hidden" name="request_id" value="{{ $request->id }}">
-                                <input type="hidden" name="request_action" value="deactivate">
-                                <button type="button" class="btn btn-danger btn-sm btn-status-update">Deactivate</button>
-                            </form>
+                                @if($is_active == '1')
+                                <form method="POST" action='{{ url("/cband") }}'>
+                                    @csrf
+                                    <input type="hidden" name="group_id" value="{{ $request->group_id }}">
+                                    <input type="hidden" name="request_id" value="{{ $request->id }}">
+                                    <input type="hidden" name="request_action" value="activate">
+                                    <button type="button" class="btn btn-success btn-sm btn-status-update">Activate</button>
+                                </form>
+                                @elseif($is_active == '0')
+                                <form method="POST" action='{{ url("/cband") }}'>
+                                    @csrf
+                                    <input type="hidden" name="group_id" value="{{ $request->group_id }}">
+                                    <input type="hidden" name="request_id" value="{{ $request->id }}">
+                                    <input type="hidden" name="request_action" value="deactivate">
+                                    <button type="button" class="btn btn-danger btn-sm btn-status-update">Deactivate</button>
+                                </form>
+                                @else
+                                    --
+                                @endif
                             @else
                             <span class="span-green">Processed</span>
                             @endif

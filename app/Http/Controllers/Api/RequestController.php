@@ -165,7 +165,7 @@ class RequestController extends Controller
                     ]),
                     'remarks' => $request->remarks,
                     'requested_by' => $user->name . '('. UserType::find($user->user_type_id)->role .')',
-                    'reference_number' => 'KAC' . $user->id . '-' . time()
+                    'reference_number' => 'KRM' . $user->id . '-' . time()
                 ];
                 
                 $apiRequest = RequestModel::create($form);
@@ -196,7 +196,7 @@ class RequestController extends Controller
                 }
 
                 $form['requested_by'] = $user->name . '('. UserType::find($user->user_type_id)->role .')';
-                $form['reference_number'] = 'KAC' . $user->id . '-' . time();
+                $form['reference_number'] = 'KRM' . $user->id . '-' . time();
 
                 $apiRequest = RequestModel::create($form);
             }
@@ -205,13 +205,17 @@ class RequestController extends Controller
 
                 ProcessRequest::dispatch();
 
+                $assests = $form;
+                
+                unset($assests['api_key']);
+
                 $logs = ActivityLog::create([
                     'type' => 'post-request',
                     'user_id' => $user->id,
                     'assets' => json_encode(array_merge([
                         'action' => 'Posted a request to OCBS application',
                         'request-type' => $requestName
-                    ],$request->except(['api_key'])))
+                    ],$assests))
                 ]);
 
                 // dd($logs);
@@ -509,7 +513,7 @@ class RequestController extends Controller
             'data' => json_encode($formData),
             'remarks' => $request->remarks,
             'requested_by' => $user->name . '('. UserType::find($user->user_type_id)->role .')',
-            'reference_number' => 'KAC' . $user->id . '-' . time()
+            'reference_number' => 'KRM' . $user->id . '-' . time()
         ];
 
         if ($operation == 'update') {
@@ -527,13 +531,14 @@ class RequestController extends Controller
                 ProcessRequest::dispatch();
                 
                 $this->postRequestToKiosk($form);
-
+                $forReferenceNumber = extract($form);
                 $logs = ActivityLog::create([
                     'type' => 'post-request',
                     'user_id' => $user->id,
                     'assets' => json_encode(array_merge([
                         'action' => 'Posted a request to OCBS application',
-                        'request-type' => $requestName
+                        'request-type' => $requestName,
+                        'reference_number' => $reference_number
                     ],$request->except(['api_key','_token'])))
                 ]);
 
