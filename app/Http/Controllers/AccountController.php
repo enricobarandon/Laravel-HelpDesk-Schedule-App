@@ -193,7 +193,8 @@ class AccountController extends Controller
                     ])
             ]);
 
-            return redirect('accounts/deactivated')->with('success', 'Updated Status!');
+            // return redirect('accounts/deactivated')->with('success', 'Updated Status!');
+            return back()->with('success', 'Updated Status!');
 
         }
 

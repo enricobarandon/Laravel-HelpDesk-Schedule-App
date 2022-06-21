@@ -25,6 +25,20 @@
                         </div>
                     @endif
 
+                    @if (session('status'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('status') }}
+                        </div>
+                    @elseif (session('success'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('success') }}
+                        </div>
+                    @elseif(session('error'))
+                        <div class="alert alert-danger" role="alert">
+                            {{ session('error') }}
+                        </div>
+                    @endif
+
                     <form action="{{ route('storeAccountRequest') }}" class="row" method="post">
                         @csrf
                         <input type="hidden" name="uuid" value="{{ $account->uuid }}">
@@ -187,7 +201,7 @@
                         </div>
 
                         <div class="col-md-12">
-                            <input type="submit" class="btn btn-success" value="Submit">
+                            <input type="submit" class="btn btn-success" value="Update">
                         </div>
                     </form>
                     @endif
