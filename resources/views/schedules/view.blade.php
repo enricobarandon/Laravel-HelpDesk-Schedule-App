@@ -36,7 +36,7 @@ if (! function_exists('removeParam')) {
                     <form class="form-horizontal" method="get">
                         <div class="form-group row">
                             <div class="col-md-3">
-                                <input type="text" class="filter-group form-control" name="groupCode" placeholder="Group Code/ Group Name/ Group Address">
+                                <input type="text" class="filter-group form-control" name="groupCode" placeholder="Group Code/Group Name/Address">
                             </div>
 
                             <div class="col-md-2">
