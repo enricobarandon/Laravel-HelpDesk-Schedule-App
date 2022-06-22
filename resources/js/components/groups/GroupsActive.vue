@@ -22,6 +22,10 @@
                     </select>
                 </div>
 
+                <div class="col-md-3">
+                    <input type="text" class="form-control" name="filterGuarantor" id="filterGuarantor" placeholder="Guarantor" @keyup.enter="postFilterGroup()" v-model='filter.guarantor'>
+                </div>
+
                 <div class="col">
                     <button type="button" class="btn btn-success" @click="postFilterGroup()"><i class="fas fa-search"></i> Submit</button>
                     <a href="#" class="btn btn-danger" @click="resetFilter()">Reset</a>
@@ -108,7 +112,8 @@ export default {
             // 'name' : '',
             'code' : '',
             'site' : '',
-            'type' : ''
+            'type' : '',
+            'guarantor' : ''
         })
 
         const { groups, filteredGroups, getActiveGroups, groupTypes } = useGroups()
@@ -137,6 +142,9 @@ export default {
                 if (filter.type) {
                     return val.group_type == filter.type
                 }
+                if (filter.guarantor) {
+                    return val.guarantor.toLowerCase() == filter.guarantor.toLowerCase()
+                }
 
                 return true;
             })
@@ -148,6 +156,7 @@ export default {
             filter.code = ''
             filter.site = ''
             filter.type = ''
+            filter.guarantor = ''
         }
 
         // const redirectToEditForm = (id) => {

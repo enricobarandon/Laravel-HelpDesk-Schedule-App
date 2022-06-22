@@ -25,11 +25,15 @@
             </div>
 
             <div class="col-md-2">
-                    <select class="form-control" name="filterType" placeholder="Group Type" v-model='filter.type'>
-                        <option selected value="">Select Group Type</option>
-                        <option :value="value" v-for="(value, name) in groupTypes" :key="name">{{ value }}</option>
-                    </select>
-                </div>
+                <select class="form-control" name="filterType" placeholder="Group Type" v-model='filter.type'>
+                    <option selected value="">Select Group Type</option>
+                    <option :value="value" v-for="(value, name) in groupTypes" :key="name">{{ value }}</option>
+                </select>
+            </div>
+
+            <div class="col-md-3">
+                <input type="text" class="form-control" name="filterGuarantor" id="filterGuarantor" placeholder="Guarantor" @keyup.enter="postFilterGroup()" v-model='filter.guarantor'>
+            </div>
 
             <div class="col">
                 <button type="button" class="btn btn-success" @click="postFilterGroup()"><i class="fas fa-search"></i> Submit</button>
@@ -113,7 +117,8 @@ export default {
             'code' : '',
             'status' : '',
             'site' : '',
-            'type' : ''
+            'type' : '',
+            'guarantor' : ''
         })
 
         const { groups, filteredDeactivatedGroups, getDeactivatedGroups, groupTypes } = useGroups()
@@ -145,6 +150,9 @@ export default {
                 if (filter.type) {
                     return val.group_type == filter.type
                 }
+                if (filter.guarantor) {
+                    return val.guarantor.toLowerCase() == filter.guarantor.toLowerCase()
+                }
 
                 return true;
             })
@@ -156,6 +164,7 @@ export default {
             filter.status = ''
             filter.site = ''
             filter.type = ''
+            filter.guarantor = ''
 
         }
 
