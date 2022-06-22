@@ -26,7 +26,7 @@
                 <td>{{ $account->contact }}</td>
                 <td>{{ $account->position }}</td>
                 <td>{{ $account->username }}</td>
-                <td>--</td>
+                <td>{{ $account->password }}</td>
                 <td>{{ $account->is_active ? 'Active' : 'Deactivated'}}</td>
                 <td class="display-center">
                 <!-- <a href="/accounts/{{ $account->acc_id }}" type="button" class="btn btn-sm btn-primary"><i class="fas fa-cog"></i> Edit</button> -->

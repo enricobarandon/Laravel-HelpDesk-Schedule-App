@@ -11,6 +11,8 @@
             <th>Site</th>
             <th>Province</th>
             <th>Guarantor</th>
+            <th>Operation Date</th>
+            <th>Pullout Date</th>
         </tr>
     </thead>
     <tbody>

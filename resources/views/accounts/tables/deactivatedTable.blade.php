@@ -24,7 +24,7 @@
                 <td>{{ $account->contact }}</td>
                 <td>{{ $account->position }}</td>
                 <td>{{ $account->username }}</td>
-                <td>--</td>
+                <td>{{ $account->password }}</td>
                 <td>{{ $account->status }}</td>
                 <td class="display-center">
                 </td>

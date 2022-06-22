@@ -8,6 +8,8 @@ use App\Models\Group;
 use App\Models\ActivityLog;
 use DB;
 use App\Jobs\ProcessRequest;
+use Excel;
+use App\Exports\ScheduledGroupExport;
 
 class CbandController extends Controller
 {
@@ -30,6 +32,15 @@ class CbandController extends Controller
         }
 
         $requests = $requests->paginate(20);
+
+        if ($request->has('download')) {
+            return Excel::download(
+                new ScheduledGroupExport('cband.tables.cRequestsTable', [
+                    'requests' => $requests
+                ]),
+                'cband-requests.xlsx'
+            );
+        }
         
         return view('cband.index', compact('requests','keyword'));
     }
