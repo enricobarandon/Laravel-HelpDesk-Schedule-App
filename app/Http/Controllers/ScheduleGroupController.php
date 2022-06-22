@@ -363,6 +363,8 @@ class ScheduleGroupController extends Controller
         $scheduleId = request()->scheduleId;
 
         $groupId = request()->groupId;
+        // dd(request()->accountId);
+        // dd($accountId,$scheduleId,$groupId);
         
         $user = Auth::user();
 

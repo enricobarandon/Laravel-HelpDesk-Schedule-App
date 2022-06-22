@@ -163,7 +163,7 @@
                           @endphp
                           <tr>
                             <td>
-                              {{ $accountCount++ }}
+                              {{ $account->acc_id }}
                             </td>
                             <td>
                               <input type="text" value="{{ $account->first_name }} {{ $account->last_name }}" class="form-control {{ $trClass }}" disabled>
@@ -191,18 +191,18 @@
                             </td>
                             <td>
                               @if($account->scheduled_group_id)
-                                <form action='{{ url("/scheduledaccount/$scheduledGroupInfo->id/account/$account->acc_id") }}' id="removeAccount" method="POST">
+                                <form action='{{ url("/scheduledaccount/$scheduledGroupInfo->id/account/$account->acc_id") }}' class="removeAccount" method="POST">
                                   @csrf
                                   @method('delete')
-                                  <button class="btn btn-danger btn-sm remove-account"><i class="fa fa-times"></i> Remove</button>
+                                  <button type="submit" class="btn btn-danger btn-sm remove-account"><i class="fa fa-times"></i> Remove</button>
                                 </form>
                               @else
-                                <form action='{{ url("/scheduledaccount/$scheduledGroupInfo->id/account/$account->acc_id") }}' id="confirmAccount" method="POST">
+                                <form action='{{ url("/scheduledaccount/$scheduledGroupInfo->id/account/$account->acc_id") }}' class="confirmAccount" method="POST">
                                   @csrf
                                   @method('post')
                                   <input type="hidden" name="groupId" value="{{ $groupId }}">
                                   <input type="hidden" name="scheduleId" value="{{ $scheduleId }}">
-                                  <button class="btn btn-success btn-sm confirm-account"><i class="fa fa-plus"></i> Confirm</button>
+                                  <button type="submit" class="btn btn-success btn-sm confirm-account"><i class="fa fa-plus"></i> Confirm</button>
                                 </form>
                               @endif
                               <!-- <button class="btn btn-primary"><i class="fa fa-wrench"></i> Edit</button> -->
@@ -244,7 +244,7 @@
           $(this).closest('form').find('.remove-account').text('Please wait ...')
           .attr('disabled','disabled');
           $('.remove-account, .confirm-account').attr('disabled','disabled');
-          $('#removeAccount').submit();
+          $($(this).closest('form')).submit();
       });
       
       $('.confirm-account').on('click',function()
@@ -252,7 +252,7 @@
           $(this).closest('form').find('.confirm-account').text('Please wait ...')
           .attr('disabled','disabled');
           $('.remove-account, .confirm-account').attr('disabled','disabled');
-          $('#confirmAccount').submit();
+          $($(this).closest('form')).submit();
       });
   });
   </script>
