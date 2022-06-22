@@ -106,6 +106,9 @@ export default {
                     return val.group_type == filter.type
                 }
                 if (filter.guarantor) {
+                    if (!val.guarantor) {
+                        return false;
+                    }
                     return val.guarantor.toLowerCase() == filter.guarantor.toLowerCase()
                 }
 
