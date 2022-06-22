@@ -163,7 +163,7 @@
                           @endphp
                           <tr>
                             <td>
-                              {{ $account->acc_id }}
+                              {{ $accountCount++ }}
                             </td>
                             <td>
                               <input type="text" value="{{ $account->first_name }} {{ $account->last_name }}" class="form-control {{ $trClass }}" disabled>
