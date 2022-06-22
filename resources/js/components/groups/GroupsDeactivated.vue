@@ -31,7 +31,7 @@
                 </select>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <input type="text" class="form-control" name="filterGuarantor" id="filterGuarantor" placeholder="Guarantor" @keyup.enter="postFilterGroup()" v-model='filter.guarantor'>
             </div>
 

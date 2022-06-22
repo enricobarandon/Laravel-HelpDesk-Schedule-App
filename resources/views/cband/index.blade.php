@@ -57,7 +57,116 @@ if (! function_exists('removeParam')) {
                         </div>
                     </form>
 
-                    @include('cband.tables.cRequestsTable')
+                    @php
+                    $user = auth()->user();
+                    $allowedRolesForActions = [5];
+                    @endphp
+                    <table class="table table-bordered table-striped sm-global-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>ID</th>
+                                <th>Ref #</th>
+                                <th>Requested At</th>
+                                <th>Requested By</th>
+                                <th>Group Name</th>
+                                <th>Operation</th>
+                                <th>Status</th>
+                                <th>Requested Data</th>
+                                <th>Remarks</th>
+                                <th>Current Viewing Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php
+                                $requestCount = ($requests->currentpage()-1)* $requests->perpage() + 1;
+                            @endphp
+                            @foreach($requests as $request)
+                                @php
+                                    $tdClass = '';
+                                    if($request->status == 'approved'){
+                                        $tdClass = 'td-green';
+                                    }elseif($request->status == 'rejected'){
+                                        $tdClass = 'td-red';
+                                    }else{
+                                        $tdClass = 'td-blue';
+                                    }
+                                    $viewingStatus = $request->viewing_status ? 'Active' : 'Deactivated';
+
+                                @endphp
+                                <tr>
+                                    <td>{{ $requestCount++ }}</td>
+                                    <td>{{ $request->id }}</td>
+                                    <td>{{ $request->reference_number }}</td>
+                                    <td>{{ date('M d, Y h:i:s A', strtotime($request->created_at)) }}</td>
+                                    <td>{{ $request->requested_by }}</td>
+                                    <td>
+                                        @php
+                                            echo $request->group_name ? htmlspecialchars($request->group_name) : $request->username
+                                        @endphp
+                                    </td>
+                                    <td>{{ $request->operation }}</td>
+                                    <td class="{{ $tdClass }}">{{ strtoupper($request->status) }}</td>
+                                    <td>
+                                        @php
+                                            $dataHtml = '';
+                                            $is_active = '';
+                                            if ($request->data != 'null') {
+                                                $data = json_decode($request->data);
+                                                $dataHtml = '';
+                                                foreach($data as $key => $value) {
+                                                    $dataHtml .= "<li>$key : $value</li>";
+                                                    $is_active = $data->is_active;
+                                                }
+                                            }
+                                        @endphp
+                                        {!! $dataHtml !!}
+                                        <!-- {{ $is_active }} -->
+                                    </td>
+                                    <td>{{ $request->remarks }}</td>
+                                    <td class="{{ $viewingStatus == 'Active' ? 'td-blue' : 'td-red' }}">{{ $viewingStatus }}</td>
+                                    <td class="text-center">
+                                        @if (in_array($user->user_type_id, $allowedRolesForActions))
+                                            @if($request->status == 'approved')
+                                                @if($request->is_processed == '0')
+                                                    @if($is_active == '1')
+                                                    <form method="POST" action='{{ url("/cband") }}'>
+                                                        @csrf
+                                                        <input type="hidden" name="group_id" value="{{ $request->group_id }}">
+                                                        <input type="hidden" name="request_id" value="{{ $request->id }}">
+                                                        <input type="hidden" name="request_action" value="activate">
+                                                        <button type="button" class="btn btn-success btn-sm btn-status-update">Activate</button>
+                                                    </form>
+                                                    @elseif($is_active == '0')
+                                                    <form method="POST" action='{{ url("/cband") }}'>
+                                                        @csrf
+                                                        <input type="hidden" name="group_id" value="{{ $request->group_id }}">
+                                                        <input type="hidden" name="request_id" value="{{ $request->id }}">
+                                                        <input type="hidden" name="request_action" value="deactivate">
+                                                        <button type="button" class="btn btn-danger btn-sm btn-status-update">Deactivate</button>
+                                                    </form>
+                                                    @else
+                                                        --
+                                                    @endif
+                                                @else
+                                                <span class="span-green">Processed</span>
+                                                @endif
+                                            @endif
+                                        @else
+                                            @if($request->status == 'approved')
+                                                @if($request->is_processed == '0')
+                                                <span class="span-red">Processing</span>
+                                                @else
+                                                <span class="span-green">Processed</span>
+                                                @endif
+                                            @endif
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
 
                     <div class="col">
                         <div class="float-right">
@@ -70,4 +179,30 @@ if (! function_exists('removeParam')) {
         </div>
     </div>
 </div>
+@endsection
+
+@section('script')
+<script>
+    $("document").ready(function(){
+    $('.btn-status-update').on('click', function(){
+        if($(this).text() == 'Activate'){
+            $text = 'Activate';
+        }else{
+            $text = 'Deactivate';
+        }
+        swal({
+            title: "Are you sure?",
+            text: "You want to "+$text+" Viewing of this group?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+          })
+          .then((willUpdate) => {
+            if (willUpdate) {
+                $(this).closest('form').submit();
+            }
+          });
+    })
+});
+</script>
 @endsection

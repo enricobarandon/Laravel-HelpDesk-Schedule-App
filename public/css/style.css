@@ -138,9 +138,10 @@
     font-weight: 700;
 }
 .logo-img {
-    position: relative;
+    /* position: relative;
     max-width: 95%;
-    max-height: 205px;
+    max-height: 205px; */
+    width: 100%;
 }
 .global-table {
     width: 100% !important;

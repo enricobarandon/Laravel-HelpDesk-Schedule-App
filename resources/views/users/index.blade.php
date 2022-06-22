@@ -94,11 +94,11 @@ if (! function_exists('removeParam')) {
                                         <form action='{{ url("/users/$user->id") }}' method="POST">
                                             @csrf
                                                 @if($user->is_active)
-                                                    <button type="submit" class="btn btn-danger">
+                                                    <button type="button" class="btn btn-danger users-status">
                                                         <i class="fas fa-times"></i> Deactivate
                                                     </button>
                                                 @else
-                                                    <button type="submit" class="btn btn-success">
+                                                    <button type="button" class="btn btn-success users-status">
                                                         <i class="fas fa-plus"></i> Activate
                                                     </button>
                                                 @endif
@@ -122,4 +122,30 @@ if (! function_exists('removeParam')) {
         </div>
     </div>
 </div>
+@endsection
+
+@section('script')
+<script>
+    $("document").ready(function(){
+    $('.users-status').on('click', function(){
+        if($(this).text() == 'Activate'){
+            $text = 'Activate';
+        }else{
+            $text = 'Deactivate';
+        }
+        swal({
+            title: "Are you sure?",
+            text: "You want to "+$text+" User?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+          })
+          .then((willUpdate) => {
+            if (willUpdate) {
+                $(this).closest('form').submit();
+            }
+          });
+    })
+});
+</script>
 @endsection
