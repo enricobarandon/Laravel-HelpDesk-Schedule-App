@@ -164,7 +164,7 @@ export default {
             filteredGroups,
             user_type,
             // redirectToEditForm
-            groupTypes
+            groupTypes,
         }
     },
     methods: { 

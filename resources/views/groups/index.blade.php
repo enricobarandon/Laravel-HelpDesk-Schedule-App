@@ -16,7 +16,7 @@ if (! function_exists('removeParam')) {
             <div class="card">
                 <div class="card-header">
                     {{ __('Group Management') }}
-                    <a class="btn btn-success float-right" href="{{ removeParam(request()->fullUrlWithQuery(['download-'.request()->segment(3).'' => '1']), 'active') }}">Download Excel</a>
+                    <a class="btn btn-success float-right" href="{{ removeParam(request()->fullUrlWithQuery(['download-'.request()->segment(3).'' => '1']), 'active') }}">Download Excel1</a>
                     <!-- @if(Auth::user()->user_type_id == 1 || Auth::user()->user_type_id == 2)
                     <a class="btn btn-primary float-right" href="{{ route('groups.create') }}"><i class="fa fa-plus"></i> Create Group</a>
                     @endif -->
@@ -31,7 +31,7 @@ if (! function_exists('removeParam')) {
                             {{ session('error') }}
                         </div>
                     @endif
-                    <router-view :user="{{ Auth::user() }}" />
+                    <router-view :user="{{ Auth::user() }}"/>
                 </div>
             </div>
         </div>

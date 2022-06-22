@@ -35,45 +35,45 @@ if (! function_exists('removeParam')) {
 
                     <form class="form-horizontal" method="get">
                         <div class="form-group row">
-                        <div class="col-md-3">
-                            <input type="text" class="filter-group form-control" name="groupCode" placeholder="Group Code">
-                        </div>
+                            <div class="col-md-3">
+                                <input type="text" class="filter-group form-control" name="groupCode" placeholder="Group Code/ Group Name/ Group Address">
+                            </div>
 
-                        <div class="col-md-2">
-                            <select id="selectSite" name="selectSite" class="form-control">
-                                <option selected value="">SELECT ALL SITE</option>
-                                <option value="wpc2040">WPC2040</option>
-                                <option value="wpc2040aa">WPC2040AA</option>
-                            </select>
-                        </div>
+                            <div class="col-md-2">
+                                <select id="selectSite" name="selectSite" class="form-control">
+                                    <option selected value="">SELECT ALL SITE</option>
+                                    <option value="wpc2040">WPC2040</option>
+                                    <option value="wpc2040aa">WPC2040AA</option>
+                                </select>
+                            </div>
 
-                        <div class="col-md-3">
-                            <select id="selectType" name="selectType[]" class="form-control"  multiple="multiple">
-                                <option selected value="">SELECT ALL TYPE</option>
-                                <option value="ARENA">ARENA</option>
-                                <option value="OCBS-LOTTO">OCBS-LOTTO</option>
-                                <option value="OCBS-OTB">OCBS-OTB</option>
-                                <option value="OCBS-RESTOBAR">OCBS-RESTOBAR</option>
-                                <option value="OCBS-STORE">OCBS-STORE</option>
-                                <option value="OCBS-MALL">OCBS-MALL</option>
-                                <option value="OCBS">OCBS</option>
-                                <option value="OCBS-EGAMES">OCBS-EGAMES</option>
-                                <option value="OCBS-CASINO">OCBS-CASINO</option>
-                            </select>
-                        </div>
+                            <div class="col-md-3">
+                                <select id="selectType" name="selectType[]" class="form-control"  multiple="multiple">
+                                    <option selected value="">SELECT ALL TYPE</option>
+                                    <option value="ARENA">ARENA</option>
+                                    <option value="OCBS-LOTTO">OCBS-LOTTO</option>
+                                    <option value="OCBS-OTB">OCBS-OTB</option>
+                                    <option value="OCBS-RESTOBAR">OCBS-RESTOBAR</option>
+                                    <option value="OCBS-STORE">OCBS-STORE</option>
+                                    <option value="OCBS-MALL">OCBS-MALL</option>
+                                    <option value="OCBS">OCBS</option>
+                                    <option value="OCBS-EGAMES">OCBS-EGAMES</option>
+                                    <option value="OCBS-CASINO">OCBS-CASINO</option>
+                                </select>
+                            </div>
 
-                        <div class="col-md-2">
-                            <select id="pagination" name="pagination" class="form-select">
-                                <option selected value="">Show Entries</option>
-                                <option value="100">100</option>
-                                <option value="all">Show All</option>
-                            </select>
-                        </div>
+                            <div class="col-md-2">
+                                <select id="pagination" name="pagination" class="form-select">
+                                    <option selected value="">Show Entries</option>
+                                    <option value="100">100</option>
+                                    <option value="all">Show All</option>
+                                </select>
+                            </div>
 
-                        <div class="col">
-                            <button type="submit" class="btn btn-success"><i class="fas fa-search"></i> Submit</button>
-                            <a href="{{ url('/schedules/view') }}/{{ $scheduleId }}" class="btn btn-danger">Reset</a>
-                        </div>
+                            <div class="col">
+                                <button type="submit" class="btn btn-success"><i class="fas fa-search"></i> Submit</button>
+                                <a href="{{ url('/schedules/view') }}/{{ $scheduleId }}" class="btn btn-danger">Reset</a>
+                            </div>
                         </div>
                     </form>
 

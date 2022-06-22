@@ -422,11 +422,16 @@ class ScheduleGroupController extends Controller
                             ->join('groups','groups.id', 'scheduled_groups.group_id')
                             ->join('provinces','provinces.id', 'groups.province_id')
                             ->where('scheduled_groups.schedule_id', $scheduleId);
-
+        
         $groupedByAccounts = ScheduledAccount::createAccountsAssocArr($scheduleId);
 
         if($request->groupCode){
-            $scheduledGroups = $scheduledGroups->where('groups.code', '=', $request->groupCode);
+            // $scheduledGroups = $scheduledGroups->where('groups.code', '=', $request->groupCode);
+            $scheduledGroups = $scheduledGroups->where(function($query) use ($request) {
+                $query->where('groups.code', '=', $request->groupCode)
+                            ->orWhere('groups.name','like',"%$request->groupCode%")
+                            ->orWhere('groups.address','like',"%$request->groupCode%");
+            });
         }
 
         if($request->selectType){

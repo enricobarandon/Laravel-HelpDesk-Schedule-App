@@ -187,7 +187,9 @@ export default {
             'reference_number' : ''
         })
 
-        onMounted(getGroup(props.id))
+        onMounted(() => {
+            getGroup(props.id)
+        })
 
         const saveGroup = async () => {
             await updateGroup(props.id)
