@@ -4,11 +4,11 @@
         <div class="form-horizontal">
             <div class="form-group row">
 
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <input type="text" class="form-control" name="filterCode" id="filterCode" placeholder="Group Code" @keyup.enter="postFilterGroup()" v-model='filter.code'>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <select class="form-control" name="filterSite" placeholder="Site" @keyup.enter="postFilterGroup()" v-model='filter.site'>
                         <option selected value="">Select Site</option>
                         <option value="wpc2040">WPC2040</option>
@@ -16,7 +16,7 @@
                     </select>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <select class="form-control" name="filterType" placeholder="Group Type" @keyup.enter="postFilterGroup()" v-model='filter.type'>
                         <option selected value="">Select Group Type</option>
                         <option :value="value" v-for="(value, name) in groupTypes" :key="name">{{ value }}</option>
