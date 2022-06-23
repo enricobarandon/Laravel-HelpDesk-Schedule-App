@@ -94,11 +94,11 @@ if (! function_exists('removeParam')) {
                                         <form action='{{ url("/users/$user->id") }}' method="POST">
                                             @csrf
                                                 @if($user->is_active)
-                                                    <button type="button" class="btn btn-danger users-status">
+                                                    <button type="button" class="btn btn-danger users-status deactivate">
                                                         <i class="fas fa-times"></i> Deactivate
                                                     </button>
                                                 @else
-                                                    <button type="button" class="btn btn-success users-status">
+                                                    <button type="button" class="btn btn-success users-status activate">
                                                         <i class="fas fa-plus"></i> Activate
                                                     </button>
                                                 @endif
@@ -128,7 +128,7 @@ if (! function_exists('removeParam')) {
 <script>
     $("document").ready(function(){
     $('.users-status').on('click', function(){
-        if($(this).text() == 'Activate'){
+        if($(this).hasClass('activate') == true){
             $text = 'Activate';
         }else{
             $text = 'Deactivate';
