@@ -154,7 +154,7 @@ export default {
                     if (!val.guarantor) {
                         return false;
                     }
-                    return val.guarantor.toLowerCase() == filter.guarantor.toLowerCase()
+                    return val.guarantor.toLowerCase().includes(filter.guarantor.toLowerCase())
                 }
 
                 return true;
