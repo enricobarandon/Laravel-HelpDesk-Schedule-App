@@ -30,7 +30,7 @@ return new class extends Migration
             $table->string('site');
             $table->string('guarantor');
             $table->char('status')->nullable();
-            $table->boolean('viewing_status')->default(1);
+            $table->boolean('viewing_status')->nullable();
             $table->date('operation_date')->nullable();
             $table->date('pullout_date')->nullable();
             $table->timestamps();

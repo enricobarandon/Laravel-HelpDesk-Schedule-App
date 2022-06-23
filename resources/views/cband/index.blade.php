@@ -92,7 +92,20 @@ if (! function_exists('removeParam')) {
                                     }else{
                                         $tdClass = 'td-blue';
                                     }
-                                    $viewingStatus = $request->viewing_status ? 'Active' : 'Deactivated';
+                                    $viewingStatus = '';
+                                    $statusClass = '';
+                                    if($request->viewing_status != ''){
+                                        if($request->viewing_status == 0){
+                                            $viewingStatus = 'Deactivated';
+                                            $statusClass = 'td-red';
+                                        }else{
+                                            $viewingStatus = 'Active';
+                                            $statusClass = 'td-blue';
+                                        }
+                                    }else{
+                                        $statusClass = '';
+                                        $viewingStatus = '--';
+                                    }
 
                                 @endphp
                                 <tr>
@@ -125,7 +138,7 @@ if (! function_exists('removeParam')) {
                                         <!-- {{ $is_active }} -->
                                     </td>
                                     <td>{{ $request->remarks }}</td>
-                                    <td class="{{ $viewingStatus == 'Active' ? 'td-blue' : 'td-red' }}">{{ $viewingStatus }}</td>
+                                    <td class="{{ $statusClass }}">{{ $viewingStatus }}</td>
                                     <td class="text-center">
                                         @if (in_array($user->user_type_id, $allowedRolesForActions))
                                             @if($request->status == 'approved')
