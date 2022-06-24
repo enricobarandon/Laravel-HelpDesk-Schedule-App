@@ -140,7 +140,13 @@ class UserController extends Controller
         $userId = $user->id;
         $update = User::where('id', $userId)->update(['is_active' => DB::raw('!is_active')]);
         
+        
         if ($update) {
+
+            if (!$user->is_active == 0) {
+                \Session::getHandler()->destroy($user->session_id);
+            }
+
             ActivityLog::create([
                 'type' => 'change-user-status',
                 'user_id' => $auth->id,
