@@ -38,7 +38,7 @@ if (! function_exists('removeParam')) {
                         </div>
                     @endif
 
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <form class="form-horizontal" method="get">
                             <div class="form-group row">
                                 <div class="col-md-3">
@@ -74,7 +74,7 @@ if (! function_exists('removeParam')) {
                                     <a href="{{ url('schedules/manage') }}/{{ $scheduleId }}" class="btn btn-danger">Reset</a>
                                 </div>
                         </form>
-                    </div>
+                    </div> -->
 
 
                     <form class="form-horizontal" id="frmAddGroup" method="POST" action='{{ url("/schedules/manage/$scheduleId") }}'>
