@@ -328,3 +328,8 @@ input.form-control.edit-password {
     padding: 3px 5PX; 
     border-radius: 4px;
 }
+.btn-top-right {
+    position: absolute;
+    top: 5px;
+    right: 20px;
+}
