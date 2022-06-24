@@ -25,6 +25,27 @@ class ScheduleGroupController extends Controller
     {
         $scheduleId = request()->segment(3);
 
+        $groupCode = $request->input('filter-code');
+        $province = $request->input('select-province');
+        $type = $request->input('select-type');
+
+        if ($groupCode) {
+            $groupCode = " and groups.code = '$groupCode'";
+        }
+        if ($province) {
+            $province = " and groups.province_id = $province";
+        }
+        if (!empty($type)) {
+            $count = count($type);
+            if ($count > 1) {
+                array_shift($type);
+                $type = "'" . implode("','",$type) . "'";
+                $type = " and groups.group_type in ($type)";
+            } else if($count == 1 && $type[0] == '') {
+                $type = '';
+            }
+        }
+
         $scheduleInfo = Schedule::find($scheduleId);
 
         $scheduledGroups = ScheduledGroup::select('group_id','operation_time')
@@ -67,6 +88,7 @@ class ScheduleGroupController extends Controller
                         `address` 
                     from `groups` 
                     where `is_active` = 1 and `id` not in ($arrToStr) 
+                    $groupCode $province $type
                     order by `name` asc
                     "
                 )
@@ -114,6 +136,7 @@ class ScheduleGroupController extends Controller
                         `address` 
                     from `groups` 
                     where `is_active` = 1 and `id` not in (0) 
+                    $groupCode $province $type
                     order by `name` asc
                     "
                 )

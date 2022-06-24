@@ -38,6 +38,44 @@ if (! function_exists('removeParam')) {
                         </div>
                     @endif
 
+                    <div class="form-group">
+                        <form class="form-horizontal" method="get">
+                            <div class="form-group row">
+                                <div class="col-md-3">
+                                    <input type="text" class="filter-group form-control" name="filter-code" id="filter-code" placeholder="Group Code">
+                                </div>
+
+                                <div class="col-md-2">
+                                    <select class="form-control" name="select-province" id="select-province">
+                                        <option selected disabled value="">Select Province</option>
+                                        @foreach($provinces as $province)
+                                        <option value="{{ $province->id }}">{{ $province->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="col-md-3">
+                                        <select id="select-type" name="select-type[]" multiple="multiple" class="form-control">
+                                            <option selected value="">SELECT ALL TYPE</option>
+                                            <option value="ARENA">ARENA</option>
+                                            <option value="OCBS-LOTTO">OCBS-LOTTO</option>
+                                            <option value="OCBS-OTB">OCBS-OTB</option>
+                                            <option value="OCBS-RESTOBAR">OCBS-RESTOBAR</option>
+                                            <option value="OCBS-STORE">OCBS-STORE</option>
+                                            <option value="OCBS-MALL">OCBS-MALL</option>
+                                            <option value="OCBS">OCBS</option>
+                                            <option value="OCBS-EGAMES8">OCBS-EGAMES</option>
+                                            <option value="OCBS-CASINO">OCBS-CASINO</option>
+                                        </select>
+                                    </div>
+
+                                <div class="col">
+                                    <button type="submit" class="btn btn-success"><i class="fas fa-search"></i> Submit</button>
+                                    <a href="{{ url('schedules/manage') }}/{{ $scheduleId }}" class="btn btn-danger">Reset</a>
+                                </div>
+                        </form>
+                    </div>
+
 
                     <form class="form-horizontal" id="frmAddGroup" method="POST" action='{{ url("/schedules/manage/$scheduleId") }}'>
                         @csrf
@@ -222,7 +260,7 @@ if (! function_exists('removeParam')) {
 <script src="{{ asset('js/script.js') }}"></script>
 <script>
 $(document).ready(function() {
-    $('#selectType').multiselect();
+    $('#selectType, #select-type').multiselect();
     $('.btn-add-group').on('click',function()
     {
         $(this).text('Please wait ...')
