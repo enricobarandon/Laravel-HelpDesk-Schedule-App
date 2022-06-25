@@ -1,5 +1,6 @@
 <template>
     <div v-bind="$attrs">
+        <a href="/groups/view/active?download-active=1" class="btn btn-success btn-top-right">Download Excel</a>
         <div class="form-horizontal">
             <div class="form-group row">
 

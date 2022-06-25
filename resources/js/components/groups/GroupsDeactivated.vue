@@ -1,5 +1,6 @@
 <template>
 
+        <a href="/groups/view/deactivated?download-deactivated=1" class="btn btn-success btn-top-right">Download Excel</a>
     <!-- <form class="form-horizontal" id="frmDeactivatedGroupFilters"> -->
         <div class="form-group row">
 
