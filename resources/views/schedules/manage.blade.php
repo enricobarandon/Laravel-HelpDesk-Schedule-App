@@ -64,7 +64,7 @@ if (! function_exists('removeParam')) {
                                             <option value="OCBS-STORE">OCBS-STORE</option>
                                             <option value="OCBS-MALL">OCBS-MALL</option>
                                             <option value="OCBS">OCBS</option>
-                                            <option value="OCBS-EGAMES8">OCBS-EGAMES</option>
+                                            <option value="OCBS-EGAMES">OCBS-EGAMES</option>
                                             <option value="OCBS-CASINO">OCBS-CASINO</option>
                                         </select>
                                     </div>
@@ -83,11 +83,36 @@ if (! function_exists('removeParam')) {
                             <div class="form-group row">
                                 <label for="searchGroup" class="col-sm-2 col-form-label">Group Name</label>
                                 <div class="col-sm-8">
-                                    <select class="selectpicker form-control" data-live-search="true" name="group_id">
+                                    <!-- <select class="selectpicker form-control" data-live-search="true" name="group_id">
                                         <option value="0" selected disabled>Select Group</option>
                                         @if(count($groupsForSelect) >= 1)
                                         <option value="all">Select All Active Groups</option>
                                         @endif
+
+                                        @foreach($groupsForSelect as $group)
+                                            <option value="{{ $group->id }}">
+                                                {{ $group->name }}
+                                                @if($group->address)
+                                                    ({{ $group->address }})
+                                                @endif
+                                            </option>
+                                        @endforeach
+                                    </select> -->
+                                    <select class="selectpicker form-control" data-live-search="true" multiple="multiple" name="group_id[]" id="select-type">
+                                        <option value="0" selected disabled>Select Group</option>
+                                        @if(count($groupsForSelect) >= 1)
+                                        <option value="ALL">Select All Active Groups</option>
+                                        @endif
+                                        <option value="ARENA">Select All ARENA</option>
+                                        <option value="OCBS-LOTTO">Select All OCBS-LOTTO</option>
+                                        <option value="OCBS-OTB">Select All OCBS-OTB</option>
+                                        <option value="OCBS-RESTOBAR">Select All OCBS-RESTOBAR</option>
+                                        <option value="OCBS-STORE">Select All OCBS-STORE</option>
+                                        <option value="OCBS-MALL">Select All OCBS-MALL</option>
+                                        <option value="OCBS">Select All OCBS</option>
+                                        <option value="OCBS-EGAMES">Select All OCBS-EGAMES</option>
+                                        <option value="OCBS-CASINO">Select All OCBS-CASINO</option>
+
 
                                         @foreach($groupsForSelect as $group)
                                             <option value="{{ $group->id }}">
@@ -260,7 +285,11 @@ if (! function_exists('removeParam')) {
 <script src="{{ asset('js/script.js') }}"></script>
 <script>
 $(document).ready(function() {
-    $('#selectType, #select-type').multiselect();
+    $('#selectType').multiselect();
+    $('#select-type').multiselect({
+         enableFiltering: true,
+         maxHeight: 300      
+    });
     $('.btn-add-group').on('click',function()
     {
         $(this).text('Please wait ...')

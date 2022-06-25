@@ -179,91 +179,91 @@ class ScheduleGroupController extends Controller
         
     }
 
-    public function addGroup()
-    {
-        $scheduleId = request()->id;
+    // public function addGroup()
+    // {
+    //     $scheduleId = request()->id;
         
-        $groupId = request()->group_id;
+    //     $groupId = request()->group_id;
 
-        $user = Auth::user();
+    //     $user = Auth::user();
 
-        if ($groupId == 'all') {
+    //     if ($groupId == 'all') {
 
-            $allGroups = Group::select('groups.id','scheduled_groups.id as scheduled_groups_id','groups.remarks')
-                            ->leftjoin('scheduled_groups', function($join) use ($scheduleId){
-                                $join->on('scheduled_groups.group_id', 'groups.id')
-                                    ->where('scheduled_groups.schedule_id','=', $scheduleId);
-                            })
-                            ->where('is_active', 1)
-                            ->orderBy('name','asc')
-                            ->get();
+    //         $allGroups = Group::select('groups.id','scheduled_groups.id as scheduled_groups_id','groups.remarks')
+    //                         ->leftjoin('scheduled_groups', function($join) use ($scheduleId){
+    //                             $join->on('scheduled_groups.group_id', 'groups.id')
+    //                                 ->where('scheduled_groups.schedule_id','=', $scheduleId);
+    //                         })
+    //                         ->where('is_active', 1)
+    //                         ->orderBy('name','asc')
+    //                         ->get();
                             
-            $groupArray = [];
+    //         $groupArray = [];
 
-            foreach($allGroups as $index => $group) {
-                if (!$group->scheduled_groups_id) {
-                    $groupArray[$index] = [
-                        'schedule_id' => $scheduleId,
-                        'group_id' => $group->id,
-                        'created_at' => Carbon::now(),
-                        'updated_at' => Carbon::now(),
-                        'user_id' => $user->id,
-                        'remarks' => $group->remarks
-                    ];
-                }
-            }
+    //         foreach($allGroups as $index => $group) {
+    //             if (!$group->scheduled_groups_id) {
+    //                 $groupArray[$index] = [
+    //                     'schedule_id' => $scheduleId,
+    //                     'group_id' => $group->id,
+    //                     'created_at' => Carbon::now(),
+    //                     'updated_at' => Carbon::now(),
+    //                     'user_id' => $user->id,
+    //                     'remarks' => $group->remarks
+    //                 ];
+    //             }
+    //         }
             
-            $insertScheduledGroups = ScheduledGroup::insert($groupArray);
+    //         $insertScheduledGroups = ScheduledGroup::insert($groupArray);
 
-            if ($insertScheduledGroups) {
-                ActivityLog::create([
-                    'type' => 'add-group',
-                    'user_id' => $user->id,
-                    'assets' => json_encode([
-                        'action' => 'added group to schedule',
-                        'group_id' => $groupId,
-                        'schedule_id' => $scheduleId,
-                        'group_code' => 'All Active Groups'
-                    ])
-                ]);
-                return redirect('/schedules/manage/' . $scheduleId)->with('success', 'All active groups added!');
-            } else {
-                return redirect('/schedules/manage/' . $scheduleId)->with('error', 'Something went wrong!');
-            }
+    //         if ($insertScheduledGroups) {
+    //             ActivityLog::create([
+    //                 'type' => 'add-group',
+    //                 'user_id' => $user->id,
+    //                 'assets' => json_encode([
+    //                     'action' => 'added group to schedule',
+    //                     'group_id' => $groupId,
+    //                     'schedule_id' => $scheduleId,
+    //                     'group_code' => 'All Active Groups'
+    //                 ])
+    //             ]);
+    //             return redirect('/schedules/manage/' . $scheduleId)->with('success', 'All active groups added!');
+    //         } else {
+    //             return redirect('/schedules/manage/' . $scheduleId)->with('error', 'Something went wrong!');
+    //         }
             
-        } else if ($groupId > 0)  {
+    //     } else if ($groupId > 0)  {
 
-            $groupInfo = Group::select('code','remarks')->where('groups.id',$groupId)->first();
+    //         $groupInfo = Group::select('code','remarks')->where('groups.id',$groupId)->first();
 
-            ActivityLog::create([
-                'type' => 'add-group',
-                'user_id' => $user->id,
-                'assets' => json_encode([
-                    'action' => 'added group to schedule',
-                    'group_id' => $groupId,
-                    'schedule_id' => $scheduleId,
-                    'group_code' => $groupInfo->code
-                ])
-            ]);
+    //         ActivityLog::create([
+    //             'type' => 'add-group',
+    //             'user_id' => $user->id,
+    //             'assets' => json_encode([
+    //                 'action' => 'added group to schedule',
+    //                 'group_id' => $groupId,
+    //                 'schedule_id' => $scheduleId,
+    //                 'group_code' => $groupInfo->code
+    //             ])
+    //         ]);
             
-            $scheduledGroup = ScheduledGroup::create([
-                'schedule_id' => $scheduleId,
-                'group_id' => $groupId,
-                'user_id' => $user->id,
-                'remarks' => $groupInfo->remarks
-            ]);
+    //         $scheduledGroup = ScheduledGroup::create([
+    //             'schedule_id' => $scheduleId,
+    //             'group_id' => $groupId,
+    //             'user_id' => $user->id,
+    //             'remarks' => $groupInfo->remarks
+    //         ]);
 
-            if ($scheduledGroup) {
-                return redirect('/schedules/manage/' . $scheduleId)->with('success', 'Group added!');
-            } else {
-                return redirect('/schedules/manage/' . $scheduleId)->with('error', 'Something went wrong!');
-            }
+    //         if ($scheduledGroup) {
+    //             return redirect('/schedules/manage/' . $scheduleId)->with('success', 'Group added!');
+    //         } else {
+    //             return redirect('/schedules/manage/' . $scheduleId)->with('error', 'Something went wrong!');
+    //         }
 
-        } else {
-            return redirect('/schedules/manage/' . $scheduleId)->with('error', 'Something went wrong!');
-        }
+    //     } else {
+    //         return redirect('/schedules/manage/' . $scheduleId)->with('error', 'Something went wrong!');
+    //     }
         
-    }
+    // }
 
     public function removeGroup()
     {
@@ -650,6 +650,154 @@ class ScheduleGroupController extends Controller
             $tableRow .= '</tr>';
         }
         return $tableRow;
+    }
+
+    public function addGroups()
+    {
+        $scheduleId = request()->id;
+        
+        $groupId = request()->group_id;
+
+        $user = Auth::user();
+
+        // dd(in_array('ALL', $groupId));
+
+        // dd($scheduleId, $groupId);
+
+        if (in_array('ALL', $groupId)) {
+
+            $allGroups = Group::select('groups.id','scheduled_groups.id as scheduled_groups_id','groups.remarks')
+                            ->leftjoin('scheduled_groups', function($join) use ($scheduleId){
+                                $join->on('scheduled_groups.group_id', 'groups.id')
+                                    ->where('scheduled_groups.schedule_id','=', $scheduleId);
+                            })
+                            ->where('is_active', 1)
+                            ->orderBy('name','asc')
+                            ->get();
+                            
+            $groupArray = [];
+
+            foreach($allGroups as $index => $group) {
+                if (!$group->scheduled_groups_id) {
+                    $groupArray[$index] = [
+                        'schedule_id' => $scheduleId,
+                        'group_id' => $group->id,
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                        'user_id' => $user->id,
+                        'remarks' => $group->remarks
+                    ];
+                }
+            }
+            
+            $insertScheduledGroups = ScheduledGroup::insert($groupArray);
+            
+            if ($insertScheduledGroups) {
+                ActivityLog::create([
+                    'type' => 'add-group',
+                    'user_id' => $user->id,
+                    'assets' => json_encode([
+                        'action' => 'added group to schedule',
+                        'group_id' => $groupId,
+                        'schedule_id' => $scheduleId,
+                        'group_code' => 'All Active Groups'
+                    ])
+                ]);
+                return redirect('/schedules/manage/' . $scheduleId)->with('success', 'All active groups added!');
+            } else {
+                return redirect('/schedules/manage/' . $scheduleId)->with('error', 'Something went wrong!');
+            }
+
+        }
+
+        $types = [
+            'ARENA',
+            'OCBS-LOTTO',
+            'OCBS-OTB',
+            'OCBS-RESTOBAR',
+            'OCBS-STORE',
+            'OCBS-MALL',
+            'OCBS',
+            'OCBS-EGAMES',
+            'OCBS-CASINO'
+        ];
+
+        $insert = false;
+
+        foreach($groupId as $group){
+
+            if (in_array($group, $types)) {
+
+                // if group type is selected
+
+                $groups = Group::select('groups.id','code','groups.remarks','scheduled_groups.id as scheduled_groups_id')
+                            ->leftjoin('scheduled_groups', function($join) use ($scheduleId){
+                                $join->on('scheduled_groups.group_id', 'groups.id')
+                                    ->where('scheduled_groups.schedule_id','=', $scheduleId);
+                            })
+                            ->where('group_type', $group)
+                            ->where('is_active',1)
+                            ->get();
+                            
+                $groupArray = [];
+
+                foreach($groups as $i => $v) {
+                    if (!$v->scheduled_groups_id) {
+                        $groupArray[$i] = [
+                            'schedule_id' => $scheduleId,
+                            'group_id' => $v->id,
+                            'created_at' => Carbon::now(),
+                            'updated_at' => Carbon::now(),
+                            'user_id' => $user->id,
+                            'remarks' => $v->remarks
+                        ];
+                    }
+                }
+                
+                $insert = ScheduledGroup::insert($groupArray);
+
+                if ($insert) {
+                    ActivityLog::create([
+                        'type' => 'add-group',
+                        'user_id' => $user->id,
+                        'assets' => json_encode([
+                            'action' => 'added groups to schedule',
+                            'group_id' => $groupId,
+                            'schedule_id' => $scheduleId,
+                            'group_code' => "All Active '$group' Groups"
+                        ])
+                    ]);
+                }
+
+            } else {
+
+                $groupInfo = Group::select('code','remarks')->where('groups.id',$group)->first();
+
+                ActivityLog::create([
+                    'type' => 'add-group',
+                    'user_id' => $user->id,
+                    'assets' => json_encode([
+                        'action' => 'added group to schedule',
+                        'group_id' => $group,
+                        'schedule_id' => $scheduleId,
+                        'group_code' => $groupInfo->code
+                    ])
+                ]);
+                
+                $insert = ScheduledGroup::create([
+                    'schedule_id' => $scheduleId,
+                    'group_id' => $group,
+                    'user_id' => $user->id,
+                    'remarks' => $groupInfo->remarks
+                ]);
+            }
+        }
+
+        if ($insert) {
+            return redirect('/schedules/manage/' . $scheduleId)->with('success', 'Groups added!');
+        } else {
+            return redirect('/schedules/manage/' . $scheduleId)->with('error', 'Something went wrong!');
+        }
     }
 
 }
