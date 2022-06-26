@@ -34,7 +34,6 @@
 
             <div class="col-md-3">
                 <Multiselect
-                placeholder="Select Group Type"
                 v-model="filter.type"
                 v-bind="selectGroupTypes"
                 :create-option="true"
@@ -199,7 +198,8 @@ export default {
             selectGroupTypes: {
                 mode: 'tags',
                 closeOnSelect: false,
-                options: groupTypes
+                options: groupTypes,
+                placeholder: 'Select Group Type'
             }
         }
     },
