@@ -115,7 +115,7 @@ class LoginController extends Controller
                 Auth::logout();
                 $request->session()->flush();
                 $request->session()->regenerate();
-                return Redirect::to('/')
+                return back()
                     ->withErrors([
                         'password' => 'User account is Deactivated. Please contact a administrator to activate your account.',
                 ]);
