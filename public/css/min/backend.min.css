@@ -22589,6 +22589,11 @@ input.form-control.edit-password {
     padding: 3px 5PX; 
     border-radius: 4px;
 }
+.btn-top-right {
+    position: absolute;
+    top: 5px;
+    right: 20px;
+}
 
 /*! jQuery UI - v1.13.1 - 2022-01-20
 * http://jqueryui.com

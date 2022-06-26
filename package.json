@@ -23,6 +23,7 @@
         "sass-loader": "^11.0.1"
     },
     "dependencies": {
+        "@vueform/multiselect": "^2.4.2",
         "@vuepic/vue-datepicker": "^3.2.1",
         "jquery-ui": "^1.13.1",
         "moment": "^2.29.3",

@@ -17,11 +17,20 @@
                     </select>
                 </div>
 
-                <div class="col-md-2">
+                <!-- <div class="col-md-2">
                     <select class="form-control" name="filterType" placeholder="Group Type" @keyup.enter="postFilterGroup()" v-model='filter.type'>
                         <option selected value="">Select Group Type</option>
                         <option :value="value" v-for="(value, name) in groupTypes" :key="name">{{ value }}</option>
                     </select>
+                </div> -->
+
+                <div class="col-md-2">
+                    <Multiselect
+                    v-model="filter.type"
+                    v-bind="selectGroupTypes"
+                    :create-option="true"
+                    @keyup.enter="postFilterGroup()"
+                    />
                 </div>
 
                 <div class="col-md-3">
@@ -80,8 +89,12 @@
 import { onMounted, reactive } from 'vue'
 import useGroups from '../../composables/groups'
 import moment from 'moment'
+import Multiselect from '@vueform/multiselect'
 
 export default {
+    components: {
+      Multiselect,
+    },
     setup() {
         
         const { groups, getPulledOutGroups, filteredPulledOutGroups, groupTypes } = useGroups()
@@ -91,7 +104,7 @@ export default {
         const filter = reactive({
             'code' : '',
             'site' : '',
-            'type' : '',
+            'type' : [],
             'guarantor' : ''
         })
 
@@ -103,8 +116,8 @@ export default {
                 if (filter.site) {
                     return val.site == filter.site
                 }
-                if (filter.type) {
-                    return val.group_type == filter.type
+                if (filter.type.length > 0) {
+                    return filter.type.includes(val.group_type)
                 }
                 if (filter.guarantor) {
                     if (!val.guarantor) {
@@ -122,7 +135,7 @@ export default {
             filteredPulledOutGroups.value = groups.value
             filter.code = ''
             filter.site = ''
-            filter.type = ''
+            filter.type = []
             filter.guarantor = ''
         }
 
@@ -131,7 +144,12 @@ export default {
             groupTypes,
             filter,
             postFilterGroup,
-            resetFilter
+            resetFilter,
+            selectGroupTypes: {
+                mode: 'tags',
+                closeOnSelect: false,
+                options: groupTypes
+            }
         }
 
     },

@@ -16,11 +16,20 @@
                     </select>
                 </div>
 
-                <div class="col-md-2">
+                <!-- <div class="col-md-2">
                     <select class="form-control" name="filterType" placeholder="Group Type" @keyup.enter="postFilterGroup()" v-model='filter.type'>
                         <option selected value="">Select Group Type</option>
                         <option :value="value" v-for="(value, name) in groupTypes" :key="name">{{ value }}</option>
                     </select>
+                </div> -->
+
+                <div class="col-md-2">
+                    <Multiselect
+                    v-model="filter.type"
+                    v-bind="selectGroupTypes"
+                    :create-option="true"
+                    @keyup.enter="postFilterGroup()"
+                    />
                 </div>
 
                 <div class="col-md-3">
@@ -90,11 +99,15 @@ import useGroups from '../../composables/groups'
 import useRequests from '../../composables/requests'
 import moment from 'moment'
 // import { useRouter } from 'vue-router'
+import Multiselect from '@vueform/multiselect'
 
 export default {
     // inheritAttrs: false,
     props: {
         user: Object
+    },
+    components: {
+      Multiselect,
     },
     setup(props) {
         // const router = useRouter()
@@ -113,7 +126,7 @@ export default {
             // 'name' : '',
             'code' : '',
             'site' : '',
-            'type' : '',
+            'type' : [],
             'guarantor' : ''
         })
 
@@ -140,8 +153,8 @@ export default {
                 if (filter.site) {
                     return val.site == filter.site
                 }
-                if (filter.type) {
-                    return val.group_type == filter.type
+                if (filter.type.length > 0) {
+                    return filter.type.includes(val.group_type)
                 }
                 if (filter.guarantor) {
                     if (!val.guarantor) {
@@ -159,7 +172,7 @@ export default {
             filteredGroups.value = groups.value
             filter.code = ''
             filter.site = ''
-            filter.type = ''
+            filter.type = []
             filter.guarantor = ''
         }
 
@@ -178,6 +191,11 @@ export default {
             user_type,
             // redirectToEditForm
             groupTypes,
+            selectGroupTypes: {
+                mode: 'tags',
+                closeOnSelect: false,
+                options: groupTypes
+            }
         }
     },
     methods: { 
@@ -189,3 +207,5 @@ export default {
    }
 }
 </script>
+
+<style src="@vueform/multiselect/themes/default.css"></style>
