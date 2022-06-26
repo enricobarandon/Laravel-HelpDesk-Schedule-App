@@ -38,24 +38,6 @@ class LoginController extends Controller
         $user = Auth::user();
         
         $role = $user->user_type_id;
-
-        ActivityLog::create([
-            'type' => 'login',
-            'user_id' => $user->id,
-            'assets' => json_encode([
-                'email' => $user->email,
-                'user_role' => UserType::getUserRole($user->user_type_id)->role
-            ])
-        ]);
-        
-        // if (Auth::user()->is_active == 0) {
-        //     Auth::logout();
-        //     request()->session()->flush();
-        //     request()->session()->regenerate();
-        //     return route('login.page')->withErrors([
-        //             'password' => 'User account is Deactivated. Please contact a administrator to activate your account.',
-        //     ]);
-        // }
         
         switch ($role) {
             case '1':
@@ -95,6 +77,7 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
+
         $this->validateLogin($request);
 
         if ($this->attemptLogin($request)) {
@@ -102,12 +85,15 @@ class LoginController extends Controller
                 $request->session()->put('auth.password_confirmed_at', time());
             }
 
+            $user = Auth::user();
+
             ActivityLog::create([
                 'type' => 'login',
                 'user_id' => Auth::id(),
                 'assets' => json_encode([
-                    'action' => Auth::user()->username . ' login',
-                    'user_type' => Auth::user()->user_type_id
+                    'action' => 'User login',
+                    'email' => $user->email,
+                    'user_role' => UserType::getUserRole($user->user_type_id)->role
                 ])
             ]);
 
@@ -115,7 +101,7 @@ class LoginController extends Controller
                 Auth::logout();
                 $request->session()->flush();
                 $request->session()->regenerate();
-                return Redirect::to('/')
+                return Redirect::to('/login')
                     ->withErrors([
                         'password' => 'User account is Deactivated. Please contact a administrator to activate your account.',
                 ]);

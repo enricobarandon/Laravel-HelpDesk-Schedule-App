@@ -23,8 +23,9 @@
                     </select>
                 </div> -->
 
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <Multiselect
+                    placeholder="Select Group Type"
                     v-model="filter.type"
                     v-bind="selectGroupTypes"
                     :create-option="true"

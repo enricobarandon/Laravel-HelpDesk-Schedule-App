@@ -4,7 +4,7 @@
     <!-- <form class="form-horizontal" id="frmDeactivatedGroupFilters"> -->
         <div class="form-group row">
 
-            <div class="col-md-2">
+            <div class="col">
                 <input type="text" class="form-control" name="filterCode" id="filterCode" placeholder="Group Code" @keyup.enter="postFilterGroup()" v-model='filter.code'>
             </div>
 
@@ -17,7 +17,7 @@
                 </select>
             </div>
 
-            <div class="col-md-2">
+            <div class="col">
                 <select class="form-control" name="filterSite" placeholder="Site" v-model='filter.site'>
                     <option selected value="">Select Site</option>
                     <option value="wpc2040">WPC2040</option>
@@ -32,8 +32,9 @@
                 </select>
             </div> -->
 
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <Multiselect
+                placeholder="Select Group Type"
                 v-model="filter.type"
                 v-bind="selectGroupTypes"
                 :create-option="true"
@@ -45,7 +46,7 @@
                 <input type="text" class="form-control" name="filterGuarantor" id="filterGuarantor" placeholder="Guarantor" @keyup.enter="postFilterGroup()" v-model='filter.guarantor'>
             </div>
 
-            <div class="col">
+            <div class="col-md-2">
                 <button type="button" class="btn btn-success" @click="postFilterGroup()"><i class="fas fa-search"></i> Submit</button>
                 <a href="#" class="btn btn-danger" @click="resetFilter()">Reset</a>
             </div>
