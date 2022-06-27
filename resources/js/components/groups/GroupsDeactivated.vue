@@ -151,30 +151,37 @@ export default {
 
         const postFilterGroup = async () => {
             // filteredDeactivatedGroups.value = groups.value.filter(val => val.code.toLowerCase() == filter.code.toLowerCase() || val.status == filter.status || val.site == filter.site)
+            // if (filter.status) {
+            //     return val.status == filter.status
+            // }
             filteredDeactivatedGroups.value = groups.value.filter((val) => {
                 if (filter.code) {
                     return val.code.toLowerCase() == filter.code.toLowerCase()
-                }
-                if (filter.status) {
-                    return val.status == filter.status
-                }
+                } 
+                return true
+            }).filter((val) => {
                 if (filter.site) {
                     return val.site == filter.site
                 }
+                return true
+            }).filter((val) => {
                 if (filter.type.length > 0) {
-                    if (filter.site) {
-                        return filter.type.includes(val.group_type) && val.site == filter.site
-                    }
                     return filter.type.includes(val.group_type)
                 }
+                return true
+            }).filter((val) => {
                 if (filter.guarantor) {
                     if (!val.guarantor) {
                         return false;
                     }
                     return val.guarantor.toLowerCase().includes(filter.guarantor.toLowerCase())
                 }
-
-                return true;
+                return true
+            }).filter((val) => {
+                if (filter.status) {
+                    return val.status == filter.status
+                }
+                return true
             })
         }
 

@@ -145,29 +145,29 @@ export default {
         }
 
         const postFilterGroup = async () => {
-            // filteredGroups.value = groups.value.filter(val => val.code.toLowerCase() == filter.code.toLowerCase())
             filteredGroups.value = groups.value.filter((val) => {
                 if (filter.code) {
                     return val.code.toLowerCase() == filter.code.toLowerCase()
-                }
-                if (filter.type.length > 0) {
-                    if (filter.site) {
-                        return filter.type.includes(val.group_type) && val.site == filter.site
-                    }
-                    return filter.type.includes(val.group_type)
-                }
+                } 
+                return true
+            }).filter((val) => {
                 if (filter.site) {
                     return val.site == filter.site
-                    // return val.site.includes(filter.site);
                 }
+                return true
+            }).filter((val) => {
+                if (filter.type.length > 0) {
+                    return filter.type.includes(val.group_type)
+                }
+                return true
+            }).filter((val) => {
                 if (filter.guarantor) {
                     if (!val.guarantor) {
                         return false;
                     }
                     return val.guarantor.toLowerCase().includes(filter.guarantor.toLowerCase())
                 }
-
-                return true;
+                return true
             })
         }
 
