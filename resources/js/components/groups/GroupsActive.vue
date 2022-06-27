@@ -150,11 +150,15 @@ export default {
                 if (filter.code) {
                     return val.code.toLowerCase() == filter.code.toLowerCase()
                 }
+                if (filter.type.length > 0) {
+                    if (filter.site) {
+                        return filter.type.includes(val.group_type) && val.site == filter.site
+                    }
+                    return filter.type.includes(val.group_type)
+                }
                 if (filter.site) {
                     return val.site == filter.site
-                }
-                if (filter.type.length > 0) {
-                    return filter.type.includes(val.group_type)
+                    // return val.site.includes(filter.site);
                 }
                 if (filter.guarantor) {
                     if (!val.guarantor) {
