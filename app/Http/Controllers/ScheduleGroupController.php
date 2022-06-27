@@ -48,6 +48,10 @@ class ScheduleGroupController extends Controller
 
         $scheduleInfo = Schedule::find($scheduleId);
 
+        if($scheduleInfo->status == 'finished'){
+            return redirect('/schedules-past')->with('error', 'Schedule is already Finished!');
+        }
+
         $scheduledGroups = ScheduledGroup::select('group_id','operation_time')
                                 ->where('schedule_id', $scheduleId)
                                 ->get();
@@ -83,12 +87,14 @@ class ScheduleGroupController extends Controller
                 DB::raw(
                     "
                     select 
-                        `id`, 
-                        `name`, 
-                        `address` 
-                    from `groups` 
-                    where `is_active` = 1 and `id` not in ($arrToStr) 
-                    order by `name` asc
+                        `groups`.`id`, 
+                        `groups`.`name`, 
+                        `groups`.`address`,
+                        `provinces`.`name` as `province`
+                    from `groups`
+                    left join `provinces` on `groups`.`province_id` = `provinces`.`id`
+                    where `is_active` = 1 and `groups`.`id` not in ($arrToStr)  
+                    order by `groups`.`name` asc
                     "
                 )
             );
@@ -130,12 +136,14 @@ class ScheduleGroupController extends Controller
                 DB::raw(
                     "
                     select 
-                        `id`, 
-                        `name`, 
-                        `address` 
-                    from `groups` 
-                    where `is_active` = 1 and `id` not in (0) 
-                    order by `name` asc
+                        `groups`.`id`, 
+                        `groups`.`name`, 
+                        `groups`.`address`, 
+                        `provinces`.`name` as `province`
+                    from `groups`
+                    left join `provinces` on `groups`.`province_id` = `provinces`.`id`
+                    where `is_active` = 1 and `groups`.`id` not in (0)  
+                    order by `groups`.`name` asc
                     "
                 )
             );
@@ -663,6 +671,10 @@ class ScheduleGroupController extends Controller
         // dd(in_array('ALL', $groupId));
 
         // dd($scheduleId, $groupId);
+
+        if(empty($groupId)){
+            return redirect('/schedules/manage/' . $scheduleId)->with('error', 'No selected group!');
+        }
 
         if (in_array('ALL', $groupId)) {
 

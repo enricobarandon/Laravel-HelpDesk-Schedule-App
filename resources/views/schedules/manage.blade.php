@@ -117,9 +117,9 @@ if (! function_exists('removeParam')) {
                                         @foreach($groupsForSelect as $group)
                                             <option value="{{ $group->id }}">
                                                 {{ $group->name }}
-                                                @if($group->address)
-                                                    ({{ $group->address }})
-                                                @endif
+                                                    @if($group->province)
+                                                        ({{ $group->province }})
+                                                    @endif
                                             </option>
                                         @endforeach
                                     </select>
@@ -288,7 +288,8 @@ $(document).ready(function() {
     $('#selectType').multiselect();
     $('#select-type').multiselect({
          enableFiltering: true,
-         maxHeight: 300      
+         maxHeight: 300,
+         enableCaseInsensitiveFiltering: true      
     });
     $('.btn-add-group').on('click',function()
     {

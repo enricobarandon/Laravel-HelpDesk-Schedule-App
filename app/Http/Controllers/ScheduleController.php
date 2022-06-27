@@ -98,7 +98,7 @@ class ScheduleController extends Controller
     }
 
     public function pastSchedules(Request $request){
-        $pastSchedules = Schedule::select('id','name','status','date_time','created_at')
+        $pastSchedules = Schedule::select('id','name','status','date_time','created_at','updated_at')
                                 ->where('status', 'finished')
                                 ->orderBy('date_time','desc')
                                 ->get();
