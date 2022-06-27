@@ -162,6 +162,9 @@ export default {
                     return val.site == filter.site
                 }
                 if (filter.type.length > 0) {
+                    if (filter.site) {
+                        return filter.type.includes(val.group_type) && val.site == filter.site
+                    }
                     return filter.type.includes(val.group_type)
                 }
                 if (filter.guarantor) {
