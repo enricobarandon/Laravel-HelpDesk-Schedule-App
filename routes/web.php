@@ -34,9 +34,6 @@ Route::middleware(['auth'])->group(function(){
     
     Route::middleware('role:Administrator,Tech,Help Desk,Finance')->group(function(){
 
-        Route::resource('/schedules', \App\Http\Controllers\ScheduleController::class);
-
-        Route::get('/schedules-past', [App\Http\Controllers\ScheduleController::class, 'pastSchedules'])->name('schedules.pastSchedules');
         Route::get('/schedules/manage/{id}', [App\Http\Controllers\ScheduleGroupController::class, 'index'])->name('schedules.groups.manage');
         // Route::post('/schedules/manage/{id?}', [App\Http\Controllers\ScheduleGroupController::class, 'addGroup'])->name('schedules.groups.addGroup');
         Route::post('/schedules/manage/{id?}', [App\Http\Controllers\ScheduleGroupController::class, 'addGroups'])->name('schedules.groups.addGroups');
@@ -46,7 +43,6 @@ Route::middleware(['auth'])->group(function(){
         Route::delete('/scheduledaccount/{scheduledGroupId}/account/{accountId}', [App\Http\Controllers\ScheduleGroupController::class, 'deleteScheduledAccount'])->name('schedules.accounts.delete');
         Route::post('/scheduledaccount/{scheduledGroupId}/account/{accountId}', [App\Http\Controllers\ScheduleGroupController::class, 'storeScheduledAccount'])->name('schedules.accounts.store');
 
-        Route::get('/schedules/view/{id}', [App\Http\Controllers\ScheduleGroupController::class, 'view'])->name('schedules.groups.view');
         Route::put('/schedules/{scheduleId}/groups/{groupId}', [App\Http\Controllers\ScheduleGroupController::class, 'updateGroup'])->name('schedules.groups.update');
 
         Route::post('/requests/groups', [\App\Http\Controllers\RequestController::class, 'groupStatusUpdate'])->name('requests.groups.update');
@@ -62,6 +58,10 @@ Route::middleware(['auth'])->group(function(){
     });
 
     Route::middleware('role:Administrator,Tech,Help Desk,Finance,C Band')->group(function(){
+
+        Route::resource('/schedules', \App\Http\Controllers\ScheduleController::class);
+        Route::get('/schedules-past', [App\Http\Controllers\ScheduleController::class, 'pastSchedules'])->name('schedules.pastSchedules');
+        Route::get('/schedules/view/{id}', [App\Http\Controllers\ScheduleGroupController::class, 'view'])->name('schedules.groups.view');
 
         Route::get('/groups/view/{status}', [\App\Http\Controllers\GroupController::class, 'index'])->name('groups.index');
         Route::get('/groups/create', [App\Http\Controllers\GroupController::class, 'create'])->name('groups.create');

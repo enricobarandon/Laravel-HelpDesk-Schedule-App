@@ -90,6 +90,7 @@ class ScheduleGroupController extends Controller
                         `groups`.`id`, 
                         `groups`.`name`, 
                         `groups`.`address`,
+                        `groups`.`guarantor`,
                         `provinces`.`name` as `province`
                     from `groups`
                     left join `provinces` on `groups`.`province_id` = `provinces`.`id`
@@ -139,6 +140,7 @@ class ScheduleGroupController extends Controller
                         `groups`.`id`, 
                         `groups`.`name`, 
                         `groups`.`address`, 
+                        `groups`.`guarantor`, 
                         `provinces`.`name` as `province`
                     from `groups`
                     left join `provinces` on `groups`.`province_id` = `provinces`.`id`
@@ -313,7 +315,7 @@ class ScheduleGroupController extends Controller
         
         $groupId = request()->groupId;
 
-        $groupInfo = Group::select('groups.name as group_name','address', 'groups.group_type','owner','contact','code','provinces.site','installed_pc','active_staff','provinces.name as province_name')
+        $groupInfo = Group::select('groups.name as group_name','address', 'groups.group_type','owner','contact','code','provinces.site','installed_pc','active_staff','provinces.name as province_name','guarantor')
                             ->where('groups.id', $groupId)
                             ->join('provinces', 'provinces.id', 'groups.province_id')
                             ->first();

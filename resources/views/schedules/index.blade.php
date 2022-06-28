@@ -2,7 +2,7 @@
 
 @section('style')
 
-@if(Auth::user()->user_type_id == 2)
+@if(in_array(Auth::user()->user_type_id, [2,5]))
 <style>
     .btn-create, .btn-edit, .btn-manage {
         display: none;
@@ -12,6 +12,7 @@
 @endsection
 
 @section('content')
+@section('title','Schedule')
 @php
 if (! function_exists('removeParam')) {
     function removeParam($url, $param) {

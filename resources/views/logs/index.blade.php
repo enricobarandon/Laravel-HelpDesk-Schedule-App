@@ -10,6 +10,7 @@ if (! function_exists('removeParam')) {
 }
 @endphp
 @section('content')
+@section('title','Activity-Logs')
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-12">

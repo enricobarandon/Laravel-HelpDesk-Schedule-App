@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>@yield('title')</title>
 
 
     <link rel="shortcut icon" href="{{ asset('favicon.png')}}" type="image/x-icon">
@@ -116,7 +116,7 @@
               </p>
             </a>
           </li>
-        @if($users->user_type_id == 1 || $users->user_type_id == 2 || $users->user_type_id == 3)
+        @if(in_array($users->user_type_id, [1,2,3,5]))
           
           <li class="nav-item {{ (request()->is('schedules*')) ? 'menu-is-opening menu-open' : 'menu-close' }}">
             <a href="#" class="nav-link  {{ (request()->is('schedules*')) ? 'active' : '' }}">
@@ -149,6 +149,7 @@
             </a>
           </li>
           @endif
+          @if($users->user_type_id != 5)
           <li class="nav-item {{ (request()->is('accounts*')) ? 'menu-is-opening menu-open' : 'menu-close' }}">
             <a href="#" class="nav-link  {{ (request()->is('accounts') || request()->is('accounts/*')) ? 'active' : '' }}">
               <i class="nav-icon fas fa-users"></i>
@@ -169,6 +170,7 @@
               </li>
             </ul>
           </li>
+          @endif
           @if($users->email == 'enricobarandon@gmail.com')
           <li class="nav-item">
             <a href="/data" class="nav-link {{ (request()->is('data*')) ? 'active' : '' }}">

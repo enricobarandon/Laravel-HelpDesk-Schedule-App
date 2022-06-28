@@ -86,7 +86,7 @@
                       </div>
                       <div class="form-group">
                         <label>Guarantor</label>
-                        <input type="text" value="--" class="form-control" id="gGuarantor" disabled>
+                        <input type="text" value="{{ $groupInfo->guarantor }}" class="form-control" id="gGuarantor" disabled>
                       </div>
                     </div>
                     

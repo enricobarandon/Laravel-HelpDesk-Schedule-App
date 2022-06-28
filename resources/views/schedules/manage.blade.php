@@ -120,6 +120,9 @@ if (! function_exists('removeParam')) {
                                                     @if($group->province)
                                                         ({{ $group->province }})
                                                     @endif
+                                                    @if($group->guarantor)
+                                                        ({{ $group->guarantor }})
+                                                    @endif
                                             </option>
                                         @endforeach
                                     </select>

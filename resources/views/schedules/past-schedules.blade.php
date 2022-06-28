@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+@section('title','Schedule')
 @php
 if (! function_exists('removeParam')) {
     function removeParam($url, $param) {
