@@ -465,28 +465,28 @@ class RequestController extends Controller
                 'digits_between' => 'Mobile Number must be 10 to 15 digits',
             ];
             $validator = Validator::make(request()->all(), [
-                'operation' => 'required',
-                'first-name' => 'required|string|max:50',
-                'last-name' => 'required|string|max:50',
-                'username' => 'required|string|max:50'.$unique,
-                'contact' => 'required|digits_between:10,15|numeric',
+                // 'operation' => 'required',
+                // 'first-name' => 'required|string|max:50',
+                // 'last-name' => 'required|string|max:50',
+                // 'username' => 'required|string|max:50'.$unique,
+                // 'contact' => 'required|digits_between:10,15|numeric',
                 'position' => ['required', Rule::in(['Cashier','Teller','Teller/Cashier','Supervisor','Operator'])],
                 'allowed-sides' => ['required', Rule::in(['m','w','n','a'])],
                 'is-active' => 'required|boolean',
-                'remarks' => 'nullable|string|max:300',
-                'group-code' => 'required|max:10'
+                'remarks' => 'nullable|string|max:300'
+                // 'group-code' => 'required|max:10'
             ]);
 
             $formData = [
                 'uuid' => $uuid,
-                'firstname' => $request->input('first-name'),
-                'lastname' => $request->input('last-name'),
-                'username' => $request->username,
-                'contact' => $request->contact,
+                // 'firstname' => $request->input('first-name'),
+                // 'lastname' => $request->input('last-name'),
+                // 'username' => $request->username,
+                // 'contact' => $request->contact,
                 'position' => $request->position,
                 'allowed_sides' => $request->input('allowed-sides'),
-                'is_active' => $request->input('is-active'),
-                'group_code' => $request->input('group-code')
+                'is_active' => $request->input('is-active')
+                // 'group_code' => $request->input('group-code')
             ];
 
         } else {
