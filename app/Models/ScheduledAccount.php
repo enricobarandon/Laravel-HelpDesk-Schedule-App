@@ -23,6 +23,13 @@ class ScheduledAccount extends Model
         $accounts = ScheduledAccount::select('account_id','accounts.group_id','first_name','last_name','username','position','allowed_sides','contact','remarks','password','accounts.status','accounts.is_active')
                         ->join('accounts','accounts.id','scheduled_accounts.account_id')
                         ->where('scheduled_accounts.schedule_id', $scheduleId)
+                        ->orderby(DB::raw('case 
+                                        when accounts.position = "Cashier" then 1 
+                                        when accounts.position = "Teller" then 2
+                                        when accounts.position = "Teller/Cashier" then 3
+                                        when accounts.position = "Supervisor" then 4
+                                        when accounts.position = "Operator" then 5
+                                        end'))
                         ->get()
                         ->toArray();
 

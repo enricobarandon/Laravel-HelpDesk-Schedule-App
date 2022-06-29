@@ -5,14 +5,14 @@
         <div class="col-md-6">
             <div class="form-group"> 
                 <label>Group Name</label>
-                <textarea id="group-name" name="group-name" class="form-control" rows="2" v-model="group.name"></textarea>
+                <textarea id="group-name" name="group-name" class="form-control" rows="2" v-model="group.name" disabled></textarea>
             </div>
         </div>
 
         <div class="col-md-6">
             <div class="form-group">
                 <label>Address</label>
-                <textarea id="group-address" name="group-address" class="form-control" rows="2" v-model="group.address"></textarea>
+                <textarea id="group-address" name="group-address" class="form-control" rows="2" v-model="group.address" disabled></textarea>
             </div>
         </div>
 
@@ -21,12 +21,12 @@
 
             <div class="form-group">
                 <label>Group Type</label>
-                <input type="text" class="form-control" id="group-type" name="group-type" v-model="group.group_type">
+                <input type="text" class="form-control" id="group-type" name="group-type" v-model="group.group_type" disabled>
             </div>
 
             <div class="form-group">
                 <label>Group Code</label>
-                <input type="text" class="form-control" id="group-code" name="group-code" v-model="group.code">
+                <input type="text" class="form-control" id="group-code" name="group-code" v-model="group.code" disabled>
             </div>
 
         </div>
@@ -35,12 +35,12 @@
 
             <div class="form-group">
                 <label>Operator</label>
-                <input type="text" class="form-control" id="group-operator" name="group-operator" v-model="group.owner">
+                <input type="text" class="form-control" id="group-operator" name="group-operator" v-model="group.owner" disabled>
             </div>
 
             <div class="form-group">
                 <label>Site</label>
-                <input type="text" class="form-control" id="group-site" name="group-site" v-model="group.site">
+                <input type="text" class="form-control" id="group-site" name="group-site" v-model="group.site" disabled>
             </div>
             
         </div>
@@ -49,12 +49,12 @@
 
             <div class="form-group">
                 <label>Contact</label>
-                <input type="number" class="form-control" id="group-contact" name="group-contact" v-model="group.contact">
+                <input type="number" class="form-control" id="group-contact" name="group-contact" v-model="group.contact" disabled>
             </div>
 
             <div class="form-group">
                 <label>Guarantor</label>
-                <input type="text" class="form-control" id="group-guarantor" name="group-guarantor" v-model="group.guarantor">
+                <input type="text" class="form-control" id="group-guarantor" name="group-guarantor" v-model="group.guarantor" disabled>
             </div>
 
         </div>

@@ -517,7 +517,7 @@ class ScheduleGroupController extends Controller
             $tbody .=               '<tr>';
             $tbody .=                   '<td style="text-align: center;">ARENA NAME</td>';
             $tbody .=                   '<td colspan="3" style="background-color: darkgreen; color: white; font-weight: bold; width: 500px;" >'. htmlspecialchars($group->name) .'</td>';
-            $tbody .=                   '<td colspan="4" style="background-color: darkgreen; color: white; text-align: center;">'. $group->remarks .'</td>';
+            $tbody .=                   '<td colspan="4" style="background-color: darkgreen; color: white; text-align: center; width: 450px;">'. $group->remarks .'</td>';
             $tbody .=               '</tr>';
             $tbody .=           '</thead>';
             $tbody .=           '<tbody>';
@@ -537,7 +537,7 @@ class ScheduleGroupController extends Controller
             $tbody .=                   '<td style="text-align: center;">OPERATOR NAME</td>';
             $tbody .=                   '<td colspan="3" style="text-align: center;">'. strtoupper(htmlspecialchars($group->owner)) .'</td>';
             $tbody .=                   '<td colspan="2" style="text-align: center;">'. date('l, M d Y', strtotime($scheduleInfo->date_time)) .'</td>';
-            $tbody .=                   '<td colspan="2" style="text-align: center;">'. date('H:i A', strtotime($group->operation_time)) .'</td>';
+            $tbody .=                   '<td colspan="2" style="text-align: center;">'. date('h:i A', strtotime($group->operation_time)) .'</td>';
             $tbody .=               '</tr>';
             $tbody .=               '<tr>';
             $tbody .=                   '<td style="text-align: center;">CONTACT DETAILS</td>';
