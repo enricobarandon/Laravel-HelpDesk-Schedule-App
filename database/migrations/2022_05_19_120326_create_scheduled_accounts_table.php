@@ -19,6 +19,9 @@ return new class extends Migration
             $table->integer('schedule_id');
             $table->integer('group_id');
             $table->integer('account_id');
+            $table->string('account_allowed_sides', 50);
+            $table->string('account_password')->nullable();
+            $table->string('account_position', 50);
             $table->timestamps();
         });
     }

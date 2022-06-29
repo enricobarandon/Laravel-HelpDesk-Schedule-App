@@ -120,10 +120,10 @@
                           <th>#</td>
                           <th>Full Name</td>
                           <th>Contact</td>
-                          <th>Role</td>
-                          <th>Side</td>
                           <th>Username</td>
                           <th>Password</td>
+                          <th>Role</td>
+                          <th>Side</td>
                           <th>Remarks</td>
                           <th>Status</td>
                           <th>Action</td>
@@ -172,17 +172,29 @@
                               <input type="text" value="{{ $account->contact }}" class="form-control {{ $trClass }}" disabled>
                             </td>
                             <td>
-                              <input type="text" value="{{ $account->position }}" class="form-control {{ $trClass }}" disabled>
-                            </td>
-                            <td>
-                              <input type="text" value="{{ $account->allowed_sides }}" class="form-control {{ $trClass }}" disabled>
-                            </td>
-                            <td>
                               <input type="text" value="{{ $account->username }}" class="form-control {{ $trClass }}" disabled>
                             </td>
-                            <td>
-                              <input type="text" value="{{ $account->password }}" class="form-control {{ $trClass }}" disabled>
-                            </td>
+                              @if($account->scheduled_group_id)
+                              <td>
+                                <input type="text" value="{{ $account->account_password }}" class="form-control {{ $trClass }}" disabled>
+                              </td>
+                              <td>
+                                <input type="text" value="{{ $account->account_position }}" class="form-control {{ $trClass }}" disabled>
+                              </td>
+                              <td>
+                                <input type="text" value="{{ $account->account_allowed_sides }}" class="form-control {{ $trClass }}" disabled>
+                              </td>
+                              @else
+                              <td>
+                                <input type="text" value="{{ $account->password }}" class="form-control {{ $trClass }}" disabled>
+                              </td>
+                              <td>
+                                <input type="text" value="{{ $account->position }}" class="form-control {{ $trClass }}" disabled>
+                              </td>
+                              <td>
+                                <input type="text" value="{{ $account->allowed_sides }}" class="form-control {{ $trClass }}" disabled>
+                              </td>
+                              @endif
                             <td>
                               <input type="text" value="{{ $account->is_active == 0 ? 'DEACTIVATED' : 'ACTIVE' }}" class="form-control {{ $remarksCSS }}" disabled>
                             </td>
