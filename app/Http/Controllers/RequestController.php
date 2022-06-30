@@ -19,7 +19,7 @@ class RequestController extends Controller
                         ->leftjoin('accounts','accounts.uuid','requests.uuid')
                         ->orderBy('id','desc');
         
-        if(Auth::user()->user_type_id == 5){
+        if(in_array(Auth::user()->user_type_id, [4,5])){
             $requests = $requests->where('requests.operation', 'groups.update');
         }
         

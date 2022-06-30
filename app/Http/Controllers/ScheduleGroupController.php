@@ -54,6 +54,7 @@ class ScheduleGroupController extends Controller
 
         $scheduledGroups = ScheduledGroup::select('group_id','operation_time')
                                 ->where('schedule_id', $scheduleId)
+                                ->orderBy('id','desc')
                                 ->get();
         
         $scheduledGroupsIds = $scheduledGroups->pluck('group_id')->toArray();
@@ -80,6 +81,7 @@ class ScheduleGroupController extends Controller
                 from `groups` 
                 inner join `provinces` on `provinces`.`id` = `groups`.`province_id` 
                     where `groups`.`id` in ($arrToStr)
+                    ORDER BY field(`groups`.`id`, $arrToStr)
                 "
             ));
 
@@ -556,6 +558,7 @@ class ScheduleGroupController extends Controller
             $tbody .=                   '<td style="text-align: center;"># OF ACTIVE STAFFS</td>';
             $tbody .=                   '<td colspan="3" style="text-align: center;">'. $group->active_staff .'</td>';
             $tbody .=               '</tr>';
+            if(Auth::User()->user_type_id != 5){
             $tbody .=               '<tr>';
             $tbody .=                   '<th style="background-color: black; color: yellow; text-align: center;">NAMES</th>';
             $tbody .=                   '<th style="background-color: black; color: yellow; text-align: center;">CONTACT</th>';
@@ -566,6 +569,7 @@ class ScheduleGroupController extends Controller
             $tbody .=                   '<th style="background-color: black; color: yellow; text-align: center;">STATUS</th>';
             $tbody .=               '</tr>';
             $tbody .=               $accounts;
+            }
             $tbody .=           '</tbody>';
             $tbody .=       '</table>';
             $tbody .=   '<td>';

@@ -157,9 +157,9 @@ class UserController extends Controller
                     'new status' => !$user->is_active
                 ])
             ]);
-            return redirect('/users')->with('success','User status updated');
+            return back()->with('success','User status updated');
         }else {
-            return redirect('/users')->with('error','Something went wrong');
+            return back()->with('error','Something went wrong');
         }
     }
     
