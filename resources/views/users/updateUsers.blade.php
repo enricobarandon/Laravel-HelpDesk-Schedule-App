@@ -75,10 +75,10 @@
                             </div>
                         @endif
                         <div class="row mb-3">
-                            <label for="name" class="col-md-4 col-form-label text-md-end">New Password</label>
+                            <label for="name" class="col-md-4 col-form-label text-md-end" minlength="8">New Password</label>
 
                             <div class="col-md-6">
-                                <input id="cpassword" type="password" class="form-control" name="cpassword" required autofocus>
+                                <input id="cpassword" type="password" class="form-control" minlength="8" name="cpassword" required autofocus>
                             </div>
                         </div>
                         

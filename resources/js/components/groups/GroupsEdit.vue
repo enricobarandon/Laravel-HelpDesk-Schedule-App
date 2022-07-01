@@ -2,9 +2,11 @@
     <router-link :to="{ name: 'groups.deactivated' }"  class="btn btn-primary" v-if="group.is_active == '0'">
         <i class="fas fa-chevron-left"></i> Back to groups page
     </router-link>
+
     <router-link :to="{ name: 'groups.active' }"  class="btn btn-primary" v-if="group.is_active == '1'">
         <i class="fas fa-chevron-left"></i> Back to groups page
     </router-link>
+    
     <div class="row">
 
         <div class="col-md-6">

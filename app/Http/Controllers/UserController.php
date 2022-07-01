@@ -34,6 +34,12 @@ class UserController extends Controller
             $users = $users->where('users.user_type_id', $request->userType);
         }
 
+        $userStatus = $request->userStatus;
+
+        if($request->userStatus != ''){
+            $users = $users->where('users.is_active', $request->userStatus);
+        }
+
         $users = $users->paginate(20);
 
         if ($request->has('download')) {
@@ -45,7 +51,7 @@ class UserController extends Controller
             );
         }
 
-        return view('users.index', compact('users','userTypes','keyword','userType'));
+        return view('users.index', compact('users','userTypes','keyword','userType','userStatus'));
     }
     public function updateUser(Request $request){
         $userTypes = UserType::get();
@@ -95,7 +101,7 @@ class UserController extends Controller
             }
         }else{
             $validator = Validator::make($request->all(), [
-                'cpassword' => 'required',
+                'cpassword' => 'required|min:8',
                 'ccpassword' => 'required',
             ]);
             if ($validator->fails()) {

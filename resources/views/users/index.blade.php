@@ -53,6 +53,15 @@ if (! function_exists('removeParam')) {
                                     
                                 </select>
                             </div>
+                            
+                            <div class="col-md-2">
+                                <select class="form-control" name="userStatus" id="userStatus">
+                                    <option value="" selected disabled>Select Status</option>
+                                    <option value="1" {{ $userStatus == '1' ? 'selected' : '' }}>Active</option>
+                                    <option value="0" {{ $userStatus == '0' ? 'selected' : '' }}>Deactivated</option>
+                                    
+                                </select>
+                            </div>
 
                             <div class="col">
                                 <button type="submit" class="btn btn-success"><i class="fas fa-search"></i> Submit</button>

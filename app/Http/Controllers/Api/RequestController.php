@@ -100,10 +100,14 @@ class RequestController extends Controller
             $uuid = (string) Str::uuid();
             $checkInRequests = false;
         } else if ($operation == 'update') {
-            $checkInRequests = RequestModel::where('operation', $requestName)
-                                ->where('uuid', $uuid)
-                                ->where('status','pending')
-                                ->first();
+            // $checkInRequests = RequestModel::where('operation', $requestName)
+            //                     ->where('uuid', $uuid)
+            //                     ->where('status','pending')
+            //                     ->first();
+            $checkInRequests = RequestModel::whereraw("operation = '$requestName'
+                                            and (status = 'approved' AND is_processed = 0  and uuid = '$uuid')
+                                            or (status = 'pending' and uuid = '$uuid')")
+                                            ->first();
         }
 
 
@@ -245,10 +249,17 @@ class RequestController extends Controller
             }
         } else {
             if ($operation == 'update') {
-                return response([
-                    'result' => 0,
-                    'message' => 'Request already exists.'
-                ], 200);
+                if($checkInRequests->status == 'pending'){
+                    return response([
+                        'result' => 0,
+                        'message' => 'Request already exists.'
+                    ], 200);
+                }else{
+                    return response([
+                        'result' => 0,
+                        'message' => 'Request already approved but not yet processed by C-Band.'
+                    ], 200);
+                }
             }
 
             return redirect()->back()->with('error', 'Request already exists'); 
