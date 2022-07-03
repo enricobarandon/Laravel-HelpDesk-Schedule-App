@@ -110,6 +110,7 @@
         </div>
 
         <form @submit.prevent="saveGroup" ref="form" class="row" v-if="user_type == '1' || user_type == '2'">
+        
             <div class="col-md-6">
                 <div class="form-group">
                     <label>No. of Staff</label>
