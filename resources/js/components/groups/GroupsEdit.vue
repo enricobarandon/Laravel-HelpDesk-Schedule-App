@@ -109,7 +109,7 @@
             </div>
         </div>
 
-        <form @submit.prevent="saveGroup" ref="form" class="row">
+        <form @submit.prevent="saveGroup" ref="form" class="row" v-if="user_type == '1' || user_type == '2'">
             <div class="col-md-6">
                 <div class="form-group">
                     <label>No. of Staff</label>
@@ -176,13 +176,16 @@ export default {
         id: {
             required: true,
             type: String
-        }
+        },
+        user: Object
     },
     setup(props) {
 
         const { errors, group, getGroup, updateGroup,oldGroupData } = useGroups()
 
         const { storeRequest } = useRequests()
+        
+        const user_type = props.user.user_type_id
 
         const form = reactive({
             'api_key' : '',
@@ -227,7 +230,8 @@ export default {
             group,
             saveGroup,
             form,
-            postUpdateRequest
+            postUpdateRequest,
+            user_type
         }
     },
     components: {
