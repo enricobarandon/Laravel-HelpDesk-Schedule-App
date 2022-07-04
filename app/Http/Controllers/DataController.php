@@ -19,6 +19,7 @@ class DataController extends Controller
     {
         // $apiURL = 'https://development.wpc2040.live/api/v4/groups';
 
+        $environment = env('APP_ENV');
         if ($environment == 'production') {
             $apiURL = 'https://wpc2040.live/api/v4/groups';
         } else {
@@ -72,6 +73,7 @@ class DataController extends Controller
     public function initialUsersTransfer()
     {
         // $apiURL = 'https://development.wpc2040.live/api/v4/users';
+        $environment = env('APP_ENV');
         if ($environment == 'production') {
             $apiURL = 'https://wpc2040.live/api/v4/users';
         } else {
