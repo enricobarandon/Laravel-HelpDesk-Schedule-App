@@ -96,6 +96,15 @@ class OcbsController extends Controller
 
                 $request->merge(['group_id' => $groupInfo->id]);
 
+                $allowedSides = [
+                    'm' => 'Meron only',
+                    'w' => 'Wala only',
+                    'n' => 'None',
+                    'a' => 'All sides'
+                ];
+
+                $request['allowed_sides'] = $allowedSides[$request['allowed_sides']];
+
                 $create = Account::create($request->except(['table','group_uuid']));
             }
 
