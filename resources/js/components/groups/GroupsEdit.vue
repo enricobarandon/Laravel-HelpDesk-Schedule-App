@@ -139,9 +139,9 @@
                 </div>
             </div> 
 
-            <div class="col-md-6">
+            <div class="col-md-6" v-if="group.is_active == '0'">
                 <div class="form-group">
-                    <label>Status</label>
+                    <label>Deactivated Status</label>
                     <select class="form-control" id="group-status" name="group-status" v-model="group.status">
                         <option selected disabled value="">-- Select Status --</option>
                         <option value="">No Status</option>
