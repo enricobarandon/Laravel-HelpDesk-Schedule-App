@@ -272,7 +272,16 @@ class RequestController extends Controller
     {
         $user = auth()->user();
 
-        $apiURL = 'https://development.wpc2040.live/api/v4/requests';
+        $environment = env('APP_ENV');
+
+        if ($environment == 'production') {
+            // temporary
+            // direct to site A
+            // follow up condition to detect if site is for site A or B
+            $apiURL = 'https://wpc2040.live/api/v4/requests';
+        } else {
+            $apiURL = 'https://development.wpc2040.live/api/v4/requests';
+        }
 
         $apiKey = env('KIOSK_API_KEY');
   

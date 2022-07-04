@@ -17,7 +17,13 @@ class DataController extends Controller
 
     public function initialGroupsTransfer()
     {
-        $apiURL = 'https://development.wpc2040.live/api/v4/groups';
+        // $apiURL = 'https://development.wpc2040.live/api/v4/groups';
+
+        if ($environment == 'production') {
+            $apiURL = 'https://wpc2040.live/api/v4/groups';
+        } else {
+            $apiURL = 'https://development.wpc2040.live/api/v4/groups';
+        }
 
         $postInput = [
             'api_key' => '4856dff1c620f02368c744f8eb6d4617a29f12fb'
@@ -65,7 +71,12 @@ class DataController extends Controller
 
     public function initialUsersTransfer()
     {
-        $apiURL = 'https://development.wpc2040.live/api/v4/users';
+        // $apiURL = 'https://development.wpc2040.live/api/v4/users';
+        if ($environment == 'production') {
+            $apiURL = 'https://wpc2040.live/api/v4/users';
+        } else {
+            $apiURL = 'https://development.wpc2040.live/api/v4/users';
+        }
 
         $postInput = [
             'api_key' => '4856dff1c620f02368c744f8eb6d4617a29f12fb'
