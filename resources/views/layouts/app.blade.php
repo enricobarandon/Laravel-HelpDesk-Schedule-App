@@ -189,7 +189,7 @@
               <p>
                 Requests
               </p>
-              <i class="nav-icon fa fa-bell float-right"><label class="pending-requests"><span id="pendingRequests">0</span></label></i>
+              <i class="nav-icon fa fa-bell float-right"><label class="pending-requests" id="pending-requests"><span id="pendingRequests">0</span></label></i>
             </a>
           </li>
           @endif
@@ -298,6 +298,12 @@ const getData = async () => {
     let response = await axios.get('/api/requests');
 
     if (document.getElementById('pendingRequests')) {
+
+      document.getElementById('pending-requests').style.display = 'block';
+      if (response.data.pendingRequests == 0) {
+        document.getElementById('pending-requests').style.display = 'none';
+      }
+      
       document.getElementById('pendingRequests').innerHTML = response.data.pendingRequests
     }
 
@@ -311,6 +317,12 @@ var channel = window.Echo.channel('requests');
 
 channel.listen('RequestReceived', (message) => {
           if (document.getElementById('pendingRequests')) {
+
+            document.getElementById('pending-requests').style.display = 'block';
+            if (response.data.pendingRequests == 0) {
+              document.getElementById('pending-requests').style.display = 'none';
+            } 
+
             document.getElementById('pendingRequests').innerHTML = message.pendingRequestCount
           }
 

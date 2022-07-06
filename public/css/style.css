@@ -339,4 +339,6 @@ span.multiselect-selected-text {
 ul.multiselect-container.dropdown-menu.show {
     width: 100%;
 }
-
+#pending-requests{
+    display:none;
+}

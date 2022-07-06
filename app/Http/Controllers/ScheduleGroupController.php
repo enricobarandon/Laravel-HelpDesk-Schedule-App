@@ -827,25 +827,12 @@ class ScheduleGroupController extends Controller
     public function storeAllScheduledAccount() 
     {
         $scheduledGroupId = request()->scheduledGroupId;
-        
-        // $accountId = request()->accountId;
 
         $scheduleId = request()->scheduleId;
 
         $groupId = request()->groupId;
-
-        // dd($groupId);
         
         $user = Auth::user();
-
-        // $checkIfExisting = ScheduledAccount::select('id')
-        //                     ->where('scheduled_group_id', $scheduledGroupId)
-        //                     ->where('account_id', $accountId)
-        //                     ->first();
-
-        // if ($checkIfExisting) {
-        //     return back()->with('error','Account already confirmed');
-        // }
 
         $allAccounts = Group::select('groups.id','accounts.id as acc_id','accounts.allowed_sides','accounts.password','accounts.position')
                         ->join('accounts','accounts.group_id','groups.id')
@@ -853,7 +840,6 @@ class ScheduleGroupController extends Controller
                         ->where('groups.id', $groupId)
                         ->whereNull('scheduled_accounts.id')
                         ->get();
-                        // dd($allAccounts);
 
         if ($allAccounts) {
             $insertArr = [];
@@ -870,51 +856,28 @@ class ScheduleGroupController extends Controller
                     'updated_at' => Carbon::now()
                 ]);
             }
-            // dd($insertArr);
         }
 
         $storeAll = ScheduledAccount::insert($insertArr);
         
 
-        // $accountInfo = Account::find($accountId);
+        $groupInfo = Group::find($groupId, ['code']);
 
-        // $storeAccountFromScheduledGroup = ScheduledAccount::insert([
-        //     'scheduled_group_id' => $scheduledGroupId,
-        //     'schedule_id' => $scheduleId,
-        //     'group_id' => $groupId,
-        //     'account_id' => $accountId,
-        //     'account_allowed_sides' => $accountInfo->allowed_sides,
-        //     'account_password' => $accountInfo->password,
-        //     'account_position' => $accountInfo->position,
-        //     'created_at' => Carbon::now(),
-        //     'updated_at' => Carbon::now()
-        // ]);
+        ActivityLog::create([
+            'type' => 'confirmed-account',
+            'user_id' => $user->id,
+            'assets' => json_encode([
+                'action' => 'Confirmed all accounts for a scheduled group',
+                'account_id' => 'all accounts',
+                'schedule_group_id' => $scheduledGroupId,
+                'scheduleId' => $scheduleId,
+                'groupId' => $groupId,
+                'group_code' => $groupInfo->code
+            ])
+        ]);
 
-        // $scheduledGroupInfo = ScheduledGroup::find($scheduledGroupId);
-
-        // if ($storeAccountFromScheduledGroup) {
-
-        //     $groupCode = Group::select('code')->where('groups.id',$scheduledGroupInfo->group_id)->first();
-
-        //     $accountInfo = Account::find($accountId);
-
-            $groupInfo = Group::find($groupId, ['code']);
-
-            ActivityLog::create([
-                'type' => 'confirmed-account',
-                'user_id' => $user->id,
-                'assets' => json_encode([
-                    'action' => 'Confirmed all accounts for a scheduled group',
-                    'account_id' => 'all accounts',
-                    'schedule_group_id' => $scheduledGroupId,
-                    'scheduleId' => $scheduleId,
-                    'groupId' => $groupId,
-                    'group_code' => $groupInfo->code
-                ])
-            ]);
-
-            return redirect("/schedules/$scheduleId/groups/$groupId");
-        // }
+        return redirect("/schedules/$scheduleId/groups/$groupId");
+    
     }
 
 }
