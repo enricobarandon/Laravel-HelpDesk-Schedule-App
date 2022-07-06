@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Schedule;
 use Excel;
 use App\Exports\ScheduledGroupExport;
+use Auth;
 
 class ScheduleController extends Controller
 {
@@ -36,8 +37,12 @@ class ScheduleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        return view('schedules.create', []);
+    {  
+        if(Auth::user()->user_type_id == 1){
+            return view('schedules.create', []);
+        }else{
+            return redirect('/')->with('error','Access denied');
+        }
     }
 
     /**
@@ -70,7 +75,11 @@ class ScheduleController extends Controller
      */
     public function edit($id)
     {
-        return view('schedules.edit', []);
+        if(Auth::user()->user_type_id == 1){
+            return view('schedules.edit', []);
+        }else{
+            return redirect('/')->with('error','Access denied');
+        }
         
     }
 

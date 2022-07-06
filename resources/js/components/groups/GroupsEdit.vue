@@ -7,7 +7,7 @@
         <i class="fas fa-chevron-left"></i> Back to groups page
     </router-link>
     
-    <div class="row">
+    <div class="row" v-if="user_type != '5'">
 
         <div class="col-md-6">
             <div class="form-group"> 

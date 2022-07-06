@@ -7,7 +7,7 @@
         </div>
     </div>
 
-    <form @submit.prevent="saveSchedule" ref="form">
+    <form @submit.prevent="saveSchedule" ref="form" v-if="user_type == '1'">
         <a href='/schedules' class="btn btn-primary">Back to Schedule Management page</a>
         <div class="form-group">
             <label for="name">Name</label>
@@ -44,7 +44,8 @@ export default {
         id: {
             required: true,
             type: String
-        }
+        },
+        user: Object
     },
     setup(props) {
         const { errors, schedule, getSchedule, updateSchedule } = useSchedules()
@@ -55,10 +56,13 @@ export default {
             await updateSchedule(props.id)
         }
 
+        const user_type = props.user.user_type_id
+
         return {
             errors,
             schedule,
-            saveSchedule
+            saveSchedule,
+            user_type
         }
     },
     components: {

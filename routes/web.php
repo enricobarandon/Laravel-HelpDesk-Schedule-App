@@ -30,9 +30,16 @@ Route::middleware(['auth'])->group(function(){
         Route::post('/users-data', [App\Http\Controllers\DataController::class, 'initialUsersTransfer'])->name('data.initialUsersTransfer');
 
         Route::get('logs', [\App\Http\Controllers\ActivityLogsController::class, 'index'])->name('logs.index')->middleware('role:Administrator');
+        
+        Route::get('/users', [App\Http\Controllers\UserController::class, 'index'])->name('users.index');
+        Route::get('users/update/{id}/info', [\App\Http\Controllers\UserController::class, 'updateUser'])->name('users.updateUsers');
+        Route::get('users/update/{id}/password', [\App\Http\Controllers\UserController::class, 'updateUser'])->name('users.updateUsers');
+        Route::post('submitUser', [\App\Http\Controllers\UserController::class, 'submitUser'])->name('users.updateUsers');
+        Route::post('users/{user}',[\App\Http\Controllers\UserController::class, 'changeUserStatus'])->name('users.changeUserStatus');
     });
+
     
-    Route::middleware('role:Administrator,Tech,Help Desk,Finance')->group(function(){
+    Route::middleware('role:Administrator,Help Desk')->group(function(){
 
         Route::get('/schedules/manage/{id}', [App\Http\Controllers\ScheduleGroupController::class, 'index'])->name('schedules.groups.manage');
         // Route::post('/schedules/manage/{id?}', [App\Http\Controllers\ScheduleGroupController::class, 'addGroup'])->name('schedules.groups.addGroup');
@@ -44,6 +51,10 @@ Route::middleware(['auth'])->group(function(){
         Route::post('/scheduledaccount/{scheduledGroupId}/account/{accountId}', [App\Http\Controllers\ScheduleGroupController::class, 'storeScheduledAccount'])->name('schedules.accounts.store');
 
         Route::put('/schedules/{scheduleId}/groups/{groupId}', [App\Http\Controllers\ScheduleGroupController::class, 'updateGroup'])->name('schedules.groups.update');
+        
+    });
+    
+    Route::middleware('role:Administrator,Tech,Help Desk')->group(function(){
 
         Route::post('/requests/groups', [\App\Http\Controllers\RequestController::class, 'groupStatusUpdate'])->name('requests.groups.update');
         Route::get('requests', [\App\Http\Controllers\RequestController::class, 'index'])->name('requests.index');
@@ -57,7 +68,15 @@ Route::middleware(['auth'])->group(function(){
 
     });
 
-    Route::middleware('role:Administrator,Tech,Help Desk,Finance,C Band')->group(function(){
+    
+    Route::middleware('role:Administrator,Tech,Help Desk,Finance')->group(function(){
+
+        Route::post('/requests/groups', [\App\Http\Controllers\RequestController::class, 'groupStatusUpdate'])->name('requests.groups.update');
+        Route::get('requests', [\App\Http\Controllers\RequestController::class, 'index'])->name('requests.index');
+        
+    });
+
+    Route::middleware('role:Administrator,Tech,Help Desk,C Band')->group(function(){
 
         Route::resource('/schedules', \App\Http\Controllers\ScheduleController::class);
         Route::get('/schedules-past', [App\Http\Controllers\ScheduleController::class, 'pastSchedules'])->name('schedules.pastSchedules');
@@ -71,19 +90,17 @@ Route::middleware(['auth'])->group(function(){
         Route::post('cband',[\App\Http\Controllers\CbandController::class, 'changeViewingStatus'])->name('cband.changeViewingStatus');
 
     });
+    
+    Route::middleware('role:Administrator,Tech,Help Desk,Finance,C Band')->group(function(){
 
-    Route::middleware('role:Administrator,Tech')->group(function(){
+        Route::get('/groups/view/{status}', [\App\Http\Controllers\GroupController::class, 'index'])->name('groups.index');
+        Route::get('/groups/create', [App\Http\Controllers\GroupController::class, 'create'])->name('groups.create');
+        Route::get('groups/request/edit/{$group}',[App\Http\Controllers\GroupController::class, 'show'])->name('groups.show');
 
-        Route::get('/users', [App\Http\Controllers\UserController::class, 'index'])->name('users.index');
-        Route::get('users/update/{id}/info', [\App\Http\Controllers\UserController::class, 'updateUser'])->name('users.updateUsers');
-        Route::get('users/update/{id}/password', [\App\Http\Controllers\UserController::class, 'updateUser'])->name('users.updateUsers');
-        Route::post('submitUser', [\App\Http\Controllers\UserController::class, 'submitUser'])->name('users.updateUsers');
-        Route::post('users/{user}',[\App\Http\Controllers\UserController::class, 'changeUserStatus'])->name('users.changeUserStatus');
+        Route::get('cband',[\App\Http\Controllers\CbandController::class, 'index'])->name('cband.index');
+        Route::post('cband',[\App\Http\Controllers\CbandController::class, 'changeViewingStatus'])->name('cband.changeViewingStatus');
 
     });
-
-
-    
 
 });
 

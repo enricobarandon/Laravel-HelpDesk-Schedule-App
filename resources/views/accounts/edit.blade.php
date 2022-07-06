@@ -189,7 +189,7 @@
                         <div class="col-md-6">
 
                             <div class="form-group">
-                                <label>Status</label>
+                                <label>Deactivated Status</label>
                                 <select id="status" name="status" class="form-control">
                                     <option selected disabled> Select Status </option>
                                     <option value="">No Status</option>
