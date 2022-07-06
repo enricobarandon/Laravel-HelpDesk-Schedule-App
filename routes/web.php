@@ -49,6 +49,7 @@ Route::middleware(['auth'])->group(function(){
 
         Route::delete('/scheduledaccount/{scheduledGroupId}/account/{accountId}', [App\Http\Controllers\ScheduleGroupController::class, 'deleteScheduledAccount'])->name('schedules.accounts.delete');
         Route::post('/scheduledaccount/{scheduledGroupId}/account/{accountId}', [App\Http\Controllers\ScheduleGroupController::class, 'storeScheduledAccount'])->name('schedules.accounts.store');
+        Route::post('/scheduledaccount/{scheduledGroupId}/confirm-all', [App\Http\Controllers\ScheduleGroupController::class, 'storeAllScheduledAccount'])->name('schedules.accounts.storeAll');
 
         Route::put('/schedules/{scheduleId}/groups/{groupId}', [App\Http\Controllers\ScheduleGroupController::class, 'updateGroup'])->name('schedules.groups.update');
         

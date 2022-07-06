@@ -133,7 +133,24 @@
 
                         @php
                           $accountCount = 1;
+                          $groupAccountsCount = count($groupAccounts);
                         @endphp
+
+                        @if($groupAccountsCount > 0)
+                          <tr>
+                            <td colspan=10 class="text-center">
+                              <!-- <button class="btn btn-success btn-sm">Confirm All Accounts</button> -->
+                              <form action='{{ url("/scheduledaccount/$scheduledGroupInfo->id/confirm-all") }}' class="confirmAllAccount" method="POST">
+                                  @csrf
+                                  @method('post')
+                                  <input type="hidden" name="groupId" value="{{ $groupId }}">
+                                  <input type="hidden" name="scheduleId" value="{{ $scheduleId }}">
+                                  <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> Confirm All Accounts</button>
+                                </form>
+                            </td>
+                          </tr>
+                        @endif
+                        
                         
                         @foreach($groupAccounts as $account)
                           @php
