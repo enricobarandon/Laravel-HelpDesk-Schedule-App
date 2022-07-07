@@ -829,14 +829,17 @@ class ScheduleGroupController extends Controller
         $scheduledGroupId = request()->scheduledGroupId;
 
         $scheduleId = request()->scheduleId;
-
+        
         $groupId = request()->groupId;
         
         $user = Auth::user();
 
         $allAccounts = Group::select('groups.id','accounts.id as acc_id','accounts.allowed_sides','accounts.password','accounts.position')
                         ->join('accounts','accounts.group_id','groups.id')
-                        ->leftjoin('scheduled_accounts','scheduled_accounts.account_id','accounts.id')
+                        ->leftjoin('scheduled_accounts', function($join) use ($scheduleId){
+                            $join->on('scheduled_accounts.account_id','accounts.id')
+                                ->where('scheduled_accounts.schedule_id','=', $scheduleId);
+                        })
                         ->where('groups.id', $groupId)
                         ->whereNull('scheduled_accounts.id')
                         ->get();
