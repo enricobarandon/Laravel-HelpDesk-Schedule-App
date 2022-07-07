@@ -19,9 +19,9 @@ class RequestController extends Controller
                         ->leftjoin('accounts','accounts.uuid','requests.uuid')
                         ->orderBy('id','desc');
         
-        if(in_array(Auth::user()->user_type_id, [4,5])){
-            $requests = $requests->where('requests.operation', 'groups.update');
-        }
+        // if(in_array(Auth::user()->user_type_id, [4,5])){
+        //     $requests = $requests->where('requests.operation', 'groups.update');
+        // }
         
         $keyword = $request->keyword;
 
