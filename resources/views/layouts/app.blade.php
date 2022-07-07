@@ -116,83 +116,6 @@
               </p>
             </a>
           </li>
-        @if(in_array($users->user_type_id, [1,2,3,5]))
-          
-          <li class="nav-item {{ (request()->is('schedules*')) ? 'menu-is-opening menu-open' : 'menu-close' }}">
-            <a href="#" class="nav-link  {{ (request()->is('schedules*')) ? 'active' : '' }}">
-            <i class="nav-icon fa fa-calendar"></i>
-              <p>Schedules<i class="right fas fa-angle-left"></i></p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item {{ (request()->is('schedules')) ? 'custom-active' : '' }}">
-                <a href="/schedules" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Active Schedules</p>
-                </a>
-              </li>
-              <li class="nav-item {{ (request()->is('schedules-past')) ? 'custom-active' : '' }}">
-                <a href="/schedules-past" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Past Schedules</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-
-          @if($users->user_type_id == 1)
-          <li class="nav-item">
-            <a href="/users" class="nav-link {{ (request()->is('users')) ? 'active' : '' }}">
-              <i class="nav-icon fa fa-users"></i>
-              <p>
-                Users
-              </p>
-            </a>
-          </li>
-          @endif
-          @if($users->user_type_id != 5)
-          <li class="nav-item {{ (request()->is('accounts*')) ? 'menu-is-opening menu-open' : 'menu-close' }}">
-            <a href="#" class="nav-link  {{ (request()->is('accounts') || request()->is('accounts/*')) ? 'active' : '' }}">
-              <i class="nav-icon fas fa-users"></i>
-              <p>Accounts<i class="right fas fa-angle-left"></i></p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item {{ (request()->is('accounts')) ? 'custom-active' : '' }}">
-                <a href="/accounts" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Active Accounts</p>
-                </a>
-              </li>
-              <li class="nav-item {{ (request()->is('accounts/deactivated')) ? 'custom-active' : '' }}">
-                <a href="/accounts/deactivated" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Deactivated Accounts</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-          @endif
-          @if($users->email == 'enricobarandon@gmail.com')
-          <li class="nav-item">
-            <a href="/data" class="nav-link {{ (request()->is('data*')) ? 'active' : '' }}">
-              <i class="nav-icon fa fa-list"></i>
-              <p>
-                Sync Data
-              </p>
-            </a>
-          </li>
-          @endif
-        @endif
-          @if($users->user_type_id != 5)
-          <li class="nav-item">
-            <a href="/requests" class="nav-link {{ (request()->is('requests*')) ? 'active' : '' }}">
-              <i class="nav-icon fa fa-list"></i>
-              <p>
-                Requests
-              </p>
-              <i class="nav-icon fa fa-bell float-right"><label class="pending-requests" id="pending-requests" style="display:none"><span id="pendingRequests">0</span></label></i>
-            </a>
-          </li>
-          @endif
 
           <li class="nav-item {{ (request()->is('groups/*')) ? 'menu-is-opening menu-open' : 'menu-close' }}">
             <a href="#" class="nav-link  {{ (request()->is('groups/*')) ? 'active' : '' }}">
@@ -220,6 +143,87 @@
               </li>
             </ul>
           </li>
+
+
+        @if(in_array($users->user_type_id, [1,2,3,5]))
+          
+          <li class="nav-item {{ (request()->is('schedules*')) ? 'menu-is-opening menu-open' : 'menu-close' }}">
+            <a href="#" class="nav-link  {{ (request()->is('schedules*')) ? 'active' : '' }}">
+            <i class="nav-icon fa fa-calendar"></i>
+              <p>Schedules<i class="right fas fa-angle-left"></i></p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item {{ (request()->is('schedules')) ? 'custom-active' : '' }}">
+                <a href="/schedules" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Active Schedules</p>
+                </a>
+              </li>
+              <li class="nav-item {{ (request()->is('schedules-past')) ? 'custom-active' : '' }}">
+                <a href="/schedules-past" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Past Schedules</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          
+          @if($users->user_type_id != 5)
+          <li class="nav-item {{ (request()->is('accounts*')) ? 'menu-is-opening menu-open' : 'menu-close' }}">
+            <a href="#" class="nav-link  {{ (request()->is('accounts') || request()->is('accounts/*')) ? 'active' : '' }}">
+              <i class="nav-icon fas fa-users"></i>
+              <p>Accounts<i class="right fas fa-angle-left"></i></p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item {{ (request()->is('accounts')) ? 'custom-active' : '' }}">
+                <a href="/accounts" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Active Accounts</p>
+                </a>
+              </li>
+              <li class="nav-item {{ (request()->is('accounts/deactivated')) ? 'custom-active' : '' }}">
+                <a href="/accounts/deactivated" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Deactivated Accounts</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          @endif
+
+          @if($users->user_type_id == 1)
+          <li class="nav-item">
+            <a href="/users" class="nav-link {{ (request()->is('users')) ? 'active' : '' }}">
+              <i class="nav-icon fa fa-users"></i>
+              <p>
+                Users
+              </p>
+            </a>
+          </li>
+          @endif
+          @if($users->email == 'enricobarandon@gmail.com')
+          <li class="nav-item">
+            <a href="/data" class="nav-link {{ (request()->is('data*')) ? 'active' : '' }}">
+              <i class="nav-icon fa fa-list"></i>
+              <p>
+                Sync Data
+              </p>
+            </a>
+          </li>
+          @endif
+        @endif
+          @if($users->user_type_id != 5)
+          <li class="nav-item">
+            <a href="/requests" class="nav-link {{ (request()->is('requests*')) ? 'active' : '' }}">
+              <i class="nav-icon fa fa-list"></i>
+              <p>
+                Requests
+              </p>
+              <i class="nav-icon fa fa-bell float-right"><label class="pending-requests" id="pending-requests" style="display:none"><span id="pendingRequests">0</span></label></i>
+            </a>
+          </li>
+          @endif
 
           <li class="nav-item">
             <a href="/cband" class="nav-link {{ (request()->is('cband')) ? 'active' : '' }}">
