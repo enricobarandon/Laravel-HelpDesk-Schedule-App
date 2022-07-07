@@ -22600,7 +22600,7 @@ span.multiselect-selected-text {
 ul.multiselect-container.dropdown-menu.show {
     width: 100%;
 }
-#pending-requests{
+#pending-requests, #pending-cband-requests{
     display:none;
 }
 /*! jQuery UI - v1.13.1 - 2022-01-20

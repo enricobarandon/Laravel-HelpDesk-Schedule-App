@@ -189,7 +189,7 @@
               <p>
                 Requests
               </p>
-              <i class="nav-icon fa fa-bell float-right"><label class="pending-requests" id="pending-requests"><span id="pendingRequests">0</span></label></i>
+              <i class="nav-icon fa fa-bell float-right"><label class="pending-requests" id="pending-requests" style="display:none"><span id="pendingRequests">0</span></label></i>
             </a>
           </li>
           @endif
@@ -227,7 +227,7 @@
               <p>
                 CBand
               </p>
-              <i class="nav-icon fa fa-bell float-right"><label class="pending-requests"><span id="approvedGroupRequests">0</span></label></i>
+              <i class="nav-icon fa fa-bell float-right"><label class="pending-requests" id="pending-cband-requests" style="display:none"><span id="approvedGroupRequests">0</span></label></i>
             </a>
           </li>
 
@@ -296,7 +296,7 @@
 
 const getData = async () => {
     let response = await axios.get('/api/requests');
-
+  console.log(response);
     if (document.getElementById('pendingRequests')) {
 
       document.getElementById('pending-requests').style.display = 'block';
@@ -308,6 +308,12 @@ const getData = async () => {
     }
 
     if (document.getElementById('approvedGroupRequests')) {
+
+      document.getElementById('pending-cband-requests').style.display = 'block';
+      if (response.data.approvedGroupRequests == 0) {
+        document.getElementById('pending-cband-requests').style.display = 'none';
+      }
+      
       document.getElementById('approvedGroupRequests').innerHTML = response.data.approvedGroupRequests
     }
 }
@@ -327,6 +333,12 @@ channel.listen('RequestReceived', (message) => {
           }
 
           if (document.getElementById('approvedGroupRequests')) {
+
+            document.getElementById('pending-cband-requests').style.display = 'block';
+            if (response.data.approvedGroupRequests == 0) {
+              document.getElementById('pending-cband-requests').style.display = 'none';
+            }
+
             document.getElementById('approvedGroupRequests').innerHTML = message.approvedGroupRequestCount
           }
         });
