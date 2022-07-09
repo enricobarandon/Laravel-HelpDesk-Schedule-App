@@ -278,7 +278,12 @@ class RequestController extends Controller
             // temporary
             // direct to site A
             // follow up condition to detect if site is for site A or B
-            $apiURL = 'https://wpc2040.live/api/v4/requests';
+            $host = request()->getHost();
+            if ($host == 'schedule.wpc2040.live') {
+                $apiURL = 'https://wpc2040.live/api/v4/requests';
+            } else if ($host == 'schedule.wpc2040aa.live') {
+                $apiURL = 'https://wpc2040aa.live/api/v4/requests';
+            }
         } else {
             $apiURL = 'https://development.wpc2040.live/api/v4/requests';
         }

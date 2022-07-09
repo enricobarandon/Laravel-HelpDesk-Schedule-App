@@ -21,7 +21,13 @@ class DataController extends Controller
 
         $environment = env('APP_ENV');
         if ($environment == 'production') {
-            $apiURL = 'https://wpc2040.live/api/v4/groups';
+            // $apiURL = 'https://wpc2040.live/api/v4/groups';
+            $host = request()->getHost();
+            if ($host == 'schedule.wpc2040.live') {
+                $apiURL = 'https://wpc2040.live/api/v4/groups';
+            } else if ($host == 'schedule.wpc2040aa.live') {
+                $apiURL = 'https://wpc2040aa.live/api/v4/groups';
+            }
         } else {
             $apiURL = 'https://development.wpc2040.live/api/v4/groups';
         }
@@ -75,7 +81,13 @@ class DataController extends Controller
         // $apiURL = 'https://development.wpc2040.live/api/v4/users';
         $environment = env('APP_ENV');
         if ($environment == 'production') {
-            $apiURL = 'https://wpc2040.live/api/v4/users';
+            // $apiURL = 'https://wpc2040.live/api/v4/users';
+            $host = request()->getHost();
+            if ($host == 'schedule.wpc2040.live') {
+                $apiURL = 'https://wpc2040.live/api/v4/users';
+            } else if ($host == 'schedule.wpc2040aa.live') {
+                $apiURL = 'https://wpc2040aa.live/api/v4/users';
+            }
         } else {
             $apiURL = 'https://development.wpc2040.live/api/v4/users';
         }
