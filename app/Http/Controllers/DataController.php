@@ -33,7 +33,7 @@ class DataController extends Controller
         }
 
         $postInput = [
-            'api_key' => '4856dff1c620f02368c744f8eb6d4617a29f12fb'
+            'api_key' => '4e829e510539afcc43365a18acc91ede41fb555e'
         ];
   
         $headers = [
@@ -93,7 +93,7 @@ class DataController extends Controller
         }
 
         $postInput = [
-            'api_key' => '4856dff1c620f02368c744f8eb6d4617a29f12fb'
+            'api_key' => '4e829e510539afcc43365a18acc91ede41fb555e'
         ];
   
         $headers = [
