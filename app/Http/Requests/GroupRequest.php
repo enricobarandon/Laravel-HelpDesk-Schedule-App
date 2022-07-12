@@ -36,7 +36,7 @@ class GroupRequest extends FormRequest
             'active_staff' => ['required'],
             'installed_pc' => ['required'],
             'status' => ['nullable'],
-            'operation_date' => ['required','date'],
+            'operation_date' => ['nullable','date'],
             'pullout_date' => ['nullable','date']
         ];
     }
