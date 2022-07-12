@@ -61,7 +61,7 @@ class ScheduleGroupController extends Controller
         $scheduledGroupsOperationHours = $scheduledGroups->keyBy('group_id')->toArray();
 
         $arrToStr = implode(",", $scheduledGroupsIds);
-
+        
         $groupsForDisplay = [];
         $groupsForSelect = [];
         
@@ -85,6 +85,8 @@ class ScheduleGroupController extends Controller
                 "
             ));
 
+            $arrToStr .= ',1'; // for excluding lucky 8 office group
+            
             $groupsForSelect = DB::select(
                 DB::raw(
                     "
@@ -135,6 +137,7 @@ class ScheduleGroupController extends Controller
             }
                 
         } else {
+            // exclude group id = 1 for lucky 8 office
             $groupsForSelect = DB::select(
                 DB::raw(
                     "
@@ -146,11 +149,12 @@ class ScheduleGroupController extends Controller
                         `provinces`.`name` as `province`
                     from `groups`
                     left join `provinces` on `groups`.`province_id` = `provinces`.`id`
-                    where `is_active` = 1 and `groups`.`id` not in (0)  
+                    where `is_active` = 1 and `groups`.`id` not in (1)  
                     order by `groups`.`name` asc
                     "
                 )
             );
+            
         }
         if ($request->has('download') || $request->has('downloadcurrent')) {
 
@@ -701,7 +705,7 @@ class ScheduleGroupController extends Controller
             $groupArray = [];
 
             foreach($allGroups as $index => $group) {
-                if (!$group->scheduled_groups_id) {
+                if (!$group->scheduled_groups_id && $group->id != '1') {
                     $groupArray[$index] = [
                         'schedule_id' => $scheduleId,
                         'group_id' => $group->id,
@@ -761,11 +765,11 @@ class ScheduleGroupController extends Controller
                             ->where('group_type', $group)
                             ->where('is_active',1)
                             ->get();
-                            
+                
                 $groupArray = [];
 
                 foreach($groups as $i => $v) {
-                    if (!$v->scheduled_groups_id) {
+                    if (!$v->scheduled_groups_id && $v->id != '1') { // exclude group id 1 for lucky 8 office
                         $groupArray[$i] = [
                             'schedule_id' => $scheduleId,
                             'group_id' => $v->id,
@@ -794,25 +798,29 @@ class ScheduleGroupController extends Controller
 
             } else {
 
-                $groupInfo = Group::select('code','remarks')->where('groups.id',$group)->first();
+                if ($group != '1') { // exclude group_id 1; Lucky 8 office
 
-                ActivityLog::create([
-                    'type' => 'add-group',
-                    'user_id' => $user->id,
-                    'assets' => json_encode([
-                        'action' => 'added group to schedule',
-                        'group_id' => $group,
+                    $groupInfo = Group::select('code','remarks')->where('groups.id',$group)->first();
+
+                    ActivityLog::create([
+                        'type' => 'add-group',
+                        'user_id' => $user->id,
+                        'assets' => json_encode([
+                            'action' => 'added group to schedule',
+                            'group_id' => $group,
+                            'schedule_id' => $scheduleId,
+                            'group_code' => $groupInfo->code
+                        ])
+                    ]);
+                    
+                    $insert = ScheduledGroup::create([
                         'schedule_id' => $scheduleId,
-                        'group_code' => $groupInfo->code
-                    ])
-                ]);
-                
-                $insert = ScheduledGroup::create([
-                    'schedule_id' => $scheduleId,
-                    'group_id' => $group,
-                    'user_id' => $user->id,
-                    'remarks' => $groupInfo->remarks
-                ]);
+                        'group_id' => $group,
+                        'user_id' => $user->id,
+                        'remarks' => $groupInfo->remarks
+                    ]);
+                }
+
             }
         }
 
@@ -843,7 +851,7 @@ class ScheduleGroupController extends Controller
                         ->where('groups.id', $groupId)
                         ->whereNull('scheduled_accounts.id')
                         ->get();
-
+                        
         if ($allAccounts) {
             $insertArr = [];
             foreach($allAccounts as $account) {
