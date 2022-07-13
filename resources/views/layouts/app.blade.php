@@ -79,7 +79,9 @@
     <!-- Brand Logo -->
     <a href="#" class="brand-link">
       <!-- <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8"> -->
-      <h5 class="brand-text font-weight-light">SCHEDULE.WPC2040.LIVE</h3>
+      <h5 class="brand-text font-weight-light">
+        {{ request()->getHost() }}
+      </h3>
     </a>
 
     <!-- Sidebar -->
@@ -329,7 +331,7 @@ channel.listen('RequestReceived', (message) => {
           if (document.getElementById('pendingRequests')) {
 
             document.getElementById('pending-requests').style.display = 'block';
-            if (response.data.pendingRequests == 0) {
+            if (message.pendingRequestCount == 0) {
               document.getElementById('pending-requests').style.display = 'none';
             } 
 
@@ -339,7 +341,7 @@ channel.listen('RequestReceived', (message) => {
           if (document.getElementById('approvedGroupRequests')) {
 
             document.getElementById('pending-cband-requests').style.display = 'block';
-            if (response.data.approvedGroupRequests == 0) {
+            if (message.approvedGroupRequestCount == 0) {
               document.getElementById('pending-cband-requests').style.display = 'none';
             }
 

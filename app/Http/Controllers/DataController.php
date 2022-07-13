@@ -21,13 +21,19 @@ class DataController extends Controller
 
         $environment = env('APP_ENV');
         if ($environment == 'production') {
-            $apiURL = 'https://wpc2040.live/api/v4/groups';
+            // $apiURL = 'https://wpc2040.live/api/v4/groups';
+            $host = request()->getHost();
+            if ($host == 'schedule.wpc2040.live') {
+                $apiURL = 'https://admin.wpc2040.live/api/v4/groups';
+            } else if ($host == 'schedule.wpc2040aa.live') {
+                $apiURL = 'https://admin.wpc2040aa.live/api/v4/groups';
+            }
         } else {
             $apiURL = 'https://development.wpc2040.live/api/v4/groups';
         }
 
         $postInput = [
-            'api_key' => '4856dff1c620f02368c744f8eb6d4617a29f12fb'
+            'api_key' => '4e829e510539afcc43365a18acc91ede41fb555e'
         ];
   
         $headers = [
@@ -75,13 +81,19 @@ class DataController extends Controller
         // $apiURL = 'https://development.wpc2040.live/api/v4/users';
         $environment = env('APP_ENV');
         if ($environment == 'production') {
-            $apiURL = 'https://wpc2040.live/api/v4/users';
+            // $apiURL = 'https://wpc2040.live/api/v4/users';
+            $host = request()->getHost();
+            if ($host == 'schedule.wpc2040.live') {
+                $apiURL = 'https://admin.wpc2040.live/api/v4/users';
+            } else if ($host == 'schedule.wpc2040aa.live') {
+                $apiURL = 'https://admin.wpc2040aa.live/api/v4/users';
+            }
         } else {
             $apiURL = 'https://development.wpc2040.live/api/v4/users';
         }
 
         $postInput = [
-            'api_key' => '4856dff1c620f02368c744f8eb6d4617a29f12fb'
+            'api_key' => '4e829e510539afcc43365a18acc91ede41fb555e'
         ];
   
         $headers = [
