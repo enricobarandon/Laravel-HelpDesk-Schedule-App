@@ -331,7 +331,7 @@ channel.listen('RequestReceived', (message) => {
           if (document.getElementById('pendingRequests')) {
 
             document.getElementById('pending-requests').style.display = 'block';
-            if (response.data.pendingRequests == 0) {
+            if (message.pendingRequestCount == 0) {
               document.getElementById('pending-requests').style.display = 'none';
             } 
 
@@ -341,7 +341,7 @@ channel.listen('RequestReceived', (message) => {
           if (document.getElementById('approvedGroupRequests')) {
 
             document.getElementById('pending-cband-requests').style.display = 'block';
-            if (response.data.approvedGroupRequests == 0) {
+            if (message.approvedGroupRequestCount == 0) {
               document.getElementById('pending-cband-requests').style.display = 'none';
             }
 
