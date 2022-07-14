@@ -21,7 +21,7 @@
 <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper" id="app">
         <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light {{ request()->getHost() == 'schedule.wpc2040aa.live' ? 'wpc2040aa-bg' : 'wpc2040-bg' }}">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item">

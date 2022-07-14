@@ -20,7 +20,7 @@
                 <div class="container login-container">
                     <div class="row justify-content-center">
                         <div class="col-md-6 text-center justify-content-center align-items-center">
-                        <img src="dist/img/wpc2040.jpg" alt="logo" class="header-mobile__logo-img logo-img  mb-2">
+                        <img src="dist/img/{{ request()->getHost() == 'schedule.wpc2040aa.live' ? 'wpc2040aa.jpg' : 'wpc2040.jpg' }}" alt="logo" class="header-mobile__logo-img logo-img  mb-2">
                         <!-- <img src="dist/img/wpc2040aa.jpg" alt="logo" class="header-mobile__logo-img logo-img  mb-2"> -->
                         </div>
                         <div class="col-md-6">

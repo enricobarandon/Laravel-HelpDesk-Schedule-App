@@ -48,7 +48,7 @@
 
                             <div class="form-group">
                                 <label>First Name</label>
-                                <input type="text" class="form-control" id="first-name" name="first-name" value="{{ $account->first_name }}" disabled>
+                                <input type="text" class="form-control" id="first-name" name="first-name" value="{{ $account->first_name }}" readonly="readonly">
                             </div>
 
                         </div>
@@ -57,7 +57,7 @@
 
                             <div class="form-group">
                                 <label>Last Name</label>
-                                <input type="text" class="form-control" id="last-name" name="last-name" value="{{ $account->last_name }}" disabled>
+                                <input type="text" class="form-control" id="last-name" name="last-name" value="{{ $account->last_name }}" readonly="readonly">
                             </div>
 
                         </div>
@@ -66,7 +66,7 @@
 
                             <div class="form-group">
                                 <label>Username</label>
-                                <input type="text" class="form-control" id="username" name="username" value="{{ $account->username }}" disabled>
+                                <input type="text" class="form-control" id="username" name="username" value="{{ $account->username }}" readonly="readonly">
                             </div>
                             
                         </div>
@@ -75,7 +75,7 @@
 
                         <div class="form-group">
                                 <label>Contact</label>
-                                <input type="number" class="form-control" id="contact" name="contact" value="{{ $account->contact }}" disabled>
+                                <input type="number" class="form-control" id="contact" name="contact" value="{{ $account->contact }}" readonly="readonly">
                             </div>
 
                         </div>
@@ -84,7 +84,7 @@
 
                             <div class="form-group">
                                 <label>Group</label>
-                                <select class="form-control" id="group-code" name="group-code" disabled>
+                                <select class="form-control" id="group-code" name="group-code" readonly="readonly">
                                     <option selected disabled> -- Select Group --</option>
                                     @foreach($groups as $group)
                                         <option value="{{ $group->code }}"
