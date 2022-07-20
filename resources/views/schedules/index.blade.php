@@ -2,7 +2,7 @@
 
 @section('style')
 
-@if(in_array(Auth::user()->user_type_id, [2,5]))
+@if(in_array(Auth::user()->user_type_id, [2,4,5]))
 <style>
     .btn-create, .btn-edit, .btn-manage {
         display: none;

@@ -562,13 +562,14 @@ class ScheduleGroupController extends Controller
             $tbody .=                   '<td style="text-align: center;"># OF ACTIVE STAFFS</td>';
             $tbody .=                   '<td colspan="3" style="text-align: center;">'. $group->active_staff .'</td>';
             $tbody .=               '</tr>';
-            if(Auth::User()->user_type_id != 5){
+            if(in_array(Auth::User()->user_type_id, [1,2,3])){
             $tbody .=               '<tr>';
-            $tbody .=                   '<th style="background-color: black; color: yellow; text-align: center;">NAMES</th>';
+            $tbody .=                   '<th colspan=".5" style="background-color: black; color: yellow; text-align: center;">#</th>';
+            $tbody .=                   '<th colspan="1.5" style="background-color: black; color: yellow; text-align: center;">NAMES</th>';
             $tbody .=                   '<th style="background-color: black; color: yellow; text-align: center;">CONTACT</th>';
             $tbody .=                   '<th style="background-color: black; color: yellow; text-align: center;">POSITION</th>';
             $tbody .=                   '<th style="background-color: black; color: yellow; text-align: center;">REMARKS</th>';
-            $tbody .=                   '<th colspan="2" style="background-color: black; color: yellow; text-align: center;">USERNAME</th>';
+            $tbody .=                   '<th style="background-color: black; color: yellow; text-align: center;">USERNAME</th>';
             $tbody .=                   '<th style="background-color: black; color: yellow; text-align: center;">PASSWORD</th>';
             $tbody .=                   '<th style="background-color: black; color: yellow; text-align: center;">STATUS</th>';
             $tbody .=               '</tr>';
@@ -652,6 +653,7 @@ class ScheduleGroupController extends Controller
     {
         $trClass = '';
         $tableRow = '';
+        $i = 1;
         foreach($accountsArr[$groupId] as $account) {
 
             if($account['status'] == 'temporarydeactivated' and $account['is_active'] == 0){
@@ -663,11 +665,12 @@ class ScheduleGroupController extends Controller
             }
 
             $tableRow .= '<tr>';
-            $tableRow .=    '<td style="text-align: center;' . $trClass . '">'. strtoupper($account['first_name']) .' '. strtoupper($account['last_name']) .'</td>';
+            $tableRow .=    '<td colspan=".5" style="text-align: center;' . $trClass . '">'. $i++ .'</td>';
+            $tableRow .=    '<td colspan="1.5" style="text-align: center;' . $trClass . '">'. strtoupper($account['first_name']) .' '. strtoupper($account['last_name']) .'</td>';
             $tableRow .=    '<td style="text-align: center;' . $trClass . '">'. $account['contact'] .'</td>';
             $tableRow .=    '<td style="text-align: center;' . $trClass . '">'. strtoupper($account['account_position']) .'</td>';
             $tableRow .=    '<td style="text-align: center;' . $trClass . '">'. $account['account_allowed_sides'] .'</td>';
-            $tableRow .=    '<td colspan="2" style="text-align: center;' . $trClass . '">'. $account['username'] .'</td>';
+            $tableRow .=    '<td style="text-align: center;' . $trClass . '">'. $account['username'] .'</td>';
             $tableRow .=    '<td style="text-align: center;' . $trClass . '">'. $account['account_password'] .'</td>';
             $tableRow .=    '<td style="background-color: lightskyblue; text-align: center;">ACCOUNT CONFIRMED</td>';
             $tableRow .= '</tr>';

@@ -23,7 +23,7 @@
                     <td>
                         {{ $value->name. ' - ' . $value->role  }}
                     </td>
-                    <td>
+                    <td style="max-width: 500px;">
                         @php
 
                             $decoded_data = json_decode($value->assets,true);

@@ -146,9 +146,6 @@
             </ul>
           </li>
 
-
-        @if(in_array($users->user_type_id, [1,2,3,5]))
-          
           <li class="nav-item {{ (request()->is('schedules*')) ? 'menu-is-opening menu-open' : 'menu-close' }}">
             <a href="#" class="nav-link  {{ (request()->is('schedules*')) ? 'active' : '' }}">
             <i class="nav-icon fa fa-calendar"></i>
@@ -170,6 +167,7 @@
             </ul>
           </li>
 
+        @if(in_array($users->user_type_id, [1,2,3,5]))
           
           @if($users->user_type_id != 5)
           <li class="nav-item {{ (request()->is('accounts*')) ? 'menu-is-opening menu-open' : 'menu-close' }}">

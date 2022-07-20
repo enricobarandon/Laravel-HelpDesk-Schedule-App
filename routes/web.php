@@ -77,22 +77,22 @@ Route::middleware(['auth'])->group(function(){
         
     });
 
-    Route::middleware('role:Administrator,Tech,Help Desk,C Band')->group(function(){
+    // Route::middleware('role:Administrator,Tech,Help Desk,C Band')->group(function(){
+
+    //     Route::get('/groups/view/{status}', [\App\Http\Controllers\GroupController::class, 'index'])->name('groups.index');
+    //     Route::get('/groups/create', [App\Http\Controllers\GroupController::class, 'create'])->name('groups.create');
+    //     Route::get('groups/request/edit/{$group}',[App\Http\Controllers\GroupController::class, 'show'])->name('groups.show');
+
+    //     Route::get('cband',[\App\Http\Controllers\CbandController::class, 'index'])->name('cband.index');
+    //     Route::post('cband',[\App\Http\Controllers\CbandController::class, 'changeViewingStatus'])->name('cband.changeViewingStatus');
+
+    // });
+    
+    Route::middleware('role:Administrator,Tech,Help Desk,Finance,C Band')->group(function(){
 
         Route::resource('/schedules', \App\Http\Controllers\ScheduleController::class);
         Route::get('/schedules-past', [App\Http\Controllers\ScheduleController::class, 'pastSchedules'])->name('schedules.pastSchedules');
         Route::get('/schedules/view/{id}', [App\Http\Controllers\ScheduleGroupController::class, 'view'])->name('schedules.groups.view');
-
-        Route::get('/groups/view/{status}', [\App\Http\Controllers\GroupController::class, 'index'])->name('groups.index');
-        Route::get('/groups/create', [App\Http\Controllers\GroupController::class, 'create'])->name('groups.create');
-        Route::get('groups/request/edit/{$group}',[App\Http\Controllers\GroupController::class, 'show'])->name('groups.show');
-
-        Route::get('cband',[\App\Http\Controllers\CbandController::class, 'index'])->name('cband.index');
-        Route::post('cband',[\App\Http\Controllers\CbandController::class, 'changeViewingStatus'])->name('cband.changeViewingStatus');
-
-    });
-    
-    Route::middleware('role:Administrator,Tech,Help Desk,Finance,C Band')->group(function(){
 
         Route::get('/groups/view/{status}', [\App\Http\Controllers\GroupController::class, 'index'])->name('groups.index');
         Route::get('/groups/create', [App\Http\Controllers\GroupController::class, 'create'])->name('groups.create');

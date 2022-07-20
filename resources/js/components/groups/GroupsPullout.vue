@@ -1,7 +1,7 @@
 <template>
     <div v-bind="$attrs">
 
-        <a href="/groups/view/pullout?download-pullout=1" class="btn btn-success btn-top-right">Download Excel</a>
+        <a href="/groups/view/pullout?download-pullout=1" class="btn btn-success btn-top-right">Download All</a>
         <div class="form-horizontal">
             <div class="form-group row">
 
