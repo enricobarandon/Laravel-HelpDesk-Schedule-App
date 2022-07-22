@@ -99,7 +99,7 @@ if (! function_exists('removeParam')) {
                                         @endforeach
                                     </select> -->
                                     <select class="selectpicker form-control" data-live-search="true" multiple="multiple" name="group_id[]" id="select-type">
-                                        <option value="0" selected disabled>Select Group</option>
+                                        <option value="0" disabled>Select Group</option>
                                         @if(count($groupsForSelect) >= 1)
                                         <option value="ALL">Select All Active Groups</option>
                                         @endif

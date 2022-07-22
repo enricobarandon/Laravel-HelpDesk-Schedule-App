@@ -335,6 +335,8 @@ input.form-control.edit-password {
 }
 span.multiselect-selected-text {
     margin: auto;
+    width: 100%;
+    white-space: pre-wrap;
 }
 ul.multiselect-container.dropdown-menu.show {
     width: 100%;
