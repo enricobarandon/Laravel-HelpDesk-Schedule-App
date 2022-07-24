@@ -103,7 +103,7 @@
                         <div class="col-md-4">
                           <div class="form-group">
                             <label>Time of Operation</label>
-                            <input type="text" value="{{ date('h:i A', strtotime($scheduledGroupInfo->operation_time)) }}" class="form-control" id="operation_time" name="operation_time">
+                            <input type="text" value="{{ isset($scheduledGroupInfo->operation_time) ? date('h:i A', strtotime($scheduledGroupInfo->operation_time)) : '' }}" class="form-control" id="operation_time" name="operation_time">
                           </div>
                         </div>
                         <div class="col-md-12 text-center">
