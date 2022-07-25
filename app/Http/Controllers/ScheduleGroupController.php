@@ -315,7 +315,7 @@ class ScheduleGroupController extends Controller
         return redirect('/schedules/manage/' . $scheduleId);
     }
 
-    public function manageGroup()
+    public function manageGroup(Request $request)
     {
         $scheduleId = request()->scheduleId;
         
@@ -344,6 +344,17 @@ class ScheduleGroupController extends Controller
                             // dd($groupAccounts);
         
         $scheduleInfo = Schedule::find($scheduleId);                            
+
+        
+        if ($request->has('download') || $request->has('downloadcurrent')) {
+
+            return Excel::download(
+                new ScheduledGroupExport('schedules.tables.manageGroupTable', [
+                    'groupAccounts' => $groupAccounts,
+                ]),
+                $groupInfo->code.'-accounts.xlsx'
+            );
+        }
 
         return view('schedules.groups.index', [
             'scheduleId' => $scheduleId,

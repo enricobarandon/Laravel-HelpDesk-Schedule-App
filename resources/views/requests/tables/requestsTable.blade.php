@@ -49,13 +49,13 @@
                             $data = json_decode($request->data);
                             $dataHtml = '';
                             foreach($data as $key => $value) {
-                                $dataHtml .= "<li>$key : $value</li>";
+                                $dataHtml .= "<li>". $key ." : ". htmlspecialchars($value) . "</li>";
                             }
                         }
                     @endphp
                     {!! $dataHtml !!}
                 </td>
-                <td>{{ $request->remarks }}</td>
+                <td>{{ htmlspecialchars($request->remarks) }}</td>
             </tr>
         @endforeach
     </tbody>

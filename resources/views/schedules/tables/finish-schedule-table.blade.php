@@ -5,6 +5,7 @@
             <th>Schedule Name</th>
             <th>Schedule Date</th>
             <th>Created At</th>
+            <th>Finished At</th>
         </tr>
     </thead>
     <tbody>
@@ -14,6 +15,7 @@
                 <td>{{ $schedule->name }}</td>
                 <td>{{ date("M d, Y",strtotime($schedule->date_time)) }}</td>
                 <td>{{ date("M d, Y h:i:s a",strtotime($schedule->created_at)) }}</td>
+                <td>{{ date("M d, Y h:i:s a",strtotime($schedule->updated_at)) }}</td>
             </tr>
         @endforeach
     </tbody>

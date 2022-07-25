@@ -1,5 +1,14 @@
 @extends('layouts.app')
 
+@php
+if (! function_exists('removeParam')) {
+    function removeParam($url, $param) {
+        $url = preg_replace('/(&|\?)'.preg_quote($param).'=[^&]*$/', '', $url);
+        $url = preg_replace('/(&|\?)'.preg_quote($param).'=[^&]*&/', '$1', $url);
+        return $url;
+    }
+}
+@endphp
 @section('content')
 <!-- Main content -->
 <div class="content">
@@ -114,19 +123,22 @@
                       </form>
                     </div>
 
+                    <div class="col-md-12">
+                    <a class="btn btn-success float-right" href="{{ removeParam(request()->fullUrlWithQuery(['download' => '1']), 'downloadcurrent') }}">Download Excel</a>
+                    </div>
                     <table class="table sm-global-table">
                       <thead>
                         <tr>
                           <th>#</td>
-                          <th>Full Name</td>
-                          <th>Contact</td>
-                          <th>Username</td>
-                          <th>Password</td>
-                          <th>Role</td>
-                          <th>Side</td>
-                          <th>Remarks</td>
-                          <th>Status</td>
-                          <th>Action</td>
+                          <th>Full Name</th>
+                          <th>Contact</th>
+                          <th>Username</th>
+                          <th>Password</th>
+                          <th>Role</th>
+                          <th>Side</th>
+                          <th>Remarks</th>
+                          <th>Status</th>
+                          <th>Action</th>
                         </tr>
                       </thead>
                       <tbody>

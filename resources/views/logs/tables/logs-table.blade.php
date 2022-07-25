@@ -37,14 +37,14 @@
                                     if (is_array($data)) {
 
                                     } else {
-                                        $description .= "<li>" .$key . " : " .  $data . "</li>";
+                                        $description .= "<li>" .$key . " : " .  htmlspecialchars($data) . "</li>";
                                     }
 
 
 
                                 }
                             }else{
-                                $description = "<li>".$value->assets."</li>";
+                                $description = "<li>".htmlspecialchars($value->assets)."</li>";
                             }
 
                         @endphp
