@@ -633,7 +633,7 @@ class ScheduleGroupController extends Controller
 
         $updateScheduledGroupInfo = ScheduledGroup::where('schedule_id', $scheduleId)
                                                 ->where('group_id', $groupId)
-                                                ->update(['remarks' => $remarks, 'operation_time' => $optime]);
+                                                ->update(['remarks' => $remarks, 'operation_time' => isset(request()->operation_time) ? $optime : null]);
 
 
         if ($updateScheduledGroupInfo) {
