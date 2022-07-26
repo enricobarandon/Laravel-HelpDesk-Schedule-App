@@ -44,7 +44,7 @@ $user = auth()->user();
                             </div>
 
                             <div class="col-md-2">
-                                <input type="text" class="form-control" name="filterGname" id="filterGname" placeholder="Group Code">
+                                <input type="text" class="form-control" name="filterGname" id="filterGname" placeholder="Group">
                             </div>
                             
                             <div class="col-md-2">
@@ -107,7 +107,7 @@ $user = auth()->user();
                                 @endphp
                                 <tr class="{{ $trClass }}">
                                     <td>{{ $accountCount++ }}</td>
-                                    <td>{{ htmlspecialchars($account->group_name) }}</td>
+                                    <td>{{ $account->group_name }}</td>
                                     <!-- <td>--</td> -->
                                     <td>{{ $account->first_name }} {{ $account->last_name }}</td>
                                     <td>{{ $account->contact }}</td>

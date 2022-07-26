@@ -132,7 +132,7 @@
                 </div>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-6" v-if="group.is_active == '0'">
                 <div class="form-group">
                     <label>Pullout Date</label>
                     <Datepicker :format="formatDate" name="pullout-date" id="pullout-date" placeholder="Select Date" v-model="group.pullout_date" />

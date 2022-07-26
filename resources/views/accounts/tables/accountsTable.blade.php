@@ -20,7 +20,7 @@
         @foreach($accounts as $account)
             <tr>
                 <td>{{ $accountCount++ }}</td>
-                <td>{{ htmlspecialchars($account->group_name) }}</td>
+                <td>{{ $account->group_name }}</td>
                 <!-- <td>--</td> -->
                 <td>{{ $account->first_name }} {{ $account->last_name }}</td>
                 <td>{{ $account->contact }}</td>

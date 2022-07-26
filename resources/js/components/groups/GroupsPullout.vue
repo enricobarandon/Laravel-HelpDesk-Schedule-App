@@ -5,8 +5,8 @@
         <div class="form-horizontal">
             <div class="form-group row">
 
-                <div class="col-md-2">
-                    <input type="text" class="form-control" name="filterCode" id="filterCode" placeholder="Group Code" @keyup.enter="postFilterGroup()" v-model='filter.code'>
+                <div class="col-md-3">
+                    <input type="text" class="form-control" name="filterCode" id="filterCode" placeholder="Group" @keyup.enter="postFilterGroup()" v-model='filter.code'>
                 </div>
 
                 <div class="col-md-2">
@@ -24,7 +24,7 @@
                     </select>
                 </div> -->
 
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <Multiselect
                     v-model="filter.type"
                     v-bind="selectGroupTypes"
@@ -111,7 +111,7 @@ export default {
         const postFilterGroup = async () => {
             filteredPulledOutGroups.value = groups.value.filter((val) => {
                 if (filter.code) {
-                    return val.code.toLowerCase() == filter.code.toLowerCase()
+                    return val.name.toLowerCase().includes(filter.code.toLowerCase())
                 } 
                 return true
             }).filter((val) => {
@@ -154,7 +154,7 @@ export default {
                 mode: 'tags',
                 closeOnSelect: false,
                 options: groupTypes,
-                placeholder: 'Select Group Type'
+                placeholder: 'Group Type'
             }
         }
 
