@@ -168,7 +168,7 @@
 
                             <div class="form-group">
                                 <label>Request Remarks</label>
-                                <textarea id="remarks" name="remarks" class="form-control" rows="2"></textarea>
+                                <textarea id="remarks" name="remarks" class="form-control" rows="2">{{ $account->remarks }}</textarea>
                             </div>
                             
                         </div>

@@ -1,4 +1,4 @@
-<template>
+<template> 
     <div v-bind="$attrs">
         <a href="/groups/view/active?download-active=1" class="btn btn-success btn-top-right">Download All</a>
         <div class="form-horizontal">
@@ -15,13 +15,6 @@
                         <option value="wpc2040aa">WPC2040AA</option>
                     </select>
                 </div>
-
-                <!-- <div class="col-md-2">
-                    <select class="form-control" name="filterType" placeholder="Group Type" @keyup.enter="postFilterGroup()" v-model='filter.type'>
-                        <option selected value="">Select Group Type</option>
-                        <option :value="value" v-for="(value, name) in groupTypes" :key="name">{{ value }}</option>
-                    </select>
-                </div> -->
 
                 <div class="col-md-2">
                     <Multiselect

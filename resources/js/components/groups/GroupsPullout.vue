@@ -17,13 +17,6 @@
                     </select>
                 </div>
 
-                <!-- <div class="col-md-2">
-                    <select class="form-control" name="filterType" placeholder="Group Type" @keyup.enter="postFilterGroup()" v-model='filter.type'>
-                        <option selected value="">Select Group Type</option>
-                        <option :value="value" v-for="(value, name) in groupTypes" :key="name">{{ value }}</option>
-                    </select>
-                </div> -->
-
                 <div class="col-md-2">
                     <Multiselect
                     v-model="filter.type"

@@ -1,4 +1,4 @@
-<template>
+<template> 
     <router-link :to="{ name: 'groups.deactivated' }"  class="btn btn-primary" v-if="group.is_active == '0'">
         <i class="fas fa-chevron-left"></i> Back to groups page
     </router-link>

@@ -1,7 +1,5 @@
-<template>
-
+<template> 
         <a href="/groups/view/deactivated?download-deactivated=1" class="btn btn-success btn-top-right">Download All</a>
-    <!-- <form class="form-horizontal" id="frmDeactivatedGroupFilters"> -->
         <div class="form-group row">
 
             <div class="col-md-3">
@@ -24,13 +22,6 @@
                     <option value="wpc2040aa">WPC2040AA</option>
                 </select>
             </div>
-
-            <!-- <div class="col-md-2">
-                <select class="form-control" name="filterType" placeholder="Group Type" v-model='filter.type'>
-                    <option selected value="">Select Group Type</option>
-                    <option :value="value" v-for="(value, name) in groupTypes" :key="name">{{ value }}</option>
-                </select>
-            </div> -->
 
             <div class="col-md-2">
                 <Multiselect
