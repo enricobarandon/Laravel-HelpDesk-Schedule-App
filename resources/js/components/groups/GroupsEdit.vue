@@ -41,7 +41,7 @@
         <div class="col-md-4">
 
             <div class="form-group">
-                <label>Operator</label>
+                <label>Owner</label>
                 <input type="text" class="form-control" id="group-operator" name="group-operator" v-model="group.owner" disabled>
             </div>
 
