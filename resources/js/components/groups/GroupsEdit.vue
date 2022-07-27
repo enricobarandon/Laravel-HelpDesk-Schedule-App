@@ -41,7 +41,7 @@
         <div class="col-md-4">
 
             <div class="form-group">
-                <label>Operator</label>
+                <label>Owner</label>
                 <input type="text" class="form-control" id="group-operator" name="group-operator" v-model="group.owner" disabled>
             </div>
 
@@ -134,13 +134,6 @@
 
             <div class="col-md-6" v-if="group.is_active == '0'">
                 <div class="form-group">
-                    <label>Pullout Date</label>
-                    <Datepicker :format="formatDate" name="pullout-date" id="pullout-date" placeholder="Select Date" v-model="group.pullout_date" />
-                </div>
-            </div> 
-
-            <div class="col-md-6" v-if="group.is_active == '0'">
-                <div class="form-group">
                     <label>Deactivated Status</label>
                     <select class="form-control" id="group-status" name="group-status" v-model="group.status">
                         <option selected disabled value="">-- Select Status --</option>
@@ -152,6 +145,13 @@
                     </select>
                 </div>
             </div>
+
+            <div class="col-md-6" v-if="group.is_active == '0'">
+                <div class="form-group" v-if="group.status == 'pullout'">
+                    <label>Pullout Date</label> 
+                    <Datepicker :format="formatDate" name="pullout-date" id="pullout-date" placeholder="Select Date" v-model="group.pullout_date" />
+                </div>
+            </div> 
 
             <div class="col-md-12 text-center">
                 <button type="button" v-on:click="sweetAlert" class="btn btn-primary">Update</button>
@@ -225,7 +225,6 @@ export default {
 
             await storeRequest({...form})
         }
-
         return {
             errors,
             group,
