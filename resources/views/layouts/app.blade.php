@@ -128,19 +128,19 @@
               <li class="nav-item {{ (request()->is('groups/view/active')) ? 'custom-active' : '' }}">
                 <a href="/groups/view/active" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Active Group</p>
+                  <p>Active Groups</p>
                 </a>
               </li>
               <li class="nav-item {{ (request()->is('groups/view/deactivated')) ? 'custom-active' : '' }}">
                 <a href="/groups/view/deactivated" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Deactivated</p>
+                <p>Deactivated Groups</p>
                 </a>
               </li>
               <li class="nav-item {{ (request()->is('groups/view/pullout')) ? 'custom-active' : '' }}">
                 <a href="/groups/view/pullout" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Pullout</p>
+                <p>Pullout Groups</p>
                 </a>
               </li>
             </ul>
