@@ -75,7 +75,7 @@ if (! function_exists('removeParam')) {
 
                     <div class="col-md-4">
                       <div class="form-group">
-                        <label>Operator</label>
+                        <label>Owner</label>
                         <input type="text" value="{{ $groupInfo->owner }}" class="form-control" id="gOperator" disabled>
                       </div>
                       <div class="form-group">
