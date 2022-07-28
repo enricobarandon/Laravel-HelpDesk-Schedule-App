@@ -89,7 +89,7 @@
                                     @foreach($groups as $group)
                                         <option value="{{ $group->code }}"
                                             <?php
-                                                echo $account->group_id == $group->id ? 'selected' : ''
+                                                echo $account->group_id == $group->id ? 'selected' : 'disabled'
                                             ?>
                                         >
                                             {{ $group->name }}
