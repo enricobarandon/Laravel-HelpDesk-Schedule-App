@@ -32,8 +32,8 @@ Route::middleware(['auth'])->group(function(){
         Route::get('logs', [\App\Http\Controllers\ActivityLogsController::class, 'index'])->name('logs.index')->middleware('role:Administrator');
         
         Route::get('/users', [App\Http\Controllers\UserController::class, 'index'])->name('users.index');
-        Route::get('users/update/{id}/info', [\App\Http\Controllers\UserController::class, 'updateUser'])->name('users.updateUsers');
-        Route::get('users/update/{id}/password', [\App\Http\Controllers\UserController::class, 'updateUser'])->name('users.updateUsers');
+        Route::get('users/update/{id}/info', [\App\Http\Controllers\UserController::class, 'updateUser'])->name('users.updateUsers.info');
+        Route::get('users/update/{id}/password', [\App\Http\Controllers\UserController::class, 'updateUser'])->name('users.updateUsers.password');
         Route::post('submitUser', [\App\Http\Controllers\UserController::class, 'submitUser'])->name('users.updateUsers');
         Route::post('users/{user}',[\App\Http\Controllers\UserController::class, 'changeUserStatus'])->name('users.changeUserStatus');
     });
