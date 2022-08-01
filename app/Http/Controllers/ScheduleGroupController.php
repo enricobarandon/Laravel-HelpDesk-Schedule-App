@@ -530,6 +530,14 @@ class ScheduleGroupController extends Controller
                 $siteColor = 'background-color: #dc3545;color: #ffffff;';
             }
 
+            $op_time = '';
+
+            if($group->operation_time){
+                $op_time = date('h:i A', strtotime($group->operation_time));
+            }else{
+                $op_time = '--';
+            }
+
             $tbody .= '<tbody>';
             $tbody .= '<tr colspan="1">';
             $tbody .=   '<td><h3>' . $groupCount++ .'</h3></td>';
@@ -559,7 +567,7 @@ class ScheduleGroupController extends Controller
             $tbody .=                   '<td style="text-align: center;">OPERATOR NAME</td>';
             $tbody .=                   '<td colspan="3" style="text-align: center;">'. strtoupper(htmlspecialchars($group->owner)) .'</td>';
             $tbody .=                   '<td colspan="2" style="text-align: center;">'. date('l, M d Y', strtotime($scheduleInfo->date_time)) .'</td>';
-            $tbody .=                   '<td colspan="2" style="text-align: center;">'. date('h:i A', strtotime($group->operation_time)) .'</td>';
+            $tbody .=                   '<td colspan="2" style="text-align: center;">'. $op_time .'</td>';
             $tbody .=               '</tr>';
             $tbody .=               '<tr>';
             $tbody .=                   '<td style="text-align: center;">CONTACT DETAILS</td>';
