@@ -398,7 +398,7 @@ class ScheduleGroupController extends Controller
                 ])
             ]);
 
-            return redirect("/schedules/$scheduledGroupInfo->schedule_id/groups/$scheduledGroupInfo->group_id");
+            return redirect("/schedules/$scheduledGroupInfo->schedule_id/groups/$scheduledGroupInfo->group_id")->with('success', 'Account Successfully Removed!');;
         }
     }
 
@@ -461,7 +461,7 @@ class ScheduleGroupController extends Controller
                 ])
             ]);
 
-            return redirect("/schedules/$scheduledGroupInfo->schedule_id/groups/$scheduledGroupInfo->group_id");
+            return redirect("/schedules/$scheduledGroupInfo->schedule_id/groups/$scheduledGroupInfo->group_id")->with('success', 'Account Successfully Confirmed!');
         }
     }
 
@@ -471,7 +471,7 @@ class ScheduleGroupController extends Controller
 
         $scheduleInfo = Schedule::find($scheduleId, ['name','date_time','status']);
         
-        $scheduledGroups = ScheduledGroup::select('scheduled_groups.schedule_id','scheduled_groups.operation_time','scheduled_groups.group_id','groups.group_type','groups.name','code','owner','contact','address','active_staff','installed_pc','scheduled_groups.remarks','provinces.site')
+        $scheduledGroups = ScheduledGroup::select('scheduled_groups.schedule_id','scheduled_groups.operation_time','scheduled_groups.group_id','groups.group_type','groups.name','code','owner','contact','address','active_staff','installed_pc','scheduled_groups.remarks','provinces.site','groups.guarantor')
                             ->join('groups','groups.id', 'scheduled_groups.group_id')
                             ->join('provinces','provinces.id', 'groups.province_id')
                             ->where('scheduled_groups.schedule_id', $scheduleId);
@@ -580,6 +580,10 @@ class ScheduleGroupController extends Controller
             $tbody .=               '<tr>';
             $tbody .=                   '<td style="text-align: center;"># OF ACTIVE STAFFS</td>';
             $tbody .=                   '<td colspan="3" style="text-align: center;">'. $group->active_staff .'</td>';
+            $tbody .=               '</tr>';
+            $tbody .=               '<tr>';
+            $tbody .=                   '<td style="text-align: center;">GUARANTOR</td>';
+            $tbody .=                   '<td colspan="3" style="text-align: center;">'. $group->guarantor .'</td>';
             $tbody .=               '</tr>';
             if(in_array(Auth::User()->user_type_id, [1,2,3])){
             $tbody .=               '<tr>';

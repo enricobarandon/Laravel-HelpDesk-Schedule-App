@@ -36,6 +36,14 @@ if (! function_exists('removeParam')) {
                       <div class="alert alert-success" role="alert">
                           {{ session('success') }}
                       </div>
+                      
+                      @section('call-script')
+                      <script>
+                      $(document).ready(function() {
+                          $('html, body').animate({ scrollTop: $('#tbl-account').offset().top }, 'slow');
+                      });
+                      </script>
+                      @endsection
                   @elseif(session('error'))
                       <div class="alert alert-danger" role="alert">
                           {{ session('error') }}
@@ -126,7 +134,7 @@ if (! function_exists('removeParam')) {
                     <div class="col-md-12">
                     <a class="btn btn-success float-right" href="{{ removeParam(request()->fullUrlWithQuery(['download' => '1']), 'downloadcurrent') }}">Download Excel</a>
                     </div>
-                    <table class="table sm-global-table">
+                    <table class="table sm-global-table" id="tbl-account">
                       <thead>
                         <tr>
                           <th>#</td>

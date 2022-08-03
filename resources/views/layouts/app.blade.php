@@ -291,6 +291,7 @@
 <!-- Scripts -->
 <script src="{{ asset('js/min/backend.min.js') }}"></script>
 @yield('script')
+@yield('call-script')
 <!-- <script src="https://js.pusher.com/7.1/pusher.min.js"></script> -->
 <script>
 
