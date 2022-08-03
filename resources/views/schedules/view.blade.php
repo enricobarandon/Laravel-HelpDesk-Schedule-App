@@ -34,9 +34,17 @@ if (! function_exists('removeParam')) {
                 <div class="card-body">
 
                     <form class="form-horizontal" method="get">
-                        <div class="form-group row">
+                        <div class="form-group row" style="justify-content: center;">
                             <div class="col-md-3">
                                 <input type="text" class="filter-group form-control" name="groupCode" placeholder="Group Code/Group Name/Address">
+                            </div>
+
+                            <div class="col-md-3">
+                                <input type="text" class="filter-group form-control" name="ogName" placeholder="Operator/Guarantor">
+                            </div>
+
+                            <div class="col-md-2">
+                                <input type="text" class="filter-group form-control" name="operation_time" id="operation_time" placeholder="Operation Time">
                             </div>
 
                             <div class="col-md-2">
@@ -46,8 +54,10 @@ if (! function_exists('removeParam')) {
                                     <option value="wpc2040aa">WPC2040AA</option>
                                 </select>
                             </div>
+                        </div>
 
-                            <div class="col-md-3">
+                        <div class="form-group row" style="justify-content: center;">
+                            <div class="col-md-4">
                                 <select id="selectType" name="selectType[]" class="form-control"  multiple="multiple">
                                     <option selected value="">SELECT ALL TYPE</option>
                                     <option value="ARENA">ARENA</option>
@@ -70,7 +80,7 @@ if (! function_exists('removeParam')) {
                                 </select>
                             </div>
 
-                            <div class="col">
+                            <div class="col-md-3">
                                 <button type="submit" class="btn btn-success"><i class="fas fa-search"></i> Submit</button>
                                 <a href="{{ url('/schedules/view') }}/{{ $scheduleId }}" class="btn btn-danger">Reset</a>
                             </div>
@@ -81,7 +91,7 @@ if (! function_exists('removeParam')) {
                     
                     <div class="col">
                         <div class="float-right">
-                            {{ $scheduledGroups->appends(['selectSite' => $selectSite, 'selectType' => $selectType])->links('pagination::bootstrap-4') }}
+                            {{ $scheduledGroups->appends(Request::except('page'))->links('pagination::bootstrap-4') }}
                         </div>
                     </div>
 
@@ -100,6 +110,7 @@ if (! function_exists('removeParam')) {
 @endsection
 @section('style')
 <link href="{{ asset('css/bootstrap-multiselect.min.css') }}" rel="stylesheet">
+<link href="{{ asset('css/timepicker.min.css') }}" rel="stylesheet">
 <style>
     .multiselect-native-select .btn-group {
         width: 100%;
@@ -107,10 +118,18 @@ if (! function_exists('removeParam')) {
 </style>
 @endsection
 @section('script')
+<script src="{{ asset('js/timepicker.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap-multiselect.min.js') }}"></script>
 <script>
 $(document).ready(function() {
     $('#selectType').multiselect();
+    
+    $('#operation_time').timepicker({
+        timeFormat: 'hh:mm p',
+        dynamic: false,
+        dropdown: true,
+        scrollbar: true
+    });
 });
 </script>
 @endsection

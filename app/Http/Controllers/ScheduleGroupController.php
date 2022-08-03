@@ -497,6 +497,17 @@ class ScheduleGroupController extends Controller
             $scheduledGroups = $scheduledGroups->where('provinces.site', $request->selectSite);
         }
 
+        if($request->ogName){
+            $scheduledGroups = $scheduledGroups->where(function($query) use ($request) {
+                                $query->where('guarantor', 'like', '%' . $request->ogName . '%')
+                                      ->orWhere('owner', 'like', '%' . $request->ogName . '%');
+            });
+        }
+
+        if($request->operation_time){
+            $scheduledGroups = $scheduledGroups->where('operation_time', date('H:i', strtotime($request->operation_time)));
+        }
+
         if($request->pagination){
             if($request->pagination == 'all'){
                 $scheduledGroups = $scheduledGroups->paginate(999999);
@@ -574,16 +585,16 @@ class ScheduleGroupController extends Controller
             $tbody .=                   '<td colspan="3" style="text-align: center;">'. $group->contact .'</td>';
             $tbody .=               '</tr>';
             $tbody .=               '<tr>';
+            $tbody .=                   '<td style="text-align: center;">GUARANTOR</td>';
+            $tbody .=                   '<td colspan="3" style="text-align: center;">'. $group->guarantor .'</td>';
+            $tbody .=               '</tr>';
+            $tbody .=               '<tr>';
             $tbody .=                   '<td style="text-align: center;"># OF PC INSTALLED</td>';
             $tbody .=                   '<td colspan="3" style="text-align: center;">'. $group->installed_pc .'</td>';
             $tbody .=               '</tr>';
             $tbody .=               '<tr>';
             $tbody .=                   '<td style="text-align: center;"># OF ACTIVE STAFFS</td>';
             $tbody .=                   '<td colspan="3" style="text-align: center;">'. $group->active_staff .'</td>';
-            $tbody .=               '</tr>';
-            $tbody .=               '<tr>';
-            $tbody .=                   '<td style="text-align: center;">GUARANTOR</td>';
-            $tbody .=                   '<td colspan="3" style="text-align: center;">'. $group->guarantor .'</td>';
             $tbody .=               '</tr>';
             if(in_array(Auth::User()->user_type_id, [1,2,3])){
             $tbody .=               '<tr>';
