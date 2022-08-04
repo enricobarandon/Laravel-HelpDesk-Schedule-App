@@ -141,7 +141,7 @@ class AccountController extends Controller
         $filterRole = $request->filterRole;
 
         if($request->filterGname){
-            $accounts = $accounts->where('code', 'like', '%' . $request->filterGname . '%');
+            $accounts = $accounts->where('name', 'like', '%' . $request->filterGname . '%');
         }
 
         if($request->filterName){

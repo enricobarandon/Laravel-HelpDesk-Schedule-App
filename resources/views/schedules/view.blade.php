@@ -20,9 +20,6 @@ if (! function_exists('removeParam')) {
     @endif
     <div class="row">
         <main class="py-4">
-
-            <h4><i class="fa fa-info-circle"></i> {{ $scheduleInfo->name }}</h4>
-            <h5>{{ date('l, M d Y', strtotime($scheduleInfo->date_time)) }}</h5>
             
             <div class="card card-info">
 

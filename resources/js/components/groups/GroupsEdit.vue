@@ -154,7 +154,8 @@
             </div> 
 
             <div class="col-md-12 text-center">
-                <button type="button" v-on:click="sweetAlert" class="btn btn-primary">Update</button>
+                <button type="button" v-on:click="sweetAlert" class="btn btn-primary" v-if="group.status != 'pullout'">Update</button>
+                <button type="button" v-on:click="sweetAlert" class="btn btn-primary" v-if="group.pullout_date != null && group.status == 'pullout'">Update</button>
                 <button type="submit" ref="submit" style="display: none">Submit</button>
             </div>
 

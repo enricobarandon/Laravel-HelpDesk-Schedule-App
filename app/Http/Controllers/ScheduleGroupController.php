@@ -549,13 +549,14 @@ class ScheduleGroupController extends Controller
                 $op_time = '--';
             }
 
-            $tbody .= '<tbody>';
-            $tbody .= '<tr colspan="1">';
-            $tbody .=   '<td><h3>' . $groupCount++ .'</h3></td>';
+            // $tbody .= '<tbody>';
+            $tbody .= '<tr>';
+            // $tbody .=   '<td><h3>' . $groupCount++ .'</h3></td>';
             $tbody .=   '<td>';
             $tbody .=       '<table class="table table-bordered full-sched-table" cellspacing="0">';
             $tbody .=           '<thead>';
             $tbody .=               '<tr>';
+            $tbody .=                   '<td><h5>' . $groupCount++ .'</h5></td>';
             $tbody .=                   '<td style="text-align: center;">ARENA NAME</td>';
             $tbody .=                   '<td colspan="3" style="background-color: darkgreen; color: white; font-weight: bold; width: 500px;" >'. htmlspecialchars($group->name) .'</td>';
             $tbody .=                   '<td colspan="4" style="background-color: darkgreen; color: white; text-align: center; width: 450px;">'. $group->remarks .'</td>';
@@ -563,41 +564,49 @@ class ScheduleGroupController extends Controller
             $tbody .=           '</thead>';
             $tbody .=           '<tbody>';
             $tbody .=               '<tr>';
+            $tbody .=                   '<td></td>';
             $tbody .=                   '<td style="text-align: center;">Address</td>';
             $tbody .=                   '<td colspan="3" style="text-align: center;">'. $group->address .'</td>';
             $tbody .=                   '<td colspan="2" style="background-color: darkgreen; color: white; text-align: center; font-weight: bold;">'. $group->code .'</td>';
             $tbody .=                   '<td colspan="2" style="text-align: center; font-weight: bold; '. $siteColor .'">'. $group->site .'</td>';
             $tbody .=               '</tr>';
             $tbody .=               '<tr>';
+            $tbody .=                   '<td></td>';
             $tbody .=                   '<td style="text-align: center;">Site</td>';
             $tbody .=                   '<td colspan="3" style="text-align: center;">'. $group->group_type .'</td>';
             $tbody .=                   '<td colspan="2" style="text-align: center;">Date</td>';
             $tbody .=                   '<td colspan="2" style="text-align: center;">Time</td>';
             $tbody .=               '</tr>';
             $tbody .=               '<tr>';
+            $tbody .=                   '<td></td>';
             $tbody .=                   '<td style="text-align: center;">OPERATOR NAME</td>';
             $tbody .=                   '<td colspan="3" style="text-align: center;">'. strtoupper(htmlspecialchars($group->owner)) .'</td>';
             $tbody .=                   '<td colspan="2" style="text-align: center;">'. date('l, M d Y', strtotime($scheduleInfo->date_time)) .'</td>';
             $tbody .=                   '<td colspan="2" style="text-align: center;">'. $op_time .'</td>';
             $tbody .=               '</tr>';
             $tbody .=               '<tr>';
+            $tbody .=                   '<td></td>';
             $tbody .=                   '<td style="text-align: center;">CONTACT DETAILS</td>';
             $tbody .=                   '<td colspan="3" style="text-align: center;">'. $group->contact .'</td>';
             $tbody .=               '</tr>';
             $tbody .=               '<tr>';
+            $tbody .=                   '<td></td>';
             $tbody .=                   '<td style="text-align: center;">GUARANTOR</td>';
             $tbody .=                   '<td colspan="3" style="text-align: center;">'. $group->guarantor .'</td>';
             $tbody .=               '</tr>';
             $tbody .=               '<tr>';
+            $tbody .=                   '<td></td>';
             $tbody .=                   '<td style="text-align: center;"># OF PC INSTALLED</td>';
             $tbody .=                   '<td colspan="3" style="text-align: center;">'. $group->installed_pc .'</td>';
             $tbody .=               '</tr>';
             $tbody .=               '<tr>';
+            $tbody .=                   '<td></td>';
             $tbody .=                   '<td style="text-align: center;"># OF ACTIVE STAFFS</td>';
             $tbody .=                   '<td colspan="3" style="text-align: center;">'. $group->active_staff .'</td>';
             $tbody .=               '</tr>';
             if(in_array(Auth::User()->user_type_id, [1,2,3])){
             $tbody .=               '<tr>';
+            $tbody .=                   '<td></td>';
             $tbody .=                   '<th colspan=".5" style="background-color: black; color: yellow; text-align: center;">#</th>';
             $tbody .=                   '<th colspan="1.5" style="background-color: black; color: yellow; text-align: center;">NAMES</th>';
             $tbody .=                   '<th style="background-color: black; color: yellow; text-align: center;">CONTACT</th>';
@@ -611,16 +620,17 @@ class ScheduleGroupController extends Controller
             }
             $tbody .=           '</tbody>';
             $tbody .=       '</table>';
-            $tbody .=   '<td>';
+            $tbody .=   '</td>';
             $tbody .= '</tr>';
-            $tbody .= '</tbody>';
+            // $tbody .= '</tbody>';
         }
 
         if ($request->has('download') || $request->has('downloadcurrent')) {
 
             return Excel::download(
                 new ScheduledGroupExport('schedules.tables.fullview', [
-                    'tbody' => $tbody
+                    'tbody' => $tbody,
+                    'scheduleInfo' => $scheduleInfo
                 ]),
                 'schedule.xlsx'
             );
@@ -699,6 +709,7 @@ class ScheduleGroupController extends Controller
             }
 
             $tableRow .= '<tr>';
+            $tableRow .=    '<td></td>';
             $tableRow .=    '<td colspan=".5" style="text-align: center;' . $trClass . '">'. $i++ .'</td>';
             $tableRow .=    '<td colspan="1.5" style="text-align: center;' . $trClass . '">'. strtoupper($account['first_name']) .' '. strtoupper($account['last_name']) .'</td>';
             $tableRow .=    '<td style="text-align: center;' . $trClass . '">'. $account['contact'] .'</td>';

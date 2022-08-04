@@ -11,8 +11,13 @@
             <th>Site</th>
             <th>Province</th>
             <th>Guarantor</th>
+            @if($groupsStatus == 'deactivated')
+            <th>Status</th>
+            @endif
             <th>Operation Date</th>
+            @if($groupsStatus == 'pullout')
             <th>Pullout Date</th>
+            @endif
         </tr>
     </thead>
     <tbody>
@@ -31,8 +36,13 @@
                 <td>{{ $group->site }}</td>
                 <td>{{ $group->province }}</td>
                 <td>{{ $group->guarantor }}</td>
+                @if($groupsStatus == 'deactivated')
+                <td>{{ $group->status }}</td>
+                @endif
                 <td>{{ $group->operation_date == '' ? '--' : date("M d, Y",strtotime($group->operation_date))}}</td>
+                @if($groupsStatus == 'pullout')
                 <td>{{ $group->pullout_date == '' ? '--' : date("M d, Y",strtotime($group->pullout_date))}}</td>
+                @endif
             </tr>
         @endforeach
     </tbody>

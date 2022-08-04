@@ -15,6 +15,8 @@ class GroupController extends Controller
         $groups = Group::select('groups.name','is_active','group_type','code','owner','contact','provinces.name as province','provinces.site as site','active_staff','installed_pc','status','address','guarantor','operation_date','pullout_date')
                         ->join('provinces','provinces.id','groups.province_id');
 
+        $groupsStatus = '';
+        
         if ($request->has('download-active') || $request->has('download-deactivated') || $request->has('download-pullout')) {
 
             if($request->has('download-active')){
@@ -29,7 +31,8 @@ class GroupController extends Controller
             }
             return Excel::download(
                 new ScheduledGroupExport('groups.tables.groupsTable', [
-                    'groups' => $groups
+                    'groups' => $groups,
+                    'groupsStatus' => $groupsStatus
                 ]),
                 $groupsStatus.'-groups.xlsx'
             );
@@ -37,7 +40,10 @@ class GroupController extends Controller
 
         $groups = $groups->get();
 
-        return view('groups.index', ['groups' => $groups]);
+        return view('groups.index', [
+                    'groups' => $groups,
+                    'groupsStatus' => $groupsStatus
+                ]);
         // return view('groups.index');
     }
 
