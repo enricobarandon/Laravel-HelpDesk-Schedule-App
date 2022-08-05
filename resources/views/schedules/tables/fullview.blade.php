@@ -7,7 +7,7 @@
     </thead>
     <tbody>
         <tr>
-            <td colspan="9">{{ strtoupper($scheduleInfo->name) }} ({{ date('l, M d Y', strtotime($scheduleInfo->date_time)) }})</td>
+            <td colspan="9" style="font-weight: bold;">{{ strtoupper($scheduleInfo->name) }} ({{ date('l, M d Y', strtotime($scheduleInfo->date_time)) }})</td>
         </tr>
         <tr></tr>
         {!! $tbody !!}

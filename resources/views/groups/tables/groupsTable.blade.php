@@ -11,7 +11,7 @@
             <th>Site</th>
             <th>Province</th>
             <th>Guarantor</th>
-            @if($groupsStatus == 'deactivated')
+            @if($groupsStatus != 'active')
             <th>Status</th>
             @endif
             <th>Operation Date</th>
@@ -36,7 +36,7 @@
                 <td>{{ $group->site }}</td>
                 <td>{{ $group->province }}</td>
                 <td>{{ $group->guarantor }}</td>
-                @if($groupsStatus == 'deactivated')
+                @if($groupsStatus != 'active')
                 <td>{{ $group->status }}</td>
                 @endif
                 <td>{{ $group->operation_date == '' ? '--' : date("M d, Y",strtotime($group->operation_date))}}</td>
