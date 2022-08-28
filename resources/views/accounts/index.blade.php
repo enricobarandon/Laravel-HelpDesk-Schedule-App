@@ -57,6 +57,14 @@ $user = auth()->user();
                                     <option value="Operator">Operator</option>
                                 </select>
                             </div>
+                            
+                            <div class="col-md-2">
+                                <select class="form-control" name="filterSite" id="filterSite">
+                                    <option selected disabled value="">SELECT SITE</option>
+                                    <option value="wpc2040">WPC2040</option>
+                                    <option value="wpc2040aa">WPC2040AA</option>
+                                </select>
+                            </div>
 
                             <div class="col">
                                 <button type="submit" class="btn btn-success"><i class="fas fa-search"></i> Submit</button>
@@ -71,9 +79,9 @@ $user = auth()->user();
                             <tr>
                                 <th>#</th>
                                 <th>Group</th>
-                                <!-- <th>Guarantor</th> -->
                                 <th>Full Name</th>
                                 <th>Contact #</th>
+                                <th>Site</th>
                                 <th>Role</th>
                                 <th>Username</th>
                                 <th>Password</th>
@@ -92,6 +100,7 @@ $user = auth()->user();
                                     <!-- <td>--</td> -->
                                     <td>{{ $account->first_name }} {{ $account->last_name }}</td>
                                     <td>{{ $account->contact }}</td>
+                                    <td class="{{ $account->site == 'wpc2040' ? 'td-blue' : 'td-red' }}">{{ $account->site }}</td>
                                     <td>{{ $account->position }}</td>
                                     <td>{{ $account->username }}</td>
                                     <td>

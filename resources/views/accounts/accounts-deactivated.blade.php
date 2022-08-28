@@ -39,7 +39,7 @@ $user = auth()->user();
                     <form class="form-horizontal" method="get">
                         <div class="form-group row">
 
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <input type="text" class="form-control" name="filterName" id="filterName" placeholder="Name / Username">
                             </div>
 
@@ -58,11 +58,19 @@ $user = auth()->user();
                                 </select>
                             </div>
                             
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <select class="form-control" name="filterStatus" id="filterStatus">
                                     <option selected disabled value="">SELECT STATUS</option>
                                     <option value="temporarydeactivated">Temporary Deactivated</option>
                                     <option value="permanentdeactivated">Permanent Deactivated</option>
+                                </select>
+                            </div>
+                            
+                            <div class="col-md-2">
+                                <select class="form-control" name="filterSite" id="filterSite">
+                                    <option selected disabled value="">SELECT SITE</option>
+                                    <option value="wpc2040">WPC2040</option>
+                                    <option value="wpc2040aa">WPC2040AA</option>
                                 </select>
                             </div>
 
@@ -82,6 +90,7 @@ $user = auth()->user();
                                 <!-- <th>Guarantor</th> -->
                                 <th>Full Name</th>
                                 <th>Contact #</th>
+                                <th>Site</th>
                                 <th>Role</th>
                                 <th>Username</th>
                                 <th>Password</th>
@@ -111,6 +120,7 @@ $user = auth()->user();
                                     <!-- <td>--</td> -->
                                     <td>{{ $account->first_name }} {{ $account->last_name }}</td>
                                     <td>{{ $account->contact }}</td>
+                                    <td class="{{ $account->site == 'wpc2040' ? 'td-blue' : 'td-red' }}">{{ $account->site }}</td>
                                     <td>{{ $account->position }}</td>
                                     <td>{{ $account->username }}</td>
                                     <td>

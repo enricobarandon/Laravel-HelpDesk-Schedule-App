@@ -16,8 +16,9 @@ use Auth;
 class AccountController extends Controller
 {
     public function index(Request $request) {
-        $accounts = Account::select('accounts.id as acc_id','groups.name as group_name','first_name','last_name','accounts.contact','position','username','accounts.is_active','accounts.uuid','password')
+        $accounts = Account::select('accounts.id as acc_id','groups.name as group_name','first_name','last_name','accounts.contact','position','username','accounts.is_active','accounts.uuid','password','provinces.site as site')
                         ->leftjoin('groups','groups.id','accounts.group_id')
+                        ->leftjoin('provinces','provinces.id','groups.province_id')
                         ->where('accounts.is_active', 1);
         
         $filterStatus = $request->filterStatus;
@@ -34,6 +35,10 @@ class AccountController extends Controller
 
         if($request->filterRole != ""){
             $accounts = $accounts->where('accounts.position', $request->filterRole);
+        }
+        
+        if($request->filterSite != ""){
+            $accounts = $accounts->where('provinces.site', $request->filterSite);
         }
         
         $accounts = $accounts->paginate(100);
@@ -132,8 +137,9 @@ class AccountController extends Controller
     }
 
     public function accountsDeactivated(Request $request) {
-        $accounts = Account::select('accounts.id as acc_id','groups.name as group_name','first_name','last_name','accounts.contact','position','username','accounts.is_active','accounts.uuid','password','accounts.status')
+        $accounts = Account::select('accounts.id as acc_id','groups.name as group_name','first_name','last_name','accounts.contact','position','username','accounts.is_active','accounts.uuid','password','accounts.status','provinces.site as site')
                         ->leftjoin('groups','groups.id','accounts.group_id')
+                        ->leftjoin('provinces','provinces.id','groups.province_id')
                         ->where('accounts.is_active', 0);
         
         $filterStatus = $request->filterStatus;
@@ -154,6 +160,10 @@ class AccountController extends Controller
 
         if($request->filterStatus != ""){
             $accounts = $accounts->where('accounts.status', $request->filterStatus);
+        }
+        
+        if($request->filterSite != ""){
+            $accounts = $accounts->where('provinces.site', $request->filterSite);
         }
         
         $accounts = $accounts->paginate(100);
