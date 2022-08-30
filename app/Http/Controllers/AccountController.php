@@ -26,7 +26,7 @@ class AccountController extends Controller
         $filterRole = $request->filterRole;
 
         if($request->filterGname){
-            $accounts = $accounts->where('name', 'like', '%' . $request->filterGname . '%');
+            $accounts = $accounts->where('groups.name', 'like', '%' . $request->filterGname . '%');
         }
 
         if($request->filterName){
@@ -147,7 +147,7 @@ class AccountController extends Controller
         $filterRole = $request->filterRole;
 
         if($request->filterGname){
-            $accounts = $accounts->where('name', 'like', '%' . $request->filterGname . '%');
+            $accounts = $accounts->where('groups.name', 'like', '%' . $request->filterGname . '%');
         }
 
         if($request->filterName){
