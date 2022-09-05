@@ -29,7 +29,16 @@ class DataController extends Controller
                 $apiURL = 'https://admin.wpc2040aa.live/api/v4/groups';
             }
         } else {
-            $apiURL = 'https://development.wpc2040.live/api/v4/groups';
+            $devHost = request()->getHost();
+            if ($devHost == 'devsched.wpc2040.live') {
+                // for develop server
+                // BMM server
+                $apiURL = 'https://develop.wpc2040.live//api/v4/groups';
+            } else if ($devHost == 'devschedule.wpc2040.live') {
+                // for official dev server
+                // dev2
+                $apiURL = 'https://development.wpc2040.live/api/v4/groups';
+            }
         }
 
         $postInput = [
@@ -89,7 +98,17 @@ class DataController extends Controller
                 $apiURL = 'https://admin.wpc2040aa.live/api/v4/users';
             }
         } else {
-            $apiURL = 'https://development.wpc2040.live/api/v4/users';
+            // $apiURL = 'https://development.wpc2040.live/api/v4/users';
+            $devHost = request()->getHost();
+            if ($devHost == 'devsched.wpc2040.live') {
+                // for develop server
+                // BMM server
+                $apiURL = 'https://develop.wpc2040.live//api/v4/users';
+            } else if ($devHost == 'devschedule.wpc2040.live') {
+                // for official dev server
+                // dev2
+                $apiURL = 'https://development.wpc2040.live/api/v4/users';
+            }
         }
 
         $postInput = [

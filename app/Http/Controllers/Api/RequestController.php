@@ -285,7 +285,17 @@ class RequestController extends Controller
                 $apiURL = 'https://admin.wpc2040aa.live/api/v4/requests';
             }
         } else {
-            $apiURL = 'https://development.wpc2040.live/api/v4/requests';
+            // $apiURL = 'https://development.wpc2040.live/api/v4/requests';
+            $devHost = request()->getHost();
+            if ($devHost == 'devsched.wpc2040.live') {
+                // for develop server
+                // BMM server
+                $apiURL = 'https://develop.wpc2040.live//api/v4/requests';
+            } else if ($devHost == 'devschedule.wpc2040.live') {
+                // for official dev server
+                // dev2
+                $apiURL = 'https://development.wpc2040.live/api/v4/requests';
+            }
         }
 
         $apiKey = env('KIOSK_API_KEY');
