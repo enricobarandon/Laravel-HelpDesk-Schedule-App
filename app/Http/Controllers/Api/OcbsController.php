@@ -113,7 +113,7 @@ class OcbsController extends Controller
         if ($create) {
 
             ActivityLog::create([
-                'type' => 'ocbs-create-group',
+                'type' => 'ocbs-create-' . $table,
                 'user_id' => 0,
                 'assets' => json_encode(array_merge([
                     'action' => 'Received create from ocbs',
