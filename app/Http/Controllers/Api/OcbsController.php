@@ -112,6 +112,8 @@ class OcbsController extends Controller
 
         if ($create) {
 
+            $table = $table == 'users' ? 'user' : ' group';
+
             ActivityLog::create([
                 'type' => 'ocbs-create-' . $table,
                 'user_id' => 0,
