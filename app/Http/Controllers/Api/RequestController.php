@@ -18,6 +18,8 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Str;
 use App\Models\UserType;
 use App\Jobs\ProcessRequest;
+use App\Models\Schedule;
+use App\Models\ScheduledAccount;
 
 class RequestController extends Controller
 {
@@ -414,6 +416,14 @@ class RequestController extends Controller
                     if ($operation == 'update') {
     
                         $result = Account::where('uuid', $request->uuid)->update($data);
+
+                        // check if there is an ongoing event;
+                        // update user allowed_sides and position in scheduled_accounts for that user;
+                        $checkOngoingEvent = Schedule::select('id')->where('status','active')->orderBy('id','desc')->first();
+                        if ($checkOngoingEvent) {
+                            $accountInfo = Account::where('uuid', $request->uuid)->first();
+                            ScheduledAccount::updateUserCurEvent($checkOngoingEvent->id, $accountInfo->id, $data);
+                        }
     
                     } else if($operation == 'create') {
 

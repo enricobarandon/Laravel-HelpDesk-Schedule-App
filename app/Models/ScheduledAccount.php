@@ -36,4 +36,12 @@ class ScheduledAccount extends Model
         return collect($accounts)->groupBy('group_id')->all();
     }
 
+    public static function updateUserCurEvent($scheduleId, $accountId, $data) {
+        $update = ScheduledAccount::where('schedule_id', $scheduleId)
+                            ->where('account_id', $accountId)
+                            ->update([
+                                'account_allowed_sides' => $data['allowed_sides'],
+                                'account_position'  => $data['position']
+                            ]);
+    }
 }

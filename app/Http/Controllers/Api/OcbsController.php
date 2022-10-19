@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Group;
 use App\Models\ActivityLog;
 use App\Models\Account;
+use App\Models\Schedule;
+use App\Models\ScheduledAccount;
 
 class OcbsController extends Controller
 {
@@ -47,6 +49,13 @@ class OcbsController extends Controller
             $target = Account::where('uuid', $uuid)->first();
 
             $targetInfo = $target->username;
+
+            // check if there is an ongoing event;
+            // update user allowed_sides and position in scheduled_accounts for that user;
+            $checkOngoingEvent = Schedule::select('id')->where('status','active')->orderBy('id','desc')->first();
+            if ($checkOngoingEvent) {
+                ScheduledAccount::updateUserCurEvent($checkOngoingEvent->id, $target->id, $updateAccountForm);
+            }
 
         }
         
