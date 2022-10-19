@@ -92,6 +92,7 @@ $user = auth()->user();
                                 <th>Contact #</th>
                                 <th>Site</th>
                                 <th>Role</th>
+                                <th>Allowed Side</th>
                                 <th>Username</th>
                                 <th>Password</th>
                                 <th>Status</th>
@@ -122,6 +123,7 @@ $user = auth()->user();
                                     <td>{{ $account->contact }}</td>
                                     <td class="{{ $account->site == 'wpc2040' ? 'td-blue' : 'td-red' }}">{{ $account->site }}</td>
                                     <td>{{ $account->position }}</td>
+                                    <td>{{ $account->allowed_sides }}</td>
                                     <td>{{ $account->username }}</td>
                                     <td>
                                         <form method="post" action="{{ url('/accounts/update-password/'.$account->acc_id)}}">

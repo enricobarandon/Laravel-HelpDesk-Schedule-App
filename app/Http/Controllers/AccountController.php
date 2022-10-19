@@ -16,7 +16,7 @@ use Auth;
 class AccountController extends Controller
 {
     public function index(Request $request) {
-        $accounts = Account::select('accounts.id as acc_id','groups.name as group_name','first_name','last_name','accounts.contact','position','username','accounts.is_active','accounts.uuid','password','provinces.site as site')
+        $accounts = Account::select('accounts.id as acc_id','groups.name as group_name','first_name','last_name','accounts.contact','position','username','accounts.is_active','accounts.uuid','password','provinces.site as site','allowed_sides')
                         ->leftjoin('groups','groups.id','accounts.group_id')
                         ->leftjoin('provinces','provinces.id','groups.province_id')
                         ->where('accounts.is_active', 1);
@@ -66,13 +66,23 @@ class AccountController extends Controller
             'a' => 'All sides'
         ];
 
-        $positions = [
-            'Teller',
-            'Cashier',
-            'Teller/Cashier',
-            'Supervisor',
-            'Operator'
-        ];
+        $positions = '';
+
+        if($account->position == 'Supervisor'){
+            $positions = [
+                'Supervisor'
+            ];
+        }else if($account->position == 'Operator'){
+            $positions = [
+                'Operator'
+            ];
+        }else{
+            $positions = [
+                'Teller',
+                'Cashier',
+                'Teller/Cashier'
+            ];
+        }
 
         $groups = Group::select('id','code','name')
                     // ->where('is_active',1)
@@ -137,7 +147,7 @@ class AccountController extends Controller
     }
 
     public function accountsDeactivated(Request $request) {
-        $accounts = Account::select('accounts.id as acc_id','groups.name as group_name','first_name','last_name','accounts.contact','position','username','accounts.is_active','accounts.uuid','password','accounts.status','provinces.site as site')
+        $accounts = Account::select('accounts.id as acc_id','groups.name as group_name','first_name','last_name','accounts.contact','position','username','accounts.is_active','accounts.uuid','password','accounts.status','provinces.site as site','allowed_sides')
                         ->leftjoin('groups','groups.id','accounts.group_id')
                         ->leftjoin('provinces','provinces.id','groups.province_id')
                         ->where('accounts.is_active', 0);

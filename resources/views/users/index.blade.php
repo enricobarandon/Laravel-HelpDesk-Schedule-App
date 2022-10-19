@@ -123,7 +123,7 @@ if (! function_exists('removeParam')) {
                                 
                     <div class="col">
                         <div class="float-right">
-                            {{ $users->appends(['userType' => $userType])->links('pagination::bootstrap-4') }}
+                            {{ $users->appends(Request::except('page'))->links('pagination::bootstrap-4') }}
                         </div>
                     </div>        
 
