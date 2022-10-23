@@ -699,11 +699,14 @@ class ScheduleGroupController extends Controller
         $tableRow = '';
         $i = 1;
         foreach($accountsArr[$groupId] as $account) {
-
-            if($account['status'] == 'temporarydeactivated' and $account['is_active'] == 0){
-                $trClass = 'background: yellow;';
-            }elseif($account['status'] == 'permanentdeactivated' and $account['is_active'] == 0){
-                $trClass = 'background: #dc3545; color: white;';
+            if($account['is_active'] == 0){
+                if($account['status'] == 'temporarydeactivated'){
+                    $trClass = 'background: yellow;';
+                }elseif($account['status'] == 'permanentdeactivated'){
+                    $trClass = 'background: #dc3545; color: white;';
+                }else{
+                    $trClass = 'background: #ff7b00; color: white;';
+                }
             }else{
                 $trClass = '';
             }
