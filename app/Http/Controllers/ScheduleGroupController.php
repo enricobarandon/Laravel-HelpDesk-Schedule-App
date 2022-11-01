@@ -413,6 +413,11 @@ class ScheduleGroupController extends Controller
         $groupId = request()->groupId;
         // dd(request()->accountId);
         // dd($accountId,$scheduleId,$groupId);
+        $scheduledGroupInfo = ScheduledGroup::find($scheduledGroupId);
+
+        if($scheduledGroupInfo->operation_time == null){
+            return back()->with('error','Please input operation time first!');
+        }
         
         $user = Auth::user();
 
@@ -438,8 +443,6 @@ class ScheduleGroupController extends Controller
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);
-
-        $scheduledGroupInfo = ScheduledGroup::find($scheduledGroupId);
 
         if ($storeAccountFromScheduledGroup) {
 
@@ -892,6 +895,12 @@ class ScheduleGroupController extends Controller
         $groupId = request()->groupId;
         
         $user = Auth::user();
+        
+        $scheduledGroupInfo = ScheduledGroup::find($scheduledGroupId);
+
+        if($scheduledGroupInfo->operation_time == null){
+            return back()->with('error','Please input operation time first!');
+        }
 
         $allAccounts = Group::select('groups.id','accounts.id as acc_id','accounts.allowed_sides','accounts.password','accounts.position')
                         ->join('accounts','accounts.group_id','groups.id')
