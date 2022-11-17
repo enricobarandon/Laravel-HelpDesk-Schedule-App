@@ -474,7 +474,7 @@ class ScheduleGroupController extends Controller
 
         $scheduleInfo = Schedule::find($scheduleId, ['name','date_time','status']);
         
-        $scheduledGroups = ScheduledGroup::select('scheduled_groups.schedule_id','scheduled_groups.operation_time','scheduled_groups.group_id','groups.group_type','groups.name','code','owner','contact','address','active_staff','installed_pc','scheduled_groups.remarks','provinces.site','groups.guarantor')
+        $scheduledGroups = ScheduledGroup::select('scheduled_groups.schedule_id','scheduled_groups.operation_time','scheduled_groups.group_id','groups.group_type','groups.name','code','owner','contact','address','active_staff','installed_pc','scheduled_groups.remarks','provinces.site','groups.guarantor','groups.is_active')
                             ->join('groups','groups.id', 'scheduled_groups.group_id')
                             ->join('provinces','provinces.id', 'groups.province_id')
                             ->where('scheduled_groups.schedule_id', $scheduleId);
@@ -537,11 +537,22 @@ class ScheduleGroupController extends Controller
             }
 
             $siteColor = '';
+            $is_active = '';
 
             if ($group->site == 'wpc2040') {
                 $siteColor = 'background-color: #007bff;color: #ffffff;';
             } else if ($group->site == 'wpc2040aa') {
                 $siteColor = 'background-color: #dc3545;color: #ffffff;';
+            }
+
+            if($scheduleInfo->status == 'active')
+                if ($group->is_active == 1) {
+                    $is_active = 'background-color: darkgreen;color: #ffffff;';
+                } else{
+                    $is_active = 'background-color: #ff7b00;color: #ffffff;';
+                }
+            else{
+                $is_active = 'background-color: darkgreen;color: #ffffff;';
             }
 
             $op_time = '';
@@ -561,7 +572,7 @@ class ScheduleGroupController extends Controller
             $tbody .=               '<tr>';
             $tbody .=                   '<td><h5>' . $groupCount++ .'</h5></td>';
             $tbody .=                   '<td style="text-align: center;">ARENA NAME</td>';
-            $tbody .=                   '<td colspan="3" style="background-color: darkgreen; color: white; font-weight: bold; width: 500px;" >'. htmlspecialchars($group->name) .'</td>';
+            $tbody .=                   '<td colspan="3" style="'.$is_active.' font-weight: bold; width: 500px;" >'. htmlspecialchars($group->name) .'</td>';
             $tbody .=                   '<td colspan="4" style="background-color: darkgreen; color: white; text-align: center; width: 450px;">'. $group->remarks .'</td>';
             $tbody .=               '</tr>';
             $tbody .=           '</thead>';
