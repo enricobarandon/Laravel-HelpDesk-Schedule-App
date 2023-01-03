@@ -35,16 +35,16 @@ if (! function_exists('removeParam')) {
 
                             <div class="col-md-3">
                                 <select class="form-control" name="status" id="status">
-                                    <option value="" selected disabled>Select All Status</option>
-                                    <option value="pending">Pending</option>
-                                    <option value="approved">Approved</option>
-                                    <option value="rejected">Rejected</option>
+                                    <!-- <option value="" selected disabled>Select All Status</option> -->
+                                    <option value="pending" {{ $status == 'pending' ? 'selected' : '' }}>Pending</option>
+                                    <option value="approved" {{ $status == 'approved' ? 'selected' : '' }}>Approved</option>
+                                    <option value="rejected" {{ $status == 'rejected' ? 'selected' : '' }}>Rejected</option>
                                 </select>
                             </div>
 
                             <div class="col">
                                 <button type="submit" class="btn btn-success"><i class="fas fa-search"></i> Submit</button>
-                                <a href="{{ url('/requests') }}" class="btn btn-danger">Reset</a>
+                                <a href="{{ url('/requests?status=pending') }}" class="btn btn-danger">Reset</a>
                             </div>
                         </div>
                     </form>

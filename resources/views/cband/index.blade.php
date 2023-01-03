@@ -42,18 +42,25 @@ if (! function_exists('removeParam')) {
                                 <input type="text" class="form-control" name="keyword" id="keyword" placeholder="keyword" value="">
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <select class="form-control" name="status" id="status">
-                                    <option value="" selected disabled>Select All Status</option>
-                                    <option value="pending">Pending</option>
-                                    <option value="approved">Approved</option>
-                                    <option value="rejected">Rejected</option>
+                                    <option value="" {{ $status == '' ? 'selected' : '' }} disabled>Select All Status</option>
+                                    <option value="pending" {{ $status == 'pending' ? 'selected' : '' }}>Pending</option>
+                                    <option value="approved" {{ $status == 'approved' ? 'selected' : '' }}>Approved</option>
+                                    <option value="rejected" {{ $status == 'rejected' ? 'selected' : '' }}>Rejected</option>
                                 </select>
                             </div>
 
+                            <div class="col-md-3">
+                                <select class="form-control" name="cbandStatus" id="cbandStatus">
+                                    <option value="0" {{ $cbandStatus == '0' ? 'selected' : '' }}>Processing</option>
+                                    <option value="1" {{ $cbandStatus == '1' ? 'selected' : '' }}>Processed</option>
+                                </select>
+                            </div>
+                            
                             <div class="col">
                                 <button type="submit" class="btn btn-success"><i class="fas fa-search"></i> Submit</button>
-                                <a href="{{ url('/cband') }}" class="btn btn-danger">Reset</a>
+                                <a href="{{ url('/cband?cbandStatus=0') }}" class="btn btn-danger">Reset</a>
                             </div>
                         </div>
                     </form>

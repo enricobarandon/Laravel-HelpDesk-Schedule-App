@@ -27,8 +27,14 @@ class CbandController extends Controller
             $requests = $requests->where(DB::raw('CONCAT_WS(requested_by,requests.data,requests.remarks,reference_number)'), 'like', '%' . $keyword . '%');
         }
 
+        $status = $request->status;
         if($request->status != ""){
-            $requests = $requests->where('requests.status', $request->status);
+            $requests = $requests->where('requests.status', $status);
+        }
+        
+        $cbandStatus = $request->cbandStatus;
+        if($request->cbandStatus != ""){
+            $requests = $requests->where('requests.status', 'approved')->where('requests.is_processed', $cbandStatus);
         }
 
         $requests = $requests->paginate(20);
@@ -42,7 +48,7 @@ class CbandController extends Controller
             );
         }
         
-        return view('cband.index', compact('requests','keyword'));
+        return view('cband.index', compact('requests','keyword','cbandStatus','status'));
     }
     public function changeViewingStatus(Request $request)
     {
