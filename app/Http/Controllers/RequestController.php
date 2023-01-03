@@ -35,6 +35,10 @@ class RequestController extends Controller
             $requests = $requests->where('requests.status', $request->status);
         }
 
+        if($keyword == '' and $status == ''){
+            $requests = $requests->where('requests.status', 'pending');
+        }
+
         $requests = $requests->paginate(20);
 
         if ($request->has('download') || $request->has('downloadcurrent')) {

@@ -60,7 +60,7 @@ if (! function_exists('removeParam')) {
                             
                             <div class="col">
                                 <button type="submit" class="btn btn-success"><i class="fas fa-search"></i> Submit</button>
-                                <a href="{{ url('/cband?cbandStatus=0') }}" class="btn btn-danger">Reset</a>
+                                <a href="{{ url('/cband') }}" class="btn btn-danger">Reset</a>
                             </div>
                         </div>
                     </form>

@@ -37,6 +37,10 @@ class CbandController extends Controller
             $requests = $requests->where('requests.status', 'approved')->where('requests.is_processed', $cbandStatus);
         }
 
+        if($keyword == '' and $status == '' and $cbandStatus == ''){
+            $requests = $requests->where('requests.status', 'approved')->where('requests.is_processed', '0');
+        }
+
         $requests = $requests->paginate(20);
 
         if ($request->has('download')) {

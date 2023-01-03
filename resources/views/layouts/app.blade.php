@@ -215,7 +215,7 @@
         @endif
           @if($users->user_type_id != 5)
           <li class="nav-item">
-            <a href="/requests?status=pending" class="nav-link {{ (request()->is('requests*')) ? 'active' : '' }}">
+            <a href="/requests" class="nav-link {{ (request()->is('requests*')) ? 'active' : '' }}">
               <i class="nav-icon fa fa-list"></i>
               <p>
                 Requests
@@ -226,7 +226,7 @@
           @endif
 
           <li class="nav-item">
-            <a href="/cband?cbandStatus=0" class="nav-link {{ (request()->is('cband')) ? 'active' : '' }}">
+            <a href="/cband" class="nav-link {{ (request()->is('cband')) ? 'active' : '' }}">
               <i class="nav-icon fa fa-tv"></i>
               <p>
                 CBand

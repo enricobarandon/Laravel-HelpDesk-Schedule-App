@@ -44,7 +44,7 @@ if (! function_exists('removeParam')) {
 
                             <div class="col">
                                 <button type="submit" class="btn btn-success"><i class="fas fa-search"></i> Submit</button>
-                                <a href="{{ url('/requests?status=pending') }}" class="btn btn-danger">Reset</a>
+                                <a href="{{ url('/requests') }}" class="btn btn-danger">Reset</a>
                             </div>
                         </div>
                     </form>
