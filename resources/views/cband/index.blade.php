@@ -42,12 +42,20 @@ if (! function_exists('removeParam')) {
                                 <input type="text" class="form-control" name="keyword" id="keyword" placeholder="keyword" value="">
                             </div>
 
-                            <div class="col-md-2">
+                            <!-- <div class="col-md-2">
                                 <select class="form-control" name="status" id="status">
                                     <option value="" {{ $status == '' ? 'selected' : '' }} disabled>Select All Status</option>
                                     <option value="pending" {{ $status == 'pending' ? 'selected' : '' }}>Pending</option>
                                     <option value="approved" {{ $status == 'approved' ? 'selected' : '' }}>Approved</option>
                                     <option value="rejected" {{ $status == 'rejected' ? 'selected' : '' }}>Rejected</option>
+                                </select>
+                            </div> -->
+
+                            <div class="col-md-2">
+                                <select class="form-control" name="vStatus" id="vStatus">
+                                    <option value="" {{ $vStatus == '' ? 'selected' : '' }} disabled>Viewing Status</option>
+                                    <option value="1" {{ $vStatus == '1' ? 'selected' : '' }}>Active</option>
+                                    <option value="0" {{ $vStatus == '0' ? 'selected' : '' }}>Deactivated</option>
                                 </select>
                             </div>
 

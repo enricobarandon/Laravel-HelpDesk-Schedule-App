@@ -28,8 +28,13 @@ class CbandController extends Controller
         }
 
         $status = $request->status;
-        if($request->status != ""){
-            $requests = $requests->where('requests.status', $status);
+        // if($request->status != ""){
+        //     $requests = $requests->where('requests.status', $status);
+        // }
+
+        $vStatus = $request->vStatus;
+        if($vStatus != ""){
+            $requests = $requests->where('groups.viewing_status', $vStatus);
         }
         
         $cbandStatus = $request->cbandStatus;
@@ -52,7 +57,7 @@ class CbandController extends Controller
             );
         }
         
-        return view('cband.index', compact('requests','keyword','cbandStatus','status'));
+        return view('cband.index', compact('requests','keyword','cbandStatus','status','vStatus'));
     }
     public function changeViewingStatus(Request $request)
     {
