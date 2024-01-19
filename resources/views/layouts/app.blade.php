@@ -67,11 +67,11 @@
                 <div class="dropdown">
             </li>
         @endguest
-      
+
     </ul>
   </nav>
   <!-- /.navbar -->
-@php 
+@php
   $users = Auth::user();
 @endphp
   <!-- Main Sidebar Container -->
@@ -109,7 +109,7 @@
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-         
+
           <li class="nav-item">
             <a href="/home" class="nav-link {{ (request()->is('home')) ? 'active' : '' }}">
               <i class="nav-icon fas fa-th"></i>
@@ -168,7 +168,7 @@
           </li>
 
         @if(in_array($users->user_type_id, [1,2,3,5]))
-          
+
           @if($users->user_type_id != 5)
           <li class="nav-item {{ (request()->is('accounts*')) ? 'menu-is-opening menu-open' : 'menu-close' }}">
             <a href="#" class="nav-link  {{ (request()->is('accounts') || request()->is('accounts/*')) ? 'active' : '' }}">
@@ -236,6 +236,16 @@
           </li>
 
           @if($users->user_type_id == 1)
+
+          <li class="nav-item">
+            <a href="/archive" class="nav-link {{ (request()->is('archive')) ? 'active' : '' }}">
+              <i class="nav-icon fa fa-folder"></i>
+              <p>
+                Archive
+              </p>
+            </a>
+          </li>
+
           <li class="nav-item">
             <a href="/logs" class="nav-link {{ (request()->is('logs')) ? 'active' : '' }}">
               <i class="nav-icon fa fa-list"></i>
@@ -308,7 +318,7 @@ const getData = async () => {
       if (response.data.pendingRequests == 0) {
         document.getElementById('pending-requests').style.display = 'none';
       }
-      
+
       document.getElementById('pendingRequests').innerHTML = response.data.pendingRequests
     }
 
@@ -318,7 +328,7 @@ const getData = async () => {
       if (response.data.approvedGroupRequests == 0) {
         document.getElementById('pending-cband-requests').style.display = 'none';
       }
-      
+
       document.getElementById('approvedGroupRequests').innerHTML = response.data.approvedGroupRequests
     }
 }
@@ -332,7 +342,7 @@ channel.listen('RequestReceived', (message) => {
             document.getElementById('pending-requests').style.display = 'block';
             if (message.pendingRequestCount == 0) {
               document.getElementById('pending-requests').style.display = 'none';
-            } 
+            }
 
             document.getElementById('pendingRequests').innerHTML = message.pendingRequestCount
           }

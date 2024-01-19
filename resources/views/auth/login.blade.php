@@ -20,8 +20,7 @@
                 <div class="container login-container">
                     <div class="row justify-content-center">
                         <div class="col-md-6 text-center justify-content-center align-items-center">
-                        <img src="dist/img/{{ request()->getHost() == 'schedule.wpc2040aa.live' ? 'wpc2040aa.jpg' : 'wpc2040.jpg' }}" alt="logo" class="header-mobile__logo-img logo-img  mb-2">
-                        <!-- <img src="dist/img/wpc2040aa.jpg" alt="logo" class="header-mobile__logo-img logo-img  mb-2"> -->
+                            <img src="dist/img/web-logo.jpg" alt="logo" class="header-mobile__logo-img logo-img  mb-2">
                         </div>
                         <div class="col-md-6">
                             <div class="card card-login">
@@ -80,9 +79,9 @@
             $("document").ready(function(){
                 $("#btnLogin").off("submit");
                 $('.view-password').hover(function () {
-                   $('#password').attr('type', 'text'); 
+                   $('#password').attr('type', 'text');
                 }, function () {
-                   $('#password').attr('type', 'password'); 
+                   $('#password').attr('type', 'password');
                 });
             });
         </script>

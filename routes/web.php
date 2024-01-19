@@ -30,15 +30,19 @@ Route::middleware(['auth'])->group(function(){
         Route::post('/users-data', [App\Http\Controllers\DataController::class, 'initialUsersTransfer'])->name('data.initialUsersTransfer');
 
         Route::get('logs', [\App\Http\Controllers\ActivityLogsController::class, 'index'])->name('logs.index')->middleware('role:Administrator');
-        
+
         Route::get('/users', [App\Http\Controllers\UserController::class, 'index'])->name('users.index');
         Route::get('users/update/{id}/info', [\App\Http\Controllers\UserController::class, 'updateUser'])->name('users.updateUsers.info');
         Route::get('users/update/{id}/password', [\App\Http\Controllers\UserController::class, 'updateUser'])->name('users.updateUsers.password');
         Route::post('submitUser', [\App\Http\Controllers\UserController::class, 'submitUser'])->name('users.updateUsers');
         Route::post('users/{user}',[\App\Http\Controllers\UserController::class, 'changeUserStatus'])->name('users.changeUserStatus');
+
+        Route::get('/archive/create', [App\Http\Controllers\ArchiveController::class, 'add'])->name('archive.add');
+        Route::get('/archive/update/{id}', [App\Http\Controllers\ArchiveController::class, 'edit'])->name('archive.edit');
+        Route::post('/submitArchive', [App\Http\Controllers\ArchiveController::class, 'submitArchive'])->name('archive.submitArchive');
     });
 
-    
+
     Route::middleware('role:Administrator,Help Desk')->group(function(){
 
         Route::get('/schedules/manage/{id}', [App\Http\Controllers\ScheduleGroupController::class, 'index'])->name('schedules.groups.manage');
@@ -52,14 +56,14 @@ Route::middleware(['auth'])->group(function(){
         Route::post('/scheduledaccount/{scheduledGroupId}/confirm-all', [App\Http\Controllers\ScheduleGroupController::class, 'storeAllScheduledAccount'])->name('schedules.accounts.storeAll');
 
         Route::put('/schedules/{scheduleId}/groups/{groupId}', [App\Http\Controllers\ScheduleGroupController::class, 'updateGroup'])->name('schedules.groups.update');
-        
+
     });
-    
+
     Route::middleware('role:Administrator,Tech,Help Desk')->group(function(){
 
         Route::post('/requests/groups', [\App\Http\Controllers\RequestController::class, 'groupStatusUpdate'])->name('requests.groups.update');
         Route::get('requests', [\App\Http\Controllers\RequestController::class, 'index'])->name('requests.index');
-        
+
         Route::get('/accounts', [App\Http\Controllers\AccountController::class, 'index'])->name('accounts.index');
         Route::get('/accounts/deactivated', [App\Http\Controllers\AccountController::class, 'accountsDeactivated'])->name('accounts.accounts-deactivated');
         Route::get('/accounts/create', [App\Http\Controllers\AccountController::class, 'create'])->name('accounts.create');
@@ -69,12 +73,13 @@ Route::middleware(['auth'])->group(function(){
 
     });
 
-    
+
     Route::middleware('role:Administrator,Tech,Help Desk,Finance')->group(function(){
 
         Route::post('/requests/groups', [\App\Http\Controllers\RequestController::class, 'groupStatusUpdate'])->name('requests.groups.update');
         Route::get('requests', [\App\Http\Controllers\RequestController::class, 'index'])->name('requests.index');
-        
+
+        Route::get('/archive', [App\Http\Controllers\ArchiveController::class, 'index'])->name('archive.index');
     });
 
     // Route::middleware('role:Administrator,Tech,Help Desk,C Band')->group(function(){
@@ -87,7 +92,7 @@ Route::middleware(['auth'])->group(function(){
     //     Route::post('cband',[\App\Http\Controllers\CbandController::class, 'changeViewingStatus'])->name('cband.changeViewingStatus');
 
     // });
-    
+
     Route::middleware('role:Administrator,Tech,Help Desk,Finance,C Band')->group(function(){
 
         Route::resource('/schedules', \App\Http\Controllers\ScheduleController::class);
