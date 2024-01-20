@@ -58,7 +58,7 @@
                         <div class="col-md-6">
 
                             <div class="form-group">
-                                <label>Sabong Archive Link</label>
+                                <label>Kiosk Archive Link</label>
                                 <input type="text" class="form-control" id="fg_link" name="fg_link" value="{{ $archiveInfo->fg_link }}" required>
                             </div>
 
@@ -67,7 +67,7 @@
                         <div class="col-md-6">
 
                             <div class="form-group">
-                                <label>Kiosk Archive Link</label>
+                                <label>Kiosk Schedule Archive Link</label>
                                 <input type="text" class="form-control" id="schedule_link" name="schedule_link" value="{{ $archiveInfo->schedule_link }}" required>
                             </div>
 

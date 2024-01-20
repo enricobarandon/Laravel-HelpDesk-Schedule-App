@@ -24,6 +24,16 @@ if (! function_exists('removeParam')) {
                     <form class="form-horizontal" method="get">
                         <div class="form-group row">
 
+                            <div class="col-md-4">
+                                <select class="form-control" name="action" id="action">
+                                    <option value="" selected disabled>-Filter Actions-</option>
+                                    @foreach($actions as $key => $value)
+                                    <option value="{{ $key }}" {{ $key == $action ? 'selected' : '' }}>{{ $value }}</option>
+                                    @endforeach
+
+                                </select>
+                            </div>
+
                             <div class="col-md-3">
                                 <input type="text" class="form-control" name="keyword" id="keyword" placeholder="keyword" value="{{ $keyword }}">
                             </div>
@@ -38,7 +48,7 @@ if (! function_exists('removeParam')) {
                             </div>
                         </div>
                     </form>
-                    
+
                     @include('logs.tables.logs-table')
 
                     <div class="col">

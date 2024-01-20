@@ -31,15 +31,15 @@ class OcbsController extends Controller
             $targetInfo = $target->code;
 
         } else if ($table == 'users') {
-            
+
             $updateAccountForm = $request->except(['table']);
 
             if (array_key_exists('group_uuid', $updateAccountForm)) {
 
                 $findGroup = Group::select('id')->where('uuid', $request->group_uuid)->first();
-    
+
                 $updateAccountForm['group_id'] = $findGroup->id;
-    
+
                 unset($updateAccountForm['group_uuid']);
             }
 
@@ -58,7 +58,7 @@ class OcbsController extends Controller
             }
 
         }
-        
+
 
         if ($update) {
 
@@ -100,7 +100,7 @@ class OcbsController extends Controller
 
             // $request->group_uuid convert to group id
             $groupInfo = Group::select('id')->where('uuid', $request->group_uuid)->first();
-            
+
             if ($groupInfo) {
 
                 $request->merge(['group_id' => $groupInfo->id]);
@@ -147,6 +147,11 @@ class OcbsController extends Controller
 
     public function updateOperatorsStatus(Request $request)
     {
+
+        $newStatus = $request->is_active;
+
+        $oldStatus = $newStatus == 0 ? 1 : 0;
+
         $updateOperatorsStatus = Account::where('position','Operator')->update(['is_active' => $request->is_active]);
 
         if ($updateOperatorsStatus) {
@@ -156,7 +161,8 @@ class OcbsController extends Controller
                 'user_id' => 0,
                 'assets' => json_encode([
                     'action' => 'Received update for operators status',
-                    'new status' => $request->is_active
+                    'old status' => $oldStatus,
+                    'new status' => $newStatus
                 ])
             ]);
 

@@ -23,16 +23,16 @@ class ArchiveRequest extends FormRequest
     public function rules()
     {
         return [
-            'bet_count' => ['required'],
-            'transaction_count' => ['required'],
-            'date_covered' => ['required'],
-            'fg_link' => ['required'],
-            'schedule_link' => ['required'],
-            'start' => ['required'],
-            'end' => ['required'],
-            'duration' => ['required'],
-            'requested_by' => ['required'],
-            'processed_by' => ['required'],
+            'bet_count' => ['required','integer'],
+            'transaction_count' => ['required','integer'],
+            'date_covered' => ['required', 'string', 'regex:/^[a-z\d\-_ñÑ\s]+$/i', 'max:100'],
+            'fg_link' => ['required', 'string'],
+            'schedule_link' => ['required', 'string'],
+            'start' => ['required', 'string', 'regex:/^[a-z\d\-_ñÑ\s]+$/i', 'max:100'],
+            'end' => ['required', 'string', 'regex:/^[a-z\d\-_ñÑ\s]+$/i', 'max:100'],
+            'duration' => ['required', 'string', 'regex:/^[a-z\d\-_ñÑ\s]+$/i', 'max:100'],
+            'requested_by' => ['required', 'string', 'regex:/^[a-z\d\-_ñÑ\s]+$/i', 'max:100'],
+            'processed_by' => ['required', 'string', 'regex:/^[a-z\d\-_ñÑ\s]+$/i', 'max:100'],
         ];
     }
 }

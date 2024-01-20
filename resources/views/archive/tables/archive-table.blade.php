@@ -5,8 +5,8 @@
             <th>Bet Count</th>
             <th>Transaction Count</th>
             <th>Date Covered</th>
-            <th>Sabong Archive Link</th>
             <th>Kiosk Archive Link</th>
+            <th>Kiosk Schedule Archive Link</th>
             <th>Start</th>
             <th>End</th>
             <th>Duration</th>

@@ -78,10 +78,10 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="#" class="brand-link">
-      <!-- <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8"> -->
-      <h5 class="brand-text font-weight-light">
+        <img src="{{ asset('dist/img/web-logo.jpg') }}" alt="logo" class="header-mobile__logo-img logo-img  mb-2 w-100">
+      {{-- <h5 class="brand-text font-weight-light">
         {{ request()->getHost() }}
-      </h3>
+      </h3> --}}
     </a>
 
     <!-- Sidebar -->
@@ -235,8 +235,6 @@
             </a>
           </li>
 
-          @if($users->user_type_id == 1)
-
           <li class="nav-item">
             <a href="/archive" class="nav-link {{ (request()->is('archive')) ? 'active' : '' }}">
               <i class="nav-icon fa fa-folder"></i>
@@ -245,6 +243,8 @@
               </p>
             </a>
           </li>
+
+          @if($users->user_type_id == 1)
 
           <li class="nav-item">
             <a href="/logs" class="nav-link {{ (request()->is('logs')) ? 'active' : '' }}">
