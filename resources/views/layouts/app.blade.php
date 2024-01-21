@@ -235,6 +235,7 @@
             </a>
           </li>
 
+          @if($users->user_type_id != 5)
           <li class="nav-item">
             <a href="/archive" class="nav-link {{ (request()->is('archive')) ? 'active' : '' }}">
               <i class="nav-icon fa fa-folder"></i>
@@ -243,6 +244,7 @@
               </p>
             </a>
           </li>
+          @endif
 
           @if($users->user_type_id == 1)
 

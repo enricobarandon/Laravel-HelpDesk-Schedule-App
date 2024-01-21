@@ -121,7 +121,7 @@ class OcbsController extends Controller
 
         if ($create) {
 
-            $table = $table == 'users' ? 'user' : ' group';
+            $table = $table == 'users' ? 'user' : 'group';
 
             ActivityLog::create([
                 'type' => 'ocbs-create-' . $table,
@@ -148,9 +148,9 @@ class OcbsController extends Controller
     public function updateOperatorsStatus(Request $request)
     {
 
-        $newStatus = $request->is_active;
+        $newStatus = isset($request->is_active) ? 'Active' : 'Deactivated';
 
-        $oldStatus = $newStatus == 0 ? 1 : 0;
+        $oldStatus = $newStatus == 'Active' ? 'Deactivated' : 'Active';
 
         $updateOperatorsStatus = Account::where('position','Operator')->update(['is_active' => $request->is_active]);
 
