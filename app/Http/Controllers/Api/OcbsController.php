@@ -148,9 +148,9 @@ class OcbsController extends Controller
     public function updateOperatorsStatus(Request $request)
     {
 
-        $newStatus = isset($request->is_active) ? 'Active' : 'Deactivated';
+        $newStatus = $request->is_active == 0 ? '0' : '1';
 
-        $oldStatus = $newStatus == 'Active' ? 'Deactivated' : 'Active';
+        $oldStatus = $newStatus == '0' ? '1' : '0';
 
         $updateOperatorsStatus = Account::where('position','Operator')->update(['is_active' => $request->is_active]);
 
