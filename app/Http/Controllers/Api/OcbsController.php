@@ -148,7 +148,7 @@ class OcbsController extends Controller
     public function updateOperatorsStatus(Request $request)
     {
 
-        $newStatus = $request->is_active == 0 ? '0' : '1';
+        $newStatus = $request->is_active == '0' ? '0' : '1';
 
         $oldStatus = $newStatus == '0' ? '1' : '0';
 
