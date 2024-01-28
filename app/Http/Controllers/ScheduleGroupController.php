@@ -56,49 +56,49 @@ class ScheduleGroupController extends Controller
                                 ->where('schedule_id', $scheduleId)
                                 ->orderBy('id','desc')
                                 ->get();
-        
+
         $scheduledGroupsIds = $scheduledGroups->pluck('group_id')->toArray();
         $scheduledGroupsOperationHours = $scheduledGroups->keyBy('group_id')->toArray();
 
         $arrToStr = implode(",", $scheduledGroupsIds);
-        
+
         $groupsForDisplay = [];
         $groupsForSelect = [];
-        
+
         if ($arrToStr != "") {
 
             $groupsForDisplay = DB::select(DB::raw(
                 "
-                select 
-                    `groups`.`id`, 
-                    `groups`.`name` as `group_name`, 
-                    `address`, 
-                    `provinces`.`site`, 
-                    `province_id`, 
+                select
+                    `groups`.`id`,
+                    `groups`.`name` as `group_name`,
+                    `address`,
+                    `provinces`.`site`,
+                    `province_id`,
                     `provinces`.`name` as `province_name`,
                     code,
                     groups.group_type
-                from `groups` 
-                inner join `provinces` on `provinces`.`id` = `groups`.`province_id` 
+                from `groups`
+                inner join `provinces` on `provinces`.`id` = `groups`.`province_id`
                     where `groups`.`id` in ($arrToStr)
                     ORDER BY field(`groups`.`id`, $arrToStr)
                 "
             ));
 
-            $arrToStr .= ',1'; // for excluding lucky 8 office group
-            
+            $arrToStr .= ',1,2,3'; // for excluding lucky 8 office group
+
             $groupsForSelect = DB::select(
                 DB::raw(
                     "
-                    select 
-                        `groups`.`id`, 
-                        `groups`.`name`, 
+                    select
+                        `groups`.`id`,
+                        `groups`.`name`,
                         `groups`.`address`,
                         `groups`.`guarantor`,
                         `provinces`.`name` as `province`
                     from `groups`
                     left join `provinces` on `groups`.`province_id` = `provinces`.`id`
-                    where `is_active` = 1 and `groups`.`id` not in ($arrToStr)  
+                    where `is_active` = 1 and `groups`.`id` not in ($arrToStr)
                     order by `groups`.`name` asc
                     "
                 )
@@ -113,7 +113,7 @@ class ScheduleGroupController extends Controller
             $groupsForDisplay = collect($groupsForDisplay);
             $groupsForSelect = collect($groupsForSelect);
 
-                            
+
             if($request->filterGroup){
                 // $groupsForDisplay = $groupsForDisplay->where('code', $request->filterGroup);
                 $groupsForDisplay = $groupsForDisplay->filter(function ($item) use ($request) {
@@ -135,26 +135,26 @@ class ScheduleGroupController extends Controller
             if($request->siteID){
                 $groupsForDisplay = $groupsForDisplay->where('site', $request->siteID);
             }
-                
+
         } else {
             // exclude group id = 1 for lucky 8 office
             $groupsForSelect = DB::select(
                 DB::raw(
                     "
-                    select 
-                        `groups`.`id`, 
-                        `groups`.`name`, 
-                        `groups`.`address`, 
-                        `groups`.`guarantor`, 
+                    select
+                        `groups`.`id`,
+                        `groups`.`name`,
+                        `groups`.`address`,
+                        `groups`.`guarantor`,
                         `provinces`.`name` as `province`
                     from `groups`
                     left join `provinces` on `groups`.`province_id` = `provinces`.`id`
-                    where `is_active` = 1 and `groups`.`id` not in (1)  
+                    where `is_active` = 1 and `groups`.`id` not in (1)
                     order by `groups`.`name` asc
                     "
                 )
             );
-            
+
         }
         if ($request->has('download') || $request->has('downloadcurrent')) {
 
@@ -172,11 +172,11 @@ class ScheduleGroupController extends Controller
         //                         ->join('groups')
         //                         ->join('provinces','provinces.id', 'groups.province_id')
         //                         ->where('schedule_id', $scheduleId)
-        
+
         $provinces = Province::select('id','name','site')
                             ->get();
                             // dd($groupsForDisplay);
-            
+
 
         // $groupsForDisplay = $groupsForDisplay->all();
 
@@ -190,15 +190,15 @@ class ScheduleGroupController extends Controller
             'siteID' => $request->siteID,
             'selectType' => $request->selectType,
             'selectProvince' => $request->selectProvince,
-            
+
         ]);
-        
+
     }
 
     // public function addGroup()
     // {
     //     $scheduleId = request()->id;
-        
+
     //     $groupId = request()->group_id;
 
     //     $user = Auth::user();
@@ -213,7 +213,7 @@ class ScheduleGroupController extends Controller
     //                         ->where('is_active', 1)
     //                         ->orderBy('name','asc')
     //                         ->get();
-                            
+
     //         $groupArray = [];
 
     //         foreach($allGroups as $index => $group) {
@@ -228,7 +228,7 @@ class ScheduleGroupController extends Controller
     //                 ];
     //             }
     //         }
-            
+
     //         $insertScheduledGroups = ScheduledGroup::insert($groupArray);
 
     //         if ($insertScheduledGroups) {
@@ -246,7 +246,7 @@ class ScheduleGroupController extends Controller
     //         } else {
     //             return redirect('/schedules/manage/' . $scheduleId)->with('error', 'Something went wrong!');
     //         }
-            
+
     //     } else if ($groupId > 0)  {
 
     //         $groupInfo = Group::select('code','remarks')->where('groups.id',$groupId)->first();
@@ -261,7 +261,7 @@ class ScheduleGroupController extends Controller
     //                 'group_code' => $groupInfo->code
     //             ])
     //         ]);
-            
+
     //         $scheduledGroup = ScheduledGroup::create([
     //             'schedule_id' => $scheduleId,
     //             'group_id' => $groupId,
@@ -278,15 +278,15 @@ class ScheduleGroupController extends Controller
     //     } else {
     //         return redirect('/schedules/manage/' . $scheduleId)->with('error', 'Something went wrong!');
     //     }
-        
+
     // }
 
     public function removeGroup()
     {
         $scheduleId = request()->scheduleId;
-        
+
         $groupId = request()->groupId;
-        
+
         $user = Auth::user();
 
         $scheduledGroupInfo = ScheduledGroup::where('schedule_id', $scheduleId)
@@ -300,7 +300,7 @@ class ScheduleGroupController extends Controller
 
 
         $groupCode = Group::select('code')->where('groups.id',$groupId)->first();
-        
+
         ActivityLog::create([
             'type' => 'remove-group',
             'user_id' => $user->id,
@@ -318,7 +318,7 @@ class ScheduleGroupController extends Controller
     public function manageGroup(Request $request)
     {
         $scheduleId = request()->scheduleId;
-        
+
         $groupId = request()->groupId;
 
         $groupInfo = Group::select('groups.name as group_name','address', 'groups.group_type','owner','contact','code','provinces.site','installed_pc','active_staff','provinces.name as province_name','guarantor')
@@ -342,10 +342,10 @@ class ScheduleGroupController extends Controller
                             // ->where('scheduled_accounts.schedule_id', $scheduleId)
                             ->get();
                             // dd($groupAccounts);
-        
-        $scheduleInfo = Schedule::find($scheduleId);                            
 
-        
+        $scheduleInfo = Schedule::find($scheduleId);
+
+
         if ($request->has('download') || $request->has('downloadcurrent')) {
 
             return Excel::download(
@@ -369,15 +369,15 @@ class ScheduleGroupController extends Controller
     public function deleteScheduledAccount()
     {
         $scheduledGroupId = request()->scheduledGroupId;
-        
+
         $accountId = request()->accountId;
-        
+
         $user = Auth::user();
 
         $deleteAccountFromScheduledGroup = ScheduledAccount::where('scheduled_group_id', $scheduledGroupId)
                                                     ->where('account_id', $accountId)
                                                     ->delete();
-                                                    
+
         $scheduledGroupInfo = ScheduledGroup::find($scheduledGroupId);
 
         if ($deleteAccountFromScheduledGroup) {
@@ -402,10 +402,10 @@ class ScheduleGroupController extends Controller
         }
     }
 
-    public function storeScheduledAccount() 
+    public function storeScheduledAccount()
     {
         $scheduledGroupId = request()->scheduledGroupId;
-        
+
         $accountId = request()->accountId;
 
         $scheduleId = request()->scheduleId;
@@ -418,7 +418,7 @@ class ScheduleGroupController extends Controller
         if($scheduledGroupInfo->operation_time == null){
             return back()->with('error','Please input operation time first!');
         }
-        
+
         $user = Auth::user();
 
         $checkIfExisting = ScheduledAccount::select('id')
@@ -473,12 +473,12 @@ class ScheduleGroupController extends Controller
         $scheduleId = request()->id;
 
         $scheduleInfo = Schedule::find($scheduleId, ['name','date_time','status']);
-        
+
         $scheduledGroups = ScheduledGroup::select('scheduled_groups.schedule_id','scheduled_groups.operation_time','scheduled_groups.group_id','groups.group_type','groups.name','code','owner','contact','address','active_staff','installed_pc','scheduled_groups.remarks','provinces.site','groups.guarantor','groups.is_active')
                             ->join('groups','groups.id', 'scheduled_groups.group_id')
                             ->join('provinces','provinces.id', 'groups.province_id')
                             ->where('scheduled_groups.schedule_id', $scheduleId);
-        
+
         $groupedByAccounts = ScheduledAccount::createAccountsAssocArr($scheduleId);
 
         if($request->groupCode){
@@ -671,11 +671,11 @@ class ScheduleGroupController extends Controller
         $scheduleId = request()->scheduleId;
 
         $groupId = request()->groupId;
-        
+
         $user = Auth::user();
 
         $optime = date('H:i:s',strtotime(request()->operation_time));
-    
+
         $remarks = request()->gRemarks;
 
         $updateScheduledGroupInfo = ScheduledGroup::where('schedule_id', $scheduleId)
@@ -743,7 +743,7 @@ class ScheduleGroupController extends Controller
     public function addGroups()
     {
         $scheduleId = request()->id;
-        
+
         $groupId = request()->group_id;
 
         $user = Auth::user();
@@ -766,7 +766,7 @@ class ScheduleGroupController extends Controller
                             ->where('is_active', 1)
                             ->orderBy('name','asc')
                             ->get();
-                            
+
             $groupArray = [];
 
             foreach($allGroups as $index => $group) {
@@ -781,9 +781,9 @@ class ScheduleGroupController extends Controller
                     ];
                 }
             }
-            
+
             $insertScheduledGroups = ScheduledGroup::insert($groupArray);
-            
+
             if ($insertScheduledGroups) {
                 ActivityLog::create([
                     'type' => 'add-group',
@@ -830,7 +830,7 @@ class ScheduleGroupController extends Controller
                             ->where('group_type', $group)
                             ->where('is_active',1)
                             ->get();
-                
+
                 $groupArray = [];
 
                 foreach($groups as $i => $v) {
@@ -845,7 +845,7 @@ class ScheduleGroupController extends Controller
                         ];
                     }
                 }
-                
+
                 $insert = ScheduledGroup::insert($groupArray);
 
                 if ($insert) {
@@ -877,7 +877,7 @@ class ScheduleGroupController extends Controller
                             'group_code' => $groupInfo->code
                         ])
                     ]);
-                    
+
                     $insert = ScheduledGroup::create([
                         'schedule_id' => $scheduleId,
                         'group_id' => $group,
@@ -897,16 +897,16 @@ class ScheduleGroupController extends Controller
     }
 
 
-    public function storeAllScheduledAccount() 
+    public function storeAllScheduledAccount()
     {
         $scheduledGroupId = request()->scheduledGroupId;
 
         $scheduleId = request()->scheduleId;
-        
+
         $groupId = request()->groupId;
-        
+
         $user = Auth::user();
-        
+
         $scheduledGroupInfo = ScheduledGroup::find($scheduledGroupId);
 
         if($scheduledGroupInfo->operation_time == null){
@@ -922,7 +922,7 @@ class ScheduleGroupController extends Controller
                         ->where('groups.id', $groupId)
                         ->whereNull('scheduled_accounts.id')
                         ->get();
-                        
+
         if ($allAccounts) {
             $insertArr = [];
             foreach($allAccounts as $account) {
@@ -941,7 +941,7 @@ class ScheduleGroupController extends Controller
         }
 
         $storeAll = ScheduledAccount::insert($insertArr);
-        
+
 
         $groupInfo = Group::find($groupId, ['code']);
 
@@ -959,7 +959,7 @@ class ScheduleGroupController extends Controller
         ]);
 
         return redirect("/schedules/$scheduleId/groups/$groupId");
-    
+
     }
 
 }
