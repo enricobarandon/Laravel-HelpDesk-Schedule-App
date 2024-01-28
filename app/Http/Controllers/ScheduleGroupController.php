@@ -770,7 +770,7 @@ class ScheduleGroupController extends Controller
             $groupArray = [];
 
             foreach($allGroups as $index => $group) {
-                if (!$group->scheduled_groups_id && $group->id != '1') {
+                if (!$group->scheduled_groups_id && $group->id != '1' && $group->id != '2' && $group->id != '3') {
                     $groupArray[$index] = [
                         'schedule_id' => $scheduleId,
                         'group_id' => $group->id,
