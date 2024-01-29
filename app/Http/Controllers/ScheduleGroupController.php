@@ -149,7 +149,7 @@ class ScheduleGroupController extends Controller
                         `provinces`.`name` as `province`
                     from `groups`
                     left join `provinces` on `groups`.`province_id` = `provinces`.`id`
-                    where `is_active` = 1 and `groups`.`id` not in (1)
+                    where `is_active` = 1 and `groups`.`id` not in (1,2,3)
                     order by `groups`.`name` asc
                     "
                 )
@@ -573,15 +573,15 @@ class ScheduleGroupController extends Controller
             $tbody .=                   '<td><h5>' . $groupCount++ .'</h5></td>';
             $tbody .=                   '<td style="text-align: center;">ARENA NAME</td>';
             $tbody .=                   '<td colspan="3" style="'.$is_active.' font-weight: bold; width: 500px;" >'. htmlspecialchars($group->name) .'</td>';
-            $tbody .=                   '<td colspan="4" style="background-color: darkgreen; color: white; text-align: center; width: 450px;">'. $group->remarks .'</td>';
+            $tbody .=                   '<td colspan="4" style="background-color: darkgreen; color: white; text-align: center; width: 450px;">'. htmlspecialchars($group->remarks) .'</td>';
             $tbody .=               '</tr>';
             $tbody .=           '</thead>';
             $tbody .=           '<tbody>';
             $tbody .=               '<tr>';
             $tbody .=                   '<td></td>';
             $tbody .=                   '<td style="text-align: center;">Address</td>';
-            $tbody .=                   '<td colspan="3" style="text-align: center;">'. $group->address .'</td>';
-            $tbody .=                   '<td colspan="2" style="background-color: darkgreen; color: white; text-align: center; font-weight: bold;">'. $group->code .'</td>';
+            $tbody .=                   '<td colspan="3" style="text-align: center;">'. htmlspecialchars($group->address) .'</td>';
+            $tbody .=                   '<td colspan="2" style="background-color: darkgreen; color: white; text-align: center; font-weight: bold;">'. htmlspecialchars($group->code) .'</td>';
             $tbody .=                   '<td colspan="2" style="text-align: center; font-weight: bold; '. $siteColor .'">'. $group->site .'</td>';
             $tbody .=               '</tr>';
             $tbody .=               '<tr>';
@@ -606,7 +606,7 @@ class ScheduleGroupController extends Controller
             $tbody .=               '<tr>';
             $tbody .=                   '<td></td>';
             $tbody .=                   '<td style="text-align: center;">GUARANTOR</td>';
-            $tbody .=                   '<td colspan="3" style="text-align: center;">'. $group->guarantor .'</td>';
+            $tbody .=                   '<td colspan="3" style="text-align: center;">'. htmlspecialchars($group->guarantor) .'</td>';
             $tbody .=               '</tr>';
             $tbody .=               '<tr>';
             $tbody .=                   '<td></td>';
@@ -764,6 +764,9 @@ class ScheduleGroupController extends Controller
                                     ->where('scheduled_groups.schedule_id','=', $scheduleId);
                             })
                             ->where('is_active', 1)
+                            ->where('groups.id', '!=', 1)
+                            ->where('groups.id', '!=', 2)
+                            ->where('groups.id', '!=', 3)
                             ->orderBy('name','asc')
                             ->get();
 
@@ -829,6 +832,9 @@ class ScheduleGroupController extends Controller
                             })
                             ->where('group_type', $group)
                             ->where('is_active',1)
+                            ->where('groups.id', '!=', 1)
+                            ->where('groups.id', '!=', 2)
+                            ->where('groups.id', '!=', 3)
                             ->get();
 
                 $groupArray = [];
