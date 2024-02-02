@@ -38,6 +38,11 @@ if (! function_exists('removeParam')) {
 
                     @include('archive.tables.archive-table')
 
+                    <div class="col">
+                        <div class="float-right">
+                            {{ $rows->links('pagination::bootstrap-4') }}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
