@@ -21,13 +21,14 @@
     </thead>
     <tbody>
     @php
-        $i = ($rows->currentpage()-1)* $rows->perpage() + 1;
+        // $i = ($rows->currentpage()-1)* $rows->perpage() + 1;
+        $i = $rows->total() - (($rows->currentPage() - 1) * $rows->perPage());
     @endphp
         @if(!$rows->isEmpty())
 
             @foreach($rows as $index => $value)
                 <tr>
-                    <td>{{ $i++ }}</td>
+                    <td>{{ $i-- }}</td>
                     <td>{{ number_format($value->bet_count) }}</td>
                     <td>{{ number_format($value->transaction_count) }}</td>
                     <td>{{ $value->date_covered }}</td>
