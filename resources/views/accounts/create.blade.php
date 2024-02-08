@@ -162,22 +162,10 @@
 @section('script')
 <script type="text/javascript">
 $("document").ready(function(){
-    // function isCapsLockOn(e) {
-    //     var isLetter = (e.keyCode >= 65 && e.keyCode <= 90);
-    //     var isShiftPressed = e.shiftKey;
-    //     return isLetter && !isShiftPressed || !isLetter && isShiftPressed;
-    // }
-
-    // $('.caps-input').on('keypress', function(e) {
-    //     alert('test');
-    //     if (isCapsLockOn(e)) {
-    //         var char = String.fromCharCode(e.keyCode).toUpperCase();
-    //         e.preventDefault();
-    //         $(this).val($(this).val() + char);
-    //     }
-    // });
     $('.caps-input').on('keyup', function() {
-        // Convert the input value to uppercase
+        $(this).val($(this).val().toUpperCase());
+    });
+    $('.caps-input').on('keydown', function() {
         $(this).val($(this).val().toUpperCase());
     });
 });
