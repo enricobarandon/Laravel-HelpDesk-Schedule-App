@@ -183,7 +183,7 @@ class RequestController extends Controller
                     'operation' => 'required',
                     'status' => 'required',
                     'data' => 'required',
-                    'remarks' => 'nullable|string'
+                    'remarks' => 'required|string'
                 ]);
         
                 if ($validator->fails()) {
@@ -375,13 +375,13 @@ class RequestController extends Controller
     
                         $result = Group::where('uuid', $request->uuid)->update($data);
     
-                    } else if($operation == 'create') {
+                    } elseif($operation == 'create') {
 
                         $result = Group::create($data);
 
                     }
     
-                } else if ($table == 'users') {
+                } elseif ($table == 'users') {
 
                     if (isset($data['firstname'])) {
                         $data['first_name'] = $data['firstname'];
@@ -448,7 +448,7 @@ class RequestController extends Controller
                     'message' => 'Row updated.'
                 ], 200);
 
-            } else if ($acceptChanges && $request->status == 'rejected') {
+            } elseif ($acceptChanges && $request->status == 'rejected') {
 
                 $table = '';
                 $operation = '';
@@ -485,7 +485,7 @@ class RequestController extends Controller
         $user = auth()->user();
         $allowedUsersToCreate = [1,2,3];
         $requestName = request()->operation;
-
+        
         $table = '';
         $operation = '';
         list($table, $operation) = explode('.', $requestName);
@@ -503,24 +503,32 @@ class RequestController extends Controller
                                 ->where('status','pending')
                                 ->first();
         }
-
         
         if(in_array($user->user_type_id, $allowedUsersToCreate)) {
             $messages = [
                 'digits_between' => 'Mobile Number must be 10 to 15 digits',
+                'username.alpha' => 'The :attribute must be all caps, no spaces and no special characters.',
+                'username.regex' => 'The :attribute must be all caps, no spaces and no special characters.',
             ];
-            $validator = Validator::make(request()->all(), [
+
+            $rules = [
                 'operation' => 'required',
                 'first-name' => 'required|string|max:50',
                 'last-name' => 'required|string|max:50',
-                'username' => 'required|string|max:50'.$unique,
+                'username' => 'required|string|max:50'.$unique.'|alpha|regex:/^[a-zA-Z]+$/',
                 'contact' => 'required|digits_between:10,15|numeric',
                 'position' => ['required', Rule::in(['Cashier','Teller','Teller/Cashier','Supervisor','Operator'])],
                 'allowed-sides' => ['required', Rule::in(['m','w','n','a'])],
                 'is-active' => 'required|boolean',
-                'remarks' => 'nullable|string|max:300',
                 'group-code' => 'required|max:10'
-            ]);
+            ];
+
+            $rules['remarks'] = 'nullable|string|max:300';
+            if ($operation == 'update') {
+                $rules['remarks'] = 'required|string|max:300';
+            }
+
+            $validator = Validator::make(request()->all(), $rules, $messages);
 
             $formData = [
                 'uuid' => $uuid,

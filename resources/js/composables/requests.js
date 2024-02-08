@@ -13,7 +13,7 @@ export default function useRequests() {
         errors.value = '';
         try {
             let store = await axios.post('/api/requests/groups', data)
-            console.log(store)
+            console.log(store.data)
             if (store.status === 201) {
                 Swal.fire({
                     title: "Request Posted!",

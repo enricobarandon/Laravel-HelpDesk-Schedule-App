@@ -31,7 +31,7 @@
 
                             <div class="form-group">
                                 <label>First Name</label>
-                                <input type="text" class="form-control" id="first-name" name="first-name" value="{{ old('first-name') }}">
+                                <input type="text" class="form-control caps-input" id="first-name" name="first-name" value="{{ old('first-name') }}">
                             </div>
 
                         </div>
@@ -40,7 +40,7 @@
 
                             <div class="form-group">
                                 <label>Last Name</label>
-                                <input type="text" class="form-control" id="last-name" name="last-name" value="{{ old('last-name') }}">
+                                <input type="text" class="form-control caps-input" id="last-name" name="last-name" value="{{ old('last-name') }}">
                             </div>
 
                         </div>
@@ -49,7 +49,7 @@
 
                             <div class="form-group">
                                 <label>Username</label>
-                                <input type="text" class="form-control" id="username" name="username">
+                                <input type="text" class="form-control caps-input" id="username" name="username">
                             </div>
                             
                         </div>
@@ -157,4 +157,29 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('script')
+<script type="text/javascript">
+$("document").ready(function(){
+    // function isCapsLockOn(e) {
+    //     var isLetter = (e.keyCode >= 65 && e.keyCode <= 90);
+    //     var isShiftPressed = e.shiftKey;
+    //     return isLetter && !isShiftPressed || !isLetter && isShiftPressed;
+    // }
+
+    // $('.caps-input').on('keypress', function(e) {
+    //     alert('test');
+    //     if (isCapsLockOn(e)) {
+    //         var char = String.fromCharCode(e.keyCode).toUpperCase();
+    //         e.preventDefault();
+    //         $(this).val($(this).val() + char);
+    //     }
+    // });
+    $('.caps-input').on('keyup', function() {
+        // Convert the input value to uppercase
+        $(this).val($(this).val().toUpperCase());
+    });
+});
+</script>
 @endsection
