@@ -162,10 +162,7 @@
 @section('script')
 <script type="text/javascript">
 $("document").ready(function(){
-    $('.caps-input').on('keyup', function() {
-        $(this).val($(this).val().toUpperCase());
-    });
-    $('.caps-input').on('keydown', function() {
+    $('.caps-input').on('input', function() {
         $(this).val($(this).val().toUpperCase());
     });
 });
