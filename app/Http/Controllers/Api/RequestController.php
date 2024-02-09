@@ -273,32 +273,8 @@ class RequestController extends Controller
     public function postRequestToKiosk($postInput)
     {
         $user = auth()->user();
-
-        $environment = env('APP_ENV');
-
-        if ($environment == 'production') {
-            // temporary
-            // direct to site A
-            // follow up condition to detect if site is for site A or B
-            $host = request()->getHost();
-            if ($host == 'schedule.wpc2040.live') {
-                $apiURL = 'https://admin.wpc2040.live/api/v4/requests';
-            } else if ($host == 'schedule.wpc2040aa.live') {
-                $apiURL = 'https://admin.wpc2040aa.live/api/v4/requests';
-            }
-        } else {
-            // $apiURL = 'https://development.wpc2040.live/api/v4/requests';
-            $devHost = request()->getHost();
-            if ($devHost == 'devsched.wpc2040.live') {
-                // for develop server
-                // BMM server
-                $apiURL = 'https://develop.wpc2040.live//api/v4/requests';
-            } else if ($devHost == 'devschedule.wpc2040.live') {
-                // for official dev server
-                // dev2
-                $apiURL = 'https://development.wpc2040.live/api/v4/requests';
-            }
-        }
+        
+        $apiURL = env('KIOSK_URL') . '/api/v4/requests';
 
         $apiKey = env('KIOSK_API_KEY');
   
