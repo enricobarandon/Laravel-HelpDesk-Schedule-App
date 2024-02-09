@@ -507,7 +507,6 @@ class RequestController extends Controller
         if(in_array($user->user_type_id, $allowedUsersToCreate)) {
             $messages = [
                 'digits_between' => 'Mobile Number must be 10 to 15 digits',
-                'username.alpha' => 'The :attribute must be all caps, no spaces and no special characters.',
                 'username.regex' => 'The :attribute must be all caps, no spaces and no special characters.',
             ];
 
@@ -515,7 +514,7 @@ class RequestController extends Controller
                 'operation' => 'required',
                 'first-name' => 'required|string|max:50',
                 'last-name' => 'required|string|max:50',
-                'username' => 'required|string|max:50'.$unique.'|alpha|regex:/^[a-zA-Z]+$/',
+                'username' => 'required|string|max:50'.$unique.'|regex:/^[a-zA-Z0-9]+$/',
                 'contact' => 'required|digits_between:10,15|numeric',
                 'position' => ['required', Rule::in(['Cashier','Teller','Teller/Cashier','Supervisor','Operator'])],
                 'allowed-sides' => ['required', Rule::in(['m','w','n','a'])],
