@@ -134,7 +134,7 @@ class RequestController extends Controller
                     'is_active' => 'required|boolean',
                     'remarks' => 'nullable|string'
                 ]);
-        
+
                 if ($validator->fails()) {
                     return redirect()->back()->with('errors', $validator->messages());
                 }
@@ -151,7 +151,7 @@ class RequestController extends Controller
                     8 => 'OCBS-EGAMES',
                     9 => 'OCBS-CASINO'
                 ];
-                
+
                 $form = [
                     'api_key' => '4e829e510539afcc43365a18acc91ede41fb555e',
                     'uuid' => $uuid,
@@ -173,7 +173,7 @@ class RequestController extends Controller
                     'requested_by' => $user->name . '('. UserType::find($user->user_type_id)->role .')',
                     'reference_number' => 'KRM' . $user->id . '-' . time()
                 ];
-                
+
                 $apiRequest = RequestModel::create($form);
 
             } else if($operation == 'update') {
@@ -185,7 +185,7 @@ class RequestController extends Controller
                     'data' => 'required',
                     'remarks' => 'nullable|string'
                 ]);
-        
+
                 if ($validator->fails()) {
                     return redirect()->back()->with('errors', $validator->messages());
                 }
@@ -212,7 +212,7 @@ class RequestController extends Controller
                 ProcessRequest::dispatch();
 
                 $assests = $form;
-                
+
                 unset($assests['api_key']);
 
                 $logs = ActivityLog::create([
@@ -230,16 +230,16 @@ class RequestController extends Controller
                     // dd($request->all());
                     // $this->postRequestToKiosk($request->all());
                     $this->postRequestToKiosk($form);
-                    
+
                     return response([
                         'result' => 1,
                         'message' => 'Please monitor the status of your requests on the Requests tab!'
                     ], 201);
                 }
 
-                
+
                 $this->postRequestToKiosk($form);
-                return redirect()->route('requests.index')->with('success', 'Please monitor the status of your requests on the Requests tab!'); 
+                return redirect()->route('requests.index')->with('success', 'Please monitor the status of your requests on the Requests tab!');
 
             } else {
 
@@ -264,7 +264,7 @@ class RequestController extends Controller
                 }
             }
 
-            return redirect()->back()->with('error', 'Request already exists'); 
+            return redirect()->back()->with('error', 'Request already exists');
 
         }
         // return new ApiRequestResource($apiRequest);
@@ -301,7 +301,7 @@ class RequestController extends Controller
         }
 
         $apiKey = env('KIOSK_API_KEY');
-  
+
         $headers = [
             'X-header' => 'value',
             'Content-Type' => 'application/json',
@@ -309,21 +309,21 @@ class RequestController extends Controller
         ];
 
         $postInput['requested_by'] = '.' . $user->name . '('. UserType::find($user->user_type_id)->role .')';
-        
+
         $response = Http::withHeaders($headers)->post($apiURL, $postInput);
-        
+
         $statusCode = $response->status();
-        
+
         $responseBody = json_decode($response->getBody(), true);
-        
+
         return $responseBody;
     }
 
     public function updateRequest(ApiRequests $request)
     {
-        // update local requests 
+        // update local requests
         // post from kiosk
-        
+
         $checkInRequests = RequestModel::where('uuid', $request->uuid)
                                 ->where('operation', $request->operation)
                                 ->where('status', 'pending')
@@ -346,9 +346,9 @@ class RequestController extends Controller
                                     'status' => $request->status,
                                     // 'remarks' => DB::raw('remarks') . ' ; ' . $request->remarks
                                 ]);
-                
+
             ProcessRequest::dispatch();
-                                
+
             if ($acceptChanges && $request->status == 'approved') {
 
                 // Update Helpdesk groups and users table
@@ -358,7 +358,7 @@ class RequestController extends Controller
                 list($table, $operation) = explode('.', $request->operation);
 
                 $data = json_decode($request->data, true);
-                
+
                 if ($table == 'groups') {
 
                     // dd($data);
@@ -372,15 +372,15 @@ class RequestController extends Controller
                     }
 
                     if ($operation == 'update') {
-    
+
                         $result = Group::where('uuid', $request->uuid)->update($data);
-    
+
                     } else if($operation == 'create') {
 
                         $result = Group::create($data);
 
                     }
-    
+
                 } else if ($table == 'users') {
 
                     if (isset($data['firstname'])) {
@@ -412,9 +412,9 @@ class RequestController extends Controller
                     if ($request->remarks) {
                         $data['remarks'] = $request->remarks;
                     }
-    
+
                     if ($operation == 'update') {
-    
+
                         $result = Account::where('uuid', $request->uuid)->update($data);
 
                         // check if there is an ongoing event;
@@ -424,7 +424,7 @@ class RequestController extends Controller
                             $accountInfo = Account::where('uuid', $request->uuid)->first();
                             ScheduledAccount::updateUserCurEvent($checkOngoingEvent->id, $accountInfo->id, $data);
                         }
-    
+
                     } else if($operation == 'create') {
 
                         $result = Account::create($data);
@@ -432,7 +432,7 @@ class RequestController extends Controller
                     }
                 }
 
-                
+
                 ActivityLog::create([
                     'type' => 'received-update',
                     'user_id' => 0,
@@ -468,7 +468,7 @@ class RequestController extends Controller
                     'status' => 'ok',
                     'message' => 'Row updated. Request rejected.'
                 ], 200);
-                
+
             } else {
                 return response([
                     'status' => 'error',
@@ -489,7 +489,7 @@ class RequestController extends Controller
         $table = '';
         $operation = '';
         list($table, $operation) = explode('.', $requestName);
-        
+
         $unique = '';
 
         if ($operation == 'create') {
@@ -504,10 +504,11 @@ class RequestController extends Controller
                                 ->first();
         }
 
-        
+
         if(in_array($user->user_type_id, $allowedUsersToCreate)) {
             $messages = [
                 'digits_between' => 'Mobile Number must be 10 to 15 digits',
+                'is-active.required' => 'The status field is required'
             ];
             $validator = Validator::make(request()->all(), [
                 'operation' => 'required',
@@ -515,11 +516,11 @@ class RequestController extends Controller
                 'last-name' => 'required|string|max:50',
                 'username' => 'required|string|max:50'.$unique,
                 'contact' => 'required|digits_between:10,15|numeric',
+                'group-code' => 'required|max:10',
                 'position' => ['required', Rule::in(['Cashier','Teller','Teller/Cashier','Supervisor','Operator'])],
                 'allowed-sides' => ['required', Rule::in(['m','w','n','a'])],
                 'is-active' => 'required|boolean',
-                'remarks' => 'nullable|string|max:300',
-                'group-code' => 'required|max:10'
+                'remarks' => 'nullable|string|max:300'
             ]);
 
             $formData = [
@@ -575,9 +576,9 @@ class RequestController extends Controller
         if (!$checkInRequests) {
             $apiRequest = RequestModel::create($form);
             if ($apiRequest) {
-                
+
                 ProcessRequest::dispatch();
-                
+
                 $this->postRequestToKiosk($form);
                 $forReferenceNumber = extract($form);
                 $logs = ActivityLog::create([
@@ -590,13 +591,13 @@ class RequestController extends Controller
                     ],$request->except(['api_key','_token'])))
                 ]);
 
-                return redirect()->route('accounts.index')->with('success', 'Request posted! Please monitor the status of your requests on the Requests tab!'); 
+                return redirect()->route('accounts.index')->with('success', 'Request posted! Please monitor the status of your requests on the Requests tab!');
 
             } else {
-                return redirect()->route('accounts.index')->with('error', 'Something went wrong! Please try again.'); 
+                return redirect()->route('accounts.index')->with('error', 'Something went wrong! Please try again.');
             }
         } else {
-            return redirect()->route('accounts.index')->with('error', 'Request already exists.'); 
+            return redirect()->route('accounts.index')->with('error', 'Request already exists.');
         }
     }
 
@@ -636,7 +637,7 @@ class RequestController extends Controller
                 unset($newData['group_code']);
             }
             // if(isset($newData['allowed_sides'])) {
-                
+
             // }
             foreach($newData as $index => $value) {
                 if ($index == 'allowed_sides') {
@@ -646,7 +647,7 @@ class RequestController extends Controller
                 } else if ($oldData[$index] != $newData[$index]) {
                     array_push($diff, $index);
                 }
-                
+
             }
         }
         // dd($diff);
