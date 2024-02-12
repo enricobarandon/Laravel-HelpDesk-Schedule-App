@@ -17,29 +17,7 @@ class DataController extends Controller
 
     public function initialGroupsTransfer()
     {
-        // $apiURL = 'https://development.wpc2040.live/api/v4/groups';
-
-        $environment = env('APP_ENV');
-        if ($environment == 'production') {
-            // $apiURL = 'https://wpc2040.live/api/v4/groups';
-            $host = request()->getHost();
-            if ($host == 'schedule.wpc2040.live') {
-                $apiURL = 'https://admin.wpc2040.live/api/v4/groups';
-            } else if ($host == 'schedule.wpc2040aa.live') {
-                $apiURL = 'https://admin.wpc2040aa.live/api/v4/groups';
-            }
-        } else {
-            $devHost = request()->getHost();
-            if ($devHost == 'devsched.wpc2040.live') {
-                // for develop server
-                // BMM server
-                $apiURL = 'https://develop.wpc2040.live//api/v4/groups';
-            } else if ($devHost == 'devschedule.wpc2040.live') {
-                // for official dev server
-                // dev2
-                $apiURL = 'https://development.wpc2040.live/api/v4/groups';
-            }
-        }
+        $apiURL = env('KIOSK_URL') . '/api/v4/groups';
 
         $postInput = [
             'api_key' => '4e829e510539afcc43365a18acc91ede41fb555e'
@@ -87,29 +65,7 @@ class DataController extends Controller
 
     public function initialUsersTransfer()
     {
-        // $apiURL = 'https://development.wpc2040.live/api/v4/users';
-        $environment = env('APP_ENV');
-        if ($environment == 'production') {
-            // $apiURL = 'https://wpc2040.live/api/v4/users';
-            $host = request()->getHost();
-            if ($host == 'schedule.wpc2040.live') {
-                $apiURL = 'https://admin.wpc2040.live/api/v4/users';
-            } else if ($host == 'schedule.wpc2040aa.live') {
-                $apiURL = 'https://admin.wpc2040aa.live/api/v4/users';
-            }
-        } else {
-            // $apiURL = 'https://development.wpc2040.live/api/v4/users';
-            $devHost = request()->getHost();
-            if ($devHost == 'devsched.wpc2040.live') {
-                // for develop server
-                // BMM server
-                $apiURL = 'https://develop.wpc2040.live//api/v4/users';
-            } else if ($devHost == 'devschedule.wpc2040.live') {
-                // for official dev server
-                // dev2
-                $apiURL = 'https://development.wpc2040.live/api/v4/users';
-            }
-        }
+        $apiURL = env('KIOSK_URL') . '/api/v4/users';
 
         $postInput = [
             'api_key' => '4e829e510539afcc43365a18acc91ede41fb555e'
@@ -130,15 +86,10 @@ class DataController extends Controller
         if ($responseBody['status'] == 'ok') {
 
             $groups = collect(Group::all()->toArray());
-            // dd($groups->where('name','LUCKY 8 STAR QUEST INC. OFFICE - B'));
-            // dd($groups);
-            // dd($responseBody['data']);
-            // $insertArr = [];
+            
             foreach($responseBody['data'] as $data){
 
-                // $groupInfo = Group::where('name', $data['group_name'])->first();
                 $groupInfo = $groups->where('name', '=', $data['group_name'])->first();
-                // dd($groupInfo['name']);
 
                 $newAccountArr = [
                     'uuid' => $data['uuid'],
@@ -153,11 +104,9 @@ class DataController extends Controller
                 ];
 
                 Account::create($newAccountArr);
-                // array_push($insertArr, $newAccountArr);
 
             }
-            // dd($insertArr);
-            // Account::insert($insertArr);
+            
             return 'end';
 
         }

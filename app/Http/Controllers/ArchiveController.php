@@ -15,7 +15,7 @@ class ArchiveController extends Controller
 {
     public function index(Request $request){
 
-        $rows = Archive::paginate(10);
+        $rows = Archive::orderBy('created_at','desc')->paginate(10);
 
         if ($request->has('download')) {
             return Excel::download(

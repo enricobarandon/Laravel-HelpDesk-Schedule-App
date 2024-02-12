@@ -31,7 +31,7 @@
 
                             <div class="form-group">
                                 <label>First Name</label>
-                                <input type="text" class="form-control" id="first-name" name="first-name" value="{{ old('first-name') }}">
+                                <input type="text" class="form-control caps-input" id="first-name" name="first-name" value="{{ old('first-name') }}">
                             </div>
 
                         </div>
@@ -40,7 +40,7 @@
 
                             <div class="form-group">
                                 <label>Last Name</label>
-                                <input type="text" class="form-control" id="last-name" name="last-name" value="{{ old('last-name') }}">
+                                <input type="text" class="form-control caps-input" id="last-name" name="last-name" value="{{ old('last-name') }}">
                             </div>
 
                         </div>
@@ -49,7 +49,7 @@
 
                             <div class="form-group">
                                 <label>Username</label>
-                                <input type="text" class="form-control" id="username" name="username">
+                                <input type="text" class="form-control caps-input" id="username" name="username">
                             </div>
                             
                         </div>
@@ -157,4 +157,14 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('script')
+<script type="text/javascript">
+$("document").ready(function(){
+    $('.caps-input').on('input', function() {
+        $(this).val($(this).val().toUpperCase());
+    });
+});
+</script>
 @endsection

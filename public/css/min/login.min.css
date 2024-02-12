@@ -11643,10 +11643,30 @@ input.form-control.edit-password {
 }
 span.multiselect-selected-text {
     margin: auto;
+    width: 100%;
+    white-space: pre-wrap;
 }
 ul.multiselect-container.dropdown-menu.show {
     width: 100%;
 }
 #pending-requests, #pending-cband-requests{
     display:none;
+}
+.wpc2040-bg {
+    background: linear-gradient(#48adb5,#162550 100%)!important;
+    font-weight: 700;
+}
+.wpc2040aa-bg {
+    background: linear-gradient(#ff7e8a,rgb(207, 26, 26) 100%)!important;
+    font-weight: 700;
+}
+.wpc2040-bg a {
+    color: #ffffff !important;
+}
+.wpc2040aa-bg a {
+    color: #ffffff !important;
+}
+.main-header .dropdown-menu a{
+    background: #ffffff !important;
+    color: #000 !important;
 }

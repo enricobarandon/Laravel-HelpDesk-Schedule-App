@@ -516,11 +516,11 @@ class RequestController extends Controller
                 'last-name' => 'required|string|max:50',
                 'username' => 'required|string|max:50'.$unique,
                 'contact' => 'required|digits_between:10,15|numeric',
-                'group-code' => 'required|max:10',
                 'position' => ['required', Rule::in(['Cashier','Teller','Teller/Cashier','Supervisor','Operator'])],
                 'allowed-sides' => ['required', Rule::in(['m','w','n','a'])],
                 'is-active' => 'required|boolean',
-                'remarks' => 'nullable|string|max:300'
+                'remarks' => 'nullable|string|max:300',
+                'group-code' => 'required|max:10'
             ]);
 
             $formData = [
