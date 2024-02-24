@@ -499,10 +499,8 @@ class RequestController extends Controller
                 'is-active' => 'required|boolean'
             ];
 
-            $rules['remarks'] = 'nullable|string|max:300';
-            if ($operation == 'update') {
-                $rules['remarks'] = 'required|string|max:300';
-            }
+
+            $rules['remarks'] = 'required|string|max:300';
 
             $validator = Validator::make(request()->all(), $rules, $messages);
 
