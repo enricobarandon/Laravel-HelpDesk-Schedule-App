@@ -85,7 +85,7 @@
 
             @if(in_array($users->user_type_id, [1,2,3]))
             <div class="card card-info">
-                <div class="card-header"><h5>Accounts Record</h5></div>
+                <div class="card-header"><h5>Accounts Record (Teller, Cashier, Teller/Cashier, Supervisor and Operator)</h5></div>
 
                 <div class="card-body">
 
