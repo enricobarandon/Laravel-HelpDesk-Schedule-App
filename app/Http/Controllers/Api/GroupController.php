@@ -33,7 +33,7 @@ class GroupController extends Controller
                     ->leftjoin('provinces','provinces.id','groups.province_id')
                     ->where('groups.is_active', 0)
                     ->where(function($query) {
-                        $query->whereIn('status', ['onhold','temporarydeactivated','forpullout'])
+                        $query->whereIn('status', ['onhold','temporarydeactivated','forpullout','permanentdeactivated'])
                             ->orWhereNull('status');
                     })
                     ->get();
@@ -88,14 +88,14 @@ class GroupController extends Controller
     public function update(GroupRequest $request, Group $group)
     {
         $user = auth()->user();
-        
+
         if($request->operation_date != ''){
             $request->operation_date = date('Y-m-d', strtotime($request->operation_date));
         }
         if($request->pullout_date != ''){
             $request->pullout_date = date('Y-m-d', strtotime($request->pullout_date));
         }
-        
+
         $logs = ActivityLog::create([
             'type' => 'update-group-fields',
             'user_id' => $user->id,
@@ -104,7 +104,7 @@ class GroupController extends Controller
                 'group_code' => $group->code,
             ],$request->only(['id','active_staff','installed_pc','status','operation_date','pullout_date'])))
         ]);
-        
+
         $group->update($request->validated());
 
         return new GroupResource($group);

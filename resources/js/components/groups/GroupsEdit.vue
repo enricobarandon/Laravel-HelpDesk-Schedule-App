@@ -1,4 +1,4 @@
-<template> 
+<template>
 
     <router-link :to="{ name: 'groups.deactivated' }"  class="btn btn-primary" v-if="group.is_active == '0'">
         <i class="fas fa-chevron-left"></i> Back to groups page
@@ -7,11 +7,11 @@
     <router-link :to="{ name: 'groups.active' }"  class="btn btn-primary" v-if="group.is_active == '1'">
         <i class="fas fa-chevron-left"></i> Back to groups page
     </router-link>
-    
+
     <div class="row" v-if="user_type != '5'">
 
         <div class="col-md-6">
-            <div class="form-group"> 
+            <div class="form-group">
                 <label>Group Name</label>
                 <textarea id="group-name" name="group-name" class="form-control" rows="2" v-model="group.name" disabled></textarea>
             </div>
@@ -50,7 +50,7 @@
                 <label>Site</label>
                 <input type="text" class="form-control" id="group-site" name="group-site" v-model="group.site" disabled>
             </div>
-            
+
         </div>
 
         <div class="col-md-4">
@@ -71,19 +71,19 @@
             <label>Status</label>
             <div class="form-control text-center">
                 <label class="radio-active" :for="active">
-                <input 
+                <input
                     type="radio"
-                    name="is_active" 
+                    name="is_active"
                     :id="active"
-                    :value="1" 
+                    :value="1"
                     v-model="group.is_active">
                 Active</label>
                 <label class="radio-deactivated" :for="deactivated">
-                <input 
+                <input
                     type="radio"
-                    name="is_active" 
+                    name="is_active"
                     :id="deactivated"
-                    :value="0" 
+                    :value="0"
                     v-model="group.is_active">
                 Deactivated</label>
             </div>
@@ -111,7 +111,7 @@
         </div>
 
         <form @submit.prevent="saveGroup" ref="form" class="row" v-if="user_type == '1' || user_type == '2'">
-        
+
             <div class="col-md-6">
                 <div class="form-group">
                     <label>No. of Staff</label>
@@ -125,7 +125,7 @@
                     <input type="text" class="form-control" id="group-installed-pc" name="group-installed-pc" v-model="group.installed_pc">
                 </div>
             </div>
-            
+
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Operation Date</label>
@@ -143,16 +143,17 @@
                         <option value="pullout">Pullout</option>
                         <option value="onhold">On Hold</option>
                         <option value="temporarydeactivated">Temporarily Deactivated</option>
+                        <option value="permanentdeactivated">Permanent Deactivated</option>
                     </select>
                 </div>
             </div>
 
             <div class="col-md-6" v-if="group.is_active == '0'">
                 <div class="form-group" v-if="group.status == 'pullout'">
-                    <label>Pullout Date</label> 
+                    <label>Pullout Date</label>
                     <Datepicker :format="formatDate" name="pullout-date" id="pullout-date" placeholder="Select Date" v-model="group.pullout_date" />
                 </div>
-            </div> 
+            </div>
 
             <div class="col-md-12 text-center">
                 <button type="button" v-on:click="sweetAlert" class="btn btn-primary" v-if="group.status != 'pullout'">Update</button>
@@ -187,7 +188,7 @@ export default {
         const { errors, group, getGroup, updateGroup,oldGroupData } = useGroups()
 
         const { storeRequest } = useRequests()
-        
+
         const user_type = props.user.user_type_id
 
         const form = reactive({

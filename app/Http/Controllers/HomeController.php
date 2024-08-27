@@ -31,7 +31,7 @@ class HomeController extends Controller
 
             $allGroups = Group::count();
             $activeGroups = Group::where('is_active', 1)->count();
-            $deactivatedGroups = Group::where('is_active', 0)->whereIn('status',['onhold','forpullout','temporarydeactivated'])->count();
+            $deactivatedGroups = Group::where('is_active', 0)->whereIn('status',['onhold','forpullout','temporarydeactivated','permanentdeactivated'])->count();
             $deactivatedGroupsNull = Group::where('is_active', 0)->where('status',null)->count();
             $fulloutGroups = Group::where('is_active', 0)->where('status','pullout')->count();
 

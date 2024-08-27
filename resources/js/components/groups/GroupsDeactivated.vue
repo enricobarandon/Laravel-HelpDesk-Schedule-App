@@ -1,4 +1,4 @@
-<template> 
+<template>
         <a href="/groups/view/deactivated?download-deactivated=1" class="btn btn-success btn-top-right">Download All</a>
         <div class="form-group row">
 
@@ -12,6 +12,7 @@
                     <option value="forpullout">For Pullout</option>
                     <option value="onhold">On Hold</option>
                     <option value="temporarydeactivated">Temporarily Deactivated</option>
+                    <option value="permanentdeactivated">Permanent Deactivated</option>
                 </select>
             </div>
 
@@ -147,7 +148,7 @@ export default {
             filteredDeactivatedGroups.value = groups.value.filter((val) => {
                 if (filter.code) {
                     return val.name.toLowerCase().includes(filter.code.toLowerCase())
-                } 
+                }
                 return true
             }).filter((val) => {
                 if (filter.site) {
@@ -203,7 +204,7 @@ export default {
             }
         }
     },
-    methods: { 
+    methods: {
       format_date(value){
          if (value) {
            return moment(String(value)).format('MMM DD, YYYY')
