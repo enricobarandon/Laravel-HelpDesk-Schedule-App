@@ -286,7 +286,9 @@ class RequestController extends Controller
 
         $postInput['requested_by'] = '.' . $user->name . '('. UserType::find($user->user_type_id)->role .')';
 
-        $response = Http::withHeaders($headers)->post($apiURL, $postInput);
+        $response = Http::withOptions(['verify' => false])
+            ->withHeaders($headers)
+            ->post($apiURL, $postInput);
 
         $statusCode = $response->status();
 

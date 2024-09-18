@@ -29,7 +29,9 @@ class DataController extends Controller
             'accepts' => 'application/json'
         ];
   
-        $response = Http::withHeaders($headers)->get($apiURL, $postInput);
+        $response = Http::withOptions(['verify' => false])
+            ->withHeaders($headers)
+            ->get($apiURL, $postInput);
   
         $statusCode = $response->status();
 
@@ -77,7 +79,9 @@ class DataController extends Controller
             'accepts' => 'application/json'
         ];
   
-        $response = Http::withHeaders($headers)->get($apiURL, $postInput);
+        $response = Http::withOptions(['verify' => false])
+            ->withHeaders($headers)
+            ->get($apiURL, $postInput);
   
         $statusCode = $response->status();
 
