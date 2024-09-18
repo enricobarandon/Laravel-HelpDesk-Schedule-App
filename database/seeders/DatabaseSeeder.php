@@ -22,6 +22,9 @@ class DatabaseSeeder extends Seeder
             'user_type_id' => 1
         ]);
 
-        $this->call(UserTypeSeeder::class);
+        $this->call([
+            UserTypeSeeder::class,
+            ProvincesSeeder::class,
+        ]);
     }
 }
