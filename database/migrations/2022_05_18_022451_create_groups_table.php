@@ -27,7 +27,7 @@ return new class extends Migration
             $table->integer('active_staff')->default(0);
             $table->integer('installed_pc')->default(0);
             $table->text('remarks')->nullable();
-            $table->string('site');
+            $table->string('site')->nullable();
             $table->string('guarantor');
             $table->char('status')->nullable();
             $table->boolean('viewing_status')->nullable();
