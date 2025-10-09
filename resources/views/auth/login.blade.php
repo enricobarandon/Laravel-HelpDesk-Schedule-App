@@ -20,7 +20,7 @@
                 <div class="container login-container">
                     <div class="row justify-content-center">
                         <div class="col-md-6 text-center justify-content-center align-items-center">
-                            <img src="dist/img/web-logo.jpg" alt="logo" class="header-mobile__logo-img logo-img  mb-2">
+                            <img src="dist/img/manila_arena.png" alt="logo" class="header-mobile__logo-img logo-img  mb-2">
                         </div>
                         <div class="col-md-6">
                             <div class="card card-login">
