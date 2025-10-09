@@ -78,7 +78,7 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="#" class="brand-link">
-        <img src="{{ asset('dist/img/web-logo.jpg') }}" alt="logo" class="header-mobile__logo-img logo-img  mb-2 w-100">
+        <img src="{{ asset('dist/img/arena_landscape.png') }}" alt="logo" class="header-mobile__logo-img logo-img  mb-2 w-100">
       {{-- <h5 class="brand-text font-weight-light">
         {{ request()->getHost() }}
       </h3> --}}
