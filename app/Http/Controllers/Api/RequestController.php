@@ -20,7 +20,6 @@ use App\Models\UserType;
 use App\Jobs\ProcessRequest;
 use App\Models\Schedule;
 use App\Models\ScheduledAccount;
-use Illuminate\Support\Facades\Log;
 
 class RequestController extends Controller
 {
@@ -272,45 +271,29 @@ class RequestController extends Controller
     }
 
     public function postRequestToKiosk($postInput)
-{
-    $user = auth()->user();
+    {
+        $user = auth()->user();
 
-    $apiURL = env('KIOSK_URL') . '/api/v4/requests';
+        $apiURL = env('KIOSK_URL') . '/api/v4/requests';
 
-    $headers = [
-        'X-header' => 'value',
-        'Content-Type' => 'application/json',
-        'accept' => 'application/json'
-    ];
+        $apiKey = env('KIOSK_API_KEY');
 
-    $postInput['requested_by'] = '.' . $user->name . '(' . UserType::find($user->user_type_id)->role . ')';
+        $headers = [
+            'X-header' => 'value',
+            'Content-Type' => 'application/json',
+            'accept' => 'application/json'
+        ];
 
-    try {
-
-        Log::info('Sending request', [
-            'url' => $apiURL,
-            'payload' => $postInput
-        ]);
+        $postInput['requested_by'] = '.' . $user->name . '('. UserType::find($user->user_type_id)->role .')';
 
         $response = Http::withHeaders($headers)->post($apiURL, $postInput);
 
-        Log::info('Response received', [
-            'status' => $response->status(),
-            'body' => $response->body()
-        ]);
+        $statusCode = $response->status();
 
-        return $response->json();
+        $responseBody = json_decode($response->getBody(), true);
 
-    } catch (\Exception $e) {
-
-        Log::error('API Error', [
-            'message' => $e->getMessage(),
-            'url' => $apiURL
-        ]);
-
-        return null;
+        return $responseBody;
     }
-}
 
     public function updateRequest(ApiRequests $request)
     {
