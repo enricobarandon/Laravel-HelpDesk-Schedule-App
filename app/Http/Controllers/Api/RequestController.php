@@ -20,6 +20,7 @@ use App\Models\UserType;
 use App\Jobs\ProcessRequest;
 use App\Models\Schedule;
 use App\Models\ScheduledAccount;
+use Illuminate\Support\Facades\Log;
 
 class RequestController extends Controller
 {
