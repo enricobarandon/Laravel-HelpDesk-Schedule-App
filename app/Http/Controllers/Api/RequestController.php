@@ -272,32 +272,45 @@ class RequestController extends Controller
     }
 
     public function postRequestToKiosk($postInput)
-    {
-        $user = auth()->user();
+{
+    $user = auth()->user();
 
-        $apiURL = env('KIOSK_URL') . '/api/v4/requests';
+    $apiURL = env('KIOSK_URL') . '/api/v4/requests';
 
-        $apiKey = env('KIOSK_API_KEY');
+    $headers = [
+        'X-header' => 'value',
+        'Content-Type' => 'application/json',
+        'accept' => 'application/json'
+    ];
 
-        Log::info('KIOSK_API_URL', [
-            'url' => $apiURL
+    $postInput['requested_by'] = '.' . $user->name . '(' . UserType::find($user->user_type_id)->role . ')';
+
+    try {
+
+        Log::info('Sending request', [
+            'url' => $apiURL,
+            'payload' => $postInput
         ]);
-        $headers = [
-            'X-header' => 'value',
-            'Content-Type' => 'application/json',
-            'accept' => 'application/json'
-        ];
-
-        $postInput['requested_by'] = '.' . $user->name . '('. UserType::find($user->user_type_id)->role .')';
 
         $response = Http::withHeaders($headers)->post($apiURL, $postInput);
 
-        $statusCode = $response->status();
+        Log::info('Response received', [
+            'status' => $response->status(),
+            'body' => $response->body()
+        ]);
 
-        $responseBody = json_decode($response->getBody(), true);
+        return $response->json();
 
-        return $responseBody;
+    } catch (\Exception $e) {
+
+        Log::error('API Error', [
+            'message' => $e->getMessage(),
+            'url' => $apiURL
+        ]);
+
+        return null;
     }
+}
 
     public function updateRequest(ApiRequests $request)
     {
