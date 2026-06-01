@@ -278,6 +278,9 @@ class RequestController extends Controller
 
         $apiKey = env('KIOSK_API_KEY');
 
+        Log::info('KIOSK_URL', [
+            'url' => env('KIOSK_URL')
+        ]);
         $headers = [
             'X-header' => 'value',
             'Content-Type' => 'application/json',
